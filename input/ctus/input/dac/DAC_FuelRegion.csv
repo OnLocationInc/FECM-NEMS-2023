@@ -1,0 +1,236 @@
+﻿DAC_Sites,FuelReg,DAC_FuelRegion
+AL_SAL_Eutaw2,17,Y
+AL_SAL_Lower Tuscaloosa1,17,Y
+AL_SAL_Lower Tuscaloosa2,17,Y
+AL_SAL_Paluxy4,17,Y
+AL_SAL_Washita-Fredericksburg1,17,Y
+CA_SAL_Domengine1,23,Y
+CA_SAL_Mokelumne River1,23,Y
+CA_SAL_Repetto Sst1,23,Y
+CA_SAL_Repetto Sst2a,23,Y
+CA_SAL_Repetto Sst2b,23,Y
+CA_SAL_Repetto Sst2c,23,Y
+CA_SAL_Repetto Sst3a,23,Y
+CA_SAL_Repetto Sst3b,23,Y
+CA_SAL_Repetto Sst3c,23,Y
+CA_SAL_Repetto Sst3d,23,Y
+CA_SAL_Starkey1,23,Y
+CA_SAL_Stevens1,23,Y
+CA_SAL_Winters1a,23,Y
+CA_SAL_Winters1b,23,Y
+CA_SAL_Winters1c,23,Y
+CO_SAL_Arbuckle2,20,Y
+CO_SAL_Dakota1,20,Y
+CO_SAL_Dakota2,20,Y
+CO_SAL_Dakota3,20,Y
+CO_SAL_Dakota6,20,Y
+CO_SAL_Dakota8,20,Y
+CO_SAL_Entrada1,20,Y
+CO_SAL_Entrada3,20,Y
+CO_SAL_Entrada5,20,Y
+CO_SAL_Entrada8,20,Y
+CO_SAL_Fountain1a,20,Y
+CO_SAL_Fountain1b,20,Y
+CO_SAL_Fountain2a,20,Y
+CO_SAL_Fountain2b,20,Y
+CO_SAL_Hermosa1a,20,Y
+CO_SAL_Hermosa1b,20,Y
+CO_SAL_Leadville1,20,Y
+CO_SAL_Lyons1,20,Y
+CO_SAL_Lyons2,20,Y
+CO_SAL_Lyons3,20,Y
+CO_SAL_Mesaverde1,20,Y
+CO_SAL_Morrison1,20,Y
+CO_SAL_Morrison3,20,Y
+CO_SAL_Morrison8,20,Y
+CO_SAL_Muddy7,20,Y
+CO_SAL_Nugget1,20,Y
+CO_SAL_Weber1,20,Y
+CO_SAL_Weber2,20,Y
+CO_SAL_Weber3,20,Y
+FL_SAL_Cedar Keys-Lawson1,15,Y
+FL_SAL_Cedar Keys-Lawson2,15,Y
+FL_SAL_Cedar Keys-Lawson3,15,Y
+FL_SAL_Eutaw3,15,Y
+FL_SAL_Lower Tuscaloosa3,15,Y
+FL_SAL_Lower Tuscaloosa4,15,Y
+FL_SAL_Paluxy5,15,Y
+FL_SAL_Sunniland1,15,Y
+FL_SAL_Washita-Fredericksburg2,15,Y
+GA_SAL_Eutaw4,14,Y
+GA_SAL_Lower Tuscaloosa5,14,Y
+IL_SAL_Knox1,5,Y
+IL_SAL_Knox2,5,Y
+IL_SAL_Mount Simon1,5,Y
+IL_SAL_Mount Simon2,5,Y
+IL_SAL_Mount Simon3,5,Y
+IL_SAL_St.Peter1,5,Y
+IL_SAL_St.Peter2,5,Y
+IN_SAL_Knox3,5,Y
+IN_SAL_Knox4,5,Y
+IN_SAL_Mount Simon4,5,Y
+IN_SAL_Mount Simon5,5,Y
+IN_SAL_Mount Simon6,5,Y
+IN_SAL_St.Peter3,5,Y
+IN_SAL_St.Peter4,5,Y
+KS_SAL_Arbuckle3,9,Y
+KS_SAL_Arbuckle4,9,Y
+KY_SAL_Knox5,16,Y
+KY_SAL_Knox6,16,Y
+KY_SAL_Mount Simon11,16,Y
+KY_SAL_Rome Trough Sst1,16,Y
+KY_SAL_Rose Run1,16,Y
+KY_SAL_St.Peter5,16,Y
+KY_SAL_St.Peter6,16,Y
+LA_SAL_Lower Tuscaloosa6,18,Y
+LA_SAL_Lower Tuscaloosa7,18,Y
+MD_SAL_Oriskany1,10,Y
+MD_SAL_Waste Gate1,10,Y
+MI_SAL_Mount Simon7,5,Y
+MI_SAL_Mount Simon8,5,Y
+MI_SAL_Mount Simon9,5,Y
+MI_SAL_St.Peter7,5,Y
+MI_SAL_St.Peter8,5,Y
+MI_SAL_St.Peter9,5,Y
+MI_SAL_St.Peter10,5,Y
+MI_SAL_Sylvania1,5,Y
+MS_SAL_Eutaw1,17,Y
+MS_SAL_Lower Tuscaloosa8,17,Y
+MS_SAL_Lower Tuscaloosa9,17,Y
+MS_SAL_Lower Tuscaloosa10,17,Y
+MS_SAL_Paluxy6,17,Y
+MS_SAL_Washita-Fredericksburg3,17,Y
+MT_SAL_Basal Cambrian1,19,Y
+MT_SAL_Basal Cambrian2,19,Y
+MT_SAL_Basal Cambrian3,19,Y
+MT_SAL_Basal Cambrian4,19,Y
+MT_SAL_Crow Mountain 2,19,Y
+MT_SAL_Crow Mountain 3,19,Y
+MT_SAL_Duperow-Lower1,19,Y
+MT_SAL_Duperow-Upper1,19,Y
+MT_SAL_Madison Gp-Mission Canyon Fm4,19,Y
+MT_SAL_Minnelusa2,19,Y
+MT_SAL_Muddy3,19,Y
+MT_SAL_Muddy5,19,Y
+MT_SAL_Red River2,19,Y
+MT_SAL_Tensleep3,19,Y
+ND_SAL_Basal Cambrian5,7,Y
+ND_SAL_Basal Cambrian6,7,Y
+ND_SAL_Basal Cambrian7,7,Y
+ND_SAL_Basal Cambrian8,7,Y
+ND_SAL_Madison Gp-Mission Canyon Fm1,7,Y
+ND_SAL_Madison Gp-Mission Canyon Fm2,7,Y
+ND_SAL_Red River1,7,Y
+NE_SAL_Dakota10,8,Y
+NE_SAL_Entrada7,8,Y
+NE_SAL_Morrison5,8,Y
+NM_SAL_Atoka2,21,Y
+NM_SAL_Canyon2,21,Y
+NM_SAL_Canyon4,21,Y
+NM_SAL_Cisco2,21,Y
+NM_SAL_Cisco4,21,Y
+NM_SAL_Dakota4,21,Y
+NM_SAL_Dakota7,21,Y
+NM_SAL_Devonian1,21,Y
+NM_SAL_Entrada4,21,Y
+NM_SAL_Entrada9,21,Y
+NM_SAL_Fusselman2,21,Y
+NM_SAL_Glorieta1,21,Y
+NM_SAL_Leonard2,21,Y
+NM_SAL_Mesaverde2,21,Y
+NM_SAL_Morrison2,21,Y
+NM_SAL_Queen2,21,Y
+NM_SAL_San Andres1,21,Y
+NM_SAL_Seven Rivers1,21,Y
+NM_SAL_Strawn2,21,Y
+NM_SAL_Wolfcamp2,21,Y
+OH_SAL_Conasauga1,4,Y
+OH_SAL_Copper Ridge1,4,Y
+OH_SAL_Mount Simon10,4,Y
+OH_SAL_Oriskany2,4,Y
+OH_SAL_Oriskany3,4,Y
+OH_SAL_Rose Run2,4,Y
+OK_SAL_Arbuckle1,18,Y
+OK_SAL_Morrow1,18,Y
+PA_SAL_Copper Ridge2,3,Y
+PA_SAL_Oriskany4,3,Y
+PA_SAL_Oriskany5,3,Y
+PA_SAL_Potsdam1,3,Y
+PA_SAL_Rose Run3,3,Y
+PA_SAL_Rose Run4,3,Y
+SD_SAL_Madison Gp-Mission Canyon Fm3,7,Y
+TN_SAL_Basal Sandstone TN Zone 1,16,Y
+TN_SAL_Basal Sandstone TN Zone 2,16,Y
+TX_SAL_Atoka1,18,Y
+TX_SAL_Canyon1,18,Y
+TX_SAL_Canyon3,18,Y
+TX_SAL_Cisco1,18,Y
+TX_SAL_Cisco3,18,Y
+TX_SAL_Frio1,18,Y
+TX_SAL_Frio2,18,Y
+TX_SAL_Frio3a,18,Y
+TX_SAL_Frio3b,18,Y
+TX_SAL_Frio4,18,Y
+TX_SAL_Frio5,18,Y
+TX_SAL_Frio6,18,Y
+TX_SAL_Frio7a,18,Y
+TX_SAL_Frio7b,18,Y
+TX_SAL_Frio8,18,Y
+TX_SAL_Frio9a,18,Y
+TX_SAL_Frio9b,18,Y
+TX_SAL_Frio10,18,Y
+TX_SAL_Frio11,18,Y
+TX_SAL_Frio12a,18,Y
+TX_SAL_Frio12b,18,Y
+TX_SAL_Frio13a,18,Y
+TX_SAL_Frio13b,18,Y
+TX_SAL_Frio13c,18,Y
+TX_SAL_Fusselman1,18,Y
+TX_SAL_Leonard1,18,Y
+TX_SAL_Paluxy1,18,Y
+TX_SAL_Paluxy2,18,Y
+TX_SAL_Paluxy3,18,Y
+TX_SAL_Queen1,18,Y
+TX_SAL_San Andres2,18,Y
+TX_SAL_Seven Rivers2,18,Y
+TX_SAL_Strawn1,18,Y
+TX_SAL_Wolfcamp1,18,Y
+TX_SAL_Woodbine1,18,Y
+UT_SAL_Dakota5,20,Y
+UT_SAL_Entrada2,20,Y
+UT_SAL_Green River1,20,Y
+UT_SAL_Mesaverde3,20,Y
+UT_SAL_Morrison7,20,Y
+UT_SAL_Paradox1,20,Y
+UT_SAL_Tensleep5,20,Y
+UT_SAL_Wasatch1,20,Y
+WV_SAL_Copper Ridge3,11,Y
+WV_SAL_Oriskany6,11,Y
+WV_SAL_Oriskany7,11,Y
+WV_SAL_Rome Trough Sst2,11,Y
+WV_SAL_Rose Run5,11,Y
+WY_SAL_Crow Mountain 1,19,Y
+WY_SAL_Crow Mountain 4,19,Y
+WY_SAL_Dakota9,19,Y
+WY_SAL_Entrada6,19,Y
+WY_SAL_Madison1,19,Y
+WY_SAL_Minnelusa1,19,Y
+WY_SAL_Morrison4,19,Y
+WY_SAL_Morrison6,19,Y
+WY_SAL_Muddy1,19,Y
+WY_SAL_Muddy2,19,Y
+WY_SAL_Muddy4,19,Y
+WY_SAL_Muddy6,19,Y
+WY_SAL_Muddy8,19,Y
+WY_SAL_Nugget2,19,Y
+WY_SAL_Tensleep1,19,Y
+WY_SAL_Tensleep2,19,Y
+WY_SAL_Tensleep4,19,Y
+WY_SAL_Weber4,19,Y
+PSEUDO_1,3,Y
+PSEUDO_2,5,Y
+PSEUDO_3,9,Y
+PSEUDO_4,9,Y
+PSEUDO_5,23,Y
+PSEUDO_6,21,Y
+PSEUDO_7,5,Y

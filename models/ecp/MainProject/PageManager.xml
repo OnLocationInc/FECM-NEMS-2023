@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<PageManager>
+	<Page Name="MainECP" PageGUID="460DBF43-5AF6-4392-830C-2242414C49B8">
+		<Page Name="Compare cDiff cCalc and cPass Parameters" PageGUID="18A22ECF-83A3-42C6-BA1E-9CD8AB570F43" />
+		<Page Name="Compare Differences by Threshold" PageGUID="A4237D0E-4904-471A-AD08-860169B6618B" />
+		<Page Name="All CPass Parameters" PageGUID="CC22F252-7851-48B5-9825-55956782B2E8" />
+		<Page Name="TransferVariableOutput Parameters" PageGUID="D5261703-F49A-4106-9092-44F52F11AA16" />
+	</Page>
+	<Page Name="All Data Pages" PageGUID="4AE2DB6F-7316-4D42-8CFD-47EA65EF109B">
+		<Page Name="[Data Page] Compare_ccalc_mapping" PageGUID="75C427B7-2EBC-4B52-9B5C-674F5C0C9D47" />
+		<Page Name="[Data Page] Cdiff_ccalc_mapping" PageGUID="C3224E85-669E-4F2C-8CE5-EF5A6DD79C3E" />
+	</Page>
+</PageManager>

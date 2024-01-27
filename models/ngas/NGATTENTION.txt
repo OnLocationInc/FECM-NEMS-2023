@@ -1,0 +1,8 @@
+﻿    Currentdate := "October   24, 2022" ;
+
+
+    FlowGTCapacityFlg(histyr,h,h1) := data 
+    { ( 2017, MO     , AR      ) : 1,  ( 2017, OH     , MI      ) : 1,  ( 2019, CO     , NE      ) : 1,
+      ( 2019, NE     , CO      ) : 1,  ( 2019, WA     , WA-CN_W ) : 1,  ( 2019, WA-CN_W, CN_W    ) : 1,
+      ( 2020, CO     , NE      ) : 1,  ( 2020, NE     , CO      ) : 1 } ;
+

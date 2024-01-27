@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+
+    <!-- see http://wiki.apache.org/logging-log4j/Log4jXmlFormat for formatting options -->
+    <!--     http://wiki.apache.org/logging-log4j/Log4jXmlFormat -->
+
+    <!-- output to a specific file -->
+    <appender name="MyFileAppender" class="org.apache.log4j.FileAppender">
+        <param name="File" value="aimmslink.log.txt" />
+        <param name="Append" value="false" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss,SSS} %t [%p] {%c} %m%n"/>
+        </layout>
+
+    </appender>
+
+    <appender name="MyXMLFileAppender" class="org.apache.log4j.FileAppender">
+        <param name="File" value="aimmslink.log.xml" />
+        <param name="Append" value="false" />
+        <layout class="org.apache.log4j.XMLLayout"/>
+    </appender>
+
+    <logger name="ARMI">
+        <!-- Print only messages of level error or above from the ARMI (AIMMS Remote Message Interface) package -->
+        <level value="error"/>
+    </logger>
+
+  <logger name="rapi4cxx">
+    <!-- Print only messages of level error or above from the ARMI (AIMMS Remote Message Interface) package -->
+    <level value="debug"/>
+  </logger>
+  
+    <root>
+        <priority value="error" />
+        <appender-ref ref="MyXMLFileAppender" />
+    </root>
+
+</log4j:configuration>

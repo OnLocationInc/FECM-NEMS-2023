@@ -1,0 +1,175 @@
+<?xml version="1.0"?>
+<Page Version="4000" TimeStamp="2016-12-27 13:57:48">
+	<Location top="30" left="30" bottom="540" right="600" />
+	<PageEditSize Type="Inherited">
+		<Size Width="600" Height="540" />
+	</PageEditSize>
+	<ProjectUUID>FD4E5DBD-7B49-4BC0-8952-143FD8233A59</ProjectUUID>
+	<Title>"[Data Page] coeff_cO_UBOUND"</Title>
+	<ResizeData>
+		<MainArea Line="FixedFromRight" Value="81">
+			<LeftArea Line="FixedFromTop" Value="45" />
+			<RightArea Line="FixedFromTop" Value="35">
+				<BottomArea Line="FixedFromBottom" Value="106" />
+			</RightArea>
+		</MainArea>
+	</ResizeData>
+	<Background Inherited="true" />
+	<PageObject Type="Button">
+		<Location top="10" left="520" bottom="35" right="590" />
+		<TabOrder>1</TabOrder>
+		<LeaveOnEnter>false</LeaveOnEnter>
+		<ButtonType>Text</ButtonType>
+		<Title>"Close"</Title>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<ActionSequence>
+			<Action Type="ClosePage" />
+		</ActionSequence>
+	</PageObject>
+	<PageObject Type="Button">
+		<Location top="435" left="520" bottom="460" right="590" />
+		<TabOrder>2</TabOrder>
+		<LeaveOnEnter>false</LeaveOnEnter>
+		<ButtonType>Text</ButtonType>
+		<Title>"Undo"</Title>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<ActionSequence>
+			<Action Type="MenuCommand">
+				<Command>Edit-Undo Last</Command>
+			</Action>
+		</ActionSequence>
+	</PageObject>
+	<PageObject Type="Button">
+		<Location top="470" left="520" bottom="495" right="555" />
+		<TabOrder>3</TabOrder>
+		<LeaveOnEnter>false</LeaveOnEnter>
+		<ButtonType>Bitmap</ButtonType>
+		<BitmapFile LiteralFileName="true">"&lt;prj&gt;:bitmaps\construct.png"</BitmapFile>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<ActionSequence>
+			<Action Type="DataPageSpecific">
+				<DoWhat>Reopen</DoWhat>
+			</Action>
+			<Action Type="ClosePage" />
+		</ActionSequence>
+	</PageObject>
+	<PageObject Type="Button">
+		<Location top="470" left="555" bottom="495" right="590" />
+		<TabOrder>4</TabOrder>
+		<LeaveOnEnter>false</LeaveOnEnter>
+		<ButtonType>Bitmap</ButtonType>
+		<BitmapFile LiteralFileName="true">"&lt;prj&gt;:bitmaps\totree.png"</BitmapFile>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<ActionSequence>
+			<Action Type="DataPageSpecific">
+				<DoWhat>LocationInTree</DoWhat>
+			</Action>
+		</ActionSequence>
+	</PageObject>
+	<PageObject Type="Button">
+		<Location top="505" left="520" bottom="530" right="555" />
+		<TabOrder>5</TabOrder>
+		<LeaveOnEnter>false</LeaveOnEnter>
+		<ButtonType>Bitmap</ButtonType>
+		<BitmapFile LiteralFileName="true">"&lt;prj&gt;:bitmaps\previous.png"</BitmapFile>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<ActionSequence>
+			<Action Type="DataPageSpecific">
+				<DoWhat>GotoPreviousSymbol</DoWhat>
+			</Action>
+			<Action Type="ClosePage" />
+		</ActionSequence>
+	</PageObject>
+	<PageObject Type="Button">
+		<Location top="505" left="555" bottom="530" right="590" />
+		<TabOrder>6</TabOrder>
+		<LeaveOnEnter>false</LeaveOnEnter>
+		<ButtonType>Bitmap</ButtonType>
+		<BitmapFile LiteralFileName="true">"&lt;prj&gt;:bitmaps\next.png"</BitmapFile>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<ActionSequence>
+			<Action Type="DataPageSpecific">
+				<DoWhat>GotoNextSymbol</DoWhat>
+			</Action>
+			<Action Type="ClosePage" />
+		</ActionSequence>
+	</PageObject>
+	<PageObject Type="Floating Index">
+		<Location top="10" left="10" bottom="35" right="110" />
+		<TabOrder>7</TabOrder>
+		<ObjectUUID>6AE4D12F-4223-4690-862A-D81833CF9D3D</ObjectUUID>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<Border Style="InShadow" Width="2" />
+		<Circular>true</Circular>
+		<ClickShowsList>true</ClickShowsList>
+		<BackgroundColor RGB="#ffffff" />
+		<Identifier>PlantGroup</Identifier>
+	</PageObject>
+	<PageObject Type="Floating Index">
+		<Location top="10" left="120" bottom="35" right="220" />
+		<TabOrder>8</TabOrder>
+		<ObjectUUID>F01C3527-AC16-4975-897F-B95AB6ED1708</ObjectUUID>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<Border Style="InShadow" Width="2" />
+		<Circular>true</Circular>
+		<ClickShowsList>true</ClickShowsList>
+		<BackgroundColor RGB="#ffffff" />
+		<Identifier>Season</Identifier>
+	</PageObject>
+	<PageObject Type="Floating Index">
+		<Location top="10" left="230" bottom="35" right="330" />
+		<TabOrder>9</TabOrder>
+		<ObjectUUID>A06B3ADB-86ED-47E5-BEDA-3816A6C51E55</ObjectUUID>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<Border Style="InShadow" Width="2" />
+		<Circular>true</Circular>
+		<ClickShowsList>true</ClickShowsList>
+		<BackgroundColor RGB="#ffffff" />
+		<Identifier>OperatingMode</Identifier>
+	</PageObject>
+	<PageObject Type="Scalar">
+		<Location top="10" left="340" bottom="35" right="440" />
+		<TabOrder>10</TabOrder>
+		<PopupMenu Default="true" DefaultPopupId="200" />
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<Border Style="InShadow" Width="2" />
+		<BackgroundColor RGB="#ffffff" />
+		<Layout>Value</Layout>
+		<SeparatorSign>=</SeparatorSign>
+		<ExplicitIdentifier>
+			<Identifier>coeff_cO_UBOUND( '00047', '3', '3' )</Identifier>
+			<IndexLinkage>[6AE4D12F-4223-4690-862A-D81833CF9D3D,F01C3527-AC16-4975-897F-B95AB6ED1708,A06B3ADB-86ED-47E5-BEDA-3816A6C51E55]</IndexLinkage>
+			<NumberFormat Width="5" Decimals="2" Scientific="IfTooSmallorLarge" Alignment="Center" ShowDefaults="true" />
+		</ExplicitIdentifier>
+	</PageObject>
+	<PageObject Type="Composite Table">
+		<Location top="45" left="10" bottom="530" right="510" />
+		<TabOrder>11</TabOrder>
+		<PopupMenu Default="true" DefaultPopupId="200" />
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<Border Style="InShadow" Width="2" />
+		<BackgroundColor RGB="#ffffff" />
+		<Domain>
+			<Identifier>coeff_cO_UBOUND( PlantGroup, Season, OperatingMode )</Identifier>
+			<IndexLinkage>[6AE4D12F-4223-4690-862A-D81833CF9D3D,F01C3527-AC16-4975-897F-B95AB6ED1708,A06B3ADB-86ED-47E5-BEDA-3816A6C51E55]</IndexLinkage>
+			<Index Name="PlantGroup" />
+			<Index Name="Season" />
+			<Index Name="OperatingMode" />
+			<AllowRowAdd>true</AllowRowAdd>
+			<AllowRowDelete>true</AllowRowDelete>
+			<AllowRowModify>true</AllowRowModify>
+		</Domain>
+		<ExplicitIdentifier>
+			<Identifier>coeff_cO_UBOUND( PlantGroup, Season, OperatingMode )</Identifier>
+			<NumberFormat Width="8" Decimals="3" Alignment="Center" />
+		</ExplicitIdentifier>
+	</PageObject>
+	<UsedReferences>
+		<Model>
+			<Symbol>coeff_cO_UBOUND</Symbol>
+			<Symbol>PlantGroup</Symbol>
+			<Symbol>Season</Symbol>
+			<Symbol>OperatingMode</Symbol>
+		</Model>
+	</UsedReferences>
+</Page>

@@ -1,0 +1,897 @@
+## ams_version=1.0
+
+Section S3_Data_Processing {
+	Procedure pr_ReadandProcessInputs {
+		Body: {
+			block
+				! If we are not on the first year, then we read the database, on the contrary, we read from the case
+				if NCNTRL_CURCALYR('1') = FirstModelYear and NCNTRL_CURITR('1') = 1  then
+					DirectoryGetFiles("data", "*.data", sp_CaseNamesInDirectory(i_CaseNumber));
+					_sp_PathCaseFile := "data";
+					for i_CaseNumber | (sp_CaseNamesInDirectory(i_CaseNumber) and i_CaseNumber <> 1) do
+						FileDelete(_sp_PathCaseFile + "/" + sp_CaseNamesInDirectory(i_CaseNumber));
+					endfor;
+					pr_InputDatabase;
+				ELSE
+					DirectoryGetFiles("data", "*.data", sp_CaseNamesInDirectory(i_CaseNumber));
+					p_CaseOptimizedYear(i_CaseNumber) 
+						:= val(substring(sp_CaseNamesInDirectory(i_CaseNumber), 12,15));
+					p_CaseOptimizedIteration(i_CaseNumber) 
+						:= val(substring(sp_CaseNamesInDirectory(i_CaseNumber), 17,17));
+					p_LoadedYear := max(i_CaseNumber,p_CaseOptimizedYear(i_CaseNumber));
+					p_LoadedIteration 
+					:= max(i_CaseNumber | p_CaseOptimizedYear(i_CaseNumber) = p_LoadedYear
+						, p_CaseOptimizedIteration(i_CaseNumber) );
+					sp_LastCaseName := "HMM_Output_" + p_LoadedYear + "_" + p_LoadedIteration;		
+			
+					pr_LoadData(_sp_CaseName : sp_LastCaseName);
+				endif;
+			! write out error if no data file found
+			onerror ep_err do
+				if not card(sp_CaseNamesInDirectory) then 
+					sp_ErrorMessage := 
+					"Data case load error, no cases are present in the data folder ";
+				else
+					sp_ErrorMessage 
+					:= "AIMMS Message : " + errh::Message( ep_err ) +
+					"Custom Message: Error identifying previous optimization data case, check the procedure pr_ReadAndProcessInputs";
+				endif;
+				pr_ErrorOutput(ep_err);
+			
+			endblock;
+			
+			! Read NEMS data
+			pr_ReadGlobalDataFromNEMS;
+			
+			ep_CurrentOptYear := StringToElement(i_calYear,NCNTRL_CURCALYR('1'));
+			ep_CurrentIteration := StringToElement(i_IterationNumber,NCNTRL_CURITR('1'));
+			
+			
+			! Check to warn of the loaded case does not match with the previous iteration or year
+			! A warning is raised in case of a mismatch
+			block
+			   if p_StandAlone <> 1 then
+				if not (NCNTRL_CURCALYR('1') = FirstModelYear and NCNTRL_CURITR('1') = 1) then
+					if NCNTRL_CURITR('1') = 1 then
+						if p_LoadedYear <> (NCNTRL_CURCALYR('1') - 1) then
+							raise warning "Loaded case mismatch. It is the 1st iteration of year " + NCNTRL_CURCALYR('1') + 
+							". We should be reading a case from year " + (NCNTRL_CURCALYR('1') - 1) + ", however, we have read " +
+							"a case from year " + p_LoadedYear;
+						endif;
+					elseif NCNTRL_CURITR('1') > 1 then
+						if p_LoadedYear <> NCNTRL_CURCALYR('1') or p_LoadedIteration <> (NCNTRL_CURITR('1') - 1) then
+							raise warning "Loaded case mismatch. We are running the iteration " + NCNTRL_CURITR('1') +
+							" of year " + NCNTRL_CURCALYR('1') + ". We should be loading the case for year " + NCNTRL_CURCALYR('1') +
+							" and iteration " + (NCNTRL_CURITR('1') - 1) + " however, we have loaded year " + p_LoadedYear + 
+							", iteration " + p_LoadedIteration;
+						endif;
+					endif;
+				endif;
+			   endif;
+			onerror ep_err do
+				!If we want to store a custom error message
+			!	sp_ErrorMessage := "Hardcoded fuel types do not match with the database";
+				!If we want to store the AIMMS default message
+				sp_ErrorMessage := errh::Message( ep_err );
+			
+				pr_ErrorOutput(ep_err);
+			
+			endblock;
+			
+			! Process raw data from database
+			pr_ProcessInputDatabase;
+			
+			! Process inputs from NEMS
+			pr_ProcessInputFiles;
+		}
+		Comment: "This procedure checks for the year and iteration and then reads in NEMS data, followed by processing of database and NEMS raw inputs";
+		StringParameter _sp_PathCaseFile;
+	}
+	Procedure pr_ProcessAmmoniaInputs {
+		Body: {
+			! Read data from parameter p_NH3ProdTechProps(i_NH3Spec, i_NH3Tech) into ep for each attribute
+			! Define binary for Active technologies as set in the DB
+			ep_NH3Spec := 'Active';
+			s_ActiveNH3Technologies := {i_NH3Tech | p_NH3ProdTechProps(ep_NH3Spec, i_NH3Tech)};
+			
+			ep_NH3Spec := 'Basis Year';
+			p_AmmoniaBasisYearPerTech(i_ActiveNH3Technology)
+			:= p_NH3ProdTechProps(ep_NH3Spec, i_ActiveNH3Technology);
+			
+			ep_NH3Spec := 'Reference Year';
+			ep_AmmoniaReferenceYearPerTech(i_ActiveNH3Technology)
+			:= StringToElement(cal_Year,formatstring("%n", p_NH3ProdTechProps(ep_NH3Spec, i_ActiveNH3Technology)));
+			
+			ep_NH3Spec := 'Assumed start-up year';
+			ep_AmmoniaStartYearPerTech(i_ActiveNH3Technology)
+			:= StringToElement(cal_Year,formatstring("%n", p_NH3ProdTechProps(ep_NH3Spec, i_ActiveNH3Technology)));
+			
+			
+			! Ammonia design capacity in kg/day, need to convert
+			ep_NH3Spec := 'Plant Design Capacity';
+			p_AmmoniaDesignCapacityPerTech(i_ActiveNH3Technology)
+			:= p_NH3ProdTechProps(ep_NH3Spec, i_ActiveNH3Technology) * p_DaysinYear; !(kg NH3/Day) * (Days/Year) = kg NH3/Year
+			
+			
+			
+			!Calculate O&M Cost
+				!Variable Costs
+				ep_NH3Spec := 'Total Variable Operating Costs';
+				p_AmmoniaVariableO_MCostsPerTech(i_ActiveNH3Technology) ! millions of 2018$/year
+				:= p_NH3ProdTechProps(ep_NH3Spec, i_ActiveNH3Technology);
+			
+				ep_NH3Spec := 'Total Energy Costs (less product credits)';
+				p_AmmoniaVariableO_MCostsPerTech(i_ActiveNH3Technology)
+				:= (p_AmmoniaVariableO_MCostsPerTech(i_ActiveNH3Technology) ! millions of 2018$/year
+					- p_NH3ProdTechProps(ep_NH3Spec, i_ActiveNH3Technology)) ! millions of 2018$/year
+						/$(p_AmmoniaDesignCapacityPerTech(i_ActiveNH3Technology) / 1e6);
+			
+				! Fixed Costs
+				ep_NH3Spec := 'Total Fixed Operating Costs';
+				p_AmmoniaFixedO_MCostsPerTech(i_ActiveNH3Technology)
+				:= p_NH3ProdTechProps(ep_NH3Spec, i_ActiveNH3Technology)  ! millions of 2018$/year
+					/$ (p_AmmoniaDesignCapacityPerTech(i_ActiveNH3Technology) / 1e6);
+			
+			
+			!Capital costs
+			ep_NH3Spec := 'Total Capital Costs';
+			p_AmmoniaCapitalCostsPerTech(i_ActiveNH3Technology)
+			:= p_NH3ProdTechProps(ep_NH3Spec, i_ActiveNH3Technology) !Millions of 2018$/year
+				/$ (p_AmmoniaDesignCapacityPerTech(i_ActiveNH3Technology) / 1e6);
+			
+			! Alpha and Beta These set the rate of learning in percent cost reduction per doubling
+			ep_ProdSpec := 'Alpha';
+			p_AmmoniaProdLearningAlphaPerTech(i_ActiveNH3Technology)
+			:= p_NH3ProdTechProps(ep_NH3Spec, i_ActiveNH3Technology)  ;
+			
+			ep_ProdSpec := 'Beta';
+			p_AmmoniaProdLearningBetaPerTech(i_ActiveNH3Technology)
+			:= p_NH3ProdTechProps(ep_NH3Spec, i_ActiveNH3Technology)  ;
+		}
+	}
+	Procedure pr_ProcessInputDatabase {
+		Body: {
+			! Process ammonia tech specs
+			pr_ProcessAmmoniaInputs;
+			
+			! Process production tech specs
+			pr_ProductionInputs;
+			
+			! Process transportation tech specs
+			pr_TransportationInputs;
+			
+			! Process storage tech specs
+			pr_StorageInputs;
+			
+			! Calculate fuel consumption for each production technology
+			for i_Fuel do
+				ep_ProdSpec := StringToElement(s_ProdSpecs,i_Fuel);
+				p_ProdFuelConsumptionPerTech(i_Fuel,i_ProdActiveTech) 
+					:= val(sp_ProdSpecPerTech(EP_ProdSpec, i_ProdActiveTech));
+			endfor;
+			
+			! Ammonia fuel consumption
+			for i_Fuel do
+			ep_NH3Spec := StringToElement(s_NH3Specs,i_Fuel);
+			p_AmmoniaFuelConsumptionPerTech(i_Fuel,i_ActiveNH3Technology)
+			:= p_NH3ProdTechProps(ep_NH3Spec, i_ActiveNH3Technology);
+			endfor;
+			
+			! set up season codes without all seasons which cannot be used to in the optimization
+			s_SeasonOpt := {i_Season | i_Season <> 'All Seasons'};
+			p_SeasonFraction(i_SeasonOpt) := val(sp_SeasonFraction(i_SeasonOpt));
+			
+			! Production Reserve Margin  adds small percentage to period 2 demand to add reserve above previous year's demand.
+			ep_HMMCNTLSpec := 'ProductionReserveMargin';
+			!halt;
+			p_ProductionCapacityReserve := val(sp_HMMCNTLSpec(ep_HMMCNTLSpec));
+			
+			! 45V Credits Inputs
+			ep_HMMCNTLSpec := 'PTC';
+			ep_PTCStartYear := StringToElement(i_calYear,val(sp_HMMCNTLSpec(ep_HMMCNTLSpec)));
+			
+			ep_HMMCNTLSpec := 'EITC';
+			ep_ITCStartYear := StringToElement(i_calYear,val(sp_HMMCNTLSpec(ep_HMMCNTLSpec)));
+			
+			ep_HMMCNTLSpec := 'I_45V_SYR';
+			p_45V_SYR:= val(sp_HMMCNTLSpec(ep_HMMCNTLSpec));
+			
+			ep_HMMCNTLSpec := 'I_45V_LYR_NEW';
+			p_45V_LYR_NEW:= val(sp_HMMCNTLSpec(ep_HMMCNTLSpec));
+			
+			ep_HMMCNTLSpec := 'I_45V_DURATION';
+			p_45V_DURATION:= val(sp_HMMCNTLSpec(ep_HMMCNTLSpec));
+			
+			ep_HMMCNTLSpec := 'I_45V_Multiplier';
+			p_45V_Multiplier:= val(sp_HMMCNTLSpec(ep_HMMCNTLSpec));
+			
+			! Market sharing inputs
+			ep_HMMCNTLSpec := 'MS ON/OFF';
+			p_MarketShareON:= val(sp_HMMCNTLSpec(ep_HMMCNTLSpec));
+			
+			ep_HMMCNTLSpec := 'MS Cutoff';
+			p_MarketShareCutoff:= val(sp_HMMCNTLSpec(ep_HMMCNTLSpec));
+			
+			ep_HMMCNTLSpec := 'MS Alpha';
+			p_MarketShareAlpha:= val(sp_HMMCNTLSpec(ep_HMMCNTLSpec));
+			
+			! Tech based limits
+			ep_HMMCNTLSpec := 'NucHrtRt';
+			p_HeatRateNuclear:= val(sp_HMMCNTLSpec(ep_HMMCNTLSpec));
+			
+			ep_HMMCNTLSpec := 'Lim_Renew_Share';
+			p_RenewablesShareLimit:= val(sp_HMMCNTLSpec(ep_HMMCNTLSpec));
+			
+			ep_HMMCNTLSpec := 'Lim_Nuc_Share';
+			p_NuclearShareLimit:= val(sp_HMMCNTLSpec(ep_HMMCNTLSpec));
+			
+			! Overall growth limits
+			ep_HMMCNTLSpec := 'Production Growth Rate';
+			p_ProductionGrowthLimit:= val(sp_HMMCNTLSpec(ep_HMMCNTLSpec));
+		}
+		Comment: "This converts raw inputs into model parameters";
+	}
+	Procedure pr_ProcessAmmoniaInputs {
+		Body: {
+			! Define binary for Active technologies as set in the DB
+			ep_NH3Spec := 'Active';
+			s_ActiveNH3Technologies := {i_NH3Tech | p_NH3ProdTechProps(ep_NH3Spec, i_NH3Tech)};
+			
+			ep_NH3Spec := 'Basis Year';
+			p_AmmoniaBasisYearPerTech(i_ActiveNH3Technology)
+			:= p_NH3ProdTechProps(ep_NH3Spec, i_ActiveNH3Technology);
+			
+			ep_NH3Spec := 'Reference Year';
+			ep_AmmoniaReferenceYearPerTech(i_ActiveNH3Technology)
+			:= StringToElement(cal_Year,formatstring("%n", p_NH3ProdTechProps(ep_NH3Spec, i_ActiveNH3Technology)));
+			
+			ep_NH3Spec := 'Assumed start-up year';
+			ep_AmmoniaStartYearPerTech(i_ActiveNH3Technology)
+			:= StringToElement(cal_Year,formatstring("%n", p_NH3ProdTechProps(ep_NH3Spec, i_ActiveNH3Technology)));
+			
+			
+			! Ammonia design capacity in kg/day, need to convert
+			ep_NH3Spec := 'Plant Design Capacity';
+			p_AmmoniaDesignCapacityPerTech(i_ActiveNH3Technology)
+			:= p_NH3ProdTechProps(ep_NH3Spec, i_ActiveNH3Technology) * p_DaysinYear; !(kg NH3/Day) * (Days/Year) = kg NH3/Year
+			
+			
+			
+			!Calculate O&M Cost
+				!Variable Costs
+				ep_NH3Spec := 'Total Variable Operating Costs';
+				p_AmmoniaVariableO_MCostsPerTech(i_ActiveNH3Technology) ! millions of 2018$/year
+				:= p_NH3ProdTechProps(ep_NH3Spec, i_ActiveNH3Technology);
+			
+				ep_NH3Spec := 'Total Energy Costs (less product credits)';
+				p_AmmoniaVariableO_MCostsPerTech(i_ActiveNH3Technology)
+				:= (p_AmmoniaVariableO_MCostsPerTech(i_ActiveNH3Technology) ! millions of 2018$/year
+					- p_NH3ProdTechProps(ep_NH3Spec, i_ActiveNH3Technology)) ! millions of 2018$/year
+						/$(p_AmmoniaDesignCapacityPerTech(i_ActiveNH3Technology) / 1e6);
+			
+				! Fixed Costs
+				ep_NH3Spec := 'Total Fixed Operating Costs';
+				p_AmmoniaFixedO_MCostsPerTech(i_ActiveNH3Technology)
+				:= p_NH3ProdTechProps(ep_NH3Spec, i_ActiveNH3Technology)  ! millions of 2018$/year
+					/$ (p_AmmoniaDesignCapacityPerTech(i_ActiveNH3Technology) / 1e6);
+			
+			
+			!Capital costs
+			ep_NH3Spec := 'Total Capital Costs';
+			p_AmmoniaCapitalCostsPerTech(i_ActiveNH3Technology) ! 2018$/kg of NH3
+			:= p_NH3ProdTechProps(ep_NH3Spec, i_ActiveNH3Technology) !Millions of 2018$/year
+				/$ (p_AmmoniaDesignCapacityPerTech(i_ActiveNH3Technology) / 1e6);
+			
+			! Alpha and Beta
+			ep_ProdSpec := 'Alpha';
+			p_AmmoniaProdLearningAlphaPerTech(i_ActiveNH3Technology)
+			:= p_NH3ProdTechProps(ep_NH3Spec, i_ActiveNH3Technology)  ;
+			
+			ep_ProdSpec := 'Beta';
+			p_AmmoniaProdLearningBetaPerTech(i_ActiveNH3Technology)
+			:= p_NH3ProdTechProps(ep_NH3Spec, i_ActiveNH3Technology)  ;
+		}
+		Comment: "Process ammonia tech specs";
+	}
+	Procedure pr_ProductionInputs {
+		Body: {
+			! read in parameters from sp_ProdSpecPerTech (text) into element parameters
+			!Define binary for Active technologies as set in the DB
+			ep_ProdSpec := 'Active';
+			bp_ProdActiveFlagPerTech(i_ProdTech)
+			:= val(sp_ProdSpecPerTech(EP_ProdSpec, i_ProdTech));
+			
+			s_ProdActiveTechs := {i_ProdTech|bp_ProdActiveFlagPerTech(i_ProdTech)};
+			!s_ProdActiveTechs := {i_ProdTech|val(sp_ProdSpecPerTech(EP_ProdSpec, i_ProdTech))};
+			
+			! Technology subsets Used for reporting in Table 125
+			ep_ProdSpec := 'ProdTechNG';
+			s_ProdNGTechs := {i_ProdTech|val(sp_ProdSpecPerTech(EP_ProdSpec, i_ProdTech))=1};
+			s_ProdNGSeqTechs := {i_ProdTech|val(sp_ProdSpecPerTech(EP_ProdSpec, i_ProdTech))=2};
+			
+			ep_ProdSpec := 'ProdTechCL';
+			s_ProdCLTechs := {i_ProdTech|val(sp_ProdSpecPerTech(EP_ProdSpec, i_ProdTech))=1};
+			s_ProdCLSeqTechs := {i_ProdTech|val(sp_ProdSpecPerTech(EP_ProdSpec, i_ProdTech))=2};
+			
+			ep_ProdSpec := 'ProdTechEL';
+			s_ProdELTechs := {i_ProdTech|val(sp_ProdSpecPerTech(EP_ProdSpec, i_ProdTech))};
+			
+			ep_ProdSpec := 'ProdTechBM';
+			s_ProdBMTechs := {i_ProdTech|val(sp_ProdSpecPerTech(EP_ProdSpec, i_ProdTech))=1};
+			s_ProdBMSeqTechs := {i_ProdTech|val(sp_ProdSpecPerTech(EP_ProdSpec, i_ProdTech))=2};
+			
+			! Year based inputs
+			ep_ProdSpec := 'Basis Year';
+			p_ProdBasisYearPerTech(i_ProdActiveTech)
+			:= val(sp_ProdSpecPerTech(EP_ProdSpec, i_ProdActiveTech));
+			
+			! Reference year for dollars
+			ep_ProdSpec := 'Reference Year';
+			ep_ProdReferenceYearPerTech(i_ProdActiveTech)
+			:= StringToElement(cal_Year,sp_ProdSpecPerTech(EP_ProdSpec, i_ProdActiveTech));
+			
+			ep_ProdSpec := 'Assumed start-up year';
+			ep_ProdStartYearPerTech(i_ProdActiveTech)
+			:= StringToElement(cal_Year,sp_ProdSpecPerTech(EP_ProdSpec, i_ProdActiveTech));
+			
+			! product design capacity in kg/day, need to convert
+			EP_ProdSpec := 'Plant Design Capacity';
+			p_ProdDesignCapacityPerTech(i_ProdActiveTech)
+			:= val(sp_ProdSpecPerTech(EP_ProdSpec, i_ProdActiveTech)) * p_DaysinYear;
+			
+			! CO2 parameters
+			ep_ProdSpec := 'Process CO2 produced after Capture';
+			p_ProdProcessCO2PerTech(i_ProdActiveTech)
+			:= val(sp_ProdSpecPerTech(EP_ProdSpec, i_ProdActiveTech));
+			
+			ep_ProdSpec := 'Fraction CO2 Captured';
+			p_ProdProcessCO2FracCapturedPerTech(i_ProdActiveTech)
+			:= val(sp_ProdSpecPerTech(EP_ProdSpec, i_ProdActiveTech));
+			
+			! Cost data
+			ep_ProdSpec := 'Total Capital Costs';
+			p_ProdCapitalCostsPerTech(i_ProdActiveTech)
+			:= val(sp_ProdSpecPerTech(EP_ProdSpec, i_ProdActiveTech))/$(p_ProdDesignCapacityPerTech(i_ProdActiveTech)/ 1e6);
+			
+			ep_ProdSpec := 'Total Fixed Operating Costs';
+			p_ProdFixedO_MCostsPerTech(i_ProdActiveTech)
+			:= val(sp_ProdSpecPerTech(EP_ProdSpec, i_ProdActiveTech))/$(p_ProdDesignCapacityPerTech(i_ProdActiveTech) /1e6);
+			
+			ep_ProdSpec := 'Total Variable Operating Costs';
+			p_ProdVariableO_MCostsPerTech(i_ProdActiveTech)
+			:= val(sp_ProdSpecPerTech(EP_ProdSpec, i_ProdActiveTech));
+			
+			ep_ProdSpec := 'Total Energy Costs (less product credits)';
+			p_ProdVariableO_MCostsPerTech(i_ProdActiveTech)
+			:= (p_ProdVariableO_MCostsPerTech(i_ProdActiveTech) - val(sp_ProdSpecPerTech(EP_ProdSpec, i_ProdActiveTech)))
+				/$(p_ProdDesignCapacityPerTech(i_ProdActiveTech)/1e6);
+			!Alpha and Beta are learning parameters to give percent cost reduction 
+			ep_ProdSpec := 'Alpha';
+			p_ProdLearningAlphaPerTech(i_ProdActiveTech)
+			:= val(sp_ProdSpecPerTech(EP_ProdSpec, i_ProdActiveTech));
+			
+			ep_ProdSpec := 'Beta';
+			p_ProdLearningBetaPerTech(i_ProdActiveTech)
+			:= val(sp_ProdSpecPerTech(EP_ProdSpec, i_ProdActiveTech));
+			
+			! Capacity Factor
+			ep_ProdSpec := 'Operating Capacity Factor';
+			p_ProdCapacityFactorPerTech(i_ProdActiveTech)
+			:= val(sp_ProdSpecPerTech(EP_ProdSpec, i_ProdActiveTech))/100;
+		}
+		Comment: "Process prduction tech specs";
+	}
+	Procedure pr_TransportationInputs {
+		Body: {
+			! Year based parameters for pipe
+			ep_PipeSpec := 'Reference Year';
+			ep_PipelineReferenceYearPerTech(i_TranTech)
+			:= StringToElement(cal_Year,p_PipeSpecPerTech(ep_PipeSpec, i_TranTech));
+			
+			ep_PipeSpec := 'Assumed start-up year';
+			ep_PipelineStartYearPerTech(i_TranTech)
+			:= StringToElement(cal_Year,p_PipeSpecPerTech(ep_PipeSpec, i_TranTech));
+			
+			! Nominal Flowrate
+			ep_PipeSpec := 'Peak Hydrogen Flowrate';
+			p_PipeFlowRate(i_TranTech)
+			:= p_PipeSpecPerTech(ep_PipeSpec, i_TranTech) *p_DaysinYear;
+			
+			! Cost data for pipe
+			ep_PipeSpec := 'Total O&M Costs';
+			p_PipeO_MCosts(i_TranTech)
+			:= p_PipeSpecPerTech(ep_PipeSpec, i_TranTech)/$(p_PipeFlowRate(i_TranTech) /1e6);
+			
+			ep_PipeSpec := 'Total Capital Investment';
+			p_PipeCapitalCosts(i_TranTech)
+			:= p_PipeSpecPerTech(ep_PipeSpec, i_TranTech)/$(p_PipeFlowRate(i_TranTech) /1e6);
+			
+			! Year based parameters for compressor
+			ep_PipeCompSpec := 'Reference Year';
+			ep_PipeCompressorReferenceYear(i_PipeCompTech)
+			:= StringToElement(cal_Year,p_PipeCompSpecPerTech(ep_PipeCompSpec, i_PipeCompTech));
+			
+			ep_PipeCompSpec := 'Assumed start-up year';
+			ep_PipeCompressorStartYear(i_PipeCompTech)
+			:= StringToElement(cal_Year,p_PipeCompSpecPerTech(ep_PipeCompSpec, i_PipeCompTech));
+			
+			! Nominal Flowrate
+			ep_PipeCompSpec := 'Net Hydrogen Dispensed at Stations';
+			p_PipeCompressorFlowRate(i_PipeCompTech)
+			:= p_PipeCompSpecPerTech(ep_PipeCompSpec, i_PipeCompTech);
+			
+			! Cost data for compressor
+			ep_PipeCompSpec := 'Electricity Costs';
+			p_PipeCompressorVariableO_MCosts(i_PipeCompTech)
+			:= p_PipeCompSpecPerTech(ep_PipeCompSpec, i_PipeCompTech)*1e6/$p_PipeCompressorFlowRate(i_PipeCompTech);
+			
+			ep_PipeCompSpec := 'Total O&M Costs';
+			p_PipeCompressorFixedO_MCosts(i_PipeCompTech)
+			:= p_PipeCompSpecPerTech(ep_PipeCompSpec, i_PipeCompTech)*1e6/$p_PipeCompressorFlowRate(i_PipeCompTech) - p_PipeCompressorVariableO_MCosts(i_PipeCompTech);
+			
+			ep_PipeCompSpec := 'Total Capital Costs';
+			p_PipeCompressorCapitalCosts(i_PipeCompTech)
+			:= p_PipeCompSpecPerTech(ep_PipeCompSpec, i_PipeCompTech)*1e6/$p_PipeCompressorFlowRate(i_PipeCompTech);
+			
+			ep_PipeCompSpec := 'Electricity Consumption';
+			p_PipeCompressorPowerConsumption(i_PipeCompTech,'Electricity')
+			:= p_PipeCompSpecPerTech(ep_PipeCompSpec, i_PipeCompTech)/1000/$p_PipeCompressorFlowRate(i_PipeCompTech);
+		}
+		Comment: "Process transportation tech specs";
+	}
+	Procedure pr_StorageInputs {
+		Body: {
+			! Convert storage links
+			p_SeasonStorageMap(i_SeasonOpt, j_SeasonOpt) := val(sp_SeasonStorageMap(i_SeasonOpt, j_SeasonOpt));
+			p_SeasonStorageMap(i_SeasonOpt, i_SeasonOpt) := 0;
+			
+			! Year based inputs
+			ep_StorSpec := 'Reference Year';
+			ep_StorageReferenceYearPerTech(i_StorageTech)
+			:= StringToElement(cal_Year,p_StorSpecPerTech(ep_StorSpec, i_StorageTech));
+			
+			ep_StorSpec := 'Assumed start-up year';
+			ep_StorageStartYearPerTech(i_StorageTech)
+			:= StringToElement(cal_Year,p_StorSpecPerTech(ep_StorSpec, i_StorageTech));
+			
+			! Design capacity
+			ep_StorSpec := 'Design Cavern Capacity';
+			p_StorageDesignCapacity(i_StorageTech)
+			:= p_StorSpecPerTech(ep_StorSpec, i_StorageTech);
+			
+			! Cost data
+			ep_StorSpec := 'Electricity Costs';
+			p_StorageVariableO_MCosts(i_StorageTech)
+			:= p_StorSpecPerTech(ep_StorSpec, i_StorageTech)*1e6/$p_StorageDesignCapacity(i_StorageTech);
+			
+			ep_StorSpec := 'Total O&M Costs';
+			p_StorageFixedO_MCosts(i_StorageTech)
+			:= p_StorSpecPerTech(ep_StorSpec, i_StorageTech)*1e6/$p_StorageDesignCapacity(i_StorageTech) - p_StorageVariableO_MCosts(i_StorageTech);
+			
+			ep_StorSpec := 'Total Capital Costs';
+			p_StorageCapitalCosts(i_StorageTech)
+			:= p_StorSpecPerTech(ep_StorSpec, i_StorageTech)*1e6/$p_StorageDesignCapacity(i_StorageTech);
+			
+			ep_StorSpec := 'Electricity Consumption';
+			p_StorageCompressorPowerConsumption(i_StorageTech,'Electricity')
+			:= p_StorSpecPerTech(ep_StorSpec, i_StorageTech)/1000/$p_StorageDesignCapacity(i_StorageTech);
+		}
+	}
+	Procedure pr_ProcessInputFiles {
+		Body: {
+			! Link NEMS years to Calendar
+			for i_NumYear do
+			ep_calYear := StringToElement(i_calYear,val(i_NumYear) + 1989);
+			!bp_NUMYRtoCal(i_NumYear, ep_calYear) := 1;
+			ep_NUMYRtoCal(ep_calYear) := i_NumYear;
+			!ep_CaltoNumYear(i_NumYear) := ep_calYear;
+			endfor;
+			
+			! Link GDP years to calendar
+			empty bp_GDPYRtoCal;
+			for i_GDPYear do
+			ep_calYear := StringToElement(i_calYear,val(i_GDPYear) + 1986);
+			!bp_GDPYRtoCal(i_GDPYear, ep_calYear) := 1;
+			ep_GDPYRtoCal(ep_calYear) := i_GDPYear;
+			endfor;
+			
+			! Extend GDP deflator and emissions tax beyond 2050
+			p_GDPDeflator(i_calYear) := MACOUT_MC_JPGDP(ep_GDPYRtoCal(i_calYear));
+			p_AverageGDPGrowth := average(i_calYear | (p_GDPDeflator(i_calYear) and p_GDPDeflator(i_calYear-1)), p_GDPDeflator(i_calYear)/$p_GDPDeflator(i_calYear-1));
+			p_GDPDeflator(i_calYear)|(i_calYear > '2050') := p_GDPDeflator('2050')*power(p_AverageGDPGrowth,ord(i_calYear)-64);
+			! extend emissions tax to 2080
+			p_Emission_Tax(i_calYear) := EMISSION_EMETAX('1',ep_NUMYRtoCal(i_calYear));
+			p_Emission_Tax(i_calYear)|(i_calYear > '2050') := p_Emission_Tax('2050');
+			
+			! Process transport links, census opt is 1-9 i.e. only active census regions for the optimization
+			s_CensusDivisionsOpt := {i_CensusDivision | (i_CensusDivision <> '11' and i_CensusDivision <> '10' ) };
+			p_CenDivTransportMap(i_CensusDivisionOpt, j_CensusDivisionOpt) := val(sp_CenDivTransportMap(i_CensusDivisionOpt, j_CensusDivisionOpt));
+			
+			block
+			!USE KWHR PRICE SINCE CONVERSION IN kwhr
+			! set up p_FuelPrice
+			ep_Fuel :='Electricity';
+				p_FuelPrice(ep_Fuel, i_CensusDivisionOpt, i_calYear) := EUSPRC_PELINP(i_CensusDivisionOpt,ep_NUMYRtoCal(i_calYear))
+				 / p_KWhToMMBTU;
+			ep_Fuel :='Natural Gas';
+				p_FuelPrice(ep_Fuel, i_CensusDivisionOpt, i_calYear) := AMPBLK_PNGIN(i_CensusDivisionOpt,ep_NUMYRtoCal(i_calYear));
+			ep_Fuel :='Biomass'; ! this should be ag type
+			ep_BiomassType := '4';  
+				p_FuelPrice(ep_Fuel, i_CensusDivisionOpt, i_calYear) := WRENEW_PBMH2CL(ep_BiomassType,ep_CensustoCoalRegion(i_CensusDivisionOpt),ep_NUMYRtoCal(i_calYear));
+			!	p_FuelPrice(ep_Fuel, i_CensusDivisionOpt, i_calYear) := UEFDOUT_UPRWDCR(i_CensusDivisionOpt,ep_NUMYRtoCal(i_calYear));
+			ep_Fuel :='Coal';
+				p_FuelPrice(ep_Fuel, i_CensusDivisionOpt, i_calYear) := AMPBLK_PCLIN(i_CensusDivisionOpt,ep_NUMYRtoCal(i_calYear));
+				!Add error checking in case NEMS doesn't output any of these
+			
+			onerror ep_err do 
+				!If we want to store a custom error message
+				sp_ErrorMessage := "Hardcoded fuel types do not match with the database, check procedure pr_ProcessInputFiles";
+				!If we want to store the AIMMS default message
+				!sp_ErrorMessage := errh::Message( ep_err );
+			
+				pr_ErrorOutput(ep_err);
+			
+			endblock;
+			!extend fuel price past 2050. Make nominal
+			p_FuelPrice(i_Fuel, i_CensusDivisionOpt, i_calYear) | (i_calYear > '2050') := p_FuelPrice(i_Fuel, i_CensusDivisionOpt, '2050');
+			p_FuelPrice(i_Fuel, i_CensusDivisionOpt, i_calYear) := p_FuelPrice(i_Fuel, i_CensusDivisionOpt, i_calYear) * p_GDPDeflator(i_calYear);
+			
+			! Process emissions factors from NEMS
+			ep_calYear := '2050';
+			ep_Fuel :='Natural Gas';
+			p_EmissionFactors(ep_Fuel,i_calYear) := EMEBLK_ENGHM(ep_NUMYRtoCal(i_calYear)); ! kT/trill btus
+			
+			! This needs to be positive, as we subtract from the fuel price.
+			ep_Fuel :='Biomass';
+			p_EmissionFactors(ep_Fuel,i_calYear) := -1.  * EMEBLK_EBMHM(ep_NUMYRtoCal(i_calYear)); ! kT/trill btus
+			ep_Fuel :='Coal';
+			p_EmissionFactors(ep_Fuel,i_calYear) := EMEBLK_ECLHM(ep_NUMYRtoCal(i_calYear)); ! kT/trill btus
+			!extend past 2050
+			p_EmissionFactors(i_Fuel,i_calYear) | (i_calYear > '2050') := p_EmissionFactors(i_Fuel,'2050');
+			
+			! Since tnscosts are by emm region, create for census
+			for i_CensusDivisionOpt do
+			p_TnSCosts(i_CensusDivisionOpt, i_calYear) 
+			:= average(i_EMMFuelRegion | ep_FuelRegionCensusRegionMap(i_EMMFuelRegion)=i_CensusDivisionOpt, UECPOUT_TNS_COSTS(i_EMMFuelRegion, ep_NUMYRtoCal(i_calYear)));
+			endfor;
+			
+			! Financial calculations
+			!sp500rate(t)      = sum(MNUMYR$(MNUMYR_t_emm(MNUMYR,t) and (MACOUT_MC_SP500(MNUMYR-1)>0)),
+			!                      (MACOUT_MC_SP500(MNUMYR)/MACOUT_MC_SP500(MNUMYR-1)) - 1 ) ;
+			!sp500rate('2012') = 0.0872 ;
+			
+			! Hard-coded return on market rate used
+			p_EMRP      := 0.08 ;
+			
+			! Average 10-Yr Treasury bond rate over the model time horizon
+			p_RFR := sum(i_NumYear, MACOUT_MC_RMGBLUSREAL(i_NumYear))/card(s_NEMSYears)/100;
+			
+			p_beta := 2;
+			p_EquityRate := p_RFR + p_beta * (p_EMRP - p_RFR);
+			p_CRF := p_EquityRate / $(1 - 1/power(1 + p_EquityRate,30));
+			
+			/*
+			! Average Corporate Baa bond rate over the model time horizon
+			DebtRate = sum((MNUMYR,t)$MNUMYR_t_emm(MNUMYR,t), MACOUT_MC_RMCORPBAA(MNUMYR)) / card(t) / 100 ;
+			
+			*/
+		}
+		Comment: "Process NEMS input data for fuels, prices and financials";
+	}
+	Procedure pr_ErrorOutput {
+		Arguments: (_ep_err);
+		Body: {
+			
+			! Store the error message itself
+			setelementadd(s_errors,Ep_ErrorSet, formatstring("%s",1 + card( s_errors )));
+			ep_error := last( s_errors );
+			sp_errorMessages( ep_error, ep_CurrentOptYear, ep_CurrentIteration) := sp_ErrorMessage ;
+			ep_errorSeverity( ep_error, ep_CurrentOptYear, ep_CurrentIteration) := errh::Severity( ep_err );
+			sp_errorMoment( ep_error, ep_CurrentOptYear, ep_CurrentIteration) := 
+				errh::CreationTime(ep_err,"%c%y-%m-%d %H:%M:%S");
+			
+			! Record the entire stack of error positions
+			p_errStackPos := 1 ;
+			p_errStackHeight := min(255,errh::NumberOfLocations(ep_err));
+			
+			while p_errStackPos <= p_errStackHeight do
+			
+				_ep_stackPos := p_errStackPos;
+				ep_errorNodes(ep_error,_ep_stackPos, ep_CurrentOptYear, ep_CurrentIteration) := errh::Node(ep_err,_ep_stackPos);
+				ep_errorAttributes(ep_error,_ep_stackPos, ep_CurrentOptYear, ep_CurrentIteration) := errh::attribute(ep_err,_ep_stackPos);
+				p_errorLines(ep_error,_ep_stackPos, ep_CurrentOptYear, ep_CurrentIteration) := errh::Line(ep_err,_ep_stackPos);
+				p_errStackPos += 1 ;
+			
+			
+			endwhile ;
+		}
+		ElementParameter _ep_err {
+			Range: errh::PendingErrors;
+			Property: Input;
+		}
+		ElementParameter _ep_stackPos {
+			Range: s_ErrorPath;
+		}
+	}
+	DeclarationSection Ammonia_Data {
+		Set s_ActiveNH3Technologies {
+			SubsetOf: s_NH3Techs;
+			Index: i_ActiveNH3Technology;
+		}
+		ElementParameter ep_AmmoniaReferenceYearPerTech {
+			IndexDomain: i_NH3Tech;
+			Range: cal_Year;
+		}
+		ElementParameter ep_AmmoniaStartYearPerTech {
+			IndexDomain: i_NH3Tech;
+			Range: cal_Year;
+		}
+		Parameter p_AmmoniaBasisYearPerTech {
+			IndexDomain: i_NH3Tech;
+		}
+		Parameter p_AmmoniaCapitalCostsPerTech {
+			IndexDomain: i_NH3Tech;
+			Comment: "Units: (Millions of 2018$ * day) /  (kTon NH3 * Year)";
+		}
+		Parameter p_AmmoniaDesignCapacityPerTech {
+			IndexDomain: i_NH3Tech;
+			Comment: "Units: kg NH3/Year";
+		}
+		Parameter p_AmmoniaFixedO_MCostsPerTech {
+			IndexDomain: i_NH3Tech;
+			Comment: "Units: (Millions of 2018$ * day) /  (kTon NH3 * Year)";
+		}
+		Parameter p_AmmoniaVariableO_MCostsPerTech {
+			IndexDomain: i_NH3Tech;
+			Comment: "Units: (Millions of 2018$ * day) /  (kTon NH3 * Year)";
+		}
+		Parameter p_AmmoniaFuelConsumptionPerTech {
+			IndexDomain: (i_Fuel,i_NH3Tech);
+			Comment: {
+				"Units
+				Natural Gas: MMBtu/kg H2
+				Biomass: kg/kg H2
+				Coal: kg/kg H2
+				Electricity: kWh/kg H2
+				Ethanol: gal/kg of H2
+				Hydrogen: MMBtu/kg NH3"
+			}
+		}
+	}
+	DeclarationSection Financial_Data {
+		Parameter bp_GDPYRtoCal {
+			IndexDomain: (i_GDPYear,i_calYear);
+			Range: binary;
+		}
+		ElementParameter ep_GDPYRtoCal {
+			IndexDomain: i_calYear;
+			Range: MNUMY3;
+		}
+		Parameter p_GDPDeflator {
+			IndexDomain: i_calYear;
+		}
+		Parameter p_AverageGDPGrowth;
+		Parameter p_Emission_Tax {
+			IndexDomain: i_calYear;
+		}
+		Parameter p_EMRP;
+		Parameter p_RFR;
+		Parameter p_beta;
+		Parameter p_EquityRate;
+		Parameter p_CRF;
+	}
+	DeclarationSection Production_data {
+		Set s_ProdActiveTechs {
+			SubsetOf: s_ProdTechs;
+			Index: i_ProdActiveTech;
+		}
+		Set s_ProdNGTechs {
+			SubsetOf: s_ProdTechs;
+		}
+		Set s_ProdNGSeqTechs {
+			SubsetOf: s_ProdTechs;
+		}
+		Set s_ProdCLTechs {
+			SubsetOf: s_ProdTechs;
+		}
+		Set s_ProdCLSeqTechs {
+			SubsetOf: s_ProdTechs;
+		}
+		Set s_ProdELTechs {
+			SubsetOf: s_ProdTechs;
+		}
+		Set s_ProdBMTechs {
+			SubsetOf: s_ProdTechs;
+		}
+		Set s_ProdBMSeqTechs {
+			SubsetOf: s_ProdTechs;
+		}
+		Parameter bp_ProdActiveFlagPerTech {
+			IndexDomain: (i_ProdTech);
+			Range: binary;
+		}
+		ElementParameter ep_ProdStartYearPerTech {
+			IndexDomain: i_ProdActiveTech;
+			Range: cal_Year;
+		}
+		ElementParameter ep_ProdReferenceYearPerTech {
+			IndexDomain: i_ProdActiveTech;
+			Range: cal_Year;
+		}
+		Parameter p_ProdBasisYearPerTech {
+			IndexDomain: i_ProdActiveTech;
+		}
+		Parameter p_ProdDesignCapacityPerTech {
+			IndexDomain: i_ProdActiveTech;
+		}
+		Parameter p_ProdCapitalCostsPerTech {
+			IndexDomain: i_ProdActiveTech;
+		}
+		Parameter p_ProdFixedO_MCostsPerTech {
+			IndexDomain: i_ProdActiveTech;
+		}
+		Parameter p_ProdVariableO_MCostsPerTech {
+			IndexDomain: i_ProdActiveTech;
+		}
+		Parameter p_ProdFuelConsumptionPerTech {
+			IndexDomain: (i_Fuel,i_ProdActiveTech);
+		}
+		Parameter p_TotalFuelEmissionsPerTech {
+			IndexDomain: (i_ProdActiveTech,i_calYear);
+		}
+		Parameter p_ProdProcessCO2PerTech {
+			IndexDomain: i_ProdActiveTech;
+		}
+		Parameter p_ProdProcessCO2FracCapturedPerTech {
+			IndexDomain: i_ProdActiveTech;
+		}
+		Parameter p_ProdLearningAlphaPerTech {
+			IndexDomain: i_ProdActiveTech;
+		}
+		Parameter p_ProdLearningBetaPerTech {
+			IndexDomain: i_ProdActiveTech;
+		}
+		Parameter p_ProdCapacityFactorPerTech {
+			IndexDomain: i_ProdActiveTech;
+		}
+		Parameter p_AdjustedFuelPricebyTech {
+			IndexDomain: (i_Fuel,i_ProdTech,i_CensusDivision,i_calYear);
+		}
+	}
+	DeclarationSection Transportation_data {
+		ElementParameter ep_PipelineStartYearPerTech {
+			IndexDomain: i_TranTech;
+			Range: cal_Year;
+		}
+		ElementParameter ep_PipelineReferenceYearPerTech {
+			IndexDomain: i_TranTech;
+			Range: cal_Year;
+		}
+		Parameter p_PipeFlowRate {
+			IndexDomain: i_TranTech;
+		}
+		Parameter p_PipeO_MCosts {
+			IndexDomain: i_TranTech;
+		}
+		Parameter p_PipeCapitalCosts {
+			IndexDomain: i_TranTech;
+		}
+		ElementParameter ep_PipeCompressorStartYear {
+			IndexDomain: i_PipeCompTech;
+			Range: cal_Year;
+		}
+		ElementParameter ep_PipeCompressorReferenceYear {
+			IndexDomain: i_PipeCompTech;
+			Range: cal_Year;
+		}
+		Parameter p_PipeCompressorFlowRate {
+			IndexDomain: i_PipeCompTech;
+		}
+		Parameter p_PipeCompressorFixedO_MCosts {
+			IndexDomain: i_PipeCompTech;
+		}
+		Parameter p_PipeCompressorVariableO_MCosts {
+			IndexDomain: i_PipeCompTech;
+		}
+		Parameter p_PipeCompressorCapitalCosts {
+			IndexDomain: i_PipeCompTech;
+		}
+		Parameter p_PipeCompressorPowerConsumption {
+			IndexDomain: (i_PipeCompTech,i_Fuel);
+		}
+	}
+	DeclarationSection Storage_Data {
+		ElementParameter ep_StorageStartYearPerTech {
+			IndexDomain: i_StorageTech;
+			Range: cal_Year;
+		}
+		ElementParameter ep_StorageReferenceYearPerTech {
+			IndexDomain: i_StorageTech;
+			Range: cal_Year;
+		}
+		Parameter p_StorageDesignCapacity {
+			IndexDomain: i_StorageTech;
+		}
+		Parameter p_StorageFixedO_MCosts {
+			IndexDomain: i_StorageTech;
+		}
+		Parameter p_StorageVariableO_MCosts {
+			IndexDomain: i_StorageTech;
+		}
+		Parameter p_StorageCapitalCosts {
+			IndexDomain: i_StorageTech;
+		}
+		Parameter p_StorageCompressorPowerConsumption {
+			IndexDomain: (i_StorageTech,i_Fuel);
+		}
+	}
+	DeclarationSection Input_Files {
+		Set s_CensusDivisionsOpt {
+			SubsetOf: MNUMCR;
+			Index: i_CensusDivisionOpt, j_CensusDivisionOpt, i_CnDvOpt;
+		}
+		ElementParameter ep_NUMYRtoCal {
+			IndexDomain: i_calYear;
+			Range: MNUMYR;
+		}
+		ElementParameter ep_FuelType {
+			Range: s_Fuels;
+		}
+		Parameter p_FuelPrice {
+			IndexDomain: (i_Fuel,i_CensusDivision,i_CalYear);
+			Comment: {
+				"Units
+				Natural Gas: 
+				Biomass: 
+				Coal:
+				Electricity: 
+				Ethanol: 
+				Hydrogen:"
+			}
+		}
+		Parameter p_EmissionFactors {
+			IndexDomain: (i_Fuel,i_calYear);
+		}
+		Parameter p_TnSCosts {
+			IndexDomain: (i_CensusDivision,i_calYear);
+		}
+		ElementParameter ep_PTCStartYear {
+			Range: cal_Year;
+		}
+		ElementParameter ep_ITCStartYear {
+			Range: cal_Year;
+		}
+		Parameter p_45V_SYR {
+			Range: nonnegative;
+		}
+		Parameter p_45V_LYR_NEW {
+			Range: nonnegative;
+		}
+		Parameter p_45V_DURATION {
+			Range: nonnegative;
+		}
+		Parameter p_45V_Multiplier {
+			Range: nonnegative;
+		}
+		Parameter p_MarketShareON;
+		Parameter p_MarketShareCutoff;
+		Parameter p_MarketShareAlpha;
+		Parameter p_HeatRateNuclear;
+		Parameter p_RenewablesShareLimit;
+		Parameter p_ProductionCapacityReserve {
+			InitialData: 0.03;
+		}
+		Parameter p_NuclearShareLimit;
+		Parameter p_ProductionGrowthLimit;
+	}
+	DeclarationSection Unused_Data {
+		ElementParameter ep_CaltoNumYear {
+			IndexDomain: i_NumYear;
+			Range: cal_Year;
+		}
+		Parameter bp_NUMYRtoCal {
+			IndexDomain: (i_NumYear,i_calYear);
+			Range: binary;
+		}
+	}
+}

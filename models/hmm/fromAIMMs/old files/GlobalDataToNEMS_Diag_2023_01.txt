@@ -1,0 +1,116 @@
+﻿    NCNTRL_CURCALYR(1) := 2023 ;
+ 
+    NCNTRL_CURITR(1) := 1 ;
+ 
+    ModelYear := 2023 ;
+ 
+    ep_CurrentOptYear := '2023' ;
+ 
+    s_ThirdPeriodYears := data
+    { 2025, 2026, 2027, 2028, 2029, 2030, 2031, 2032, 2033, 2034, 2035, 2036, 2037, 2038, 2039, 2040, 2041, 2042, 2043, 2044, 2045,
+      2046, 2047, 2048, 2049, 2050, 2051, 2052 } ;
+ 
+! Index:
+!    i_calYear
+!        range :  cal_Year ;
+ 
+Composite table:
+    i_PAT                                   i_CensusDivisionOpt  i_calYear    p_PUC(i_PAT,i_CensusDivisionOpt,i_calYear)
+!   --------------------------------------  -------------------  ---------    ------------------------------------------
+    'Solid Oxide electrolysis  Nuc'                           6  2024                                             11.791
+    'Solid Oxide electrolysis  Nuc'                           6  2025                                             11.791
+    'Solid Oxide electrolysis  Nuc'                           6  2026                                             11.791
+    'Solid Oxide electrolysis  Nuc'                           6  2027                                             11.791
+    'Solid Oxide electrolysis  Nuc'                           6  2028                                             11.791
+    'Solid Oxide electrolysis  Nuc'                           6  2029                                             11.791
+    'Solid Oxide electrolysis  Nuc'                           6  2030                                             11.791
+    'Solid Oxide electrolysis  Nuc'                           6  2031                                             11.791
+    'Solid Oxide electrolysis  Nuc'                           6  2032                                             11.791
+    'Solid Oxide electrolysis  Nuc'                           6  2033                                             11.791
+    'Solid Oxide electrolysis  Nuc'                           6  2034                                             11.791
+    'Solid Oxide electrolysis  Nuc'                           6  2035                                             11.791
+    'Solid Oxide electrolysis  Nuc'                           6  2036                                             11.791
+    'Solid Oxide electrolysis  Nuc'                           6  2037                                             11.791
+    'Solid Oxide electrolysis  Nuc'                           6  2038                                             11.791
+    'Solid Oxide electrolysis  Nuc'                           6  2039                                             11.791
+    'Solid Oxide electrolysis  Nuc'                           6  2040                                             11.791
+    'Solid Oxide electrolysis  Nuc'                           6  2041                                             11.791
+    'Solid Oxide electrolysis  Nuc'                           6  2042                                             11.791
+    'Solid Oxide electrolysis  Nuc'                           6  2043                                             11.791
+    'Solid Oxide electrolysis  Nuc'                           6  2044                                             11.791
+    'Solid Oxide electrolysis  Nuc'                           6  2045                                             11.791
+    'Solid Oxide electrolysis  Nuc'                           6  2046                                             11.791
+    'Solid Oxide electrolysis  Nuc'                           6  2047                                             11.791
+    'Solid Oxide electrolysis  Nuc'                           6  2048                                             11.791
+    'Solid Oxide electrolysis  Nuc'                           6  2049                                             11.791
+    'Solid Oxide electrolysis  Nuc'                           6  2050                                             11.791
+    'Solid Oxide electrolysis  Nuc'                           6  2051                                             11.791
+    'Solid Oxide electrolysis  Nuc'                           6  2052                                             11.791
+    'PEM electrolysis  Renewables'                            6  2024                                             11.791
+    'PEM electrolysis  Renewables'                            6  2025                                             11.791
+    'PEM electrolysis  Renewables'                            6  2026                                             11.791
+    'PEM electrolysis  Renewables'                            6  2027                                             11.791
+    'PEM electrolysis  Renewables'                            6  2028                                             11.791
+    'PEM electrolysis  Renewables'                            6  2029                                             11.791
+    'PEM electrolysis  Renewables'                            6  2030                                             11.791
+    'PEM electrolysis  Renewables'                            6  2031                                             11.791
+    'PEM electrolysis  Renewables'                            6  2032                                             11.791
+    'PEM electrolysis  Renewables'                            6  2033                                             11.791
+    'PEM electrolysis  Renewables'                            6  2034                                             11.791
+    'PEM electrolysis  Renewables'                            6  2035                                             11.791
+    'PEM electrolysis  Renewables'                            6  2036                                             11.791
+    'PEM electrolysis  Renewables'                            6  2037                                             11.791
+    'PEM electrolysis  Renewables'                            6  2038                                             11.791
+    'PEM electrolysis  Renewables'                            6  2039                                             11.791
+    'PEM electrolysis  Renewables'                            6  2040                                             11.791
+    'PEM electrolysis  Renewables'                            6  2041                                             11.791
+    'PEM electrolysis  Renewables'                            6  2042                                             11.791
+    'PEM electrolysis  Renewables'                            6  2043                                             11.791
+    'PEM electrolysis  Renewables'                            6  2044                                             11.791
+    'PEM electrolysis  Renewables'                            6  2045                                             11.791
+    'PEM electrolysis  Renewables'                            6  2046                                             11.791
+    'PEM electrolysis  Renewables'                            6  2047                                             11.791
+    'PEM electrolysis  Renewables'                            6  2048                                             11.791
+    'PEM electrolysis  Renewables'                            6  2049                                             11.791
+    'PEM electrolysis  Renewables'                            6  2050                                             11.791
+    'PEM electrolysis  Renewables'                            6  2051                                             11.791
+    'PEM electrolysis  Renewables'                            6  2052                                             11.791
+    'CL BM Gasification with CCUS'                            6  2024                                              9.260
+    'CL BM Gasification with CCUS'                            6  2025                                              9.260
+    'CL BM Gasification with CCUS'                            6  2026                                              9.260
+    'CL BM Gasification with CCUS'                            6  2027                                              9.260
+    'CL BM Gasification with CCUS'                            6  2028                                              9.260
+    'CL BM Gasification with CCUS'                            6  2029                                              9.260
+    'CL BM Gasification with CCUS'                            6  2030                                              9.260
+    'CL BM Gasification with CCUS'                            6  2031                                              9.260
+    'CL BM Gasification with CCUS'                            6  2032                                              9.260
+    'CL BM Gasification with CCUS'                            6  2033                                              9.260
+    'CL BM Gasification with CCUS'                            6  2034                                              9.260
+    'CL BM Gasification with CCUS'                            6  2035                                              9.260
+    'CL BM Gasification with CCUS'                            6  2036                                              9.260
+    'CL BM Gasification with CCUS'                            6  2037                                              9.260
+    'CL BM Gasification with CCUS'                            6  2038                                              9.260
+    'CL BM Gasification with CCUS'                            6  2039                                              9.260
+    'CL BM Gasification with CCUS'                            6  2040                                              9.260
+    'CL BM Gasification with CCUS'                            6  2041                                              9.260
+    'CL BM Gasification with CCUS'                            6  2042                                              9.260
+    'CL BM Gasification with CCUS'                            6  2043                                              9.260
+    'CL BM Gasification with CCUS'                            6  2044                                              9.260
+    'CL BM Gasification with CCUS'                            6  2045                                              9.260
+    'CL BM Gasification with CCUS'                            6  2046                                              9.260
+    'CL BM Gasification with CCUS'                            6  2047                                              9.260
+    'CL BM Gasification with CCUS'                            6  2048                                              9.260
+    'CL BM Gasification with CCUS'                            6  2049                                              9.260
+    'CL BM Gasification with CCUS'                            6  2050                                              9.260
+    'CL BM Gasification with CCUS'                            6  2051                                              9.260
+    'CL BM Gasification with CCUS'                            6  2052                                              9.260
+    ;
+ 
+Composite table:
+    i_NEMSYear  i_CensusDivision    HMMBLK_NH3EXPORT(i_NEMSYear,i_CensusDivision)
+!   ----------  ----------------    ---------------------------------------------
+    ;
+ 
+    v_TotalCost       := 931.965 ;
+    v_TotalCost.basic := 'Basic' ;
+ 

@@ -1,0 +1,167 @@
+## ams_version=1.0
+
+Section S1_Data {
+	Section Calendars {
+		SourceFile: "Calendars.ams";
+		Comment: {
+			"# Calendars
+			
+			Default calendars for years, months, weeks and days."
+		}
+	}
+	Section Units {
+		SourceFile: "Units.ams";
+		Comment: {
+			"A note regarding units:
+			According to Marcel Hunting (AIMMS), in some rare cases, the use of units in mathematical
+			programs results in unexpected problems. It is unclear what the exact cause of these problems
+			is, which is why Marcel Hunting never uses units in his models."
+		}
+	}
+	Section Constants {
+		SourceFile: "Constants.ams";
+	}
+	Section Horizons {
+		Procedure pr_InitializeHorizon {
+			Body: {
+				ep_FirstMonthInPlanningInterval := First(cal_Month);
+				
+				pr_CreateMonthPeriodsTimeTable;
+			}
+		}
+		Procedure pr_CreateMonthPeriodsTimeTable {
+			Body: {
+				CreateTimeTable( TimeTable         : ep_MonthInPeriod(h),
+				                 CurrentTimeSlot   : ep_FirstMonthInPlanningInterval,
+				                 CurrentPeriod     : ep_FirstPlanningPeriod,
+				                 PeriodLength      : p_NumberOfMonthsInPlanning(h),
+				                 LengthDominates   : p_LengthDominated(h),
+				                 InactiveTimeSlots : s_InactiveMonths,
+				                 DelimiterSlots    :  s_NewPeriodStarts) ;
+			}
+		}
+		DeclarationSection Horizon_Declaration {
+			Horizon h_Periods {
+				Text: "Periods";
+				Index: h;
+				CurrentPeriod: ep_FirstPlanningPeriod;
+				IntervalLength: p_NumberOfPeriodsInPlanning;
+				Definition: {
+					{'past01'..'past12'} + ElementRange( 1,p_NumberOfPeriods, prefix: "period-")
+				}
+			}
+			Set s_MonthPeriodsTimeTable {
+				IndexDomain: h;
+				SubsetOf: cal_Month;
+				Text: "Mapping of Months to Periods";
+			}
+			Set s_InactiveMonths {
+				SubsetOf: cal_Month;
+				Definition: {
+					{}
+				}
+			}
+			Set s_NewPeriodStarts {
+				SubsetOf: cal_Month;
+				Definition: {
+					{ep_FirstHistoricalMonth..ep_YearToMonth(ep_LastModelYear) +11}
+				}
+			}
+			Set s_FirstHistoricalMonth {
+				SubsetOf: cal_Month;
+				Definition: first(cal_Month);
+			}
+			ElementParameter ep_FirstPlanningPeriod {
+				Range: h_Periods;
+				Definition: 'period-001';
+			}
+			ElementParameter ep_FirstMonthInPlanningInterval {
+				Range: cal_Month;
+			}
+			ElementParameter ep_MonthInPeriod {
+				IndexDomain: h;
+				Range: cal_Month;
+			}
+			ElementParameter ep_YearToMonth {
+				IndexDomain: i_calYear;
+				Range: cal_Month;
+				Definition: first( i_calMonth| TimeSlotCharacteristic(i_calMonth, 'year') = TimeSlotCharacteristic(i_calYear, 'year') );
+			}
+			ElementParameter ep_LastModelYear {
+				Range: cal_Year;
+				Definition: '2050';
+			}
+			ElementParameter ep_FirstHistoricalMonth {
+				Range: cal_Month;
+				Definition: first(i_calMonth);
+			}
+			Parameter p_LengthDominated {
+				IndexDomain: h;
+			}
+			Parameter p_NumberOfPeriods {
+				InitialData: 396;
+			}
+			Parameter p_NumberOfPeriodsInPlanning {
+				Text: "Lenght of periods";
+				InitialData: 12;
+			}
+			Parameter p_NumberOfMonthsInPlanning {
+				IndexDomain: h;
+				Text: "Lenght of periods";
+				Definition: 1;
+			}
+			Parameter p_InitialNumberOfPeriodsInPlanning;
+		}
+	}
+	Section Error_Handling {
+		DeclarationSection Error_Handling_Declaration {
+			Set s_ErrorPath {
+				SubsetOf: Integers;
+				Index: i_errorPath;
+				Definition: ElementRange(1,255);
+			}
+			ElementParameter ep_err {
+				Range: errh::PendingErrors;
+			}
+			Set s_errors {
+				Index: i_error;
+				Parameter: Ep_ErrorSet;
+			}
+			ElementParameter ep_error {
+				Range: s_errors;
+				InitialData: '';
+			}
+			StringParameter sp_errorMessages {
+				IndexDomain: (i_error, i_calYear, i_IterationNumber);
+			}
+			ElementParameter ep_errorSeverity {
+				IndexDomain: (i_error, i_calYear, i_IterationNumber);
+				Range: errh::AllErrorSeverities;
+			}
+			ElementParameter ep_focusError {
+				Range: s_errors;
+				InitialData: '';
+			}
+			StringParameter sp_ErrorMessage;
+			StringParameter sp_errorMoment {
+				IndexDomain: (i_error, i_calYear, i_IterationNumber);
+			}
+			Parameter p_errStackPos;
+			Parameter p_ErrStackHeight;
+			ElementParameter ep_stackPos {
+				Range: s_ErrorPath;
+			}
+			ElementParameter ep_ErrorNodes {
+				IndexDomain: (i_error,i_errorPath, i_calYear, i_IterationNumber);
+				Range: AllSymbols;
+			}
+			ElementParameter ep_errorAttributes {
+				IndexDomain: (i_error,i_errorPath, i_calYear, i_IterationNumber);
+				Range: AllAttributeNames;
+			}
+			Parameter p_errorLines {
+				IndexDomain: (i_error,i_errorPath, i_calYear, i_IterationNumber);
+			}
+		}
+	}
+}

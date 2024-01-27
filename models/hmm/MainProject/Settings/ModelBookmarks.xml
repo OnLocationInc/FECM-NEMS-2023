@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<ModelBookmarks TimeStamp="2022-10-03 16:51:36">
+	<Category Name="TODO">
+		<Bookmark Node="pr_Optimize" Attribute="body" LineNumber="7">
+			<TextLine>!if mp_HMM.ProgramStatus &lt;&gt; 'Optimal' then ... Tracy to connect it with NEMS</TextLine>
+		</Bookmark>
+	</Category>
+	<Category Name="FIXME">
+		<Bookmark Node="db_NH3ProductionCapacity" Attribute="sql query" LineNumber="1">
+			<TextLine>"select 'H-B Process' TECH, MNUMCR, MNUMYR, CAPAVAIL, CAPLAN, CAPNEW from 'NH3 Production Capacity'"</TextLine>
+		</Bookmark>
+	</Category>
+	<Category Name="TEMP">
+		<Bookmark Node="pr_ReadandProcessInputs" Attribute="body" LineNumber="6">
+			<TextLine>!NCNTRL_CURITR('1') := 2; ! For testing purposes, can be deleted</TextLine>
+		</Bookmark>
+	</Category>
+	<Category>
+		<Bookmark Node="pr_WriteGlobalDataToNEMS">
+			<TextLine>pr_WriteGlobalDataToNEMS</TextLine>
+		</Bookmark>
+		<Bookmark Node="pr_IntializeOptParameters">
+			<TextLine>pr_IntializeOptParameters</TextLine>
+		</Bookmark>
+		<Bookmark Node="pr_ReadGlobalDataFromNEMS">
+			<TextLine>pr_ReadGlobalDataFromNEMS</TextLine>
+		</Bookmark>
+	</Category>
+	<Category Name="ChangeBeforeRelease">
+		<Bookmark Node="pr_ProductionInputs" Attribute="body" LineNumber="26">
+			<TextLine>!ep_ProdSpec := 'Process CO2 produced';</TextLine>
+		</Bookmark>
+		<Bookmark Node="pr_ProcessAmmoniaInputs" Attribute="body" LineNumber="27">
+			<TextLine>!:= p_NH3ProdTechProps(ep_NH3Spec, i_ActiveNH3Technology);</TextLine>
+		</Bookmark>
+	</Category>
+	<Category Name="Check Units">
+		<Bookmark Node="pr_ProcessAmmoniaInputs" Attribute="body" LineNumber="55">
+			<TextLine>	/$ (p_AmmoniaDesignCapacityPerTech(i_ActiveNH3Technology) / 1e6);</TextLine>
+		</Bookmark>
+		<Bookmark Node="pr_ProcessAmmoniaInputs" Attribute="body" LineNumber="48">
+			<TextLine>		/$ (p_AmmoniaDesignCapacityPerTech(i_ActiveNH3Technology) / 1e6);</TextLine>
+		</Bookmark>
+		<Bookmark Node="pr_ProcessAmmoniaInputs" Attribute="body" LineNumber="49">
+			<TextLine>		/$ (p_AmmoniaDesignCapacityPerTech(i_ActiveNH3Technology) / 1e6);</TextLine>
+		</Bookmark>
+		<Bookmark Identifier="p_FuelPrice" Attribute="comment" LineNumber="7">
+			<TextLine>Hydrogen: </TextLine>
+		</Bookmark>
+		<Bookmark Node="pr_ProcessInputFiles" Attribute="body" LineNumber="30" />
+	</Category>
+	<Category Name="Things to remove">
+		<Bookmark Node="pr_ProcessAmmoniaInputs" Attribute="body" LineNumber="29">
+			<TextLine>!:= p_NH3ProdTechProps(ep_NH3Spec, i_ActiveNH3Technology);</TextLine>
+		</Bookmark>
+	</Category>
+	<Category Name="turn off available">
+		<Bookmark Node="pr_CapacityLimits" Attribute="body" LineNumber="1">
+			<TextLine>! set available capacity as zero as shouuld no longer be needed. Will build </TextLine>
+		</Bookmark>
+	</Category>
+	<Category Name="onlocation">
+		<Bookmark Node="pr_WriteGlobalDataToNEMS">
+			<TextLine>pr_WriteGlobalDataToNEMS</TextLine>
+		</Bookmark>
+		<Bookmark Node="pr_OutputParameterCreation">
+			<TextLine>pr_OutputParameterCreation</TextLine>
+		</Bookmark>
+		<Bookmark Node="pr_ProcessInputFiles" Attribute="body" LineNumber="55">
+			<TextLine>p_AdjustedFuelPricebyTech(i_Fuel, i_ProdActiveOptTech, i_CensusDivisionOpt, i_calYear) := p_FuelPrice(i_Fuel, i_CensusDivisionOpt, i_calYear) ;</TextLine>
+		</Bookmark>
+	</Category>
+</ModelBookmarks>

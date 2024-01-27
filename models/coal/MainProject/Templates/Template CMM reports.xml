@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<Page Version="4000" TimeStamp="2020-05-02 22:10:12" NeedsCompiledModel="false">
+	<PageEditSize Type="Inherited" />
+	<ProjectUUID>3C1E27EB-95CC-4E52-BBB5-D70269E0E21B</ProjectUUID>
+	<TemplatesTabOrderPosition>1</TemplatesTabOrderPosition>
+	<Background Inherited="true" />
+	<PageObject Type="Navigation Object">
+		<Location top="12" left="24" bottom="54" right="726" />
+		<TabOrder>1</TabOrder>
+		<Font GUID="DAF419EC-7C9F-4BA0-A851-93FB642B71E2" Name="Header" />
+		<Border Style="None" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<Display>Text</Display>
+		<Spacing>6</Spacing>
+		<BackgroundColor Transparent="true" />
+		<NavigationData>
+			<ReferencePage>ThisPage</ReferencePage>
+			<NumberOfAncestors>1</NumberOfAncestors>
+		</NavigationData>
+	</PageObject>
+	<UsedReferences>
+		<Model />
+	</UsedReferences>
+</Page>

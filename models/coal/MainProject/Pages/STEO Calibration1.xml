@@ -1,0 +1,392 @@
+<?xml version="1.0"?>
+<Page Version="4000" TimeStamp="2020-05-19 00:38:28">
+	<PageEditSize Type="Inherited" />
+	<ProjectUUID>3C1E27EB-95CC-4E52-BBB5-D70269E0E21B</ProjectUUID>
+	<TemplatesTabOrderPosition>1</TemplatesTabOrderPosition>
+	<Background Inherited="true" />
+	<PageObject Type="Button">
+		<Location top="24" left="30" bottom="72" right="150" />
+		<TabOrder>7</TabOrder>
+		<LeaveOnEnter>false</LeaveOnEnter>
+		<ButtonType>Text</ButtonType>
+		<Title>"Year Loop"</Title>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<ActionSequence>
+			<Action Type="Run">
+				<RunWhat>SpecificProcecure</RunWhat>
+				<Procedure>YearLoop_new</Procedure>
+				<AbortOnError>true</AbortOnError>
+			</Action>
+		</ActionSequence>
+	</PageObject>
+	<PageObject Type="Composite Table">
+		<Location top="144" left="24" bottom="264" right="618" />
+		<TabOrder>1</TabOrder>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#ffffff" />
+		<Domain>
+			<Identifier>AppalachiaResult( steoyr )</Identifier>
+			<Index Name="steoyr" />
+		</Domain>
+		<ExplicitIdentifier>
+			<Identifier>AppalachiaLimit( steoyr )</Identifier>
+			<NumberFormat Width="4" Decimals="0" Alignment="Center" />
+		</ExplicitIdentifier>
+		<ExplicitIdentifier>
+			<Identifier>AppalachiaLower( steoyr )</Identifier>
+			<NumberFormat Width="4" Decimals="0" Alignment="Center" />
+		</ExplicitIdentifier>
+		<ExplicitIdentifier>
+			<Identifier>AppalachiaResult( steoyr )</Identifier>
+			<NumberFormat Width="4" Decimals="0" Alignment="Center" />
+		</ExplicitIdentifier>
+		<ExplicitIdentifier>
+			<Identifier>AppalachiaUpper( steoyr )</Identifier>
+			<NumberFormat Width="4" Decimals="0" Alignment="Center" />
+		</ExplicitIdentifier>
+		<ExplicitIdentifier>
+			<Identifier>AppalachiaStocks( steoyr )</Identifier>
+			<NumberFormat Width="7" Decimals="0" Alignment="Center" />
+		</ExplicitIdentifier>
+	</PageObject>
+	<PageObject Type="Composite Table">
+		<Location top="270" left="24" bottom="378" right="528" />
+		<TabOrder>3</TabOrder>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#ffffff" />
+		<Domain>
+			<Identifier>InteriorResult( steoyr )</Identifier>
+			<Index Name="steoyr" />
+		</Domain>
+		<ExplicitIdentifier>
+			<Identifier>InteriorLimit( steoyr )</Identifier>
+			<NumberFormat Width="4" Decimals="0" Alignment="Center" />
+		</ExplicitIdentifier>
+		<ExplicitIdentifier>
+			<Identifier>InteriorLower( steoyr )</Identifier>
+			<NumberFormat Width="4" Decimals="0" Alignment="Center" />
+		</ExplicitIdentifier>
+		<ExplicitIdentifier>
+			<Identifier>InteriorResult( steoyr )</Identifier>
+			<NumberFormat Width="4" Decimals="0" Alignment="Center" />
+		</ExplicitIdentifier>
+		<ExplicitIdentifier>
+			<Identifier>InteriorUpper( steoyr )</Identifier>
+			<NumberFormat Width="4" Decimals="0" Alignment="Center" />
+		</ExplicitIdentifier>
+		<ExplicitIdentifier>
+			<Identifier>InteriorStocks( steoyr )</Identifier>
+			<NumberFormat Width="7" Decimals="0" Alignment="Center" />
+		</ExplicitIdentifier>
+	</PageObject>
+	<PageObject Type="Composite Table">
+		<Location top="390" left="24" bottom="516" right="522" />
+		<TabOrder>4</TabOrder>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#ffffff" />
+		<Domain>
+			<Identifier>WestResult( steoyr )</Identifier>
+			<Index Name="steoyr" />
+		</Domain>
+		<ExplicitIdentifier>
+			<Identifier>WestLimit( steoyr )</Identifier>
+			<NumberFormat Width="4" Decimals="0" Alignment="Center" />
+		</ExplicitIdentifier>
+		<ExplicitIdentifier>
+			<Identifier>WestLower( steoyr )</Identifier>
+			<NumberFormat Width="4" Decimals="0" Alignment="Center" />
+		</ExplicitIdentifier>
+		<ExplicitIdentifier>
+			<Identifier>WestResult( steoyr )</Identifier>
+			<NumberFormat Width="4" Decimals="0" Alignment="Center" />
+		</ExplicitIdentifier>
+		<ExplicitIdentifier>
+			<Identifier>WestUpper( steoyr )</Identifier>
+			<NumberFormat Width="4" Decimals="0" Alignment="Center" />
+		</ExplicitIdentifier>
+		<ExplicitIdentifier>
+			<Identifier>WestStocks( steoyr )</Identifier>
+			<NumberFormat Width="7" Decimals="0" Alignment="Center" />
+		</ExplicitIdentifier>
+	</PageObject>
+	<PageObject Type="Composite Table">
+		<Location top="522" left="24" bottom="684" right="570" />
+		<TabOrder>6</TabOrder>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#ffffff" />
+		<Domain>
+			<Identifier>ElecPriceResult( steoyr )</Identifier>
+			<Index Name="steoyr" />
+		</Domain>
+		<ExplicitIdentifier>
+			<Identifier>ElecPriceSTEO( steoyr )</Identifier>
+			<NumberFormat Width="5" Decimals="2" Alignment="Center" />
+		</ExplicitIdentifier>
+		<ExplicitIdentifier>
+			<Identifier>ElecPriceLowerSTEO( steoyr )</Identifier>
+			<NumberFormat Width="4" Decimals="2" Alignment="Center" />
+		</ExplicitIdentifier>
+		<ExplicitIdentifier>
+			<Identifier>ElecPriceResult( steoyr )</Identifier>
+			<NumberFormat Width="4" Decimals="2" Alignment="Center" />
+		</ExplicitIdentifier>
+		<ExplicitIdentifier>
+			<Identifier>ElecPriceUpperSTEO( steoyr )</Identifier>
+			<NumberFormat Width="4" Decimals="2" Alignment="Center" />
+		</ExplicitIdentifier>
+	</PageObject>
+	<PageObject Type="Table">
+		<Location top="6" left="900" bottom="138" right="1302" />
+		<TabOrder>8</TabOrder>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#ffffff" />
+		<RowIndentation>3</RowIndentation>
+		<ExplicitIdentifier>
+			<Identifier>EOYStocksEP( steoyr )</Identifier>
+			<FirstColumn>1</FirstColumn>
+			<NumberFormat Width="7" Decimals="1" Alignment="Center" />
+		</ExplicitIdentifier>
+		<ExplicitIdentifier>
+			<Identifier>StocksChangeEP( steoyr )</Identifier>
+			<FirstColumn>1</FirstColumn>
+			<NumberFormat Width="5" Decimals="1" Alignment="Center" />
+		</ExplicitIdentifier>
+		<ExplicitIdentifier>
+			<Identifier>EOYStocksPrim( steoyr )</Identifier>
+			<FirstColumn>1</FirstColumn>
+			<NumberFormat Width="5" Decimals="1" Alignment="Center" />
+		</ExplicitIdentifier>
+		<ExplicitIdentifier>
+			<Identifier>StocksChangePrim( steoyr )</Identifier>
+			<FirstColumn>1</FirstColumn>
+			<NumberFormat Width="5" Decimals="1" Alignment="Center" />
+		</ExplicitIdentifier>
+	</PageObject>
+	<PageObject Type="Composite Table">
+		<Location top="6" left="162" bottom="138" right="864" />
+		<TabOrder>9</TabOrder>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#ffffff" />
+		<Domain>
+			<Identifier>SteoFlagC( steoyr )</Identifier>
+			<Index Name="steoyr" />
+		</Domain>
+		<ExplicitIdentifier>
+			<Identifier>SteoFlagW( steoyr )</Identifier>
+			<NumberFormat Width="5" Decimals="2" Alignment="Center" />
+		</ExplicitIdentifier>
+		<ExplicitIdentifier>
+			<Identifier>SteoFlagET( steoyr )</Identifier>
+			<NumberFormat Width="7" Decimals="3" Alignment="Center" />
+		</ExplicitIdentifier>
+		<ExplicitIdentifier>
+			<Identifier>SteoFlagC( steoyr )</Identifier>
+			<NumberFormat Width="5" Decimals="2" Alignment="Center" />
+		</ExplicitIdentifier>
+		<ExplicitIdentifier>
+			<Identifier>SteoFlagI( steoyr )</Identifier>
+			<NumberFormat Width="5" Decimals="2" Alignment="Center" />
+		</ExplicitIdentifier>
+		<ExplicitIdentifier>
+			<Identifier>SteoFlagRT( steoyr )</Identifier>
+			<NumberFormat Width="5" Decimals="2" Alignment="Center" />
+		</ExplicitIdentifier>
+		<ExplicitIdentifier>
+			<Identifier>SteoFlagIMP( steoyr )</Identifier>
+			<NumberFormat Width="5" Decimals="2" Alignment="Center" />
+		</ExplicitIdentifier>
+		<ExplicitIdentifier>
+			<Identifier>SteoFlagStocks( steoyr )</Identifier>
+			<NumberFormat Width="5" Decimals="2" Alignment="Center" />
+		</ExplicitIdentifier>
+		<ExplicitIdentifier>
+			<Identifier>Tolerance( steoyr )</Identifier>
+			<NumberFormat Width="7" Decimals="4" Alignment="Center" />
+		</ExplicitIdentifier>
+	</PageObject>
+	<PageObject Type="Composite Table">
+		<Location top="144" left="666" bottom="264" right="1176" />
+		<TabOrder>5</TabOrder>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#ffffff" />
+		<Domain>
+			<Identifier>WasteCoalResult( steoyr )</Identifier>
+			<Index Name="steoyr" />
+		</Domain>
+		<ExplicitIdentifier>
+			<Identifier>WasteCoalSTEO( steoyr )</Identifier>
+			<NumberFormat Width="5" Decimals="1" Alignment="Center" />
+		</ExplicitIdentifier>
+		<ExplicitIdentifier>
+			<Identifier>WasteCoalLower( steoyr )</Identifier>
+			<NumberFormat Width="6" Decimals="1" Alignment="Center" />
+		</ExplicitIdentifier>
+		<ExplicitIdentifier>
+			<Identifier>WasteCoalResult( steoyr )</Identifier>
+			<NumberFormat Width="6" Decimals="1" Alignment="Center" />
+		</ExplicitIdentifier>
+		<ExplicitIdentifier>
+			<Identifier>WasteCoalUpper( steoyr )</Identifier>
+			<NumberFormat Width="6" Decimals="1" Alignment="Center" />
+		</ExplicitIdentifier>
+	</PageObject>
+	<PageObject Type="Composite Table">
+		<Location top="270" left="666" bottom="378" right="1212" />
+		<TabOrder>11</TabOrder>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#ffffff" />
+		<Domain>
+			<Identifier>StocksChngProdResult( steoyr )</Identifier>
+			<Index Name="steoyr" />
+		</Domain>
+		<ExplicitIdentifier>
+			<Identifier>StocksChngProdResult( steoyr )</Identifier>
+			<NumberFormat Width="7" Decimals="1" Alignment="Center" />
+		</ExplicitIdentifier>
+		<ExplicitIdentifier>
+			<Identifier>StocksChangePrim( steoyr )</Identifier>
+			<NumberFormat Width="7" Decimals="1" Alignment="Center" />
+		</ExplicitIdentifier>
+		<ExplicitIdentifier>
+			<Identifier>StocksChangeEP( steoyr )</Identifier>
+			<NumberFormat Width="5" Decimals="1" Alignment="Center" />
+		</ExplicitIdentifier>
+	</PageObject>
+	<PageObject Type="Composite Table">
+		<Location top="390" left="558" bottom="516" right="1350" />
+		<TabOrder>2</TabOrder>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#ffffff" />
+		<Domain>
+			<Identifier>AppalachiaResult( steoyr )</Identifier>
+			<Index Name="steoyr" />
+		</Domain>
+		<ExplicitIdentifier>
+			<Identifier>AppalachiaLimit( steoyr )</Identifier>
+			<NumberFormat Width="4" Decimals="0" Alignment="Center" />
+		</ExplicitIdentifier>
+		<ExplicitIdentifier>
+			<Identifier>InteriorLimit( steoyr )</Identifier>
+			<NumberFormat Width="4" Decimals="0" Alignment="Center" />
+		</ExplicitIdentifier>
+		<ExplicitIdentifier>
+			<Identifier>WestLimit( steoyr )</Identifier>
+			<NumberFormat Width="4" Decimals="0" Alignment="Center" />
+		</ExplicitIdentifier>
+		<ExplicitIdentifier>
+			<Identifier>WasteCoalSTEO( steoyr )</Identifier>
+			<NumberFormat Width="4" Decimals="0" Alignment="Center" />
+		</ExplicitIdentifier>
+		<ExplicitIdentifier>
+			<Identifier>StocksChangePrim( steoyr )</Identifier>
+			<NumberFormat Width="7" Decimals="0" Alignment="Center" />
+		</ExplicitIdentifier>
+		<ExplicitIdentifier>
+			<Identifier>StocksChangeEP( steoyr )</Identifier>
+			<NumberFormat Width="5" Decimals="0" Alignment="Center" />
+		</ExplicitIdentifier>
+		<ExplicitIdentifier>
+			<Identifier>ImportsSTEO( steoyr )</Identifier>
+			<NumberFormat Width="5" Decimals="1" Alignment="Center" />
+		</ExplicitIdentifier>
+		<ExplicitIdentifier>
+			<Identifier>STEO_Supply_Tot( steoyr )</Identifier>
+			<NumberFormat Width="6" Decimals="0" Alignment="Center" />
+		</ExplicitIdentifier>
+	</PageObject>
+	<PageObject Type="Composite Table">
+		<Location top="528" left="582" bottom="678" right="1350" />
+		<TabOrder>5</TabOrder>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#ffffff" />
+		<Domain>
+			<Identifier>IndustrialTonsResult( steoyr )</Identifier>
+			<Index Name="steoyr" />
+		</Domain>
+		<ExplicitIdentifier>
+			<Identifier>IndustrialTonsSTEO( steoyr )</Identifier>
+			<NumberFormat Width="8" Decimals="1" Alignment="Center" />
+		</ExplicitIdentifier>
+		<ExplicitIdentifier>
+			<Identifier>CokeTonsSTEO( steoyr )</Identifier>
+			<NumberFormat Width="8" Decimals="1" Alignment="Center" />
+		</ExplicitIdentifier>
+		<ExplicitIdentifier>
+			<Identifier>ElecTonsSTEO( steoyr )</Identifier>
+			<NumberFormat Width="8" Decimals="1" Alignment="Center" />
+		</ExplicitIdentifier>
+		<ExplicitIdentifier>
+			<Identifier>CokingExpSTEO( steoyr )</Identifier>
+			<NumberFormat Width="5" Decimals="1" Alignment="Center" />
+		</ExplicitIdentifier>
+		<ExplicitIdentifier>
+			<Identifier>SteamExpSTEO( steoyr )</Identifier>
+			<NumberFormat Width="5" Decimals="1" Alignment="Center" />
+		</ExplicitIdentifier>
+		<ExplicitIdentifier>
+			<Identifier>STEO_Demand_Tot( steoyr )</Identifier>
+			<NumberFormat Width="7" Decimals="1" Alignment="Center" />
+		</ExplicitIdentifier>
+	</PageObject>
+	<UsedReferences>
+		<Model>
+			<Symbol>YearLoop_new</Symbol>
+			<Symbol>SteoFlagW</Symbol>
+			<Symbol>SteoFlagET</Symbol>
+			<Symbol>SteoFlagC</Symbol>
+			<Symbol>SteoFlagI</Symbol>
+			<Symbol>SteoFlagRT</Symbol>
+			<Symbol>SteoFlagIMP</Symbol>
+			<Symbol>SteoFlagStocks</Symbol>
+			<Symbol>WasteCoalSTEO</Symbol>
+			<Symbol>WasteCoalLower</Symbol>
+			<Symbol>WasteCoalUpper</Symbol>
+			<Symbol>WasteCoalResult</Symbol>
+			<Symbol>ElecTonsSTEO</Symbol>
+			<Symbol>EOYStocksPrim</Symbol>
+			<Symbol>EOYStocksEP</Symbol>
+			<Symbol>StocksChangeEP</Symbol>
+			<Symbol>StocksChangePrim</Symbol>
+			<Symbol>CokeTonsSTEO</Symbol>
+			<Symbol>IndustrialTonsSTEO</Symbol>
+			<Symbol>IndustrialTonsResult</Symbol>
+			<Symbol>ElecPriceSTEO</Symbol>
+			<Symbol>ElecPriceLowerSTEO</Symbol>
+			<Symbol>ElecPriceUpperSTEO</Symbol>
+			<Symbol>ElecPriceResult</Symbol>
+			<Symbol>AppalachiaLimit</Symbol>
+			<Symbol>AppalachiaStocks</Symbol>
+			<Symbol>AppalachiaLower</Symbol>
+			<Symbol>AppalachiaUpper</Symbol>
+			<Symbol>Tolerance</Symbol>
+			<Symbol>AppalachiaResult</Symbol>
+			<Symbol>InteriorLimit</Symbol>
+			<Symbol>InteriorLower</Symbol>
+			<Symbol>InteriorStocks</Symbol>
+			<Symbol>InteriorUpper</Symbol>
+			<Symbol>InteriorResult</Symbol>
+			<Symbol>WestLimit</Symbol>
+			<Symbol>WestLower</Symbol>
+			<Symbol>WestStocks</Symbol>
+			<Symbol>WestUpper</Symbol>
+			<Symbol>WestResult</Symbol>
+			<Symbol>StocksChngProdResult</Symbol>
+			<Symbol>CokingExpSTEO</Symbol>
+			<Symbol>SteamExpSTEO</Symbol>
+			<Symbol>ImportsSTEO</Symbol>
+			<Symbol>steoyr</Symbol>
+			<Symbol>STEO_Supply_Tot</Symbol>
+			<Symbol>STEO_Demand_Tot</Symbol>
+		</Model>
+	</UsedReferences>
+</Page>

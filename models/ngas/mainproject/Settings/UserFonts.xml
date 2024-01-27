@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<UserFonts>
+	<UserFont Name="Main Font" FaceName="Arial" PointSize="100" UUID="00000000-0000-0000-0000-000000000001" />
+	<UserFont Name="Title font" FaceName="Arial" PointSize="160" Bold="true" UUID="3EEC6209-AF15-406D-9130-A82C6D539593" InternalID="1" />
+	<UserFont Name="Legend" FaceName="Arial" PointSize="110" UUID="DBEBAEE2-DD81-4C22-9805-2E58FD341D9F" InternalID="2" />
+	<UserFont Name="Selection Object" FaceName="Arial" PointSize="140" UUID="43613FB2-AB0B-43E5-A7E3-6D7699FD7B8C" InternalID="3" />
+</UserFonts>

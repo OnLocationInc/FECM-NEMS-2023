@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<Page Version="4000" TimeStamp="2020-06-01 03:49:30">
+	<PageEditSize Type="Inherited" />
+	<ProjectUUID>3C1E27EB-95CC-4E52-BBB5-D70269E0E21B</ProjectUUID>
+	<TemplatesTabOrderPosition>1</TemplatesTabOrderPosition>
+	<Background Inherited="true" />
+	<Action>
+		<EntryProcedure>SetInitialDisplayYear</EntryProcedure>
+	</Action>
+	<PageObject Type="Button">
+		<Location top="66" left="30" bottom="120" right="240" />
+		<TabOrder>2</TabOrder>
+		<LeaveOnEnter>false</LeaveOnEnter>
+		<ButtonType>Text</ButtonType>
+		<Title>"Load/Remove Cases"</Title>
+		<BackgroundColor RGB="#c0c0c0" />
+		<ForegroundColor RGB="#000000" />
+		<Font GUID="DAF419EC-7C9F-4BA0-A851-93FB642B71E2" Name="Header" />
+		<ActionSequence>
+			<Action Type="MenuCommand">
+				<Command>Data-Multiple Cases</Command>
+			</Action>
+			<Action Type="Run">
+				<RunWhat>SpecificProcecure</RunWhat>
+				<Procedure>GetSelectedCaseNames</Procedure>
+				<AbortOnError>true</AbortOnError>
+			</Action>
+		</ActionSequence>
+	</PageObject>
+	<PageObject Type="Table">
+		<Location top="144" left="30" bottom="276" right="300" />
+		<TabOrder>3</TabOrder>
+		<Font GUID="F2C814D4-9CCE-416C-9F68-BE15F2AFC56A" Name="font 1" />
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#ffffff" />
+		<RowIndentation>3</RowIndentation>
+		<ExplicitIdentifier>
+			<Identifier>SelectedCase_Names( IndexCurrentCaseSelection )</Identifier>
+			<FirstColumn>1</FirstColumn>
+			<IdentifierTextInTitle>true</IdentifierTextInTitle>
+			<NumberFormat Width="100" Decimals="0" Alignment="Left" />
+		</ExplicitIdentifier>
+	</PageObject>
+	<PageObject Type="Navigation Object">
+		<Location top="66" left="366" bottom="408" right="816" />
+		<TabOrder>4</TabOrder>
+		<Font GUID="F2C814D4-9CCE-416C-9F68-BE15F2AFC56A" Name="font 1" />
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<Display>Button+Text</Display>
+		<Spacing>6</Spacing>
+		<BackgroundColor RGB="#ffffff" />
+		<NavigationData>
+			<ReferencePage>ThisPage</ReferencePage>
+			<NumberOfGenerations>1</NumberOfGenerations>
+			<ActionSequence>
+				<Action Type="GotoNavigationPage" />
+			</ActionSequence>
+		</NavigationData>
+	</PageObject>
+	<UsedReferences>
+		<Model>
+			<Symbol>IndexCurrentCaseSelection</Symbol>
+			<Symbol>SelectedCase_Names</Symbol>
+			<Symbol>GetSelectedCaseNames</Symbol>
+			<Symbol>SetInitialDisplayYear</Symbol>
+		</Model>
+	</UsedReferences>
+</Page>

@@ -1,0 +1,274 @@
+<?xml version="1.0"?>
+<Page Version="4000" TimeStamp="2020-05-23 23:55:40">
+	<PageEditSize Type="Inherited" />
+	<ProjectUUID>3C1E27EB-95CC-4E52-BBB5-D70269E0E21B</ProjectUUID>
+	<TemplatesTabOrderPosition>2</TemplatesTabOrderPosition>
+	<Background Inherited="true" />
+	<PageObject Type="Pivot Table">
+		<Location top="120" left="24" bottom="378" right="726" />
+		<TabOrder>3</TabOrder>
+		<ObjectUUID>383B977D-427F-4944-BDC5-88C9C823724A</ObjectUUID>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<Contents>
+			<Explicit_Identifier>
+				<Identifier ID="4110">Display_AnnualCoalProduction( ustot, yr )</Identifier>
+				<Title ID="4120">"Annual Coal Production"</Title>
+				<Format>
+					<Decimal_Places ID="4312">1</Decimal_Places>
+					<Show_1000_seperator ID="4313">"Yes"</Show_1000_seperator>
+				</Format>
+			</Explicit_Identifier>
+			<Explicit_Identifier>
+				<Identifier ID="4110">Display_AnnualCoalProduction( gr_supreg, yr )</Identifier>
+				<Title ID="4120">"By Greater Supply Regions"</Title>
+				<Format>
+					<Decimal_Places ID="4312">1</Decimal_Places>
+					<Show_1000_seperator ID="4313">"Yes"</Show_1000_seperator>
+				</Format>
+			</Explicit_Identifier>
+			<Explicit_Identifier>
+				<Identifier ID="4110">Display_AnnualCoalProduction( ew_mreg, yr )</Identifier>
+				<Title ID="4120">"East and West of Mississippi River"</Title>
+				<Format>
+					<Decimal_Places ID="4312">1</Decimal_Places>
+					<Show_1000_seperator ID="4313">"Yes"</Show_1000_seperator>
+				</Format>
+			</Explicit_Identifier>
+		</Contents>
+		<Indices>
+			<Explicit_Index>
+				<Index ID="6510">ustot</Index>
+				<Header_Title ID="6530">"Supply Region"</Header_Title>
+			</Explicit_Index>
+			<Explicit_Index>
+				<Index ID="6510">yr</Index>
+				<Header_Title ID="6530">"Year"</Header_Title>
+			</Explicit_Index>
+			<Identifier_Index>
+				<Hide_if_Single_Identifier ID="6270">"No"</Hide_if_Single_Identifier>
+			</Identifier_Index>
+		</Indices>
+		<General>
+			<Dense_Aggregation_restricts_to_Domain ID="1022">"Yes"</Dense_Aggregation_restricts_to_Domain>
+		</General>
+		<Row_Area>
+			<Background_Color ID="2010">RGB&lt;255,255,200&gt;</Background_Color>
+			<Text_Color ExtraInfo="D4F48705-BFDF-4DF8-8E1F-D38EFF981024" ID="2020">"default selection"</Text_Color>
+			<Headers>
+				<Background_Color ExtraInfo="D4F48705-BFDF-4DF8-8E1F-D38EFF981024" ID="2120">"default selection"</Background_Color>
+				<Text_Color ID="2130">RGB&lt;255,255,255&gt;</Text_Color>
+				<Show_Sub_Headers ID="2150">"No"</Show_Sub_Headers>
+			</Headers>
+			<Aggregators>
+				<Background_Color ID="2220">RGB&lt;128,255,128&gt;</Background_Color>
+			</Aggregators>
+			<Grid_Focus_Indicator>
+				<Background_Color ID="2270">RGB&lt;0,0,168&gt;</Background_Color>
+				<Text_Color ID="2280">RGB&lt;255,255,200&gt;</Text_Color>
+			</Grid_Focus_Indicator>
+		</Row_Area>
+		<Column_Area>
+			<Auto_resize_Column_Widths ID="3006">"Upon all data changes"</Auto_resize_Column_Widths>
+			<Headers>
+				<Show_Sub_Headers ID="3150">"No"</Show_Sub_Headers>
+			</Headers>
+		</Column_Area>
+		<Grid_Area>
+			<Background_Color ID="5010">RGB&lt;255,255,255&gt;</Background_Color>
+			<Alternating_Background_Color ID="5011">RGB&lt;225,225,225&gt;</Alternating_Background_Color>
+			<Aggregators>
+				<Background_Color ID="5220">RGB&lt;128,255,128&gt;</Background_Color>
+			</Aggregators>
+			<Sub_Header_Row_or_Column>
+				<Background_Color ID="5320">RGB&lt;255,255,200&gt;</Background_Color>
+			</Sub_Header_Row_or_Column>
+		</Grid_Area>
+	</PageObject>
+	<PageObject Type="Pivot Table">
+		<Location top="390" left="24" bottom="708" right="726" />
+		<TabOrder>1</TabOrder>
+		<ObjectUUID>5AB48D0F-73DF-4BE3-A1C0-3E36D9DAF7DC</ObjectUUID>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<Contents>
+			<Explicit_Identifier>
+				<Identifier ID="4110">Display_AnnualCoalProduction_reg( sreg_name, yr )</Identifier>
+				<Title ID="4120">"Total Production by supply region and  year"</Title>
+				<Format>
+					<Decimal_Places ID="4312">1</Decimal_Places>
+					<Show_1000_seperator ID="4313">"Yes"</Show_1000_seperator>
+				</Format>
+				<Colors>
+					<Text_Color ID="4165">ProdColor1( sreg_name, yr )</Text_Color>
+				</Colors>
+				<Procedures_Assertions>
+					<On_Double_Click ID="4183">SelectRegInTable1( sreg_name )</On_Double_Click>
+				</Procedures_Assertions>
+			</Explicit_Identifier>
+		</Contents>
+		<Indices>
+			<Explicit_Index>
+				<Index ID="6510">sreg_name</Index>
+				<Header_Title ID="6530">"Supply Region"</Header_Title>
+			</Explicit_Index>
+			<Explicit_Index>
+				<Index ID="6510">yr</Index>
+				<Header_Title ID="6530">"Year"</Header_Title>
+			</Explicit_Index>
+			<Identifier_Index>
+				<Hide_if_Single_Identifier ID="6270">"No"</Hide_if_Single_Identifier>
+			</Identifier_Index>
+		</Indices>
+		<General>
+			<Dense_Aggregation_restricts_to_Domain ID="1022">"Yes"</Dense_Aggregation_restricts_to_Domain>
+		</General>
+		<Row_Area>
+			<Background_Color ID="2010">RGB&lt;255,255,200&gt;</Background_Color>
+			<Text_Color ExtraInfo="D4F48705-BFDF-4DF8-8E1F-D38EFF981024" ID="2020">"default selection"</Text_Color>
+			<Headers>
+				<Background_Color ExtraInfo="D4F48705-BFDF-4DF8-8E1F-D38EFF981024" ID="2120">"default selection"</Background_Color>
+				<Text_Color ID="2130">RGB&lt;255,255,255&gt;</Text_Color>
+				<Show_Sub_Headers ID="2150">"No"</Show_Sub_Headers>
+			</Headers>
+			<Aggregators>
+				<Background_Color ID="2220">RGB&lt;128,255,128&gt;</Background_Color>
+			</Aggregators>
+			<Grid_Focus_Indicator>
+				<Background_Color ID="2270">RGB&lt;0,0,168&gt;</Background_Color>
+				<Text_Color ID="2280">RGB&lt;255,255,200&gt;</Text_Color>
+			</Grid_Focus_Indicator>
+		</Row_Area>
+		<Column_Area>
+			<Auto_resize_Column_Widths ID="3006">"Upon all data changes"</Auto_resize_Column_Widths>
+			<Headers>
+				<Show_Sub_Headers ID="3150">"No"</Show_Sub_Headers>
+			</Headers>
+		</Column_Area>
+		<Grid_Area>
+			<Background_Color ID="5010">RGB&lt;255,255,255&gt;</Background_Color>
+			<Alternating_Background_Color ID="5011">RGB&lt;225,225,225&gt;</Alternating_Background_Color>
+			<Aggregators>
+				<Background_Color ID="5220">RGB&lt;128,255,128&gt;</Background_Color>
+			</Aggregators>
+			<Sub_Header_Row_or_Column>
+				<Background_Color ID="5320">RGB&lt;255,255,200&gt;</Background_Color>
+			</Sub_Header_Row_or_Column>
+		</Grid_Area>
+	</PageObject>
+	<PageObject Type="Curve">
+		<Location top="72" left="732" bottom="426" right="1440" />
+		<TabOrder>5</TabOrder>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#c0c0c0" />
+		<ColorScheme Number="0" />
+		<SwappedAxes>true</SwappedAxes>
+		<Title>true</Title>
+		<Legend>true</Legend>
+		<Y-Labels>true</Y-Labels>
+		<X-Labels>true</X-Labels>
+		<StatusLine>true</StatusLine>
+		<ExplicitIdentifier>
+			<Identifier>Display_AnnualCoalProduction( dispaggreg, runyr )</Identifier>
+			<TitleText>"Annual Coal Production"</TitleText>
+			<Description>ClProd( dispaggreg, runyr )</Description>
+		</ExplicitIdentifier>
+		<DrawLines>true</DrawLines>
+		<MarkPoints>true</MarkPoints>
+	</PageObject>
+	<PageObject Type="Curve">
+		<Location top="480" left="732" bottom="834" right="1440" />
+		<TabOrder>4</TabOrder>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#c0c0c0" />
+		<ColorScheme Number="0" />
+		<SwappedAxes>true</SwappedAxes>
+		<Title>true</Title>
+		<Legend>true</Legend>
+		<Y-Labels>true</Y-Labels>
+		<X-Labels>true</X-Labels>
+		<StatusLine>true</StatusLine>
+		<ExplicitIdentifier>
+			<Identifier>Select_AnnualCoalProduction_reg( dispregt, runyr )</Identifier>
+			<TitleText>"Annual Coal Production"</TitleText>
+			<Description>ClProd1( dispregt, runyr )</Description>
+		</ExplicitIdentifier>
+		<DrawLines>true</DrawLines>
+		<MarkPoints>true</MarkPoints>
+	</PageObject>
+	<PageObject Type="Button">
+		<Location top="708" left="24" bottom="750" right="204" />
+		<TabOrder>6</TabOrder>
+		<LeaveOnEnter>false</LeaveOnEnter>
+		<ButtonType>Text</ButtonType>
+		<Title>"Clear Region Selection"</Title>
+		<Font GUID="F2C814D4-9CCE-416C-9F68-BE15F2AFC56A" Name="font 1" />
+		<ActionSequence>
+			<Action Type="Run">
+				<RunWhat>SpecificProcecure</RunWhat>
+				<Procedure>ClearSelections</Procedure>
+				<AbortOnError>true</AbortOnError>
+			</Action>
+		</ActionSequence>
+	</PageObject>
+	<PageObject Type="Selection Object">
+		<SelectionType>RadioButtons</SelectionType>
+		<Location top="30" left="780" bottom="66" right="1296" />
+		<TabOrder>7</TabOrder>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<TextShown>ElementName</TextShown>
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#ffffff" />
+		<ProcedureUponChange>SelectSet</ProcedureUponChange>
+		<ExplicitIdentifier>
+			<Identifier>SelectAggReg1( SelectAggReg )</Identifier>
+		</ExplicitIdentifier>
+	</PageObject>
+	<PageObject Type="Text">
+		<Location top="438" left="744" bottom="480" right="1392" />
+		<StaticText>Select regions to be displayed by double clicking on the rows (values) in the corresponding table. Selected regions will show in red in the table. To clear selections click "Clear Region Selection" button.</StaticText>
+		<Font GUID="F2C814D4-9CCE-416C-9F68-BE15F2AFC56A" Name="font 1" />
+		<TextColor RGB="#000000" />
+	</PageObject>
+	<PageObject Type="Selection Object">
+		<SelectionType>CheckBoxes</SelectionType>
+		<Location top="708" left="246" bottom="744" right="450" />
+		<TabOrder>8</TabOrder>
+		<Font GUID="F2C814D4-9CCE-416C-9F68-BE15F2AFC56A" Name="font 1" />
+		<TextShown>IdentifierText</TextShown>
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#ffffff" />
+		<ProcedureUponChange>Add_USTotal</ProcedureUponChange>
+		<ExplicitIdentifier>
+			<Identifier>SelectUSTotal</Identifier>
+			<Description>"Show US Total on the chart"</Description>
+		</ExplicitIdentifier>
+	</PageObject>
+	<UsedReferences>
+		<Model>
+			<Symbol>SelectAggReg</Symbol>
+			<Symbol>SelectAggReg1</Symbol>
+			<Symbol>ClProd</Symbol>
+			<Symbol>ClProd1</Symbol>
+			<Symbol>Display_AnnualCoalProduction</Symbol>
+			<Symbol>Display_AnnualCoalProduction_reg</Symbol>
+			<Symbol>Select_AnnualCoalProduction_reg</Symbol>
+			<Symbol>SelectUSTotal</Symbol>
+			<Symbol>ProdColor1</Symbol>
+			<Symbol>SelectRegInTable1</Symbol>
+			<Symbol>SelectSet</Symbol>
+			<Symbol>Add_USTotal</Symbol>
+			<Symbol>ClearSelections</Symbol>
+			<Symbol>yr</Symbol>
+			<Symbol>gr_supreg</Symbol>
+			<Symbol>ew_mreg</Symbol>
+			<Symbol>ustot</Symbol>
+			<Symbol>sreg_name</Symbol>
+			<Symbol>dispregt</Symbol>
+			<Symbol>dispaggreg</Symbol>
+			<Symbol>runyr</Symbol>
+		</Model>
+	</UsedReferences>
+</Page>

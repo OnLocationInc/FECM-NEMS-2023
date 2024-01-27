@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<DataManagementSetup TimeStamp="2015-12-10 18:28:56">
+	<CaseType Name="GlobalDataStructure" InternalID="2">
+		<Properties>
+			<Contents IncludeReferredSets="true">
+				<SelectedModelSection>Global Data Structure</SelectedModelSection>
+			</Contents>
+		</Properties>
+	</CaseType>
+	<CaseType Name="All Identifiers" InternalID="1">
+		<Properties>
+			<Contents AllIdentifiers="true" />
+			<Options ConfirmOverwriteExisting="false" />
+		</Properties>
+	</CaseType>
+</DataManagementSetup>

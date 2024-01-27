@@ -1,0 +1,37 @@
+* Header
+ LABEL=UECPOUT,VAR=FR_OR_SrcTrnCost
+ LABEL=UECPOUT,VAR=FR_OR_TranCost
+ LABEL=UECPOUT,VAR=IFCCS 
+ LABEL=UECPOUT,VAR=C_AVGTF
+ LABEL=UECPOUT,VAR=copccs
+ LABEL=UECPOUT,VAR=IVCCS
+ LABEL=UECPOUT,VAR=OR_OR_SrcTrnCost
+ LABEL=UECPOUT,VAR=OR_OR_TranCost
+ LABEL=UECPOUT,VAR=Src_Tns_Costs
+ LABEL=UECPOUT,VAR=TFCCS 
+ LABEL=UECPOUT,VAR=Tns_Costs
+ LABEL=UECPOUT,VAR=TVCCS
+#ProgramGoal (not in the restart, defined in ecpcntl as TCCF_GL, TCCV_GL, TTCF_GL, TTCV_GL, TICF_GL, TICV_GL, HTRT_GL)
+#CAPTURED
+#CostWorkCap
+#CostWorkInj
+#EOR_ON
+#FuelRegion
+#IGRP
+#M8 (this is in the restart; just need to figure out how to get it)
+#MNUMYR (this is in the restart; just need to figure out how to get it)
+#PipeTooBig
+#PIPED
+#PlantType
+#ProgramGoal_Att
+#RetroBase
+#RunDefn
+#SourceType
+#SrcCapCost
+#t_emm
+#TotalCost
+#Totallnj
+#UnitCost
+#UnitCostlnj
+#WELLNUM
+

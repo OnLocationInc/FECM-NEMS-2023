@@ -1,0 +1,5 @@
+1   12 nem1    Jerry
+1   12 nem2    Elaine
+1   12 nem3    George
+1   12 nem4    Kramer
+1   12 nem5    Newman

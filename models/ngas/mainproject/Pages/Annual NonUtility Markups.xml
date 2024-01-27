@@ -1,0 +1,197 @@
+<?xml version="1.0"?>
+<Page Version="4000" TimeStamp="2019-10-02 16:22:35">
+	<PageEditSize Type="Inherited" />
+	<ProjectUUID>BD6A9103-B1FB-4406-840F-21FDB00917E2</ProjectUUID>
+	<TemplatesTabOrderPosition>1</TemplatesTabOrderPosition>
+	<Background Inherited="true" />
+	<PageObject Type="Curve">
+		<Location top="54" left="210" bottom="426" right="786" />
+		<TabOrder>3</TabOrder>
+		<Font GUID="DBEBAEE2-DD81-4C22-9805-2E58FD341D9F" Name="Legend" />
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#ffffff" />
+		<ColorScheme Number="0" />
+		<Title>true</Title>
+		<Legend>true</Legend>
+		<Y-Labels>true</Y-Labels>
+		<X-Labels>true</X-Labels>
+		<YRange Automatic="false">
+			<Lower>0</Lower>
+			<Upper>10</Upper>
+		</YRange>
+		<ExplicitIdentifier>
+			<Identifier>Markups_Enduse( year, 'Residential', DisplayedCensusRegion, '1' )</Identifier>
+			<IdentifierTextInTitle>true</IdentifierTextInTitle>
+			<TitleText>"Residential Markup: Option1"</TitleText>
+		</ExplicitIdentifier>
+		<ExplicitIdentifier>
+			<Identifier>Markups_Enduse( year, 'Residential', DisplayedCensusRegion, '2' )</Identifier>
+			<TitleText>"Residential Markup: Option2"</TitleText>
+		</ExplicitIdentifier>
+		<ExplicitIdentifier>
+			<Identifier>Markups_Enduse( year, 'Residential', DisplayedCensusRegion, '3' )</Identifier>
+			<TitleText>"ResidentialMarkup: Option3"</TitleText>
+		</ExplicitIdentifier>
+		<ExplicitIdentifier>
+			<Identifier>Markups_Enduse( year, 'Residential', DisplayedCensusRegion, '4' )</Identifier>
+			<TitleText>"Residential Markup: Option4"</TitleText>
+		</ExplicitIdentifier>
+		<DrawLines>true</DrawLines>
+		<MarkPoints>true</MarkPoints>
+	</PageObject>
+	<PageObject Type="Text">
+		<Location top="12" left="210" bottom="42" right="534" />
+		<StaticText>Residential Enduse Markups, Option Selected:</StaticText>
+		<Font GUID="3EEC6209-AF15-406D-9130-A82C6D539593" Name="Title font" />
+		<TextColor RGB="#000000" />
+	</PageObject>
+	<PageObject Type="Selection Object">
+		<SelectionType>DropDownList</SelectionType>
+		<Location top="552" left="1002" bottom="576" right="1146" />
+		<TabOrder>5</TabOrder>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<TextShown>ElementName</TextShown>
+		<Border Style="None" />
+		<BackgroundColor RGB="#ffffff" />
+		<ExplicitIdentifier>
+			<Identifier>DisplayedCensusRegion</Identifier>
+		</ExplicitIdentifier>
+	</PageObject>
+	<PageObject Type="Table">
+		<Location top="6" left="534" bottom="42" right="684" />
+		<TabOrder>8</TabOrder>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#ffffff" />
+		<RowIndentation>3</RowIndentation>
+		<ExplicitIdentifier>
+			<Identifier>ResidentialOption</Identifier>
+			<FirstColumn>0</FirstColumn>
+			<NumberFormat Width="15" Decimals="0" />
+		</ExplicitIdentifier>
+	</PageObject>
+	<PageObject Type="Curve">
+		<Location top="54" left="822" bottom="426" right="1398" />
+		<TabOrder>4</TabOrder>
+		<Font GUID="DBEBAEE2-DD81-4C22-9805-2E58FD341D9F" Name="Legend" />
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#ffffff" />
+		<ColorScheme Number="0" />
+		<Title>true</Title>
+		<Legend>true</Legend>
+		<Y-Labels>true</Y-Labels>
+		<X-Labels>true</X-Labels>
+		<YRange Automatic="false">
+			<Lower>0</Lower>
+			<Upper>5</Upper>
+		</YRange>
+		<ExplicitIdentifier>
+			<Identifier>Markups_Enduse( year, 'Commercial', DisplayedCensusRegion, '1' )</Identifier>
+			<IdentifierTextInTitle>true</IdentifierTextInTitle>
+			<TitleText>"Commercial Markup: Option1"</TitleText>
+		</ExplicitIdentifier>
+		<ExplicitIdentifier>
+			<Identifier>Markups_Enduse( year, 'Commercial', DisplayedCensusRegion, '2' )</Identifier>
+			<TitleText>"Commercial Markup: Option2"</TitleText>
+		</ExplicitIdentifier>
+		<ExplicitIdentifier>
+			<Identifier>Markups_Enduse( year, 'Commercial', DisplayedCensusRegion, '3' )</Identifier>
+			<TitleText>"Commercial Markup: Option3"</TitleText>
+		</ExplicitIdentifier>
+		<ExplicitIdentifier>
+			<Identifier>Markups_Enduse( year, 'Commercial', DisplayedCensusRegion, '4' )</Identifier>
+			<TitleText>"Commercial Markup: Option4"</TitleText>
+		</ExplicitIdentifier>
+		<DrawLines>true</DrawLines>
+		<MarkPoints>true</MarkPoints>
+	</PageObject>
+	<PageObject Type="Text">
+		<Location top="12" left="822" bottom="42" right="1146" />
+		<StaticText>Commercial Enduse Markups, Option Selected:</StaticText>
+		<Font GUID="3EEC6209-AF15-406D-9130-A82C6D539593" Name="Title font" />
+		<TextColor RGB="#000000" />
+	</PageObject>
+	<PageObject Type="Table">
+		<Location top="6" left="1170" bottom="42" right="1320" />
+		<TabOrder>6</TabOrder>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#ffffff" />
+		<RowIndentation>3</RowIndentation>
+		<ExplicitIdentifier>
+			<Identifier>CommercialOption</Identifier>
+			<FirstColumn>0</FirstColumn>
+			<NumberFormat Width="15" Decimals="0" />
+		</ExplicitIdentifier>
+	</PageObject>
+	<PageObject Type="Curve">
+		<Location top="492" left="210" bottom="864" right="786" />
+		<TabOrder>2</TabOrder>
+		<Font GUID="DBEBAEE2-DD81-4C22-9805-2E58FD341D9F" Name="Legend" />
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#ffffff" />
+		<ColorScheme Number="0" />
+		<Title>true</Title>
+		<Legend>true</Legend>
+		<Y-Labels>true</Y-Labels>
+		<X-Labels>true</X-Labels>
+		<HorizontalGridLines>true</HorizontalGridLines>
+		<VerticalGridLines>true</VerticalGridLines>
+		<YRange Automatic="false">
+			<Lower>-2</Lower>
+			<Upper>10</Upper>
+			<NumGridPoints>6</NumGridPoints>
+		</YRange>
+		<ExplicitIdentifier>
+			<Identifier>Markups_Enduse( year, 'Industrial', DisplayedCensusRegion, '1' )</Identifier>
+			<IdentifierTextInTitle>true</IdentifierTextInTitle>
+			<TitleText>"Industrial Markup: Option1"</TitleText>
+		</ExplicitIdentifier>
+		<ExplicitIdentifier>
+			<Identifier>Markups_Enduse( year, 'Industrial', DisplayedCensusRegion, '2' )</Identifier>
+			<TitleText>"Industrial Markup: Option2"</TitleText>
+		</ExplicitIdentifier>
+		<ExplicitIdentifier>
+			<Identifier>Markups_Enduse( year, 'Industrial', DisplayedCensusRegion, '3' )</Identifier>
+			<TitleText>"Industrial Markup: Option3"</TitleText>
+		</ExplicitIdentifier>
+		<DrawLines>true</DrawLines>
+		<MarkPoints>true</MarkPoints>
+	</PageObject>
+	<PageObject Type="Text">
+		<Location top="450" left="210" bottom="480" right="534" />
+		<StaticText>Industrial Enduse Markups, Option Selected:</StaticText>
+		<Font GUID="3EEC6209-AF15-406D-9130-A82C6D539593" Name="Title font" />
+		<TextColor RGB="#000000" />
+	</PageObject>
+	<PageObject Type="Table">
+		<Location top="444" left="522" bottom="480" right="672" />
+		<TabOrder>7</TabOrder>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#ffffff" />
+		<RowIndentation>3</RowIndentation>
+		<ExplicitIdentifier>
+			<Identifier>IndustrialOption</Identifier>
+			<FirstColumn>0</FirstColumn>
+			<NumberFormat Width="15" Decimals="0" />
+		</ExplicitIdentifier>
+	</PageObject>
+	<PageObject Type="Text">
+		<Location top="402" left="18" bottom="456" right="198" />
+		<StaticText>Select Census Division:</StaticText>
+		<Font GUID="3EEC6209-AF15-406D-9130-A82C6D539593" Name="Title font" />
+		<TextColor RGB="#000000" />
+	</PageObject>
+	<UsedReferences>
+		<Model>
+			<Symbol>Region_Census_</Symbol>
+			<Symbol>ResidentialOption</Symbol>
+			<Symbol>CommercialOption</Symbol>
+			<Symbol>IndustrialOption</Symbol>
+			<Symbol>Markups_Enduse</Symbol>
+			<Symbol>DisplayedCensusRegion</Symbol>
+			<Symbol>year</Symbol>
+		</Model>
+	</UsedReferences>
+</Page>

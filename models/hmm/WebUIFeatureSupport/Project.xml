@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<LibraryProject AimmsVersion="4.76.11.11 unicode x64" ProjectUUID="40FCA65D-06A8-4C09-8C1D-DF5FFC4B71A9">
+	<ModelFileName>WebUIFeatureSupport.ams</ModelFileName>
+	<Prefix>wfs</Prefix>
+	<DisplayName>WebuiFeatureSupport</DisplayName>
+</LibraryProject>

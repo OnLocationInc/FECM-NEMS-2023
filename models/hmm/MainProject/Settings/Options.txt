@@ -1,0 +1,10 @@
+﻿* AIMMS
+communicate_warnings_to_end_users 1
+* CBC 2.9
+* CPLEX 20.1
+* CPLEX 22.1
+* IPOPT 3.11
+* NETSOL
+* Environment
+Number_1000_separator 3
+Number_decimal_separator 2

@@ -1,0 +1,64 @@
+﻿Component,L1,L2,Units,Saline Cavern
+Capital Costs,,Total Capital Costs,millions of BasisYear_$,12.76045464
+Capital Costs,,Total Capital Cost Excluding Land,millions of BasisYear_$,12.22429048
+Capital Costs,,Land/Other Capital Cost,millions of BasisYear_$,2.192353161
+Capital Costs,,Initial Capital Investment,millions of BasisYear_$,10.56810148
+Capital Costs,,Total Land Cost,millions of BasisYear_$,0.536164168
+Capital Costs,,Other Capital Costs,millions of BasisYear_$,1.656188993
+Capital Costs,,Site Preparation,millions of BasisYear_$,0.207023624
+Capital Costs,,Eng & Design,millions of BasisYear_$,0.414047248
+Capital Costs,,Project Contingency,millions of BasisYear_$,0.414047248
+Capital Costs,,One-time Licensing fees,millions of BasisYear_$,0
+Capital Costs,,Upfront permitting costs,millions of BasisYear_$,0.124214175
+Capital Costs,,Owners costs,millions of BasisYear_$,0.496856698
+Capital Costs,,Site Preparation rate,% of Initial Capital Investment ,5
+Capital Costs,,Eng & Design rate,% of Initial Capital Investment ,10
+Capital Costs,,Project Contingency rate ,% of Initial Capital Investment ,10
+Capital Costs,,One-time Licensing fees rate,% of Initial Capital Investment ,0
+Capital Costs,,Upfront permitting costs rate,% of Initial Capital Investment ,3
+Capital Costs,,Owners cost rate,% of Initial Capital Investment ,12
+Capital Costs,,Base Gas Cost,millions of BasisYear_$,0.692575
+Capital Costs,,Cavern/Well Cost,millions of BasisYear_$,3.762523
+Capital Costs,,Compressor Cost,millions of BasisYear_$,4.140472482
+Capital Costs,,Other Equipment Cost,millions of BasisYear_$,1.972531
+Technical Operating Parameters,,Base Gas Quantity,kg,277030
+Technical Operating Parameters,,H2 Price,BasisYear_$/kg,2.5
+Capital Costs,,Number of Compressor Units,,2
+Capital Costs,,Installed Commpressor Costs/unit (from H2A),millions of BasisYear_$,2.070236241
+Technical Operating Parameters,,Cost Factor,,1
+Capital Costs,,Compressor Other Capital Costs,millions of BasisYear_$,0.648877659
+Capital Costs,,Cavern Other Capital Costs,millions of BasisYear_$,1.007311337
+Capital Costs,,Cavern Total Capital Cost,millions of BasisYear_$,7.434940337
+Capital Costs,,Compressor Total Capital Costs,millions of BasisYear_$,4.789350141
+Fixed Operating Costs,,Total O&M Costs,millions of BasisYear_$/yr,0.994118
+Fixed Operating Costs,,Other Fixed Costs,millions of BasisYear_$/yr,0.654377
+Fixed Operating Costs,,Electricity Costs,millions of BasisYear_$/yr,0.026717
+Fixed Operating Costs,,Total Labor Costs,millions of BasisYear_$/yr,0.313024
+Fixed Operating Costs,,Insurance,millions of BasisYear_$/yr,0.127605
+Fixed Operating Costs,,Property Taxes,millions of BasisYear_$/yr,0.127605
+Fixed Operating Costs,,Licensing/Permits,millions of BasisYear_$/yr,0.01276
+Fixed Operating Costs,,Operating Maintenance and Repairs,millions of BasisYear_$/yr,0.229895
+Fixed Operating Costs,,Overhead & G&A,millions of BasisYear_$/yr,0.156512
+Fixed Operating Costs,,Other Fixed Operating Costs,millions of BasisYear_$/yr,0
+Fixed Operating Costs,,Insurance Rate,% of Total Capital Investment ,1
+Fixed Operating Costs,,Property Taxes Rate,% of Total Capital Investment ,1
+Fixed Operating Costs,,Licensing/Permits Rate,% of Total Capital Investment ,0
+Fixed Operating Costs,,Operating Maintenance and Repairs Rate for Compressor,% of Total Capital Investment ,4
+Fixed Operating Costs,,Operating Maintenance and Repairs Rate Remainder of the Facility,% of Initial Capital Investment  for remainder of the facility,1
+Fixed Operating Costs,,Overhead & G&A rate,% of labor cost,50
+Fixed Operating Costs,,Electricity Price,$/kWh,0.07
+Fixed Operating Costs,,Electricity Consumption,KWh,358970
+Fixed Operating Costs,,Labor Cost,$BasisYear/man-hrs,33.54
+Fixed Operating Costs,,Total Labor Required,hrs/year,9333
+Fixed Operating Costs,Compresssor O&M Cost,Total Compresssor O&M Cost,millions of BasisYear_$/yr,0.41
+Fixed Operating Costs,Compresssor O&M Cost,Labor Cost Pct for Compressor,% Allocated to Compressor,50
+Fixed Operating Costs,Compresssor O&M Cost,Insurance Pct for Compressor,% Allocated to Compressor,39.2
+Fixed Operating Costs,Compresssor O&M Cost,Property Taxes Pct for Compressor,% Allocated to Compressor,39.2
+Fixed Operating Costs,Compresssor O&M Cost,Licensing/Permits Pct for Compressor,% Allocated to Compressor,4
+Fixed Operating Costs,Compresssor O&M Cost,Operating Maintenance and Repairs Pct for Compressor,% Allocated to Compressor,31.3
+Fixed Operating Costs,Compresssor O&M Cost,Overhead & G&A Pct for Compressor,% Allocated to Compressor,50
+Fixed Operating Costs,Compresssor O&M Cost,Other Fixed Operating Costs Pct for Compressor,% Allocated to Compressor,0
+Fixed Operating Costs,,Cavern O&M Cost,millions of BasisYear_$/yr,0.58
+Technical Operating Parameters,,Design Cavern Capacity,kg of Hydrogen,1399298.376
+Financial Input Values,,Reference year,,2016
+Financial Input Values,,Assumed start-up year,,2015

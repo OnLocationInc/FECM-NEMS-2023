@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<ColorScheme InternalID="0">
+	<RGB>#0000ff</RGB>
+	<RGB>#ff80ff</RGB>
+	<RGB>#00ff00</RGB>
+	<RGB>#ff8000</RGB>
+	<RGB>#800080</RGB>
+	<RGB>#00ffff</RGB>
+	<RGB>#808080</RGB>
+	<RGB>#8080ff</RGB>
+	<RGB>#ff0000</RGB>
+	<RGB>#181867</RGB>
+	<RGB>#ffff00</RGB>
+	<RGB>#fe1b01</RGB>
+	<RGB>#408080</RGB>
+	<RGB>#ff80c0</RGB>
+	<RGB>#ff8080</RGB>
+	<RGB>#800000</RGB>
+</ColorScheme>
+<ColorScheme InternalID="1">
+	<RGB>#0000ff</RGB>
+	<RGB>#ff0080</RGB>
+	<RGB>#80ff80</RGB>
+	<RGB>#ffff00</RGB>
+	<RGB>#ff80ff</RGB>
+	<RGB>#400040</RGB>
+	<RGB>#ff8000</RGB>
+	<RGB>#00ffff</RGB>
+</ColorScheme>

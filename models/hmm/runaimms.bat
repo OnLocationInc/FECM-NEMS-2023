@@ -1,0 +1,1 @@
+c:/aimms/4.76.11.11-x64-VS2017/bin/aimms.exe --license-wait-seconds 60 -RNEMS_monitor .\\hmm.aimms

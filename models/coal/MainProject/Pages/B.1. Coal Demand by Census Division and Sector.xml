@@ -1,0 +1,202 @@
+<?xml version="1.0"?>
+<Page Version="4000" TimeStamp="2020-06-15 16:07:20">
+	<PageEditSize Type="Inherited" />
+	<ProjectUUID>3C1E27EB-95CC-4E52-BBB5-D70269E0E21B</ProjectUUID>
+	<TemplatesTabOrderPosition>1</TemplatesTabOrderPosition>
+	<Background Inherited="true" />
+	<PageObject Type="Pivot Table">
+		<Location top="96" left="24" bottom="804" right="660" />
+		<TabOrder>2</TabOrder>
+		<ObjectUUID>A33CE86E-9CE2-4578-88CD-E36D1BE7B91D</ObjectUUID>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<Contents>
+			<Explicit_Identifier>
+				<Identifier ID="4110">Display_NEMSSectorDemand( allsec, cd_name, runyr )</Identifier>
+				<Title ID="4120">"NEMS Demand"</Title>
+				<Format>
+					<Decimal_Places ID="4312">1</Decimal_Places>
+					<Show_1000_seperator ID="4313">"Yes"</Show_1000_seperator>
+				</Format>
+			</Explicit_Identifier>
+		</Contents>
+		<Indices>
+			<Explicit_Index>
+				<Index ID="6510">yr</Index>
+				<Header_Title ID="6530">"Year"</Header_Title>
+			</Explicit_Index>
+			<Explicit_Index>
+				<Index ID="6510">cd_name</Index>
+				<Header_Title ID="6530">"Census Division"</Header_Title>
+			</Explicit_Index>
+			<Explicit_Index>
+				<Index ID="6510">sec_name</Index>
+				<Header_Title ID="6530">"Sector"</Header_Title>
+			</Explicit_Index>
+			<Explicit_Index>
+				<Index ID="6510">allsec</Index>
+				<Header_Title ID="6530">"Sector"</Header_Title>
+			</Explicit_Index>
+			<Identifier_Index>
+				<Hide_if_Single_Identifier ID="6270">"No"</Hide_if_Single_Identifier>
+			</Identifier_Index>
+		</Indices>
+		<General>
+			<Dense_Aggregation_restricts_to_Domain ID="1022">"Yes"</Dense_Aggregation_restricts_to_Domain>
+		</General>
+		<Row_Area>
+			<Background_Color ID="2010">RGB&lt;255,255,200&gt;</Background_Color>
+			<Text_Color ExtraInfo="D4F48705-BFDF-4DF8-8E1F-D38EFF981024" ID="2020">"default selection"</Text_Color>
+			<Headers>
+				<Background_Color ExtraInfo="D4F48705-BFDF-4DF8-8E1F-D38EFF981024" ID="2120">"default selection"</Background_Color>
+				<Text_Color ID="2130">RGB&lt;255,255,255&gt;</Text_Color>
+				<Show_Sub_Headers ID="2150">"No"</Show_Sub_Headers>
+			</Headers>
+			<Aggregators>
+				<Background_Color ID="2220">RGB&lt;128,255,128&gt;</Background_Color>
+			</Aggregators>
+			<Grid_Focus_Indicator>
+				<Background_Color ID="2270">RGB&lt;0,0,168&gt;</Background_Color>
+				<Text_Color ID="2280">RGB&lt;255,255,200&gt;</Text_Color>
+			</Grid_Focus_Indicator>
+		</Row_Area>
+		<Column_Area>
+			<Auto_resize_Column_Widths ID="3006">"Upon all data changes"</Auto_resize_Column_Widths>
+			<Headers>
+				<Show_Sub_Headers ID="3150">"No"</Show_Sub_Headers>
+			</Headers>
+		</Column_Area>
+		<Grid_Area>
+			<Background_Color ID="5010">RGB&lt;255,255,255&gt;</Background_Color>
+			<Alternating_Background_Color ID="5011">RGB&lt;225,225,225&gt;</Alternating_Background_Color>
+			<Aggregators>
+				<Background_Color ID="5220">RGB&lt;128,255,128&gt;</Background_Color>
+			</Aggregators>
+			<Sub_Header_Row_or_Column>
+				<Background_Color ID="5320">RGB&lt;255,255,200&gt;</Background_Color>
+			</Sub_Header_Row_or_Column>
+		</Grid_Area>
+	</PageObject>
+	<PageObject Type="Curve">
+		<Location top="96" left="666" bottom="372" right="1314" />
+		<TabOrder>4</TabOrder>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#c0c0c0" />
+		<ColorScheme Number="0" />
+		<SwappedAxes>true</SwappedAxes>
+		<Title>true</Title>
+		<Legend>true</Legend>
+		<Y-Labels>true</Y-Labels>
+		<X-Labels>true</X-Labels>
+		<StatusLine>true</StatusLine>
+		<ExplicitIdentifier>
+			<Identifier>Display_NEMSALLSectorDemand( selnemssec, SelectCDReg, runyr )</Identifier>
+			<TitleText>"NEMS  Coal Demand"</TitleText>
+			<Description>TooltipCDDmd( selnemssec, SelectCDReg, runyr )</Description>
+		</ExplicitIdentifier>
+		<DrawLines>true</DrawLines>
+		<MarkPoints>true</MarkPoints>
+	</PageObject>
+	<PageObject Type="Curve">
+		<Location top="474" left="672" bottom="786" right="1320" />
+		<TabOrder>3</TabOrder>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#c0c0c0" />
+		<ColorScheme Number="0" />
+		<SwappedAxes>true</SwappedAxes>
+		<Title>true</Title>
+		<Legend>true</Legend>
+		<Y-Labels>true</Y-Labels>
+		<X-Labels>true</X-Labels>
+		<StatusLine>true</StatusLine>
+		<ExplicitIdentifier>
+			<Identifier>Display_NEMSALLSectorDemand( SelectNEMSSector, rcd, runyr )</Identifier>
+			<TitleText>"Total Sectoral Coal Transport"</TitleText>
+			<Description>TooltipCDDmd( SelectNEMSSector, rcd, runyr )</Description>
+		</ExplicitIdentifier>
+		<DrawLines>true</DrawLines>
+		<MarkPoints>true</MarkPoints>
+	</PageObject>
+	<PageObject Type="Selection Object">
+		<SelectionType>DropDownList</SelectionType>
+		<Location top="42" left="672" bottom="72" right="870" />
+		<TabOrder>5</TabOrder>
+		<Font GUID="F2C814D4-9CCE-416C-9F68-BE15F2AFC56A" Name="font 1" />
+		<TextShown>ElementName</TextShown>
+		<Border Style="None" />
+		<BackgroundColor RGB="#ffffff" />
+		<ExplicitIdentifier>
+			<Identifier>SelectCDReg</Identifier>
+		</ExplicitIdentifier>
+	</PageObject>
+	<PageObject Type="Selection Object">
+		<SelectionType>CheckBoxes</SelectionType>
+		<Location top="12" left="912" bottom="90" right="1296" />
+		<TabOrder>6</TabOrder>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<TextShown>ElementName</TextShown>
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#ffffff" />
+		<ExplicitIdentifier>
+			<Identifier>SelectedNEMSSectors( TotSector_Name )</Identifier>
+		</ExplicitIdentifier>
+	</PageObject>
+	<PageObject Type="Selection Object">
+		<SelectionType>DropDownList</SelectionType>
+		<Location top="408" left="666" bottom="438" right="864" />
+		<TabOrder>7</TabOrder>
+		<Font GUID="F2C814D4-9CCE-416C-9F68-BE15F2AFC56A" Name="font 1" />
+		<TextShown>ElementName</TextShown>
+		<Border Style="None" />
+		<BackgroundColor RGB="#ffffff" />
+		<ExplicitIdentifier>
+			<Identifier>SelectNEMSSector</Identifier>
+		</ExplicitIdentifier>
+	</PageObject>
+	<PageObject Type="Selection Object">
+		<SelectionType>CheckBoxes</SelectionType>
+		<Location top="378" left="882" bottom="462" right="1284" />
+		<TabOrder>8</TabOrder>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<TextShown>ElementName</TextShown>
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#ffffff" />
+		<ExplicitIdentifier>
+			<Identifier>SelectedCDregions( cd_name )</Identifier>
+		</ExplicitIdentifier>
+	</PageObject>
+	<PageObject Type="Text">
+		<Location top="18" left="672" bottom="42" right="948" />
+		<StaticText>Choose a Census Division and Sectors</StaticText>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<TextColor RGB="#000000" />
+	</PageObject>
+	<PageObject Type="Text">
+		<Location top="390" left="666" bottom="414" right="948" />
+		<StaticText>Choose a Sector and Census Divisions</StaticText>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<TextColor RGB="#000000" />
+	</PageObject>
+	<UsedReferences>
+		<Model>
+			<Symbol>CenDiv_Name</Symbol>
+			<Symbol>TotSector_Name</Symbol>
+			<Symbol>SelectedCDregions</Symbol>
+			<Symbol>SelectedNEMSSectors</Symbol>
+			<Symbol>SelectNEMSSector</Symbol>
+			<Symbol>SelectCDReg</Symbol>
+			<Symbol>TooltipCDDmd</Symbol>
+			<Symbol>Display_NEMSSectorDemand</Symbol>
+			<Symbol>Display_NEMSALLSectorDemand</Symbol>
+			<Symbol>yr</Symbol>
+			<Symbol>cd_name</Symbol>
+			<Symbol>sec_name</Symbol>
+			<Symbol>allsec</Symbol>
+			<Symbol>rcd</Symbol>
+			<Symbol>selnemssec</Symbol>
+			<Symbol>runyr</Symbol>
+		</Model>
+	</UsedReferences>
+</Page>

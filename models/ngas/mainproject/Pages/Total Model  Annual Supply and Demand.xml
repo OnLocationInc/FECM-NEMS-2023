@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<Page Version="4000" TimeStamp="2016-07-07 20:23:14">
+	<PageEditSize Type="Inherited" />
+	<ProjectUUID>BD6A9103-B1FB-4406-840F-21FDB00917E2</ProjectUUID>
+	<TemplatesTabOrderPosition>1</TemplatesTabOrderPosition>
+	<Background Inherited="true" />
+	<PageObject Type="2D Chart">
+		<Location top="42" left="198" bottom="390" right="774" />
+		<TabOrder>4</TabOrder>
+		<Border Style="InShadow" Width="2" />
+		<X_Axis>
+			<Domain ID="1004">year</Domain>
+			<Annotation>
+				<Rotation_angle ID="1010">90</Rotation_angle>
+				<Show_every_n_th_label ID="1025">5</Show_every_n_th_label>
+			</Annotation>
+		</X_Axis>
+		<Y_Axis>
+			<Identifier>
+				<Value ID="2007">TotalModelDemand( year )</Value>
+			</Identifier>
+			<Identifier>
+				<Value ID="2007">TotalModelSupply( year )</Value>
+			</Identifier>
+		</Y_Axis>
+		<Legend>
+			<Show ID="53">"Show"</Show>
+			<Title_text ID="57">"Total US supply and demand"</Title_text>
+			<Misc_display_settings>
+				<Anchor ID="41">"North"</Anchor>
+			</Misc_display_settings>
+		</Legend>
+	</PageObject>
+	<UsedReferences>
+		<Model>
+			<Symbol>year</Symbol>
+			<Symbol>TotalModelDemand</Symbol>
+			<Symbol>TotalModelSupply</Symbol>
+		</Model>
+	</UsedReferences>
+</Page>

@@ -1,0 +1,103 @@
+<?xml version="1.0"?>
+<Page Version="4000" TimeStamp="2018-02-23 13:55:09">
+	<PageEditSize Type="Inherited">
+		<Size Width="1608" Height="670" />
+	</PageEditSize>
+	<ProjectUUID>240AD1D4-C5B8-4B93-BFD3-79EF080CCD8D</ProjectUUID>
+	<TemplatesTabOrderPosition>1</TemplatesTabOrderPosition>
+	<ResizeData>
+		<MainArea Line="PercentageFromTop" Value="0.135820895522">
+			<BottomArea Line="PercentageFromTop" Value="0.815517241379">
+				<TopArea Line="PercentageFromLeft" Value="0.769278606965">
+					<LeftArea Line="PercentageFromLeft" Value="0.949878738884">
+						<LeftArea Line="PercentageFromLeft" Value="0.954855195911">
+							<LeftArea Line="PercentageFromLeft" Value="0.157002676182">
+								<RightArea Line="PercentageFromTop" Value="0.279069767442" />
+							</LeftArea>
+						</LeftArea>
+					</LeftArea>
+				</TopArea>
+			</BottomArea>
+		</MainArea>
+	</ResizeData>
+	<Background Inherited="true" />
+	<PageObject Type="2D Chart">
+		<Location top="102" left="180" bottom="444" right="1128" />
+		<TabOrder>2</TabOrder>
+		<Border Style="InShadow" Width="2" />
+		<X_Axis>
+			<Domain ID="1004">hr</Domain>
+			<Scale>
+				<Minimum ID="1014">0</Minimum>
+				<Maximum ID="1015">0</Maximum>
+			</Scale>
+		</X_Axis>
+		<Y_Axis>
+			<Identifier>
+				<Value ExtraInfo="3 1 0 2 " ID="2007">IntermittentCurtailment( pti, epselect, '2040', hr )</Value>
+			</Identifier>
+			<Title>
+				<Text ID="2003">"GW"</Text>
+			</Title>
+			<Scale>
+				<Minimum ID="2035">0</Minimum>
+			</Scale>
+			<Gridlines>
+				<Spacing ID="2043">0</Spacing>
+				<Show_on_top ID="2044">0</Show_on_top>
+			</Gridlines>
+		</Y_Axis>
+		<Display>
+			<Misc_display_settings>
+				<Color_Scheme ID="89">1</Color_Scheme>
+			</Misc_display_settings>
+		</Display>
+		<Header_Footer>
+			<Header>
+				<Text ID="23">"Intermittent Curtailment"</Text>
+			</Header>
+			<Footer>
+				<Text ID="36">"Hours(h)"</Text>
+			</Footer>
+		</Header_Footer>
+		<Legend>
+			<Show ID="53">"Show"</Show>
+		</Legend>
+	</PageObject>
+	<PageObject Type="Selection Object">
+		<SelectionType>RadioButtons</SelectionType>
+		<Location top="138" left="66" bottom="354" right="168" />
+		<TabOrder>1</TabOrder>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<TextShown>ElementName</TextShown>
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#ffffff" />
+		<ExplicitIdentifier>
+			<Identifier>epselect</Identifier>
+		</ExplicitIdentifier>
+	</PageObject>
+	<PageObject Type="Selection Object">
+		<SelectionType>ListBox</SelectionType>
+		<SingleSelect>true</SingleSelect>
+		<Location top="102" left="66" bottom="132" right="168" />
+		<TabOrder>3</TabOrder>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<TextShown>ElementName</TextShown>
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#ffffff" />
+		<ExplicitIdentifier>
+			<Identifier>yrselect</Identifier>
+		</ExplicitIdentifier>
+	</PageObject>
+	<UsedReferences>
+		<Model>
+			<Symbol>Year</Symbol>
+			<Symbol>yrselect</Symbol>
+			<Symbol>IntermittentCurtailment</Symbol>
+			<Symbol>epselect</Symbol>
+			<Symbol>hr</Symbol>
+			<Symbol>pti</Symbol>
+			<Symbol>SubEMMReg</Symbol>
+		</Model>
+	</UsedReferences>
+</Page>

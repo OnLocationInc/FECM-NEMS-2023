@@ -1,0 +1,569 @@
+## ams_version=1.0
+
+Section S2_Data_Import_Export {
+	Section NEMS_Interface {
+		Section Global_Data_Structure {
+			Section GDS_Parameters {
+				DeclarationSection GDS {
+					Set MaxItr {
+						SubsetOf: Integers;
+						Text: "Maximum Nems Iterations";
+						Index: i_MaxItr;
+						Property: NoSave, ElementsAreNumerical;
+						Comment: "Maximum Iterations";
+					}
+					Set M1_ {
+						SubsetOf: Integers;
+						Text: "Element set for 1";
+						Index: M1, S1;
+						Property: ElementsAreLabels;
+						InitialData: {
+							{1}
+						}
+						Comment: "1 set";
+					}
+				}
+				DeclarationSection NCNTRL {
+					Parameter NCNTRL_CURCALYR {
+						IndexDomain: M1;
+						Text: "Current Calendar Year for NEMS simulation, such as 2040";
+						Range: {
+							{1989..2080}
+						}
+						Property: NoSave;
+						InitialData: data { 1 : 2023 };
+					}
+					Parameter NCNTRL_CURIYR {
+						IndexDomain: M1;
+						Text: "Current year index for NEMS simulation where 1990=1";
+						Property: NoSave;
+						InitialData: 34;
+					}
+					Parameter NCNTRL_CURITR {
+						IndexDomain: M1;
+						Text: "Iteration number of NEMS gauss-seidel solution";
+						InitialData: 1;
+					}
+					Parameter NCNTRL_FCRL {
+						IndexDomain: M1;
+						Text: "FINAL CONVERGENCE AND REPORTING LOOP SWITCH (1=ON)";
+						InitialData: 0;
+					}
+					Parameter NCNTRL_FIRSYR {
+						IndexDomain: M1;
+						Text: "Current year index for NEMS simulation where 1990=1,";
+						InitialData: 24;
+					}
+					Parameter NCNTRL_LASTYR {
+						IndexDomain: M1;
+						Text: "Current year index for NEMS simulation where 1990=1";
+						InitialData: data { 1 : 61 };
+					}
+					Parameter NCNTRL_NCRL {
+						IndexDomain: M1;
+						Text: "Reporting Loop Switch (1=ON)";
+						InitialData: 0;
+					}
+				}
+			}
+		}
+		Section NEMS_Monitor_Section {
+			Procedure pr_ReadGlobalDataFromNEMS {
+				Body: {
+					!GlobalDataToAimms is the text file with composite tables from NEMS containing NEMS variables.
+					!This routine reads the text file, one for each iteration
+					!sDataYearFile:="toAIMMS\\GlobalDataToAimms_"+"2023_01.txt";
+					sDataYearFile:="toAIMMS\\GlobalDataToAimms_"+formatstring("%i",ncntrl_curcalyr('1'))+"_"+ formatstring("%>02i",ncntrl_curitr('1')) +".txt";
+					!sDataYearFile:="toAIMMS\\GlobalDataToAimms_"+formatstring("%i",ncntrl_curcalyr(ModelYear))+"_"+formatstring("%>02i",ncntrl_curitr(1))+".txt");
+					 put formatstring("the global data transfer file name is %s\n", sDataYearFile);
+					 if fileexists(sDataYearFile) then
+					       read from file sDataYearFile in merge mode;
+					 else
+					    put "the global data transfer file not found \n ";
+					 endif;
+				}
+			}
+			Procedure pr_WriteGlobalDataToNEMS {
+				Body: {
+					!sDataYearFile:="toAIMMS\\GlobalDataToAimms_"+"2023_01.txt";
+					!Writes a text file, one per iteration with composite tables to get picked up by NEMS.
+					! Writes a diagnostic file GlobalDataToNEMS_Diag with variables not in HMMPutvars.txt not picked up from NEMS first.
+					put formatstring("the global data transfer file out name is %s\n", sDataYearFile);
+					
+					!         send global data back to nems via a text file. The file is read by nems filer subroutine with funfmt=7
+					!	  creates diagnostic file
+						sDataYearFile:="fromAIMMS\\GlobalDataToNEMS_Diag_"+formatstring("%i",ncntrl_curcalyr('1'))+"_"+formatstring("%>02i",ncntrl_curitr('1'))+".txt";
+					!     
+					      put GlobalDataToNEMS; ! opens the file (sDataYearFile) and sets stage for subsequent display and/or put statements
+					      display {NCNTRL_CURCALYR('1')};
+					      display { ncntrl_curitr('1')};
+					      display {ModelYear};
+					      display {ep_CurrentOptYear};
+					      display s_ThirdPeriodYears;
+					      display i_calYear;
+					 !     display {p_ProdBasisYearPerTech(i_ProdActiveTech)} where decimals:=2;
+					 !     display {p_MarketH2DemandbySeason(i_MarketQuantityCode, i_CensusDivisionOpt, i_SeasonOpt, ep_CurrentOptYear)};
+					 !     display {p_MarketH2DemandSeasonFraction(i_MarketQuantityCode, i_SeasonOpt)};
+					 !     display {v_ProductionOperate(i_ProdActiveTech,i_CensusDivisionOpt,i_SeasonOpt,i_PlanningPeriod)} where decimals:=2;
+					 	p_PUC(ep_ProductionTech(i_Tech), i_CensusDivisionOpt, i_calYear)	 := p_ProductionUnplannedCapacity(ep_ProductionTech(i_Tech), i_CensusDivisionOpt, i_calYear)
+					        +   p_ProductionCapacityAvailable(i_tech, i_CensusDivisionOpt,ep_NUMYRtoCal(i_calYear))  ;
+					      display {p_PUC(i_PAT, i_CensusDivisionOpt, i_calYear)};
+					      display {HMMBLK_NH3EXPORT(i_NEMSYear,i_CensusDivision)};
+					
+					!      display{v_AmmoniaExportStep(i_NH3ExportStep,i_CensusDivisionOpt,ep_PlanningPeriodFirst)};
+					!     display{v_AmmoniaProductionOperate(i_ActiveNH3Technology,i_CensusDivisionOpt,i_SeasonOpt,i_PlanningPeriod)};
+					
+					!  	display {p_ProductionCapacityAvailable(i_Tech, i_CensusDivisionOpt, i_NEMSYear)};
+					!  	display {p_TotalProductionCapacity(i_ProdActiveOptTech, i_CensusDivisionOpt, i_calYear)};
+					 !     display {p_ProdCapacityLimit(i_ProdActiveOptTech, i_CensusDivisionOpt, i_PlanningPeriodFirst)};
+					 !     display {p_TotalH2Demand(i_CensusDivisionOpt, i_SeasonOpt, i_PlanningPeriod)};
+					      if ( (NCNTRL_CURCALYR('1')  = '2035' ) OR (NCNTRL_CURCALYR('1') = '2050' ) ) then
+					        display{ p_HydrogenProductionOpCost(i_PAT,i_CnDvOpt,i_calYear)};
+					        display{ p_HydrogenFixedO_MCost(i_PAT,i_CnDvOpt,i_calYear) };
+					        display{p_HydrogenProductionCapCost(i_PAT,i_CnDvOpt,i_calYear)};
+					        display{p_HydrogenProductionOpCredit(i_PAT,i_CnDvOpt,i_calYear)};
+					        display{p_HydrogenProductionOpCredit(i_PAT,i_CnDvOpt,i_calYear)};
+					        display{p_CO2CaptureCredit(i_PAT,i_CnDvOpt,i_calYear)};
+					      endif  ;
+					      display {v_TotalCost};
+					 !     display {HMMBLK_QHMM(i_MarketQuantityCode, i_CensusDivision, i_NEMSYear)} where decimals:=2;
+					      putclose;
+					
+					      sDataYearFile:="fromAIMMS\\GlobalDataToNEMS_"+formatstring("%i",ncntrl_curcalyr('1'))+"_"+formatstring("%>02i",ncntrl_curitr('1'))+".txt";
+					!         Note the "FILE" identifier GlobalDataToNEMS is linked to the string parameter sDataYearFile now to NEMS
+					      put GlobalDataToNEMS; ! opens the file (sDataYearFile) and sets stage for subsequent display and/or put statements
+					
+					      display {HMMBLK_PHMM(i_MarketPriceCode, i_CensusDivision,  i_NEMSYEAR) } where decimals:=2;
+					      display {QBLK_QBMHM( i_CensusDivision, i_NEMSYEAR)} where decimals:=2;
+					      display {QBLK_QELHM( i_CensusDivision, i_NEMSYEAR)} where decimals:=2;
+					      display {QBLK_QCLHM( i_CensusDivision, i_NEMSYEAR)} where decimals:=2;
+					      display {QBLK_QNGHM( i_CensusDivision, i_NEMSYEAR)} where decimals:=2;
+					!      display {HMMBLK_CO2CAPFUEL(i_Fuel, i_CensusDivision, i_NEMSYear)} where decimals:=2;
+					      display {HMMBLK_HMGSPRD(i_NEMSYEAR, i_CensusDivision)} where decimals:=2;
+					      display {HMMBLK_HMCLPRD(i_NEMSYEAR, i_CensusDivision)} where decimals:=2;
+					      display {HMMBLK_HMBIPRD(i_NEMSYEAR, i_CensusDivision)} where decimals:=2;
+					      display {HMMBLK_HMELPRD(i_NEMSYEAR, i_CensusDivision)} where decimals:=2;
+					      display {HMMBLK_CO2CAPFUEL(M3, i_CensusDivision, i_NEMSYear)} where decimals:=4;
+					      display {HMMBLK_INVCST(M50, i_CensusDivision, i_NEMSYear) } where decimals:=2;
+					      display {HMMBLK_HMPRODSEQ(M3,i_CensusDivision, i_NEMSYear)} where decimals:=2;
+					
+					      putclose;
+				}
+				Comment: "INVCST has index i_tech, which is not a number. We need numbers for NEMS";
+			}
+			DeclarationSection Transfer_Global_Data {
+				File NEMSMessageinFile {
+					Device: Disk;
+					Text: "File handle for monitor.in.txt";
+					Mode: replace;
+				}
+				File GlobalDatatoNEMS {
+					Name: sDataYearFile;
+					Device: Disk;
+					Text: "File handle for data out";
+					Mode: replace;
+				}
+				File NEMSMessageOutFile {
+					Name: sMessageOutFile;
+					Device: Disk;
+					Text: "Monitor.out.txt";
+					Mode: replace;
+				}
+				StringParameter sStatusMessage;
+				StringParameter sAction;
+				StringParameter sMessageOutFile {
+					Definition: "monitor.out.txt";
+				}
+				StringParameter sMessageInFile {
+					Definition: "monitor.in.txt";
+				}
+				StringParameter sDataYearFile;
+			}
+			DeclarationSection NEMS_Monitor_Identifiers {
+				Parameter p_StandAlone {
+					Text: "Identifies standalone run (now has separate routine)";
+					Range: binary;
+					Property: NoSave, Integer;
+				}
+				Parameter CountSleep;
+				Parameter p_YearForGlobalVariables {
+					Range: integer;
+					Property: NoSave, Integer;
+				}
+			}
+		}
+		Section NEMS_Data {
+			Set MNMFS1 {
+				SubsetOf: Integers;
+				Text: "Biomass types, 1 is average 1 -5";
+				Index: i_BiomassType;
+				Parameter: ep_BiomassType;
+				Definition: data {1 .. 5};
+			}
+			Set NDRGN1 {
+				SubsetOf: Integers;
+				Text: "Coal Regions";
+				Index: i_CoalRegion;
+			}
+			Parameter p_MinPrice {
+				Text: " this will be $2/MMBTU in 2021";
+				Definition: 0.96;
+			}
+			Parameter p_KWhToMMBTU {
+				Text: "293 kw per MMBTU";
+				Definition: 293.071;
+			}
+			Parameter p_DaysinYear {
+				Definition: 365;
+			}
+			Parameter p_HydrogenHHV {
+				Text: "HHV hydrogen per kg";
+				Definition: 134310;
+			}
+			Parameter p_MMBTUtoBTU {
+				Text: "MMBTU to BTU";
+				Definition: 1000000;
+			}
+			Parameter ModelYear {
+				Text: "Start Year of HMM";
+				InitialData: 2023;
+			}
+			Parameter FirstModelYear {
+				InitialData: 2023;
+			}
+			Parameter LastModelYear {
+				InitialData: 2050;
+			}
+			Set s_NEMSYears {
+				Index: i_NEMSYear;
+				Parameter: ep_CurrentNEMSYear;
+				Definition: {
+					data 
+					    { 1 , 2 , 3 , 4 , 5 , 6 , 7 , 8 , 9 , 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32,
+					      33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64,
+					      65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91 }
+				}
+				Comment: "added through 2080";
+			}
+			Set M10 {
+				SubsetOf: s_MarketQuantityCodes;
+				Text: "Hydrogen market sectors";
+				Index: i_Sector;
+			}
+			Set M15_ {
+				Text: "Set cardinality of 15";
+				Index: M15;
+			}
+			Set MNUMYR {
+				SubsetOf: s_NEMSYears;
+				Text: "Years through 2080";
+				Index: i_NumYear;
+				Definition: {
+					data 
+					    { 1 , 2 , 3 , 4 , 5 , 6 , 7 , 8 , 9 , 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32,
+					      33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64,
+					      65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91 }
+				}
+				Comment: {
+					"1 --> 1990
+					2 --> 1991
+					..."
+				}
+			}
+			Set MNUMCR {
+				SubsetOf: Integers;
+				Text: "Census Division";
+				Index: i_CensusDivision, j_CensusDivision;
+				Parameter: ep_CensusDivision;
+			}
+			Set MNUMY3 {
+				Text: "start of macro (1987)";
+				Index: i_GDPYear;
+				Definition: {
+					data 
+					    { 1 , 2 , 3 , 4 , 5 , 6 , 7 , 8 , 9 , 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32,
+					      33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64,
+					      65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94 }
+				}
+				Comment: {
+					"1 --> 1987
+					2 --> 1988
+					..."
+				}
+			}
+			Set MAXNF2 {
+				Text: "EMM fuel regions";
+				Index: i_EMMFuelRegion;
+				Comment: {
+					"
+					..."
+				}
+			}
+			Set s_Year {
+				SubsetOf: Integers;
+				Index: i_year;
+				Definition: data {1990..2100};
+			}
+			Set TECH {
+				SubsetOf: s_ProdCodes;
+				Text: "Code descriptions of production technologies.";
+				Index: i_Tech;
+				Comment: "Need to match order in database";
+			}
+			Parameter HMMBLK_PHMM {
+				IndexDomain: (i_MarketPriceCode, i_CensusDivision, i_NEMSYear);
+				Text: "Price Block sector";
+			}
+			Parameter HMMBLK_QHMM {
+				IndexDomain: (i_MarketQuantityCode, i_CensusDivision, i_NEMSYear);
+				Text: "Quantity Block by sector";
+			}
+			Parameter UEFDOUT_UPRWDCR {
+				IndexDomain: (i_CensusDivision,i_NEMSYear);
+				Text: "Price of Biomass";
+			}
+			Parameter WRENEW_PBMH2CL {
+				IndexDomain: (i_BiomassType,i_CoalRegion, i_NEMSYear);
+				Text: "Price of Biomass";
+			}
+			Parameter AMPBLK_PNGIN {
+				IndexDomain: (i_CensusDivision,i_NEMSYear);
+				Text: "Price Natural Gas Industrial with tax";
+			}
+			Parameter AMPBLK_PCLIN {
+				IndexDomain: (i_CensusDivision,i_NEMSYear);
+				Text: "Price coal with tax industrial";
+			}
+			Parameter EUSPRC_PELINP {
+				IndexDomain: (i_CensusDivision,i_NEMSYear);
+				Text: "Price electricity industrial primary";
+			}
+			Parameter QBLK_QBMHM {
+				IndexDomain: (i_CensusDivision,i_NEMSYear);
+				Text: "quantity biomass required";
+			}
+			Parameter QBLK_QELHM {
+				IndexDomain: (i_CensusDivision,i_NEMSYear);
+				Text: "Quantity electricity used";
+			}
+			Parameter QBLK_QPVEL {
+				IndexDomain: (i_CensusDivision,i_NEMSYear);
+				Text: "solar power generated (used for limit on renewable PEM)";
+			}
+			Parameter QBLK_QWIEL {
+				IndexDomain: (i_CensusDivision,i_NEMSYear);
+				Text: "wind power available";
+			}
+			Parameter QBLK_QUREL {
+				IndexDomain: (i_CensusDivision,i_NEMSYear);
+				Text: "uranium used (proxy for nuclear power)";
+			}
+			Parameter QBLK_QCLHM {
+				IndexDomain: (i_CensusDivision,i_NEMSYear);
+				Text: "coal used";
+			}
+			Parameter COGEN_WHRFOSS {
+				IndexDomain: (i_CensusDivision,i_NEMSYear);
+				Text: "average heat rate fossil fuel power sector";
+			}
+			Parameter QBLK_QNGHM {
+				IndexDomain: (i_CensusDivision,i_NEMSYear);
+				Text: "NG consumption";
+			}
+			Parameter QBLK_QH1TR {
+				IndexDomain: (i_CensusDivision,i_NEMSYear);
+				Text: "unused";
+			}
+			Parameter QBLK_QHYTR {
+				IndexDomain: (i_CensusDivision,i_NEMSYear);
+				Text: "unused";
+			}
+			Parameter QBLK_QH2TR {
+				IndexDomain: (i_CensusDivision,i_NEMSYear);
+				Text: "unused";
+			}
+			Parameter QBLK_QH3TR {
+				IndexDomain: (i_CensusDivision,i_NEMSYear);
+				Text: "unused";
+			}
+			Parameter MACOUT_MC_JPGDP {
+				IndexDomain: i_GDPYear;
+				Text: "GDP deflator";
+				Property: NoSave;
+			}
+			Parameter MACOUT_MC_RMGBLUSREAL {
+				IndexDomain: i_NEMSYear;
+				Text: "real interest rate";
+			}
+			Parameter UECPOUT_TNS_COSTS {
+				IndexDomain: (i_EMMFuelRegion,i_NEMSYear);
+				Text: "CCS transportation";
+			}
+			Parameter EMABLK_JNGHM {
+				IndexDomain: i_NEMSYear;
+				Text: "NG adder (unused)";
+			}
+			Parameter EMABLK_JCLHM {
+				IndexDomain: i_NEMSYear;
+				Text: "Coal adder (unused)";
+			}
+			Parameter EMEBLK_EBMHM {
+				IndexDomain: i_NEMSYear;
+				Text: "biomass co2 emissions";
+			}
+			Parameter EMEBLK_ENGHM {
+				IndexDomain: i_NEMSYear;
+				Text: "NG carbon emissions";
+			}
+			Parameter EMEBLK_ECLHM {
+				IndexDomain: i_NEMSYear;
+				Text: "coal carbon emissions";
+			}
+			Parameter EMISSION_EMETAX {
+				IndexDomain: (M15,i_NEMSYear);
+				Text: "carbon tax";
+			}
+			Parameter TCS45Q_CCS_EOR_45Q {
+				IndexDomain: i_NEMSYear;
+				Text: "45Q credit CCS";
+			}
+			Parameter TCS45Q_CCS_SALINE_45Q {
+				IndexDomain: i_NEMSYear;
+				Text: "45Q credit saline";
+			}
+			Parameter TCS45Q_CCS_DAC_45Q {
+				IndexDomain: i_NEMSYear;
+				Text: "45Q credit DAC";
+			}
+			Parameter TCS45Q_I_45Q_SYR {
+				IndexDomain: M1;
+				InitialData: 0;
+			}
+			Parameter TCS45Q_I_45Q_LYR_RET {
+				IndexDomain: M1;
+				InitialData: 0;
+			}
+			Parameter TCS45Q_I_45Q_LYR_NEW {
+				IndexDomain: M1;
+				InitialData: 0;
+			}
+			Parameter TCS45Q_I_45Q_DURATION {
+				IndexDomain: M1;
+				Text: "years available 45Q credit CCS";
+				InitialData: 0;
+			}
+		}
+	}
+	Section Excel {
+		SourceFile: "Excel.ams";
+	}
+	Section DBase {
+		SourceFile: "DBase.ams";
+	}
+	Section Flat_Files_NOT_USED {
+		Procedure pr_InputFlatFiles {
+			Body: {
+				! Read data from NEMS
+				!read from file Fi_Available;
+				!read from file Fi_New;
+				!read from file Fi_Planned;
+				!read from file Fi_ToAimms; ! replaced with NEMS_Monitor ReadGlobalDataFromNEMS
+				
+				!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+				
+				!read from file Fi_InputData;
+				!read from file Fi_Macro;
+				!read from file Fi_Fuels;
+				!update s_NEMSYears;
+				
+				!put Fi_OutputData;
+				!	display {HMMBLK_QHMM};
+				!putclose Fi_OutputData;
+				!
+			}
+		}
+		Parameter CAPAVAIL {
+			IndexDomain: (i_Tech,i_CensusDivision,i_NEMSYear);
+			Text: "unused";
+		}
+		Parameter CAPNEW {
+			IndexDomain: (i_Tech,i_CensusDivision,i_NEMSYear);
+			Text: "unused";
+		}
+		Parameter CAPLAN {
+			IndexDomain: (i_Tech,i_CensusDivision,i_NEMSYear);
+			Text: "unused";
+		}
+	}
+	Section Cases {
+		Procedure pr_LoadData {
+			Arguments: (_sp_CaseName);
+			Body: {
+				! reads in parameters from case file  of form HMM_Output_Year_iter.data
+				! checks list for GUI use
+				empty bp_ChangedIdentifiers;
+				bp_IdentifiersPriorToLoadCase(i_AllDefinedIdentifierName)
+				:= 1 ONLYIF(P_IdentifierCardinalities_D(i_AllDefinedIdentifierName));
+				
+				
+				CaseFilemerge(
+				url: FormatString("data\\%s.data",_sp_CaseName),0);
+				
+				bp_IdentifiersAfterLoadingCase(i_AllDefinedIdentifierName)
+				:= 1 ONLYIF(P_IdentifierCardinalities_D(i_AllDefinedIdentifierName));
+				
+				
+				bp_ChangedIdentifiers(i_AllDefinedIdentifierName)
+				:= bp_IdentifiersAfterLoadingCase(i_AllDefinedIdentifierName)
+				- bp_IdentifiersPriorToLoadCase(i_AllDefinedIdentifierName);
+			}
+			Comment: {
+				"				\"A value of \\\"0\\\" in the function \\\"CaseFileLoad\\\" indicates runtime libraries in existence before the data is loaded, but not referenced in the case file, are destroyed during the data load.
+								A value of \\\"1\\\" keeps the existing runtime libraries.\""
+			}
+			StringParameter _sp_CaseName {
+				Text: "case name of form HMM_Output_Year_iter.data";
+				Property: Input;
+			}
+			Set _s_Identifier {
+				SubsetOf: S_AllDefinedIdentifierNames_D;
+			}
+			Parameter _bp_change {
+				Range: binary;
+			}
+			StringParameter _sp_error;
+			StringParameter _sp_IdentifierID;
+		}
+		Section Loaded_Case_Information {
+			Set s_CaseNumbers {
+				SubsetOf: Integers;
+				Text: "total number of cases iter x year";
+				Index: i_CaseNumber;
+				Definition: {
+					{1..300}
+				}
+				Comment: "4 iterations would give 108 cases";
+			}
+			StringParameter sp_CaseNamesInDirectory {
+				IndexDomain: i_CaseNumber;
+			}
+			Parameter p_CaseOptimizedYear {
+				IndexDomain: i_CaseNumber;
+			}
+			Parameter p_CaseOptimizedIteration {
+				IndexDomain: i_CaseNumber;
+			}
+			Parameter p_LoadedYear;
+			Parameter p_LoadedIteration;
+			StringParameter sp_LastCaseName;
+			Parameter bp_IdentifiersPriorToLoadCase {
+				IndexDomain: i_AllDefinedIdentifierName;
+				Range: binary;
+			}
+			Parameter bp_IdentifiersAfterLoadingCase {
+				IndexDomain: i_AllDefinedIdentifierName;
+				Range: binary;
+			}
+		}
+	}
+}

@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<Page Version="4000" TimeStamp="2015-12-10 18:28:56" NeedsCompiledModel="false">
+	<PageEditSize Type="Inherited">
+		<Size Width="968" Height="390" />
+	</PageEditSize>
+	<ProjectUUID>3C1E27EB-95CC-4E52-BBB5-D70269E0E21B</ProjectUUID>
+	<TemplatesTabOrderPosition>1</TemplatesTabOrderPosition>
+	<ResizeData>
+		<MainArea Line="FixedFromTop" Value="63">
+			<BottomArea Line="FixedFromLeft" Value="185" />
+		</MainArea>
+	</ResizeData>
+	<Background Inherited="true" />
+	<UsedReferences>
+		<Model />
+	</UsedReferences>
+</Page>

@@ -1,0 +1,88 @@
+<?xml version="1.0"?>
+<Page Version="4000" TimeStamp="2016-07-07 03:24:16">
+	<PageEditSize Type="Inherited" />
+	<ProjectUUID>BD6A9103-B1FB-4406-840F-21FDB00917E2</ProjectUUID>
+	<TemplatesTabOrderPosition>1</TemplatesTabOrderPosition>
+	<Background Inherited="true" />
+	<PageObject Type="Selection Object">
+		<SelectionType>DropDownList</SelectionType>
+		<Location top="18" left="354" bottom="48" right="480" />
+		<TabOrder>2</TabOrder>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<TextShown>ElementName</TextShown>
+		<Border Style="None" />
+		<BackgroundColor RGB="#ffffff" />
+		<ExplicitIdentifier>
+			<Identifier>DisplayedDemandRegion</Identifier>
+		</ExplicitIdentifier>
+	</PageObject>
+	<PageObject Type="Curve">
+		<Location top="54" left="216" bottom="432" right="714" />
+		<TabOrder>3</TabOrder>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#ffffff" />
+		<ColorScheme Number="0" />
+		<Title>true</Title>
+		<Legend>true</Legend>
+		<Y-Labels>true</Y-Labels>
+		<X-Labels>true</X-Labels>
+		<StatusLine>true</StatusLine>
+		<ExplicitIdentifier>
+			<Identifier>TotalConsumption( modelyrmn, DisplayedDemandRegion )</Identifier>
+			<IdentifierTextInTitle>true</IdentifierTextInTitle>
+		</ExplicitIdentifier>
+		<ExplicitIdentifier>
+			<Identifier>TotalProduction( modelyrmn, DisplayedDemandRegion )</Identifier>
+			<IdentifierTextInTitle>true</IdentifierTextInTitle>
+		</ExplicitIdentifier>
+		<DrawLines>true</DrawLines>
+		<MarkPoints>true</MarkPoints>
+	</PageObject>
+	<PageObject Type="Text">
+		<Location top="24" left="222" bottom="42" right="348" />
+		<StaticText>Choose Region:</StaticText>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<TextColor RGB="#000000" />
+	</PageObject>
+	<PageObject Type="2D Chart">
+		<Location top="48" left="780" bottom="426" right="1362" />
+		<TabOrder>5</TabOrder>
+		<Border Style="InShadow" Width="2" MarginTop="6" />
+		<X_Axis>
+			<Domain ID="1004">modelyrmn</Domain>
+			<Annotation>
+				<Rotation_angle ID="1010">90</Rotation_angle>
+			</Annotation>
+		</X_Axis>
+		<Y_Axis>
+			<Chart_type ID="2001">"Area"</Chart_type>
+			<Identifier>
+				<Value ID="2007">MonthlyProductionForReport( modelyrmn, suptype, DisplayedDemandRegion )</Value>
+			</Identifier>
+			<Misc_settings>
+				<Stacked ID="2054">1</Stacked>
+			</Misc_settings>
+		</Y_Axis>
+		<Header_Footer>
+			<Header>
+				<Text ID="23">"Monthly Production by state and type"</Text>
+				<Font ExtraInfo="3EEC6209-AF15-406D-9130-A82C6D539593" ID="22">"Title font"</Font>
+			</Header>
+		</Header_Footer>
+		<Legend>
+			<Show ID="53">"Show"</Show>
+		</Legend>
+	</PageObject>
+	<UsedReferences>
+		<Model>
+			<Symbol>DemandNode_</Symbol>
+			<Symbol>TotalConsumption</Symbol>
+			<Symbol>TotalProduction</Symbol>
+			<Symbol>DisplayedDemandRegion</Symbol>
+			<Symbol>MonthlyProductionForReport</Symbol>
+			<Symbol>modelyrmn</Symbol>
+			<Symbol>suptype</Symbol>
+		</Model>
+	</UsedReferences>
+</Page>

@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<Project AimmsVersion="4.8.1.299 unicode x86" ProjectUUID="A4E50B56-1C37-4A54-BFE1-C8C2356EEE0F">
+	<ModelFileName>ecp.ams</ModelFileName>
+	<AutoSaveAndBackup>
+		<ProjectAutoSave AtRegularInterval="true" EveryNMinutes="10" />
+		<DataBackup AtRegularInterval="true" EveryNMinutes="15" NumBackupsDatedToday="3" NumDaysBeforeToday="3" />
+	</AutoSaveAndBackup>
+</Project>

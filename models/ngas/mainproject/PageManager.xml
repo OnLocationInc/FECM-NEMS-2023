@@ -1,0 +1,161 @@
+<?xml version="1.0"?>
+<PageManager>
+	<Page Name="Plant Level Data" PageGUID="3E698014-85F1-46E7-A8C9-96E2EBDFC135" />
+	<Page Name="Natural Gas Market Module (NGMM)" PageGUID="526E91D5-2118-4E2F-B134-C51138EF4AE8">
+		<Page Name="STEO Benchmarking Check" PageGUID="6186F560-0E16-4D31-AD7A-A43230507964">
+			<Page Name="STEO Benchmarking CNW Production" PageGUID="CD693E40-7AD5-45DF-AC58-F4C3F63C8CDC" />
+		</Page>
+		<Page Name="Annual  Actual and Expected Production" PageGUID="211FEF15-3153-4ECF-9B0D-CD5B602DECAC">
+			<Page Name="QP Supply" PageGUID="D7EA9F37-1109-43F1-B1C7-CFD7105662BB" />
+		</Page>
+		<Page Name="Annual Wellhead Price" PageGUID="BA6D2802-A8D7-4772-818B-D455E91B44E0" />
+		<Page Name="Spot, Citygate, and End Use Prices" PageGUID="2F9CA842-0948-41D7-8FCB-706C7B87C72A">
+			<Page Name="Monthly Citygate and Spot Prices" PageGUID="2BFFCB2B-F535-4D53-9D35-26DE23B552FE" />
+			<Page Name="Annual NonUtility Prices" PageGUID="C2F849CE-7C88-4863-914E-F937C6564A52" />
+			<Page Name="Annual NonUtility Prices vs Markups" PageGUID="C17270FF-B28F-451F-9D55-3CF2D445B58A" />
+			<Page Name="Annual NonUtility Markups" PageGUID="48245111-715C-4965-A775-8FA07F6DDCA8" />
+			<Page Name="Annual Utility Prices" PageGUID="48F110A1-CB10-4AC8-9D20-395A06A164BB" />
+			<Page Name="Annual Transportation Prices" PageGUID="080090E0-F122-4F68-9E69-0F9B4A9CB7F8" />
+		</Page>
+		<Page Name="Imports and Exports" PageGUID="E34E4261-71AD-4478-BF52-AFF48BBB2C07">
+			<Page Name="Canada" PageGUID="4106D9CE-3CFE-4F62-9DEA-2F5D3B3B3BFD" />
+			<Page Name="Mexico" PageGUID="BB24DAAC-6F8B-4ED8-9C5D-7357BCB88C0E" />
+		</Page>
+		<Page Name="LNG Exports" PageGUID="A2D8677D-5D59-4A46-87A8-CF977A6643F2">
+			<Page Name="LNG Case Compare" PageGUID="BBB40884-2291-493C-9D1E-BEE6E6E6FFA4" />
+			<Page Name="Annual LNG Exports by State" PageGUID="3B7F7789-E35A-4C7A-B6BE-2DF6757D1FA7" />
+		</Page>
+		<Page Name="Consumption by State" PageGUID="9EA092FB-7C2C-4F82-BF16-C649E1C60908">
+			<Page Name="End-Use Consumption" PageGUID="CF2BD60B-5A96-4CFA-B015-F9701AA3B36B" />
+			<Page Name="Consumption by Month" PageGUID="4DD92B74-3A62-4AEF-8507-E37B9D677C0A" />
+		</Page>
+		<Page Name="GIS Flow Map" PageGUID="E1620CFA-BF08-48E9-9C20-35A13B213264">
+			<Page Name="Annual Flows by State" PageGUID="03B72F10-269E-4714-9290-1519F81ED617" />
+			<Page Name="Regional Flows" PageGUID="D3BEC866-8B77-40F9-9729-C6E78760CBBF" />
+			<Page Name="NGA Regional Flows" PageGUID="13DE26C7-9D61-48BA-A04F-B9D4CC1ECB66" />
+			<Page Name="Flows" PageGUID="65DCBDC5-B357-42F3-824B-19F11478C307" />
+		</Page>
+		<Page Name="GIS Capacity Map" PageGUID="D3FE0FF5-E990-46F0-92EB-D8E0CFB7178A">
+			<Page Name="Capacity Expansion Debug" PageGUID="B51FA2D8-551A-4AB8-8A95-F9EC05C858BA" />
+			<Page Name="Capacity Compare" PageGUID="4CD7D5E1-89C4-4617-B8CE-8ED1466AF35E" />
+		</Page>
+		<Page Name="Annual Node Tree Debug" PageGUID="ECD575D3-05D7-42D0-A553-E8AAA01EF4CF" />
+		<Page Name="Annual Arc Tree Debug" PageGUID="0E559CD3-B9E9-4ED2-AA2D-6D0881257B79" />
+		<Page Name="Restart File Variables" PageGUID="6ED34064-147E-4CB7-B657-9537C042B6DC" />
+		<Page Name="Run Compare Debug" PageGUID="DF03C084-D2B4-4433-8F8F-0477B65C116B" />
+		<Page Name="Case Compare Debug" PageGUID="F51C0AE6-90A3-4BE7-A040-C72F6D6C7835" />
+		<Page Name="Tariff Curve Debug" PageGUID="378821AB-0E07-49E2-B394-A859EA4074E5">
+			<Page Name="Tariff Curve" PageGUID="49AB29D0-FC2B-4E10-B0C6-9D79AC80ACB8" />
+			<Page Name="Tariff Debug" PageGUID="515B51E2-6A43-487E-B148-CC2B194FFC82" />
+		</Page>
+		<Page Name="Annual Pipe, Lease and Plant Fuel by State" PageGUID="83F768F3-1947-4D9E-A0E7-D4C662009502" />
+		<Page Name="Storage by State and Month" PageGUID="9E07A9C5-364D-413C-9D8E-F9FB7B75D57B" />
+		<Page Name="Alaska" PageGUID="77EDD17F-53D4-47AF-9B7B-746CC63BD24F" Marked="true" />
+		<Page Name="Total Model  Annual Supply and Demand" PageGUID="C7F6AAE4-8305-4C0D-90D6-250BEF29439D">
+			<Page Name="US Annual Supply and Demand" PageGUID="432435C7-2584-463C-9244-B10C0564C2C3" />
+			<Page Name="Supply and Demand by State and Month" PageGUID="E7B0AEE4-BC39-4E5B-ACFF-80B1FF389A1A" />
+		</Page>
+		<Page Name="Capacity Additions" PageGUID="683617DD-D0EE-4D82-ADA3-9B03987DE4C2" />
+	</Page>
+	<Page Name="Flow Debug" PageGUID="7F7329D5-87F5-470D-BE2B-2C316E4EE0E1" />
+	<Page Name="Old EMM Debug" PageGUID="C8FC0293-25E8-4339-BE41-116ED31D89A0" />
+	<Page Name="New EMM Debug" PageGUID="F4BC77EC-E003-49F2-9D9A-BE89CA391D7C" />
+	<Page Name="GitTesting" PageGUID="EDB06DFA-0ECE-4E6D-B003-4DA8800137F7" />
+	<Page Name="test" PageGUID="D61E8CF2-F1EB-4F85-B86F-B4228DF5DA67" />
+	<Page Name="Spot Price Historical Data Check" PageGUID="888E2E1E-F89C-41FF-95A0-217823681D98" />
+	<Page Name="Supply Slack Variable" PageGUID="E3C4279F-9138-4016-BCE1-6D0404E174B7" />
+	<Page Name="HQP Supply" PageGUID="5FE3E9DB-40D8-4749-8D2B-B2F169AE252E" Marked="true" />
+	<Page Name="Draft Node Tree Debug" PageGUID="A2AD2761-9B79-4CCA-AE59-7E6CC162F118" />
+	<Page Name="Draft Arc Tree Debug" PageGUID="C6E4841F-A96A-4116-B3E9-ED3C6DCE7E1E" />
+	<Page Name="Calibration Flows and Checks" PageGUID="56D485B7-CF53-4177-AC22-EE9A88301322" Marked="true" />
+	<Page Name="All Data Pages" PageGUID="52512D0F-1102-4A7D-9BD5-D85976B9B2F4">
+		<Page Name="[Data Page] NGTDMOUT_SPNGELGR" PageGUID="4800AB30-25BE-4799-AC84-BFE325EF8F33" />
+		<Page Name="[Data Page] OGSMOUT_OGADGPRD" PageGUID="0A5CD05B-3464-47A2-8ECE-85EB6F257710" Marked="true" />
+		<Page Name="[Data Page] UEFDOUT_SQNGELGR" PageGUID="4CBE6747-C79B-4553-A48D-48A2D387F8B1" Marked="true" />
+		<Page Name="[Data Page] HistoricalDemand" PageGUID="37B35AB3-0692-4932-A41F-63D3395ED4CC" />
+		<Page Name="[Data Page] UEFDOUT_QGIELGR" PageGUID="8121FFE2-E572-45BF-89F2-F8D1D18A7935" Marked="true" />
+		<Page Name="[Data Page] UEFDOUT_QGFELGR" PageGUID="83774B40-E294-4BFA-AA67-14F74BC8AAC1" Marked="true" />
+		<Page Name="[Data Page] Q_UpperBound" PageGUID="27568ABE-0849-4885-9C71-761C567F5DB0" />
+		<Page Name="[Data Page] VariableTariffCurve" PageGUID="41CB7DB7-5D4B-416E-8928-2EF701F0B598" />
+		<Page Name="[Data Page] CurrentPipeCapacity" PageGUID="8932E079-03CC-48E4-92D0-51946DC74647" />
+		<Page Name="[Data Page] Parameter_CapacityUtilization" PageGUID="F8CC359C-118A-4681-9907-D68E38ED3AF1" />
+		<Page Name="[Data Page] Parameter_TariffCurvePrice" PageGUID="3DC52CB7-2F3C-42F2-A3C9-4285E35495D6" />
+		<Page Name="[Data Page] Capacity" PageGUID="65CCEB21-E6FA-483C-87F3-E14E69813FAE" Marked="true" />
+		<Page Name="[Data Page] ConsumptionSENER" PageGUID="6B258F85-7A91-44FC-8E2E-D52E6829A4A0" Marked="true" />
+		<Page Name="[Data Page] TotalConsumptionSENER" PageGUID="5D43E5B3-DC86-43BD-ABAC-CD178DC627BC" Marked="true" />
+		<Page Name="[Data Page] HistoricalConsumptionSENER" PageGUID="F8D04296-8530-41A4-BEF5-BA876F9718F0" />
+		<Page Name="[Data Page] Cons_MX_mon" PageGUID="93AF8192-CB8F-48CB-94B5-FE357754F629" Marked="true" />
+		<Page Name="[Data Page] INGM_Consumption" PageGUID="9CABFACD-9C48-45F3-96B3-B4BCF2300452" Marked="true" />
+		<Page Name="[Data Page] Cons_MX_S_yr" PageGUID="9C4404E0-75A2-4C7A-8F47-534E8CAF7D04" Marked="true" />
+		<Page Name="[Data Page] INGM_MX_Consumption" PageGUID="9568D774-3A23-4982-9639-AD3F3DCDADE0" Marked="true" />
+		<Page Name="[Data Page] Supply" PageGUID="FEC22136-1091-46B5-BC47-4A1DB7952DEF" />
+		<Page Name="[Data Page] INGM_MX_Production" PageGUID="836F021B-9CDD-4ABE-BBE4-78AC281E3D45" Marked="true" />
+		<Page Name="[Data Page] INGM_Production" PageGUID="B08F1906-58D8-4574-91E5-7B6115B7F77B" Marked="true" />
+		<Page Name="[Data Page] QP_Supply" PageGUID="E7001896-A0CA-44C8-A031-383914A00E07" />
+		<Page Name="[Data Page] INGM_MX_PlantFuel" PageGUID="E17E5B0A-3D8A-496A-956A-928A1B5F37EF" Marked="true" />
+		<Page Name="[Data Page] CapacityAdditionsMonthly" PageGUID="451069E6-5551-4A9B-BCD6-0EB168A53C5D" Marked="true" />
+		<Page Name="[Data Page] PipeTarCrvQty_UpBound" PageGUID="C64E04D5-BF1D-4AED-ADF5-70A5F84D2D59" />
+		<Page Name="[Data Page] PipeTariffCurveQty" PageGUID="2D381407-23A4-4E94-A6B9-A6F434A6EB91" />
+		<Page Name="[Data Page] PipeCapacity" PageGUID="00DD166F-A35C-4B73-A222-9EF52F7FE4ED" />
+		<Page Name="[Data Page] CapacityAnnual" PageGUID="42B1FD51-F3CF-4DEA-A689-ADCAB02D13EC" />
+		<Page Name="[Data Page] CE_QTariffCurve" PageGUID="CEC99901-BF05-4547-8F95-F4361BB2A45D" />
+		<Page Name="[Data Page] CE_PipeTarCrvQty_UpBound" PageGUID="386CF4FE-D471-4AD3-8EDE-6966D93ED79B" />
+		<Page Name="[Data Page] CE_Capacity" PageGUID="F684A572-D14B-45D2-9CAC-4E85B7BF2151" />
+		<Page Name="[Data Page] QTariffCurve" PageGUID="70C5397C-A42C-4B06-9131-02411D958B31" />
+		<Page Name="[Data Page] AK_Cons_EndUse" PageGUID="820C51DA-1886-42FC-A167-D5A1CD46D9FA" />
+		<Page Name="[Data Page] LFMMOUT_Q_CRUDE_IMPORTS" PageGUID="B3170ED0-6589-4CEC-873D-1D3F802AF518" Marked="true" />
+		<Page Name="[Data Page] INTOUT_Q_NON_US_DEMAND" PageGUID="04BA8564-0E59-4C24-985E-E3D8935CFA94" />
+		<Page Name="[Data Page] Cons_CAN_Yr" PageGUID="881788BA-853E-449D-94C2-363731812497" />
+		<Page Name="[Data Page] HistoricalFlow" PageGUID="27A43818-5DFE-4590-B4D8-C0A0470BC039" />
+		<Page Name="[Data Page] TariffAnnualDebug" PageGUID="68577CFB-9E4D-4AFF-B18B-778FE8F4B1A3" />
+		<Page Name="[Data Page] Tariff_Soln" PageGUID="ED49B148-7D94-4E43-9176-157F93369ADD" />
+		<Page Name="[Data Page] TariffMaxStepSln" PageGUID="B612B7D8-DC93-4904-8F03-4838AAD3F420" />
+		<Page Name="[Data Page] DebugTariffOBJ" PageGUID="E69723EB-FD27-4B07-912A-17D6CE79BCFA" />
+		<Page Name="[Data Page] DebugTariffOBJstep" PageGUID="8913CB8F-5423-4012-815B-AEC01F867F6F" />
+		<Page Name="[Data Page] AverageSupplementalSupply" PageGUID="FA187B31-91D5-4492-9B90-E50DF3FF82FE" />
+		<Page Name="[Data Page] ActualProductionAnnual" PageGUID="35B73A22-FCCB-444F-9B0E-9E9AF7345FA8" />
+		<Page Name="[Data Page] FlowsAnnual" PageGUID="85497D6F-7AA0-41E6-885C-52709A3E0E37" />
+		<Page Name="[Data Page] WellhdPrice" PageGUID="35B04701-5514-4D1B-8253-4A7703CC4347" />
+		<Page Name="[Data Page] PriceCitygateAnnualforMarkups" PageGUID="92BCA2AB-D0A5-4CC8-92FB-5BD8C9BE2FC6" />
+		<Page Name="[Data Page] HistGOMProductionShare" PageGUID="74DC1408-1D00-4556-9F05-B90A2DFE7220" />
+		<Page Name="[Data Page] HistoricalCapacity" PageGUID="7F41E637-3667-454B-B065-7064D3F20FDB" />
+		<Page Name="[Data Page] HistoricalFlowAnnual" PageGUID="718A6B7D-D39A-4739-A979-6C62F77C6F4B" />
+		<Page Name="[Data Page] CorrectedCapacity" PageGUID="B3F15091-EA68-4F82-8E39-51DD7EE3C57F" />
+		<Page Name="[Data Page] PlannedCapacity" PageGUID="124C8EEB-6D67-4142-B46D-0A9291328239" Marked="true" />
+		<Page Name="[Data Page] Proj_ThroughStates" PageGUID="C46FA9E8-3EDF-447C-8D71-473937798D5C" />
+		<Page Name="[Data Page] Cons_MX_yr_AEO2017" PageGUID="66710A5E-23AE-4C5E-ACF3-490A77A553AE" />
+		<Page Name="[Data Page] Cons_MX_yr" PageGUID="FCD693E3-D21C-482D-A2A7-7701DAFAACF0" />
+		<Page Name="[Data Page] Price_EnduseElectric" PageGUID="B002C53B-11C6-4ED5-989B-561122522D18" />
+		<Page Name="[Data Page] CE_PipeTariffCurveQty" PageGUID="5B9AA827-984C-43B9-AA2A-A81B53CB51E4" />
+		<Page Name="[Data Page] HistoricalProductionPemex" PageGUID="7EA1F2FE-DBB3-4406-B855-554A61E76F2D" />
+		<Page Name="[Data Page] OGSMOUT_OGRNAGPRD" PageGUID="0757A88E-D562-412A-ABF1-484DB257A323" />
+		<Page Name="[Data Page] PlannedCapacityAdditions" PageGUID="E5EBDE0F-10A3-41E2-B0AB-82496DB5B253" />
+		<Page Name="[Data Page] FlowsAdjust" PageGUID="10DEFA71-9DE2-4227-A3EE-AC423455163C" />
+		<Page Name="[Data Page] OGSMOUT_CNRNAGPRD" PageGUID="6A3C50ED-ACBC-4860-83D5-F1FD96F24B25" />
+		<Page Name="[Data Page] AnnualSupply" PageGUID="AE8FCD68-25CB-40CF-8A20-2D8D564B8CEB" />
+		<Page Name="[Data Page] debug" PageGUID="C6F000E6-A9F2-4DFC-A0FA-497F828E5D86" />
+		<Page Name="[Data Page] IEO_MX_Production" PageGUID="A8DD3545-78A5-4385-8251-5BB250E1F329" />
+		<Page Name="[Data Page] LeaseAndPlantFuelAnnual" PageGUID="526A21ED-7176-48EF-BFF0-6E46479839A1" />
+		<Page Name="[Data Page] HistoricalSpotPrice2" PageGUID="6D04A25D-50CF-4CCA-A495-9E026C793B34" />
+		<Page Name="[Data Page] LNG_ExpCapMon" PageGUID="36299788-589D-41B2-8B42-4BDC14ACCF4D" />
+		<Page Name="[Data Page] LNGExports" PageGUID="8AA476B0-B30A-464A-91C8-6F92E8DCEC6C" />
+		<Page Name="[Data Page] Slope_Check" PageGUID="CE228C6D-049E-419C-9734-ADD8F979527C" />
+		<Page Name="[Data Page] Slope_TariffCurve" PageGUID="4F169BC3-7E6D-4C80-AA35-87CEB7408968" />
+		<Page Name="[Data Page] ConvexityCheck_TariffCurve" PageGUID="F5090A83-F542-4244-85FD-6D796669DCE9" />
+		<Page Name="[Data Page] AverageImportTruck" PageGUID="5539C8BE-F435-4BDB-94F5-6368889A36BC" />
+		<Page Name="[Data Page] FuelCost" PageGUID="4103EFE3-EBD0-4B8C-8554-69C9B6E6C277" />
+		<Page Name="[Data Page] DeliveredFuelPrice" PageGUID="C3D0FE96-A8B8-4F5E-BEE6-A4974206B443" />
+		<Page Name="[Data Page] count_temp" PageGUID="BA2B3BF6-12DA-40E3-B6DC-DDD89C215EBC" />
+		<Page Name="[Data Page] Total_Fuel_MMBtu" PageGUID="E9E85942-3443-403A-A0E6-7A1684C1291E" />
+		<Page Name="[Data Page] Total_Fuel_Gen_MMBtu" PageGUID="730B10E0-A57D-4474-84F3-D64A62370903" />
+		<Page Name="[Data Page] Ave_HeatContent" PageGUID="8E14D799-23A0-4449-9900-053B942353A9" />
+		<Page Name="[Data Page] QuantityPurchased" PageGUID="8FAD0589-4F93-42FB-9C8A-CBCC4F95AD98" />
+		<Page Name="[Data Page] PlantCapacityFactor_Annual" PageGUID="E7E39654-0DED-4122-9F7E-A5B09F22F1CB" />
+		<Page Name="[Data Page] map_utility_ba" PageGUID="BDD8AD7A-C135-457D-BFAA-081EFFD1C1E2" />
+		<Page Name="[Data Page] map_plant_NERC_name" PageGUID="58F08D94-689C-47F9-B011-09CC0FBAB2D2" />
+		<Page Name="[Data Page] Pbase" PageGUID="F0A6C5EC-9863-4BB6-8FB7-4843BF2A134F" />
+		<Page Name="[Data Page] HistoricalSpotPrice" PageGUID="925BFC32-24CA-48D5-9EE9-0877476B236A" />
+		<Page Name="[Data Page] CapRegional" PageGUID="D8F5B37C-A4F4-489C-ABA9-1AAD2D608457" />
+		<Page Name="[Data Page] LNG_pct_util" PageGUID="F5D0D742-87D2-4554-A236-6B2BDD14C6D7" Marked="true" />
+	</Page>
+</PageManager>

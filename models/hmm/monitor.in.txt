@@ -1,0 +1,4 @@
+ncntrl_curcalyr('1'):=2023;
+ncntrl_curitr('1')  := 1;
+ncntrl_ncrl('1')  := 0;
+sAction             := "MainExecution";

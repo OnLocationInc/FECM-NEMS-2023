@@ -1,0 +1,196 @@
+<?xml version="1.0"?>
+<Page Version="4000" TimeStamp="2022-03-14 16:56:07">
+	<PageEditSize Type="Inherited" />
+	<ProjectUUID>3C1E27EB-95CC-4E52-BBB5-D70269E0E21B</ProjectUUID>
+	<TemplatesTabOrderPosition>1</TemplatesTabOrderPosition>
+	<Background Inherited="true" />
+	<PageObject Type="Text">
+		<Location top="264" left="36" bottom="306" right="390" />
+		<StaticText>Choose years to run CMM</StaticText>
+		<Font GUID="62DBA6FF-FA27-4EF5-9EBE-640298DDB3C7" Name="Title" />
+		<TextColor RGB="#000000" />
+	</PageObject>
+	<PageObject Type="Text">
+		<Location top="366" left="30" bottom="414" right="186" />
+		<StaticText>Start Year</StaticText>
+		<Font GUID="DAF419EC-7C9F-4BA0-A851-93FB642B71E2" Name="Header" />
+		<TextColor RGB="#000000" />
+	</PageObject>
+	<PageObject Type="Text">
+		<Location top="414" left="30" bottom="450" right="186" />
+		<StaticText>End Year</StaticText>
+		<Font GUID="DAF419EC-7C9F-4BA0-A851-93FB642B71E2" Name="Header" />
+		<TextColor RGB="#000000" />
+	</PageObject>
+	<PageObject Type="Scalar">
+		<Location top="360" left="258" bottom="402" right="402" />
+		<TabOrder>1</TabOrder>
+		<PopupMenu None="true" />
+		<Font GUID="DAF419EC-7C9F-4BA0-A851-93FB642B71E2" Name="Header" />
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#ffffff" />
+		<Layout>SingleLineEditField</Layout>
+		<SeparatorSign>=</SeparatorSign>
+		<ExplicitIdentifier>
+			<Identifier>Start_iyr</Identifier>
+			<NumberFormat Width="15" Decimals="0" Alignment="Left" ShowDefaults="true" />
+		</ExplicitIdentifier>
+	</PageObject>
+	<PageObject Type="Scalar">
+		<Location top="408" left="258" bottom="450" right="402" />
+		<TabOrder>4</TabOrder>
+		<Font GUID="DAF419EC-7C9F-4BA0-A851-93FB642B71E2" Name="Header" />
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#ffffff" />
+		<Layout>SingleLineEditField</Layout>
+		<SeparatorSign>=</SeparatorSign>
+		<ExplicitIdentifier>
+			<Identifier>End_iyr</Identifier>
+			<NumberFormat Width="15" Decimals="0" Alignment="Left" ShowDefaults="true" />
+		</ExplicitIdentifier>
+	</PageObject>
+	<PageObject Type="Button">
+		<Location top="570" left="60" bottom="624" right="240" />
+		<TabOrder>2</TabOrder>
+		<LeaveOnEnter>false</LeaveOnEnter>
+		<ButtonType>Text</ButtonType>
+		<Title>"Run CMM"</Title>
+		<BackgroundColor RGB="#c0c0c0" />
+		<Font GUID="DAF419EC-7C9F-4BA0-A851-93FB642B71E2" Name="Header" />
+		<ActionSequence>
+			<Action Type="Run">
+				<RunWhat>SpecificProcecure</RunWhat>
+				<Procedure>YearLoop_new</Procedure>
+				<AbortOnError>true</AbortOnError>
+			</Action>
+		</ActionSequence>
+	</PageObject>
+	<PageObject Type="Navigation Object">
+		<Location top="60" left="480" bottom="660" right="876" />
+		<TabOrder>5</TabOrder>
+		<Font GUID="F2C814D4-9CCE-416C-9F68-BE15F2AFC56A" Name="font 1" />
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<Display>Button+Text</Display>
+		<Spacing>6</Spacing>
+		<BackgroundColor RGB="#ffffff" />
+		<NavigationData>
+			<ReferencePage>ThisPage</ReferencePage>
+			<NumberOfGenerations>1</NumberOfGenerations>
+			<ActionSequence>
+				<Action Type="GotoNavigationPage" />
+			</ActionSequence>
+		</NavigationData>
+	</PageObject>
+	<PageObject Type="Text">
+		<Location top="30" left="486" bottom="60" right="600" />
+		<StaticText>Reports:</StaticText>
+		<Font GUID="DAF419EC-7C9F-4BA0-A851-93FB642B71E2" Name="Header" />
+		<TextColor RGB="#000000" />
+	</PageObject>
+	<PageObject Type="Text">
+		<Location top="306" left="30" bottom="360" right="414" />
+		<StaticText>Initially start with a base year.
+Afterwards, a start year can be chosen from the range of years that the model already ran for.
+</StaticText>
+		<Font GUID="F2C814D4-9CCE-416C-9F68-BE15F2AFC56A" Name="font 1" />
+		<TextColor RGB="#000000" />
+	</PageObject>
+	<PageObject Type="Button">
+		<Location top="60" left="30" bottom="114" right="234" />
+		<TabOrder>6</TabOrder>
+		<LeaveOnEnter>false</LeaveOnEnter>
+		<ButtonType>Text</ButtonType>
+		<Title>"Load the Case"</Title>
+		<BackgroundColor RGB="#c0c0c0" />
+		<ForegroundColor RGB="#000000" />
+		<Font GUID="DAF419EC-7C9F-4BA0-A851-93FB642B71E2" Name="Header" />
+		<ActionSequence>
+			<Action Type="MenuCommand">
+				<Command>Case-Load As Active</Command>
+			</Action>
+			<Action Type="Run">
+				<RunWhat>SpecificProcecure</RunWhat>
+				<Procedure>GetCaseName</Procedure>
+				<AbortOnError>true</AbortOnError>
+			</Action>
+		</ActionSequence>
+	</PageObject>
+	<PageObject Type="Selection Object">
+		<SelectionType>CheckBoxes</SelectionType>
+		<Location top="510" left="30" bottom="546" right="378" />
+		<TabOrder>7</TabOrder>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<TextShown>ElementName</TextShown>
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#ffffff" />
+		<ExplicitIdentifier>
+			<Identifier>IterationFlag( seliter )</Identifier>
+		</ExplicitIdentifier>
+	</PageObject>
+	<PageObject Type="Text">
+		<Location top="474" left="48" bottom="504" right="270" />
+		<StaticText>Select Iterations to run</StaticText>
+		<Font GUID="DAF419EC-7C9F-4BA0-A851-93FB642B71E2" Name="Header" />
+		<TextColor RGB="#000000" />
+	</PageObject>
+	<PageObject Type="Table">
+		<Location top="60" left="900" bottom="588" right="1434" />
+		<TabOrder>8</TabOrder>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#ffffff" />
+		<RowIndentation>3</RowIndentation>
+		<AllHorizontalGridLines>true</AllHorizontalGridLines>
+		<AllVerticalGridLines>true</AllVerticalGridLines>
+		<ExplicitIdentifier>
+			<Identifier>ResultMessage( runyr, Itr )</Identifier>
+			<FirstColumn>1</FirstColumn>
+			<NumberFormat Width="10" Decimals="0" Alignment="Right" />
+		</ExplicitIdentifier>
+	</PageObject>
+	<PageObject Type="Table">
+		<Location top="126" left="30" bottom="162" right="408" />
+		<TabOrder>9</TabOrder>
+		<Font GUID="F2C814D4-9CCE-416C-9F68-BE15F2AFC56A" Name="font 1" />
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#ffffff" />
+		<RowIndentation>3</RowIndentation>
+		<ExplicitIdentifier>
+			<Identifier>CurrentCase_Name</Identifier>
+			<FirstColumn>0</FirstColumn>
+			<IdentifierTextInTitle>true</IdentifierTextInTitle>
+			<NumberFormat Width="100" Decimals="0" Alignment="Left" />
+		</ExplicitIdentifier>
+	</PageObject>
+	<PageObject Type="Button">
+		<Location top="570" left="264" bottom="624" right="444" />
+		<TabOrder>3</TabOrder>
+		<LeaveOnEnter>false</LeaveOnEnter>
+		<ButtonType>Text</ButtonType>
+		<Title>"Prep DB Data"</Title>
+		<BackgroundColor RGB="#c0c0c0" />
+		<Font GUID="DAF419EC-7C9F-4BA0-A851-93FB642B71E2" Name="Header" />
+		<ActionSequence>
+			<Action Type="Run">
+				<RunWhat>SpecificProcecure</RunWhat>
+				<Procedure>PrepDBData</Procedure>
+				<AbortOnError>true</AbortOnError>
+			</Action>
+		</ActionSequence>
+	</PageObject>
+	<UsedReferences>
+		<Model>
+			<Symbol>YearLoop_new</Symbol>
+			<Symbol>ResultMessage</Symbol>
+			<Symbol>PrepDBData</Symbol>
+			<Symbol>Start_iyr</Symbol>
+			<Symbol>End_iyr</Symbol>
+			<Symbol>IterationFlag</Symbol>
+			<Symbol>CurrentCase_Name</Symbol>
+			<Symbol>GetCaseName</Symbol>
+			<Symbol>Itr</Symbol>
+			<Symbol>runyr</Symbol>
+			<Symbol>seliter</Symbol>
+		</Model>
+	</UsedReferences>
+</Page>

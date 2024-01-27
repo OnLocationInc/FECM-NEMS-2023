@@ -1,0 +1,224 @@
+<?xml version="1.0"?>
+<Page Version="4000" TimeStamp="2020-05-02 22:10:12">
+	<PageEditSize Type="Inherited" />
+	<ProjectUUID>3C1E27EB-95CC-4E52-BBB5-D70269E0E21B</ProjectUUID>
+	<TemplatesTabOrderPosition>1</TemplatesTabOrderPosition>
+	<Background Inherited="true" />
+	<Action>
+		<EntryProcedure>SetDefaultCoalTypes</EntryProcedure>
+	</Action>
+	<PageObject Type="Pivot Table">
+		<Location top="108" left="42" bottom="786" right="762" />
+		<TabOrder>2</TabOrder>
+		<ObjectUUID>EA1C1F69-A65C-4A88-B3FD-63E8A5AEA26D</ObjectUUID>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<Contents>
+			<Explicit_Identifier>
+				<Identifier ID="4110">Display_MinemouthPrice( Scrv1, sreg_name, sulf_name, mtyp_name, rank_name, yr )</Identifier>
+				<Title ID="4120">"Minemouth Price"</Title>
+				<Format>
+					<Decimal_Places ID="4312">1</Decimal_Places>
+					<Show_1000_seperator ID="4313">"Yes"</Show_1000_seperator>
+				</Format>
+				<Colors>
+					<Background_Color ID="4160">ProdColor5( Scrv1, sreg_name, sulf_name, mtyp_name, rank_name, yr )</Background_Color>
+				</Colors>
+			</Explicit_Identifier>
+		</Contents>
+		<Indices>
+			<Explicit_Index>
+				<Index ID="6510">sreg_name</Index>
+				<Header_Title ID="6530">"Supply Region"</Header_Title>
+			</Explicit_Index>
+			<Explicit_Index>
+				<Index ID="6510">mtyp_name</Index>
+				<Header_Title ID="6530">"Mining Method"</Header_Title>
+			</Explicit_Index>
+			<Explicit_Index>
+				<Index ID="6510">rank_name</Index>
+				<Header_Title ID="6530">"Coal Rank"</Header_Title>
+			</Explicit_Index>
+			<Explicit_Index>
+				<Index ID="6510">sulf_name</Index>
+				<Header_Title ID="6530">"Sulfur Content"</Header_Title>
+			</Explicit_Index>
+			<Explicit_Index>
+				<Index ID="6510">Scrv1</Index>
+				<Header_Title ID="6530">"No"</Header_Title>
+				<Colors>
+					<Background_Color ID="6542">ProdColor3( Scrv1 )</Background_Color>
+				</Colors>
+				<Show_All_Elements ID="6550">1</Show_All_Elements>
+			</Explicit_Index>
+			<Identifier_Index>
+				<Hide_if_Single_Identifier ID="6270">"No"</Hide_if_Single_Identifier>
+			</Identifier_Index>
+		</Indices>
+		<General>
+			<Show_Inactive_Data ID="1021">"Yes"</Show_Inactive_Data>
+			<Dense_Aggregation_restricts_to_Domain ID="1022">"Yes"</Dense_Aggregation_restricts_to_Domain>
+		</General>
+		<Row_Area>
+			<Background_Color ID="2010">RGB&lt;255,255,200&gt;</Background_Color>
+			<Text_Color ExtraInfo="D4F48705-BFDF-4DF8-8E1F-D38EFF981024" ID="2020">"default selection"</Text_Color>
+			<Headers>
+				<Background_Color ExtraInfo="D4F48705-BFDF-4DF8-8E1F-D38EFF981024" ID="2120">"default selection"</Background_Color>
+				<Text_Color ID="2130">RGB&lt;255,255,255&gt;</Text_Color>
+				<Show_Sub_Headers ID="2150">"No"</Show_Sub_Headers>
+			</Headers>
+			<Aggregators>
+				<Background_Color ID="2220">RGB&lt;128,255,128&gt;</Background_Color>
+			</Aggregators>
+			<Grid_Focus_Indicator>
+				<Background_Color ID="2270">RGB&lt;0,0,168&gt;</Background_Color>
+				<Text_Color ID="2280">RGB&lt;255,255,200&gt;</Text_Color>
+			</Grid_Focus_Indicator>
+		</Row_Area>
+		<Column_Area>
+			<Auto_resize_Column_Widths ID="3006">"Upon all data changes"</Auto_resize_Column_Widths>
+			<Headers>
+				<Show_Sub_Headers ID="3150">"No"</Show_Sub_Headers>
+			</Headers>
+		</Column_Area>
+		<Grid_Area>
+			<Background_Color ID="5010">RGB&lt;255,255,255&gt;</Background_Color>
+			<Alternating_Background_Color ID="5011">RGB&lt;225,225,225&gt;</Alternating_Background_Color>
+			<Aggregators>
+				<Background_Color ID="5220">RGB&lt;128,255,128&gt;</Background_Color>
+			</Aggregators>
+			<Sub_Header_Row_or_Column>
+				<Background_Color ID="5320">RGB&lt;255,255,200&gt;</Background_Color>
+			</Sub_Header_Row_or_Column>
+		</Grid_Area>
+	</PageObject>
+	<PageObject Type="Curve">
+		<Location top="306" left="780" bottom="828" right="1476" />
+		<TabOrder>3</TabOrder>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#c0c0c0" />
+		<ColorScheme Number="0" />
+		<SwappedAxes>true</SwappedAxes>
+		<Title>true</Title>
+		<Legend>true</Legend>
+		<Y-Labels>true</Y-Labels>
+		<X-Labels>true</X-Labels>
+		<StatusLine>true</StatusLine>
+		<ExplicitIdentifier>
+			<Identifier>Display_MinemouthPrice_Scrv( selcrv1, runyr )</Identifier>
+			<IdentifierTextInCell>true</IdentifierTextInCell>
+			<TitleText>"Coal Production by Supple Curve Number"</TitleText>
+			<Description>CurveYearName2( selcrv1, runyr )</Description>
+		</ExplicitIdentifier>
+		<ElementText Index="selcrv1">Scrv_Label( selcrv1 )</ElementText>
+		<DrawLines>true</DrawLines>
+		<MarkPoints>true</MarkPoints>
+	</PageObject>
+	<PageObject Type="Text">
+		<Location top="72" left="804" bottom="96" right="906" />
+		<StaticText>Supply regions</StaticText>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<TextColor RGB="#000000" />
+	</PageObject>
+	<PageObject Type="Text">
+		<Location top="228" left="804" bottom="240" right="906" />
+		<StaticText>Mining Method</StaticText>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<TextColor RGB="#000000" />
+	</PageObject>
+	<PageObject Type="Text">
+		<Location top="270" left="810" bottom="294" right="912" />
+		<StaticText>Coal Rank</StaticText>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<TextColor RGB="#000000" />
+	</PageObject>
+	<PageObject Type="Text">
+		<Location top="192" left="804" bottom="216" right="906" />
+		<StaticText>Sulfur Content</StaticText>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<TextColor RGB="#000000" />
+	</PageObject>
+	<PageObject Type="Selection Object">
+		<SelectionType>CheckBoxes</SelectionType>
+		<Location top="60" left="900" bottom="180" right="1392" />
+		<TabOrder>7</TabOrder>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<TextShown>ElementName</TextShown>
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#ffffff" />
+		<ProcedureUponChange>SelectSupCrv</ProcedureUponChange>
+		<ExplicitIdentifier>
+			<Identifier>Selected_Regions( sreg_name )</Identifier>
+		</ExplicitIdentifier>
+	</PageObject>
+	<PageObject Type="Selection Object">
+		<SelectionType>CheckBoxes</SelectionType>
+		<Location top="222" left="900" bottom="252" right="1146" />
+		<TabOrder>4</TabOrder>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<TextShown>ElementName</TextShown>
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#ffffff" />
+		<ProcedureUponChange>SelectSupCrv</ProcedureUponChange>
+		<ExplicitIdentifier>
+			<Identifier>Selected_Mine( mtyp_name )</Identifier>
+		</ExplicitIdentifier>
+	</PageObject>
+	<PageObject Type="Selection Object">
+		<SelectionType>CheckBoxes</SelectionType>
+		<Location top="258" left="900" bottom="300" right="1416" />
+		<TabOrder>5</TabOrder>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<TextShown>ElementName</TextShown>
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#ffffff" />
+		<ProcedureUponChange>SelectSupCrv</ProcedureUponChange>
+		<ExplicitIdentifier>
+			<Identifier>Selected_Rank( rank_name )</Identifier>
+		</ExplicitIdentifier>
+	</PageObject>
+	<PageObject Type="Selection Object">
+		<SelectionType>CheckBoxes</SelectionType>
+		<Location top="186" left="900" bottom="216" right="1212" />
+		<TabOrder>6</TabOrder>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<TextShown>ElementName</TextShown>
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#ffffff" />
+		<ProcedureUponChange>SelectSupCrv</ProcedureUponChange>
+		<ExplicitIdentifier>
+			<Identifier>Selected_Sulf( sulf_name )</Identifier>
+		</ExplicitIdentifier>
+	</PageObject>
+	<PageObject Type="Text">
+		<Location top="18" left="804" bottom="48" right="1410" />
+		<StaticText>Choose different combinations of the supply regions and coal types below. The existing curves for the chosen combinations are shown in the chart and are marked cyan in the table. </StaticText>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<TextColor RGB="#000000" />
+	</PageObject>
+	<UsedReferences>
+		<Model>
+			<Symbol>Selected_Regions</Symbol>
+			<Symbol>Selected_Sulf</Symbol>
+			<Symbol>Selected_Mine</Symbol>
+			<Symbol>Selected_Rank</Symbol>
+			<Symbol>Scrv_Label</Symbol>
+			<Symbol>CurveYearName2</Symbol>
+			<Symbol>Display_MinemouthPrice</Symbol>
+			<Symbol>Display_MinemouthPrice_Scrv</Symbol>
+			<Symbol>ProdColor5</Symbol>
+			<Symbol>ProdColor3</Symbol>
+			<Symbol>SelectSupCrv</Symbol>
+			<Symbol>yr</Symbol>
+			<Symbol>Scrv1</Symbol>
+			<Symbol>sreg_name</Symbol>
+			<Symbol>rank_name</Symbol>
+			<Symbol>sulf_name</Symbol>
+			<Symbol>mtyp_name</Symbol>
+			<Symbol>selcrv1</Symbol>
+			<Symbol>runyr</Symbol>
+			<Symbol>SetDefaultCoalTypes</Symbol>
+		</Model>
+	</UsedReferences>
+</Page>

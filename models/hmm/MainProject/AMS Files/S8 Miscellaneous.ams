@@ -1,0 +1,104 @@
+## ams_version=1.0
+
+Section S8_Miscellaneous {
+	Procedure pr_DecisionParametersInitialization {
+		Body: {
+			bp_SaveAllCases := 1;
+		}
+		Comment: {
+			"! Decision parameters are initialized here. These parameters control certain decisions
+			! Example: Save all cases or just one..."
+		}
+	}
+	DeclarationSection Decision_parameters {
+		Parameter bp_SaveAllCases {
+			Range: binary;
+			InitialData: 1;
+		}
+	}
+	Procedure pr_WriteIdentifierTranslations {
+		Body: {
+			! We can now use the text attribute of model identifiers to generate the translation 
+			! (automatic_translations.properties) file, which contains the "pretty names" of 
+			! parameters for display in the WebUI, automatically. This allows us to control it 
+			! from within the model, in stead of having to update this file separately.
+			!
+			! This procedure is run in 'PostMainInitialization'. If you want to update the file during 
+			! development, simply run 'pr_WriteIdentifierTranslation' manually.
+			!
+			! In case you want to hide the translation of an identifier (i.e. display nothing), put the
+			! string "no-display" as text attribute of an identifier.
+			!
+			! Note: the file automatic_translations.properties will be re-generated completely each 
+			! time the procedure is run. If you want to control some translations within a .properties 
+			! file manually, create a new file.
+			!
+			! In the case that multiple .properties files contain a translation for the same identifier, 
+			! the last translation in the file with the last alphabetical order (in terms of filename) 
+			! will be displayed.
+			
+			If ProjectDeveloperMode Then
+				_sp_WebUIDirectory := "MainProject/WebUI";
+				If DirectoryExists(_sp_WebUIDirectory) Then
+					_s_AllIdentifiersSorted := sort(IndexIdentifiers | AttributeToString(IndexIdentifiers, 'text'), IndexIdentifiers);
+					if Card(_s_AllIdentifiersSorted) = 0 then
+						return 0;  ! Nothing to be done.
+					endif;
+			
+					! If the webUI folder exists, make sure to create the resources folder if it doesn't exist (yet)
+					_sp_ResourcesDirectory := _sp_WebUIDirectory + "/resources";
+					If not DirectoryExists(_sp_ResourcesDirectory) Then
+						DirectoryCreate(_sp_ResourcesDirectory);
+					EndIf;
+			
+					_sp_TranslationFile := _sp_ResourcesDirectory + "/automatic_translations.properties";
+			
+					_p_MaximumLineLength :=
+						Max(
+							IndexIdentifiers in _s_AllIdentifiersSorted,
+							4  ! for " = " and "\n"
+							+ StringLength(IndexIdentifiers)
+							+ StringLength(AttributeToString(IndexIdentifiers, 'text')));
+					block where listing_page_width := _P_MaximumLineLength;
+						put _f_TranslationFile;
+			
+						for IndexIdentifiers in _s_AllIdentifiersSorted do
+							if AttributeToString(IndexIdentifiers, 'text') = "no-display" Then
+								! Write a non-breaking space (character 160, < >), because AIMMS 4.78+ does not
+								! recognize empty properties.
+								put FormatString("%e = \160\n", IndexIdentifiers);
+							Else
+								put FormatString("%e = %s\n", IndexIdentifiers, AttributeToString(IndexIdentifiers, 'text'));
+							endif;
+						endfor;
+						putclose;
+					endblock;
+				EndIf;
+			EndIf;
+		}
+		Set _s_AllIdentifiersSorted {
+			SubsetOf: AllIdentifiers;
+			OrderBy: user;
+		}
+		StringParameter _sp_WebUIDirectory;
+		StringParameter _sp_ResourcesDirectory;
+		StringParameter _sp_TranslationFile;
+		File _f_TranslationFile {
+			Name: _sp_TranslationFile;
+			Device: Disk;
+			Mode: replace;
+		}
+		Parameter _p_MaximumLineLength;
+	}
+	Procedure pr_MakeIdentifiersReadOnly {
+		Body: {
+			CurrentInputs
+				:= AllUpdatableIdentifiers
+					- {'bp_ChangedIdentifiers', 'p_DemandSlackPerYearAndIter'};
+		}
+		Comment: {
+			"Identifiers can be made read-only by removing them from the set \'CurrentInputs\'. You can refer to identifiers directly (e.g. \'p_Test\'), or
+			make entire sections read only (e.g. {IndexIdentifiers | IndexIdentifiers in S1_Data}."
+		}
+	}
+}

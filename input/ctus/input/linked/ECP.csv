@@ -1,0 +1,81 @@
+ACRONYM,DEF,GROUP,CO2_RED
+B1,Unscb - BH  - Any -,Coal,0
+B2,Unscb - BH  - Any - SC,Coal,0
+B3,W_scb - BH  -     -,Coal,0
+B4,W_scb - BH  -     - SC,Coal,0
+B5,W_scb - BH  - SCR -,Coal,0
+B6,W_scb - BH  - SCR - SC,Coal,0
+B7,Dry   - BH  - Any -,Coal,0
+B8,Dry   - BH  - Any - SC,Coal,0
+C1,Unscb - CSE - Any -,Coal,0
+C2,Unscb - CSE - Any -    FF,Coal,0
+C3,Unscb - CSE - Any - SC/FF,Coal,0
+C4,W_scb - CSE -     -,Coal,0
+C5,W_scb - CSE -     -    FF,Coal,0
+C6,W_scb - CSE -     - SC/FF,Coal,0
+C7,W_scb - CSE - SCR -,Coal,0
+C8,W_scb - CSE - SCR -    FF,Coal,0
+C9,W_scb - CSE - SCR - SC/FF,Coal,0
+CX,D_scb - CSE -     -,Coal,0
+CY,D_scb - CSE -     -    FF,Coal,0
+CZ,D_scb - CSE - SCR - SC/FF,Coal,0
+H1,Unscb - O/N - Any -,Coal,0
+H2,Unscb - O/N - Any -    FF,Coal,0
+H3,Unscb - O/N - Any - SC/FF,Coal,0
+H4,W_scb - O/N -     -,Coal,0
+H5,W_scb - O/N -     -    FF,Coal,0
+H6,W_scb - O/N -     - SC/FF,Coal,0
+H7,W_scb - O/N - SCR -,Coal,0
+H8,W_scb - O/N - SCR -    FF,Coal,0
+H9,W_scb - O/N - SCR - SC/FF,Coal,0
+HA,D_scb - O/N - Any -,Coal,0
+HB,D_scb - O/N - Any -    FF,Coal,0
+HC,D_scb - O/N - Any - SC/FF,Coal,0
+PC,Scrbd Pulverized Coal,Coal,0
+OC,Other New Coal,Coal,0
+IG,Integrated Gas Comb Cycle,Coal,0
+I2,IGCC with NG-cofiring,Coal,0
+PQ,Coal w/Partial Sequestra,Coal,0
+IS,IGCC w/Sequestration,Coal,0
+NG,Coal to Natural Gas,Gas,0
+ST,Gas/Oil Steam Turbine,Gas,0
+ET,Existing Combustion Turbine,Gas,0
+IC,Internal Combustion Engi,Gas,0
+CT,Conv Combustion Turbine,Gas,0
+T2,Aeroderivative Turbine,Gas,0
+AT,Adv Combustion Turbine,Gas,0
+EC,Existing Gas/Oil Comb Cycle,gascc,0
+CC,Conv Gas/Oil Comb Cycle,Gas,0
+AC,Adv Gas/Oil Comb Cycle,Gas,0
+A2,New Advanced Comb Cycle,Gas,0
+CS,Adv CC w/Sequestration,Gas,0
+FC,Fuel Cells,Other,0
+CN,Conventional Nuclear,Nuclear,0
+AN,Advanced Nuclear,Nuclear,0
+SM,SMR Nuclear,Nuclear,0
+GN,Greenfield Nuclear,Nuclear,0
+WD,Biomass (Wood),Other Renewable,0
+BI,Biomass IGCC (Wood),Other Renewable,0
+GT,Geothermal,Other Renewable,0
+AG,Advanced Geothermal,Other Renewable,0
+MS,Mun Solid Waste,Other Renewable,0
+HY,Hydroelectric,Hydro,0
+HO,Advanced Hydroelectric,Hydro,0
+HI,In Stream Hydroelectric,Hydro,0
+TI,Tidal Hydroelectric,Hydro,0
+PS,Pumped Storage,Other Renewable,0
+P2,Other Storage,Other Renewable,0
+SQ,Quick Storage,Other Renewable,0
+DS,Diurnal Storage,Other Renewable,0
+OS,Other Storage,Other Renewable,0
+WN,Wind OnShore,Wind,0
+WL,Wind Low Speed,Wind,0
+WF,Wind Offshore,Wind,0
+SO,Solar Thermal,Other Renewable,0
+SS,Solar Thermal w/Storage,Other Renewable,0
+S2,Solar Thermal w/Storage,Other Renewable,0
+PV,Photovoltaic,Other Renewable,0
+PT,Photovoltaic w/axis trac,Other Renewable,0
+IN,Other Intermittent,Other Renewable,0
+DB,Distributed Generation-Base,DistGen,0
+DP,Distributed Generation-Peak,DistGen,0

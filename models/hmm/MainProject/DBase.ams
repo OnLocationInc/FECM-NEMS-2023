@@ -1,0 +1,460 @@
+## ams_version=1.0
+
+Section DBase {
+	Procedure pr_InputDatabase {
+		Body: {
+			! Read SQLite database
+			pr_ReadSetsInformation;	
+			pr_ReadAllData;
+			
+			! This did not work for some reason
+			!sp_ConnectionString := SQLCreateConnectionString (
+			!    DatabaseInterface              :  'odbc',
+			!    DriverName                     :  "SQLite3 ODBC Driver",
+			!    DatabaseName                   :  "h2_inputs.db", !The path of your database
+			!    AdditionalConnectionParameters :  "") ;
+		}
+	}
+	Section Sets_Information {
+		Comment: {
+			"Set descriptions keep information about indexes in the model. 
+			Specially interesting for accronym identification
+			
+			BP_ReadSetDescriptionsFlag need to be set to 1 in order to get the data. 
+			This avoids reading inneccessary information for the optimization"
+		}
+		Procedure pr_ReadSetsInformation {
+			Body: {
+				read from table db_FuelDescriptions in merge mode;
+				!read from table db_HydrogenDemandCodeDescriptions in merge mode;
+				read from table db_MarketPriceSeasons in merge mode;
+				read from table db_MarketQuantitySeasons in merge mode;
+				read from table db_MarketPriceTransport in merge mode;
+				read from table db_MarketQuantityTransport in merge mode;
+				read from table db_PlanningPeriodDescriptions in merge mode;
+				read from table db_ProductionCodeDescriptions in merge mode;
+				read from table db_SeasonDescriptions in merge mode;
+				read from table db_StorageDescriptions in merge mode;
+				read from table db_TransportationDescriptions in merge mode;
+				
+				!!! Too complicated to read in this way. Switching to disaggrgated tables !!!
+				!read from table db_IndexCodeDescriptions in merge mode;
+				!
+			}
+			Comment: "Read Descriptions of sets";
+		}
+		DatabaseProcedure db_FuelDescriptions {
+			DataSource: "H2_Inputs";
+			SqlQuery: "select Description from 'Fuel Code'";
+			Property: UseResultSet;
+			Mapping: "Description" --> i_Fuel;
+		}
+		DatabaseProcedure db_MarketPriceSeasons {
+			DataSource: "H2_Inputs";
+			SqlQuery: "select L1,Value from 'Market Price Code Season'";
+			Property: UseResultSet;
+			Mapping: {
+				"L1" --> i_MarketPriceCode,
+				"Value" --> ep_MarketPriceSeasons(i_MarketPriceCode)
+			}
+		}
+		DatabaseProcedure db_MarketPriceTransport {
+			DataSource: "H2_Inputs";
+			SqlQuery: "select L1,Value from 'Market Price Code Transport'";
+			Property: UseResultSet;
+			Mapping: {
+				"L1" --> i_MarketPriceCode,
+				"Value" --> ep_MarketPriceTransport(i_MarketPriceCode)
+			}
+		}
+		DatabaseProcedure db_MarketQuantitySeasons {
+			DataSource: "H2_Inputs";
+			SqlQuery: "select L1,Value from 'Market Quantity Code Season'";
+			Property: UseResultSet;
+			Mapping: {
+				"L1" --> i_MarketQuantityCode,
+				"Value" --> ep_MarketQuantitySeasons(i_MarketQuantityCode)
+			}
+		}
+		DatabaseProcedure db_MarketQuantityTransport {
+			DataSource: "H2_Inputs";
+			SqlQuery: "select L1,Value from 'Market Quantity Code Transport'";
+			Property: UseResultSet;
+			Mapping: {
+				"L1" --> i_MarketQuantityCode,
+				"Value" --> ep_MarketQuantityTransport(i_MarketQuantityCode)
+			}
+		}
+		DatabaseProcedure db_PlanningPeriodDescriptions {
+			DataSource: "H2_Inputs";
+			SqlQuery: "select Description from 'Planning Period Code'";
+			Property: UseResultSet;
+			Mapping: "Description" --> i_PlanningPeriod;
+		}
+		DatabaseProcedure db_ProductionCodeDescriptions {
+			DataSource: "H2_Inputs";
+			SqlQuery: "select * from 'Production Code'";
+			Property: UseResultSet;
+			Mapping: {
+				"HMM_Index" --> i_Tech,
+				"Description" --> ep_ProductionTech(i_Tech)
+			}
+		}
+		DatabaseProcedure db_SeasonDescriptions {
+			DataSource: "H2_Inputs";
+			SqlQuery: "select Description from 'Season Code'";
+			Property: UseResultSet;
+			Mapping: "Description" --> i_Season;
+		}
+		DatabaseProcedure db_PipeSpecPerTech {
+			DataSource: "H2_Inputs";
+			SqlQuery: "Select spec, tech, value from pipe_tech_props";
+			Property: UseResultSet;
+			Mapping: {
+				"spec" --> i_PipeSpec,
+				"tech" --> i_TranTech,
+				"Value" --> p_PipeSpecPerTech(i_PipeSpec, i_TranTech)
+			}
+		}
+		DatabaseProcedure db_StorageDescriptions {
+			DataSource: "H2_Inputs";
+			SqlQuery: "select Description from 'Storage Code'";
+			Property: UseResultSet;
+			Mapping: "Description" --> i_StorageTech;
+		}
+		DatabaseProcedure db_TransportationDescriptions {
+			DataSource: "H2_Inputs";
+			SqlQuery: "select Description from 'Transportation Code'";
+			Property: UseResultSet;
+			Mapping: "Description" --> i_TranTech;
+		}
+	}
+	Section General_data_input {
+		Procedure pr_ReadAllData {
+			Body: {
+				read from table db_CompSpecPerTech in replace mode;
+				read from table db_ProdSpecPerTech in replace mode;
+				read from table db_StorSpecPerTech in replace mode;
+				read from table db_PipeSpecPerTech in replace mode;
+				read from table db_CenDivTransportMap in replace mode;
+				read from table db_SeasonFraction in replace mode;
+				read from table db_StorageMap in merge mode;
+				read from table db_ProductionCapacity in merge mode;
+				read from table db_StorageCapacity in merge mode;
+				read from table db_TransportationCapacity in merge mode;
+				!read from table db_StorageMap in replace mode;
+			}
+			Comment: {
+				"read from table db_StorSpecPerTech in replace mode;"
+			}
+		}
+		DatabaseProcedure db_ProdSpecPerTech {
+			DataSource: "H2_Inputs";
+			SqlQuery: "Select spec, tech, value from prod_tech_props";
+			Property: UseResultSet;
+			Mapping: {
+				"spec" --> i_ProdSpec,
+				"tech" --> i_ProdTech,
+				"Value" --> sp_ProdSpecPerTech(i_ProdSpec, i_ProdTech)
+			}
+		}
+		DatabaseProcedure db_CompSpecPerTech {
+			DataSource: "H2_Inputs";
+			SqlQuery: "Select spec, tech, value from comp_tech_props";
+			Property: UseResultSet;
+			Mapping: {
+				"spec" --> i_PipeCompSpec,
+				"tech" --> i_PipeCompTech,
+				"Value" --> p_PipeCompSpecPerTech(i_PipeCompSpec, i_PipeCompTech)
+			}
+		}
+		DatabaseProcedure db_StorSpecPerTech {
+			DataSource: "H2_Inputs";
+			SqlQuery: "Select spec, tech, value from stor_tech_props";
+			Property: UseResultSet;
+			Mapping: {
+				"spec" --> i_StorSpec,
+				"tech" --> i_StorageTech,
+				"Value" --> p_StorSpecPerTech(i_StorSpec, i_StorageTech)
+			}
+		}
+		DatabaseProcedure db_ProductionCapacity {
+			DataSource: "H2_Inputs";
+			SqlQuery: "Select Tech, MNUMCR, MNUMYR, CAPAVAIL, CAPLAN from 'Production Capacity'";
+			Property: UseResultSet;
+			Mapping: {
+				"TECH" --> i_Tech,
+				"MNUMCR" --> i_CensusDivision,
+				"MNUMYR" --> i_NEMSYear,
+				"CAPAVAIL" --> p_ProductionCapacityAvailable(i_Tech,i_CensusDivision,i_NEMSYear),
+				"CAPLAN" --> p_ProductionCapacityPlanned(i_Tech,i_CensusDivision,i_NEMSYear)
+			}
+		}
+		DatabaseProcedure db_TransportationCapacity {
+			DataSource: "H2_Inputs";
+			SqlQuery: "Select Tech, MNUMCR, MNUMCR2, MNUMYR, CAPAVAIL, CAPLAN from 'Transportation Capacity'";
+			Property: UseResultSet;
+			Mapping: {
+				"TECH" --> i_TranTech,
+				"MNUMCR" --> i_CensusDivision,
+				"MNUMCR2" --> j_CensusDivision,
+				"MNUMYR" --> i_NEMSYear,
+				"CAPAVAIL" --> p_TransportationCapacityAvailable(i_TranTech,i_CensusDivision,j_CensusDivision,i_NEMSYear),
+				"CAPLAN" --> p_TransportationCapacityPlanned(i_TranTech,i_CensusDivision,j_CensusDivision,i_NEMSYear)
+			}
+		}
+		DatabaseProcedure db_StorageCapacity {
+			DataSource: "H2_Inputs";
+			SqlQuery: "Select Tech, MNUMCR, MNUMYR, CAPAVAIL, CAPLAN from 'Storage Capacity'";
+			Property: UseResultSet;
+			Mapping: {
+				"TECH" --> i_StorageTech,
+				"MNUMCR" --> i_CensusDivision,
+				"MNUMYR" --> i_NEMSYear,
+				"CAPAVAIL" --> p_StorageCapacityAvailable(i_StorageTech,i_CensusDivision,i_NEMSYear),
+				"CAPLAN" --> p_StorageCapacityPlanned(i_StorageTech,i_CensusDivision,i_NEMSYear)
+			}
+		}
+		DatabaseProcedure db_CenDivTransportMap {
+			DataSource: "H2_Inputs";
+			SqlQuery: "select * from 'Census Division Links'";
+			Property: UseResultSet;
+			Mapping: {
+				"L1" --> i_CensusDivision,
+				"L2" --> j_CensusDivision,
+				"Value" --> sp_CenDivTransportMap(i_CensusDivision, j_CensusDivision)
+			}
+		}
+		DatabaseProcedure db_StorageMap {
+			DataSource: "H2_Inputs";
+			SqlQuery: "select * from 'Storage Season Links'";
+			Property: UseResultSet;
+			Mapping: {
+				"L1" --> i_Season,
+				"L2" --> j_Season,
+				"Value" --> sp_SeasonStorageMap(i_Season, j_Season)
+			}
+		}
+		DatabaseProcedure db_SeasonFraction {
+			DataSource: "H2_Inputs";
+			SqlQuery: "select L2,Value from 'Season Fraction'";
+			Property: UseResultSet;
+			Mapping: {
+				"L2" --> i_Season,
+				"Value" --> sp_SeasonFraction(i_Season)
+			}
+		}
+		DeclarationSection General_identifiers {
+			Set s_Fuels {
+				Index: i_Fuel;
+				Parameter: ep_Fuel;
+			}
+			Set s_MarketPriceCodes {
+				Index: i_MarketPriceCode;
+			}
+			Set s_MarketQuantityCodes {
+				Index: i_MarketQuantityCode;
+			}
+			Set s_PlanningPeriods {
+				Index: i_PlanningPeriod, j_PlanningPeriod;
+			}
+			Set s_Seasons {
+				Index: i_Season, j_Season;
+			}
+			ElementParameter ep_MarketPriceSeasons {
+				IndexDomain: i_MarketPriceCode;
+				Range: s_Seasons;
+			}
+			ElementParameter ep_MarketPriceTransport {
+				IndexDomain: i_MarketPriceCode;
+				Range: s_TransportTypes;
+			}
+			ElementParameter ep_MarketQuantitySeasons {
+				IndexDomain: i_MarketQuantityCode;
+				Range: s_Seasons;
+			}
+			ElementParameter ep_MarketQuantityTransport {
+				IndexDomain: i_MarketQuantityCode;
+				Range: s_TransportTypes;
+			}
+			StringParameter sp_SeasonFraction {
+				IndexDomain: i_Season;
+			}
+			Parameter p_SeasonFraction {
+				IndexDomain: i_Season;
+			}
+		}
+		DeclarationSection Production_Identifiers {
+			Set s_ProdCodes {
+				Index: i_ProdCode;
+			}
+			Set s_ProdTechs {
+				Index: i_ProdTech, j_ProdTech;
+				Parameter: ep_ProdTech;
+			}
+			ElementParameter ep_ProductionTech {
+				IndexDomain: i_Tech;
+				Range: s_ProdTechs;
+			}
+			Set s_ProdSpecs {
+				Index: i_ProdSpec, j_ProdSpec;
+				Parameter: ep_ProdSpec;
+			}
+			StringParameter sp_ProdSpecPerTech {
+				IndexDomain: (i_ProdSpec, i_ProdTech);
+			}
+			Parameter p_ProductionCapacityPlanned {
+				IndexDomain: (i_Tech,i_CensusDivision,i_NEMSYear);
+			}
+			Parameter p_ProductionCapacityAvailable {
+				IndexDomain: (i_Tech,i_CensusDivision,i_NEMSYear);
+			}
+		}
+		DeclarationSection Transportation_Identifiers {
+			Set s_TransportTechs {
+				Index: i_TranTech, j_TranTech;
+				Parameter: ep_TranTech;
+			}
+			Set s_PipeSpecs {
+				Index: i_PipeSpec, j_PipeSpec;
+				Parameter: ep_PipeSpec;
+			}
+			Parameter p_PipeSpecPerTech {
+				IndexDomain: (i_PipeSpec, i_TranTech);
+			}
+			Parameter p_TransportationCapacityPlanned {
+				IndexDomain: (i_TranTech,i_CensusDivision,j_CensusDivision,i_NEMSYear);
+			}
+			Parameter p_TransportationCapacityAvailable {
+				IndexDomain: (i_TranTech,i_CensusDivision,j_CensusDivision,i_NEMSYear);
+			}
+			StringParameter sp_CenDivTransportMap {
+				IndexDomain: (i_CensusDivision,j_CensusDivision);
+			}
+			Parameter p_CenDivTransportMap {
+				IndexDomain: (i_CensusDivision,j_CensusDivision);
+			}
+		}
+		DeclarationSection Compression_Identifiers {
+			Set s_PipeCompTechs {
+				Index: i_PipeCompTech;
+			}
+			Set s_PipeCompSpecs {
+				Index: i_PipeCompSpec;
+				Parameter: ep_PipeCompSpec;
+			}
+			Parameter p_PipeCompSpecPerTech {
+				IndexDomain: (i_PipeCompSpec, i_PipeCompTech);
+			}
+		}
+		DeclarationSection Storage_Identifiers {
+			Set s_StorageTechs {
+				Index: i_StorageTech, j_StorageTech;
+				Parameter: ep_StorageTech;
+			}
+			Set s_StorSpecs {
+				Index: i_StorSpec, j_StorSpec;
+				Parameter: EP_StorSpec;
+			}
+			Parameter p_StorSpecPerTech {
+				IndexDomain: (i_StorSpec, i_StorageTech);
+			}
+			StringParameter sp_SeasonStorageMap {
+				IndexDomain: (i_Season,j_Season);
+			}
+			Parameter p_SeasonStorageMap {
+				IndexDomain: (i_Season,j_Season);
+			}
+			Parameter p_StorageCapacityPlanned {
+				IndexDomain: (i_StorageTech,i_CensusDivision,i_NEMSYear);
+			}
+			Parameter p_StorageCapacityAvailable {
+				IndexDomain: (i_StorageTech,i_CensusDivision,i_NEMSYear);
+			}
+		}
+		DeclarationSection Unused_Identifiers {
+			StringParameter sp_ConnectionString;
+			Parameter bp_IndexCode {
+				IndexDomain: (i_IndexCode,i_IndexDescription);
+				Range: binary;
+			}
+			ElementParameter ep_IndexCodeDescriptions {
+				IndexDomain: (i_IndexCode,i_HMMCode);
+				Range: s_IndexDescriptions;
+			}
+			Set s_IndexCodes {
+				Index: i_IndexCode;
+			}
+			Set s_IndexDescriptions {
+				Index: i_IndexDescription;
+			}
+			Set s_HMMCodes {
+				Index: i_HMMCode;
+			}
+			Set s_HydrogenDemandCodes {
+				Index: i_HydrogenDemandCode;
+			}
+			Set s_TransportTech {
+				Index: i_TransportTech;
+			}
+			Set s_TransportTypes {
+				Index: i_TransportType;
+			}
+			ElementParameter ep_TransportationTech {
+				IndexDomain: i_TransportTech;
+				Range: s_TransportTechs;
+			}
+			Set s_StorageTypes {
+				Index: i_StorageType;
+			}
+		}
+	}
+	Section Unused_Sets {
+		DatabaseProcedure db_IndexCodeDescriptions {
+			DataSource: "H2_Inputs";
+			SqlQuery: "select * from index_data";
+			Property: UseResultSet;
+			Mapping: {
+				"Index_Name" --> i_IndexCode,
+				"HMM_Index" --> i_HMMCode,
+				"Description" --> ep_IndexCodeDescriptions(i_IndexCode, i_HMMCode)
+			}
+		}
+		DatabaseProcedure db_HydrogenDemandCodeDescriptions {
+			DataSource: sp_ConnectionString;
+			SqlQuery: "select * from 'Hydrogen Demand  Code'";
+			Property: UseResultSet;
+			Mapping: {
+				"HMM_Index" --> i_HydrogenDemandCode,
+				"Description" --> sp_HydrogenDemandCodesDescription(i_HydrogenDemandCode)
+			}
+		}
+		StringParameter sp_FuelCodesDescription {
+			IndexDomain: i_Fuel;
+		}
+		StringParameter sp_HydrogenDemandCodesDescription {
+			IndexDomain: i_HydrogenDemandCode;
+		}
+		StringParameter sp_MarketPriceCodesDescription {
+			IndexDomain: i_marketpricecode;
+		}
+		StringParameter sp_MarketQuantityCodesDescription {
+			IndexDomain: i_MarketQuantityCode;
+		}
+		StringParameter sp_PlanningPeriodCodesDescription {
+			IndexDomain: i_PlanningPeriod;
+		}
+		StringParameter sp_ProductionCodesDescription {
+			IndexDomain: i_Tech;
+		}
+		StringParameter sp_SeasonCodesDescription {
+			IndexDomain: i_Season;
+		}
+		StringParameter sp_StorageCodesDescription {
+			IndexDomain: i_StorageType;
+		}
+		StringParameter sp_TransportationCodesDescription {
+			IndexDomain: i_TransportType;
+		}
+	}
+}

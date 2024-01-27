@@ -1,0 +1,778 @@
+## ams_version=1.0
+
+Model Main_Model {
+	Comment: {
+		"Template version 2.0, 2021/01/08
+		------------------------------------------------------------------------------------------------
+			Disclaimer
+		------------------------------------------------------------------------------------------------
+		This AIMMS template has been developed by Districon Solutions B.V. and is intended for internal
+		use only. Please do not share this model without permission of Districon Solutions B.V. 
+		
+		It can be cloned from the git repository:
+			https://bitbucket.org/DistriconSolutions/districon-aimms-base-model/src/master/
+		
+		After every major AIMMS release (4.75.1, 4.76.1, etc), the version will be updated to the latest 
+		release of the previous major version (4.74.6, 4.75.5, etc). These versions usually contain the
+		lowest number of bugs. If new WebUI features are added, the WebuiFeatureSupport library will be 
+		updated as well.
+		- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+		
+		-----------------------------------------------------------------------------------------------
+			Project information
+		------------------------------------------------------------------------------------------------
+		Model name:					<insert model name here>
+		Project code: 				<insert project code here>
+		Project start date:			<dd-mm-yyyy>
+		Project status:				Under development / finished / in support
+		Development end date:		<dd-mm-yyyy> 
+		Project developers:			1. Developer 1			Involved per <dd-mm-yyyy>
+									2. Developer 2			Involved per <dd-mm-yyyy>
+		- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+		
+		------------------------------------------------------------------------------------------------
+			Model structure
+		------------------------------------------------------------------------------------------------
+		The model is divided into 8 different sections:
+			S1 Data 					Main data related identifiers (calendars, units, constants)
+			S2 Data Import Export		Storing \"raw\" identifiers, directly read from their source
+			S3 Data Processing			Data modifications needed to transfrom the inputs
+			S4 Calculations				Data additions and business logic
+			S4 Optimization				MIP related identifiers
+			S6 Output					Output related identifiers, often including scenario support
+			S7 GUI						UI related identifiers
+			S8 Miscellaneous			General procedures which do not belong in any of the above
+		
+		The WebuiFeatureSupport library is developed by Districon and contains supportive parameters
+		and procedures to configure webUI features requiring a string parameter, such as side panels,
+		widget actions, etc. It has prefix wfs::, which you can use to refer to identifers in this 
+		library.
+		
+		All sections are stored in a separate .ams file. They are found in the MainProject/AMS files 
+		folder. When a new section is added, make sure to store it in a new .ams file as well. You can
+		do this via the source file wizard in the section object. To create a .ams file, open the wizard
+		and select \"write...\". Name the .ams file the same as the section it is created for.
+		- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+		
+		------------------------------------------------------------------------------------------------
+			Naming and modelling conventions
+		------------------------------------------------------------------------------------------------
+		The guidelines below are intended to help keep structure and naming conventions uniform, also
+		across projects. Please keep in mind that whatever naming rules you have chosen, consistency
+		within a project is important.
+		
+		Naming
+			1.	Use the first 1 or 2 letters of the model identifier followed by a _ (p_, pr_, …)
+					- The prefix names should be lower case. This convention is also used by AIMMS in
+					  their examples. All other words should begin with a Captial (PascalCase).
+					  e.g. p_SomeIdentifier, not p_someIdentifier.
+			2.	Add prefix b if the identifier is binary (bp_, bv_,…). Set range binary.
+			3.	Add _d as post fix if the identifier has a definition (p_SomeName_d, ep_SomeName_d, …)
+				     -  moving _d to post-fix makes looking for identifiers easier, as you don\'t have to 
+				        worry about whether it has a definition or not.
+			4.	Locally defined (e.g. in procedures) model identifiers start with _ (_p_DepotCosts)	     
+			5.	Only use _ for the naming conventions mentioned above. Start new words in a name 
+				with a capital (p_TotalCost, not p_totalCost, p_Total_Cost or p_Totalcost)	        
+			6.	A set is the name of its contents in plural (s_Depots)
+				     -  Indices are singular and use i,j, (i_depot, j_depot, not i_depot, i_depot2)
+				     -  Subset names start with the superset (s_DepotsGermany, not s_German_Depots)
+			7.	Procedures are named as verbs (pr_DoSomething)
+			8.	Identifiers are named as nouns (p_Something)
+		
+		Local vs Global
+			1. If a parameter is only used for a procedure or as an intermediate use a local parameter. 
+			   This will make sure no unnecessary memory is being used. 
+		
+		Constants and single values
+			1.	All constants and single values are to be stored in model identifiers in the section Constants
+			    This prevents the use of magic numbers throughout the code.
+		
+		Use of sections
+			1. All section must have a seperate .ams file. Creates less merge conflicts and easier to code review
+			2. Create a separate section for all UI pages. This makes it easier to locate identifiers specifically
+			   designed for a page.
+		
+		Comments
+			1.	Use the comment block at the bottom of identifier attributes if an identifier
+				can use an explanation. This comment is shown when hovering over the identifier.
+			2.	Use the following commenting keywords for easy referencing/bookmarking:
+			    	a.	@TODO(<developer name>)
+			    	b.	@FIXME(<developer name>)
+			    	c.	@TEMP(<developer name>)
+			3.	If you want to refer to a model identifier in your comments, make sure to write
+				it between single quotes (\'p_Something\'). This ensures that it gets updated
+				when the name is changed.
+		- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+		
+		------------------------------------------------------------------------------------------------
+			Final notes
+		------------------------------------------------------------------------------------------------
+		This template is created and maintained by
+			Tanya Bulavskaya			t.bulavskaya@districon.com
+			Sander Djohan				s.djohan@districon.com
+			Richard Hornstra			r.hornstra@districon.com
+			Martijn Hoogendoorn			m.hoogendoorn@districon.com
+		
+		Please contact one of them in case of questions or suggestions for improvement.
+		
+		Happy modelling!
+		- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -"
+	}
+	Procedure NEMS_Monitor {
+		Body: {
+			!Initialization. On first iteration of first year reads database, otherwise loads a case file.
+			
+			MainInitialization;
+			PostMainInitialization;
+			p_StandAlone := 0;
+			
+			! Read_Runtime_Parameters;  ! read here in case "keepopen" setting needed by this procedure. currently not used.
+			
+			! Monitor.in.Text contains StandAlone for Standalone mode
+			
+			! the following allows the aimms project to be kept open (when keepopen=1) and to later Quit at direction of NEMS,
+			! or to run and exit immediately. There is sometimes a delay with the Quit option due to error trapping, so NEMS is set up to wait for 
+			! an action message of "Exited" written by the MainTermination procedure right before aimms exits.
+			CountSleep := 0;
+			! count sleep/wake cycles while waiting for direction from nems via sAction in the message file, monitor.in.txt
+			while ( CountSleep <= 2000 ) do
+				if fileexists(sMessageInFile) then
+					! read sAction, current model year, and current iteration from sMessageInFile
+					sAction:=" ";
+					read from file sMessageInFile in merge mode;
+					write sAction to file NEMSMessageOutFile in merge mode; 
+				else
+					put "the NEMS message file not found, CountSleep=",CountSleep," \n ";
+				endif;
+				! halt("halt in mainexecution top loop");;
+				if sAction = "MainExecution" then
+					p_StandAlone := 0;
+					sAction:="executing";    ! Action message to tell NEMS I'm executing
+					write sAction to file NEMSMessageOutFile in replace mode;  
+					dialogProgress(""); ! remove progress dialog
+					sStatusMessage := formatstring("Invoking MainExecution for %s",ncntrl_curcalyr('1')) + 
+					formatstring(", iteration %s",ncntrl_curitr('1')) +
+					formatstring(", reporting loop indicator=%s",ncntrl_ncrl('1'));
+					put sStatusMessage;
+					! halt("halt in mainexecution top loop");;
+					MainExecution;
+					! halt("3");
+					sAction:=formatstring("Completed %s,",ncntrl_curcalyr('1')) + 
+					formatstring("iteration %s ",ncntrl_curitr('1')) ;    ! Action message to tell NEMS I'v completed this year, iteration
+					write sAction to file NEMSMessageOutFile in replace mode;  
+			
+					CountSleep:=2001;   !get out of loop temporarily
+					sStatusMessage := "Monitoring NEMS message file("+sMessageInFile+") for "+formatstring("%s",CountSleep/2)+" seconds. Hit Ctrl+Shift+S to Stop this monitoring\n";
+					put sStatusMessage;
+					Delay(1);    ! give nems a chance to pick up status and create new monitor.in.txt file  
+					! halt("halt in mainexecution loop");
+					PreMainTermination;
+					! MainTermination;  should be called by exitaimms
+					! halt("halt in mainexecution loop");
+					! exitAimms(0); 
+			
+				elseif sAction = "StandAlone" then ! Never run as there is a separate standalone routine
+					p_StandAlone := 1;
+					sAction:="executing";    ! Action message to tell NEMS I'm executing
+					write sAction to file NEMSMessageOutFile in replace mode;  
+			
+					dialogProgress(""); ! remove progress dialog
+					sStatusMessage := formatstring("Invoking MainExecution for %s",ncntrl_curcalyr('1')) + 
+					formatstring(", iteration %s",ncntrl_curitr('1')) +
+					formatstring(", reporting loop indicator=%s",ncntrl_ncrl('1'));
+					put sStatusMessage;
+					! move to  S2 section 
+					! ReadGlobalDataFromNEMS; ! read globaldatatoAIMMS_yyyy_ii.txt where yyyy is ncntrl_curcalyr(1) and ii is ncntrl_curitr(1)
+					ModelYear := 2023;
+					!! MonthInPeriod(tmon) := Element( ModelYearMonths_, Ord(tmon));
+					MainExecution;
+					PreMainTermination;
+					MainTermination;
+					! halt("halt to see results");
+					sAction:=formatstring("Completed %s,",ncntrl_curcalyr('1')) + 
+					formatstring("iteration %s ",ncntrl_curitr('1')) ;    ! Action message to tell NEMS I'v completed this year, iteration
+					write sAction to file NEMSMessageOutFile in replace mode;  
+					CountSleep:=2001;   
+					sStatusMessage := "Monitoring NEMS message file("+sMessageInFile+") for "+formatstring("%s",CountSleep)+" seconds. Hit Ctrl+Shift+S to Stop this monitoring\n";
+					put sStatusMessage; !once through and done     
+					! halt("halt to see results");
+				elseif sAction = "Quit" then ! NEMS says to exit aimms
+					sStatusMessage := "NEMS Message File says Quit" +formatstring("%s",CountSleep) ;		               
+					CountSleep:=2000;
+				else
+					sStatusMessage := "Monitoring NEMS message file("+sMessageInFile+") for "+formatstring("%s",CountSleep)+" seconds. Hit Ctrl+Shift+S to Stop this monitoring\n";
+					Delay(1);                  
+				endif;
+			
+				dialogProgress(sStatusMessage,round(100*CountSleep/2000));
+				CountSleep += 1;
+			endwhile;
+			
+			if CountSleep>=2001 then
+				put "Quit directive found in monitor.in.txt. Exiting AIMMS";
+			else
+				put "Wait time exceeded. Exiting Aimms";
+			endif;
+			
+			if p_StandAlone = 1 then ! Don't exit on standalone. Not needed as there is a separate standalone routine
+				halt("halt to see results");
+			else				
+				exitAimms; ! causes MainTermination to run and for aimms to exit. MainTermination sends message "Exited" back to nems.
+			endif;
+		}
+		Comment: {
+			"
+			\"For KEEPOPEN=1 option, This routines cause AIMMS to sleep and periodically wake to check a message input file from NEMS. If the file
+			is found, AIMMS reads it and re-invokes mainexecution if indicated, or closes the project.  
+			After invoking mainExecution, it writes an output message file indicating completion.
+			This routine then continues the sleep-wait cycle.\""
+		}
+	}
+	Procedure StandAlone_NEMS_Monitor {
+		Body: {
+			!Initialization. On first iteration of first year reads database, otherwise loads a case file.
+			!Standalone routine.
+			MainInitialization;
+			PostMainInitialization;
+			p_StandAlone := 1;
+			! Read_Runtime_Parameters;  ! read here in case "keepopen" setting needed by this procedure. currently not used.
+			
+			! Monitor.in.Text contains StandAlone for Standalone mode
+			
+			! the following allows the aimms project to be kept open (when keepopen=1) and to later Quit at direction of NEMS,
+			! or to run and exit immediately. There is sometimes a delay with the Quit option due to error trapping, so NEMS is set up to wait for 
+			! an action message of "Exited" written by the MainTermination procedure right before aimms exits.
+			CountSleep := 0;
+			! count sleep/wake cycles while waiting for direction from nems via sAction in the message file, monitor.in.txt
+			while ( CountSleep <= 2000 ) do
+				if fileexists(sMessageInFile) then
+					! read sAction, current model year, and current iteration from sMessageInFile
+					sAction:=" ";
+					read from file sMessageInFile in merge mode;
+					write sAction to file NEMSMessageOutFile in merge mode; 
+				else
+					put "the NEMS message file not found, CountSleep=",CountSleep," \n ";
+				endif;
+				! halt("halt in mainexecution top loop");;
+				if sAction = "MainExecution" then
+					sAction:="executing";    ! Action message to tell NEMS I'm executing
+					write sAction to file NEMSMessageOutFile in replace mode;  
+			
+					dialogProgress(""); ! remove progress dialog
+					sStatusMessage := formatstring("Invoking MainExecution for %s", ncntrl_curcalyr('1')) + 
+					formatstring(", iteration %s", ncntrl_curitr('1')) +
+					formatstring(", reporting loop indicator=%s", ncntrl_ncrl('1'));
+					put sStatusMessage;
+					! halt("halt in mainexecution top loop");;
+					! move to  S2 section 
+					! ReadGlobalDataFromNEMS; ! read globaldatatoAIMMS_yyyy_ii.txt where yyyy is ncntrl_curcalyr(1) and ii is ncntrl_curitr(1)
+					!Initialize ModelYear
+					! ModelYear := 2023;
+					!! MonthInPeriod(tmon) := Element( ModelYearMonths_, Ord(tmon));
+					MainExecution;
+					! halt("3");
+					sAction:=formatstring("Completed %s,",ncntrl_curcalyr('1')) + 
+					formatstring("iteration %s ",ncntrl_curitr('1')) ;    ! Action message to tell NEMS I'v completed this year, iteration
+					write sAction to file NEMSMessageOutFile in replace mode;  
+			
+					CountSleep:=2001;   !get out of loop temporarily
+					sStatusMessage := "Monitoring NEMS message file("+sMessageInFile+") for "+formatstring("%s",CountSleep/2)+" seconds. Hit Ctrl+Shift+S to Stop this monitoring\n";
+					put sStatusMessage;
+					Delay(1);    ! give nems a chance to pick up status and create new monitor.in.txt file  
+					!			                 halt("halt in mainexecution loop");
+					PreMainTermination;
+					! MainTermination;  should be called by exitaimms
+					! halt("halt in mainexecution loop");
+					! exitAimms(0);
+			
+				elseif sAction = "StandAlone" then ! Once through and exit
+					p_StandAlone := 1;
+					sAction:="executing";    ! Action message to tell NEMS I'm executing
+					write sAction to file NEMSMessageOutFile in replace mode;  
+			
+					dialogProgress(""); ! remove progress dialog
+					sStatusMessage := formatstring("Invoking MainExecution for %s",ncntrl_curcalyr('1')) + 
+					formatstring(", iteration %s",ncntrl_curitr('1')) +
+					formatstring(", reporting loop indicator=%s",ncntrl_ncrl('1'));
+					put sStatusMessage;
+					! move to  S2 section 
+					! ReadGlobalDataFromNEMS; ! read globaldatatoAIMMS_yyyy_ii.txt where yyyy is ncntrl_curcalyr(1) and ii is ncntrl_curitr(1)
+					ModelYear := 2023;
+					!! MonthInPeriod(tmon) := Element( ModelYearMonths_, Ord(tmon));
+					MainExecution;
+					PreMainTermination;
+					MainTermination;
+					! halt("halt to see results");
+					sAction:=formatstring("Completed %s,",ncntrl_curcalyr('1')) + 
+					formatstring("iteration %s ",ncntrl_curitr('1')) ;    ! Action message to tell NEMS I'v completed this year, iteration
+					write sAction to file NEMSMessageOutFile in replace mode;  
+					CountSleep:=2001;   
+					sStatusMessage := "Monitoring NEMS message file("+sMessageInFile+") for "+formatstring("%s",CountSleep)+" seconds. Hit Ctrl+Shift+S to Stop this monitoring\n";
+					put sStatusMessage; !once through and done     
+					!			                 halt("halt to see results");
+				elseif sAction = "Quit" then ! NEMS says to exit aimms
+					sStatusMessage := "NEMS Message File says Quit" +formatstring("%s",CountSleep) ;		               
+					CountSleep:=2000;
+				else
+					sStatusMessage := "Monitoring NEMS message file("+sMessageInFile+") for "+formatstring("%s",CountSleep)+" seconds. Hit Ctrl+Shift+S to Stop this monitoring\n";
+					Delay(1);                  
+				endif;
+			
+				dialogProgress(sStatusMessage,round(100*CountSleep/2000));
+				CountSleep += 1;
+			endwhile;
+			
+			
+			if CountSleep>=2001 then
+				put "Quit directive found in monitor.in.txt. Exiting AIMMS";
+			else
+				put "Wait time exceeded. Exiting Aimms";
+			endif;
+			
+			if p_StandAlone = 1 then ! Don't exit on standalone
+				halt("halt to see results");
+			else				
+				!exitAimms; ! causes MainTermination to run and for aimms to exit. MainTermination sends message "Exited" back to nems.
+			endif;
+		}
+		Comment: {
+			"
+			\"For KEEPOPEN=1 option, This routines cause AIMMS to sleep and periodically wake to check a message input file from NEMS. If the file
+			is found, AIMMS reads it and re-invokes mainexecution if indicated, or closes the project.  
+			After invoking mainExecution, it writes an output message file indicating completion.
+			This routine then continues the sleep-wait cycle.\""
+		}
+	}
+	Module Test_Section {
+		Prefix: ts;
+		Procedure pr_TestLoadData {
+			Body: {
+				p_AmmoniaPrice(i_CensusDivisionOpt, i_SeasonOpt, ep_CurrentOptYear)
+				:= Mean(i_NH3ExportStep,
+				  	(sum((j_CensusDivisionOpt, i_PLanningPeriod),  v_AmmoniaExportStep(i_NH3ExportStep, j_CensusDivisionOpt, i_PLanningPeriod))
+				  	/$ p_NH3StepsUpperBound(i_NH3ExportStep))	
+				  	* p_NH3StepsPrice(i_NH3ExportStep));
+			}
+		}
+		Procedure Standalonetest {
+			Body: {
+				! the initial loaddata is required because this procedure is invoked from the command line.
+				! Aimms doesn't load case files automatically, as specified in the project settings, when a procedure is invoked from 
+				! the command line.   
+				! LoadData("HMM_Output"); 
+				MainInitialization;
+				PostMainInitialization;
+				p_StandAlone := 1;
+				! ncntrl_f(1):=1; ! need to fix
+				! Read_Runtime_Parameters;  ! read here in case "keepopen" setting needed by this procedure. currently not used.
+				
+				! Monitor.in.Text contains StandAlone for Standalone mode
+				
+				! the following allows the aimms project to be kept open (when keepopen=1) and to later Quit at direction of NEMS,
+				! or to run and exit immediately. There is sometimes a delay with the Quit option due to error trapping, so NEMS is set up to wait for 
+				! an action message of "Exited" written by the MainTermination procedure right before aimms exits.
+				CountSleep := 0;
+				! count sleep/wake cycles while waiting for direction from nems via sAction in the message file, monitor.in.txt
+				while ( CountSleep <= 2000 ) do
+					if fileexists(sMessageInFile) then
+						! read sAction, current model year, and current iteration from sMessageInFile
+						sAction:=" ";
+						read from file sMessageInFile in merge mode;
+					endif;
+					! halt("halt in mainexecution top loop");;
+					if sAction = "MainExecution" then
+						sAction:="executing";    ! Action message to tell NEMS I'm executing
+				
+						dialogProgress(""); ! remove progress dialog
+						sStatusMessage := formatstring("Invoking MainExecution for %s", ncntrl_curcalyr('1')) + 
+						formatstring(", iteration %s", ncntrl_curitr('1')) +
+						formatstring(", reporting loop indicator=%s", ncntrl_ncrl('1'));
+						! halt("halt in mainexecution top loop");;
+						! move to  S2 section 
+						! ReadGlobalDataFromNEMS; ! read globaldatatoAIMMS_yyyy_ii.txt where yyyy is ncntrl_curcalyr(1) and ii is ncntrl_curitr(1)
+						!Initialize ModelYear
+						! ModelYear := 2023;
+						!! MonthInPeriod(tmon) := Element( ModelYearMonths_, Ord(tmon));
+						MainExecutiontest;
+						! halt("3");
+						sAction:=formatstring("Completed %s,",ncntrl_curcalyr('1')) + 
+						formatstring("iteration %s ",ncntrl_curitr('1')) ;    ! Action message to tell NEMS I'v completed this year, iteration
+				
+						CountSleep:=2001;   !get out of loop temporarily
+						sStatusMessage := "Monitoring NEMS message file("+sMessageInFile+") for "+formatstring("%s",CountSleep/2)+" seconds. Hit Ctrl+Shift+S to Stop this monitoring\n";
+						Delay(1);    ! give nems a chance to pick up status and create new monitor.in.txt file  
+						!			                 halt("halt in mainexecution loop");
+						PreMainTermination;
+						! MainTermination;  should be called by exitaimms
+						! halt("halt in mainexecution loop");
+						! exitAimms(0);
+				
+					elseif sAction = "StandAlone" then ! Once through and exit
+						p_StandAlone := 1;
+						sAction:="executing";    ! Action message to tell NEMS I'm executing
+				
+				
+						dialogProgress(""); ! remove progress dialog
+						sStatusMessage := formatstring("Invoking MainExecution for %s",ncntrl_curcalyr('1')) + 
+						formatstring(", iteration %s",ncntrl_curitr('1')) +
+						formatstring(", reporting loop indicator=%s",ncntrl_ncrl('1'));
+				
+						! move to  S2 section 
+						! ReadGlobalDataFromNEMS; ! read globaldatatoAIMMS_yyyy_ii.txt where yyyy is ncntrl_curcalyr(1) and ii is ncntrl_curitr(1)
+						ModelYear := 2023;
+						!! MonthInPeriod(tmon) := Element( ModelYearMonths_, Ord(tmon));
+						MainExecution;
+						PreMainTermination;
+						MainTermination;
+						! halt("halt to see results");
+						sAction:=formatstring("Completed %s,",ncntrl_curcalyr('1')) + 
+						formatstring("iteration %s ",ncntrl_curitr('1')) ;    ! Action message to tell NEMS I'v completed this year, iteration
+				
+						CountSleep:=2001;   
+						sStatusMessage := "Monitoring NEMS message file("+sMessageInFile+") for "+formatstring("%s",CountSleep)+" seconds. Hit Ctrl+Shift+S to Stop this monitoring\n";
+						 !once through and done     
+						!			                 halt("halt to see results");
+					elseif sAction = "Quit" then ! NEMS says to exit aimms
+						sStatusMessage := "NEMS Message File says Quit" +formatstring("%s",CountSleep) ;		               
+						CountSleep:=2000;
+					else
+						sStatusMessage := "Monitoring NEMS message file("+sMessageInFile+") for "+formatstring("%s",CountSleep)+" seconds. Hit Ctrl+Shift+S to Stop this monitoring\n";
+						Delay(1);                  
+					endif;
+				
+					dialogProgress(sStatusMessage,round(100*CountSleep/2000));
+				endwhile;
+			}
+		}
+		Procedure pr_ReadandProcessInputsTest {
+			Body: {
+				NCNTRL_CURCALYR('1') := val(ep_OptYear); ! For testing purposes, can be deleted
+				NCNTRL_CURITR('1') := ep_OptIter; ! For testing purposes, can be deleted
+				
+				pr_ReadGlobalDataFromNEMS;
+				
+				ep_CurrentOptYear := StringToElement(i_calYear,NCNTRL_CURCALYR('1'));
+				ep_CurrentIteration := StringToElement(i_IterationNumber,NCNTRL_CURITR('1'));
+				
+				
+				block
+					! If we are not on the first year, then we read the database, on the contrary, we read from the case
+					if NCNTRL_CURCALYR('1') = FirstModelYear and NCNTRL_CURITR('1') = 1  then
+						DirectoryGetFiles("data", "*.data", sp_CaseNamesInDirectory(i_CaseNumber));
+						_sp_PathCaseFile := "data";
+						for i_CaseNumber | sp_CaseNamesInDirectory(i_CaseNumber) do
+							FileDelete(_sp_PathCaseFile + "/" + sp_CaseNamesInDirectory(i_CaseNumber));
+						endfor;
+						pr_InputDatabase;
+					ELSE
+						DirectoryGetFiles("data", "*.data", sp_CaseNamesInDirectory(i_CaseNumber));
+						p_CaseOptimizedYear(i_CaseNumber) 
+							:= val(substring(sp_CaseNamesInDirectory(i_CaseNumber), 12,15));
+						p_CaseOptimizedIteration(i_CaseNumber) 
+							:= val(substring(sp_CaseNamesInDirectory(i_CaseNumber), 17,17));
+						p_LoadedYear := max(i_CaseNumber,p_CaseOptimizedYear(i_CaseNumber));
+						p_LoadedIteration 
+						:= max(i_CaseNumber | p_CaseOptimizedYear(i_CaseNumber) = p_LoadedYear
+							, p_CaseOptimizedIteration(i_CaseNumber) );
+						sp_LastCaseName := "HMM_Output_" + p_LoadedYear + "_" + p_LoadedIteration;		
+				
+						pr_LoadData(_sp_CaseName : sp_LastCaseName);
+						pr_ReadGlobalDataFromNEMS;
+					endif;
+				onerror ep_err do
+					if not card(sp_CaseNamesInDirectory) then 
+						sp_ErrorMessage := 
+						"Data case load error, no cases are present in the data folder ";
+					else
+						sp_ErrorMessage 
+						:= "AIMMS Message : " + errh::Message( ep_err ) +
+						"Custom Message: Error identifying previous optimization data case, check the procedure pr_ReadAndProcessInputs";
+					endif;
+					pr_ErrorOutput(ep_err);
+				
+				endblock;
+				
+				! Check to warn of the loaded case does not match with the previous iteration or year
+				! A warning is raised in case of a mismatch
+				! not in standalone mode
+				block
+					if p_StandAlone <> 1 then
+						if not (NCNTRL_CURCALYR('1') = FirstModelYear and NCNTRL_CURITR('1') = 1) then
+							if NCNTRL_CURITR('1') = 1 then
+								if p_LoadedYear <> (NCNTRL_CURCALYR('1') - 1) then
+									raise warning "Loaded case mismatch. It is the 1st iteration of year " + NCNTRL_CURCALYR('1') + 
+									". We should be reading a case from year " + (NCNTRL_CURCALYR('1') - 1) + ", however, we have read " +
+									"a case from year " + p_LoadedYear;
+								endif;
+							elseif NCNTRL_CURITR('1') > 1 then
+								if p_LoadedYear <> NCNTRL_CURCALYR('1') or p_LoadedIteration <> (NCNTRL_CURITR('1') - 1) then
+									raise warning "Loaded case mismatch. We are running the iteration " + NCNTRL_CURITR('1') +
+									" of year " + NCNTRL_CURCALYR('1') + ". We should be loading the case for year " + NCNTRL_CURCALYR('1') +
+									" and iteration " + (NCNTRL_CURITR('1') - 1) + " however, we have loaded year " + p_LoadedYear + 
+									", iteration " + p_LoadedIteration;
+								endif;
+							endif;
+						endif;
+					endif; 
+				onerror ep_err do
+					!If we want to store a custom error message
+				!	sp_ErrorMessage := "Hardcoded fuel types do not match with the database";
+					!If we want to store the AIMMS default message
+					sp_ErrorMessage := errh::Message( ep_err );
+				
+					pr_ErrorOutput(ep_err);
+				
+				endblock;
+				
+				pr_ProcessInputDatabase;
+				
+				pr_ProcessInputFiles;
+			}
+			StringParameter _sp_PathCaseFile;
+		}
+		Procedure MainExecutionTest {
+			Body: {
+				! LoadData("restart_initial");
+				! ncntrl_curitr(1):=1;
+				! SaveGDS("restart");
+				! KEEPOPEN:=0;
+				! repeat
+				
+				! empty Cleared_Identifiers_;
+				! LoadData("restart");
+				    !Initialize ModelYear
+				
+				    ModelYear := StringToElement(s_Year, FormatString("%n", NCNTRL_CURCALYR('1')));
+				    ep_CurrentNEMSYear := StringToElement(s_NEMSYears, "50");
+				    if ncntrl_curitr(1) > 9 then
+				      ncntrl_ncrl(1):=1;
+				    else
+				      ncntrl_ncrl(1):=0;
+				    endif;
+				
+				    if ncntrl_curitr(1)=2 then
+				      ncntrl_fcrl(1):=1;
+				    else
+				      ncntrl_fcrl(1):=0;
+				    endif;
+				
+				
+				    display ncntrl_curcalyr ;
+				
+				    if (ModelYear >= FirstModelYear) then
+				       if (ncntrl_ncrl(1) <> 1) then
+					  pr_ReadandProcessInputsTest;
+					  pr_Optimize;
+				!            	Write_to_NEMS;		! Assign values to NEMS transfer parameters
+				       elseif (ncntrl_fcrl(1) = 1) then
+				
+				!            	NEMS_Report_Loop;
+				       endif;
+				    endif;
+				
+				
+				     if (p_StandAlone <> 1) then
+					if (ModelYear >= FirstModelYear and ncntrl_fcrl('1')<>0  and ncntrl_ncrl('1')<> 1 ) then
+						if (ModelYear < LastModelYear) then
+					!            	PrepareDataForNextRoll;
+					!		NCNTRL_CURIYR('1')+= 1;
+					!		NCNTRL_CURCALYR('1')+=1;
+					!		ncntrl_curitr(1):=1;
+							!SaveAll( FormatString("ngtdm%e", ModelYear));
+					!              	if  KEEPOPEN = 0 then
+					!              			SaveHMM FormatString("ngtdm_only%e", ModelYear)); need to write if needed
+						endif;
+					endif;
+				      endif;
+				!	  halt("mainexecution");
+				    if (p_StandAlone <> 1) then
+				    !	ncntrl_curitr(1)+=1;
+				    endif;
+				! SaveGDS("restart");
+				! endrepeat;
+				! halt(4);
+			}
+		}
+		Procedure pr_TestFullOptimization {
+			Body: {
+				ep_OptYear := 2023; ! For testing purposes, can be deleted
+				ep_OptIter := 1; ! For testing purposes, can be deleted
+				
+				while ep_OptYear <= 2050 do 
+					ep_OptIter := 1;
+				!	_P_RandomNumberOfIterations := uniform(1,3);
+				
+				!	while ep_OptIter <= _P_RandomNumberOfIterations do 
+						block;
+						!NCNTRL_CURCALYR('1') := 2025; ! For testing purposes, can be deleted
+						!NCNTRL_CURITR('1') := 3; ! For testing purposes, can be deleted
+						Standalonetest;
+				!		ep_OptIter += 1;
+				
+						onerror ep_err do
+						errh::MarkAsHandled(ep_err);
+						endblock;
+				!	endwhile;	
+				
+				
+					ep_OptYear += 1;
+				
+				endwhile;
+			}
+			Parameter _P_RandomNumberOfIterations;
+		}
+		ElementParameter ep_OptYear {
+			Range: Integers;
+		}
+		ElementParameter ep_OptIter {
+			Range: s_IterationNumbers_D;
+		}
+	}
+	Section S1_Data {
+		SourceFile: "AMS Files\\S1 Data.ams";
+	}
+	Section S2_Data_Import_Export {
+		SourceFile: "AMS Files\\S2 Data Import Export.ams";
+	}
+	Section S3_Data_Processing {
+		SourceFile: "AMS Files\\S3 Data Processing.ams";
+	}
+	Section S4_Calculations {
+		SourceFile: "AMS Files\\S4 Calculations.ams";
+	}
+	Section S5_Optimization {
+		SourceFile: "AMS Files\\S5 Optimization.ams";
+	}
+	Section S6_Output {
+		SourceFile: "AMS Files\\S6 Output.ams";
+	}
+	Section S7_GUI {
+		SourceFile: "AMS Files\\S7 GUI.ams";
+	}
+	Section S8_Miscellaneous {
+		SourceFile: "AMS Files\\S8 Miscellaneous.ams";
+	}
+	Procedure MainInitialization {
+		Body: {
+			if ProjectDeveloperMode then
+				ProfilerStart;
+				IdentifierShowAttributes('NEMS_Monitor');
+			endif;
+		}
+		Comment: "Add initialization statements here that do NOT require any library being initialized already.";
+	}
+	Procedure PostMainInitialization {
+		Body: {
+			pr_InitializeCalendar;
+			pr_WriteIdentifierTranslations;
+			pr_MakeIdentifiersReadOnly;
+			
+			! Decision parameters are initialized here. These parameters control certain decisions
+			! Example: Save all cases or just one...
+			pr_DecisionParametersInitialization;
+		}
+		Comment: {
+			"Add initialization statements here that require that the libraries are already initialized properly,
+			or add statements that require the Data Management module to be initialized."
+		}
+	}
+	Procedure MainExecution {
+		Body: {
+			! LoadData("restart_initial");
+			! ncntrl_curitr(1):=1;
+			! SaveGDS("restart");
+			! KEEPOPEN:=0;
+			! repeat
+			
+			! empty Cleared_Identifiers_;
+			! LoadData("restart");
+			    !Initialize ModelYear
+			
+			    ModelYear := StringToElement(s_Year, FormatString("%n", NCNTRL_CURCALYR('1')));
+			    ep_CurrentNEMSYear := StringToElement(s_NEMSYears, "50");
+			    if ncntrl_curitr(1) > 9 then
+			      ncntrl_ncrl(1):=1;
+			    else
+			      ncntrl_ncrl(1):=0;
+			    endif;
+			
+			    if ncntrl_curitr(1)=2 then
+			      ncntrl_fcrl(1):=1;
+			    else
+			      ncntrl_fcrl(1):=0;
+			    endif;
+			
+			
+			    display ncntrl_curcalyr ;
+			
+			    if (ModelYear >= FirstModelYear) then
+			       if (ncntrl_ncrl(1) <> 1) then
+				  pr_ReadandProcessInputs;
+				  pr_Optimize;
+			!            	Write_to_NEMS;		! Assign values to NEMS transfer parameters
+			       elseif (ncntrl_fcrl(1) = 1) then
+			
+			!            	NEMS_Report_Loop;
+			       endif;
+			    endif;
+			
+			
+			     if (p_StandAlone <> 1) then
+				if (ModelYear >= FirstModelYear and ncntrl_fcrl('1')<>0  and ncntrl_ncrl('1')<> 1 ) then
+					if (ModelYear < LastModelYear) then
+				!            	PrepareDataForNextRoll;
+				!		NCNTRL_CURIYR('1')+= 1;
+				!		NCNTRL_CURCALYR('1')+=1;
+				!		ncntrl_curitr(1):=1;
+						!SaveAll( FormatString("ngtdm%e", ModelYear));
+				!              	if  KEEPOPEN = 0 then
+				!              			SaveHMM FormatString("ngtdm_only%e", ModelYear)); need to write if needed
+					endif;
+				endif;
+			      endif;
+			!	  halt("mainexecution");
+			    if (p_StandAlone <> 1) then
+			    !	ncntrl_curitr(1)+=1;
+			    endif;
+			! SaveGDS("restart");
+			! endrepeat;
+			! halt(4Dis);
+		}
+		Comment: {
+			"            if KEEPOPEN = 0 then
+			            	if ModelYear = FirstModelYear then
+			!           		FirstYearInitialization;
+			            	elseif ModelYear > FirstModelYear then
+			!            		LoadData( FormatString(\"ngtdm_only%e\", ModelYear-1));
+			            	endif;
+			            elseif ( ModelYear = FirstModelYear and ncntrl_curitr(1)=1 ) then
+			            	FirstYearInitialization;
+			            endif;"
+		}
+	}
+	Procedure PreMainTermination {
+		Body: {
+			!return DataManagementExit();
+			return 1;
+		}
+		Comment: {
+			"Add termination statements here that require all libraries to be still alive.
+			Return 1 if you allow the termination sequence to continue.
+			Return 0 if you want to cancel the termination sequence."
+		}
+	}
+	Procedure MainTermination {
+		Body: {
+			!return DataManagementExit();
+			sAction:="Exited";    ! Action message for NEMS
+			write sAction to file NEMSMessageOutFile in replace mode;  
+			return 1;
+		}
+		Comment: {
+			"Add termination statements here that do not require all libraries to be still alive.
+			Return 1 to allow the termination sequence to continue.
+			Return 0 if you want to cancel the termination sequence.
+			It is recommended to only use the procedure PreMainTermination to cancel the termination sequence and let this procedure always return 1."
+		}
+	}
+}

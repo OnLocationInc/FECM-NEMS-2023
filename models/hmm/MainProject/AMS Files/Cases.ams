@@ -1,0 +1,64 @@
+## ams_version=1.0
+
+Section Cases {
+	Procedure Loaddata {
+		Arguments: (CaseName);
+		Body: {
+			CaseFileLoad(url: FormatString("data\\cases\\%s.data",CaseName),0);
+		}
+		Comment: {
+			"!Load case file \"CaseName\" and destroy previous runtime libraries
+			Taken from NGMM"
+		}
+		StringParameter CaseName {
+			Property: Input;
+		}
+	}
+	Procedure pr_OpenCaseFile {
+		Body: {
+			
+			_sp_PathCaseFile := "data";
+			_sp_DataName := "HMM_Output";
+			
+			_sp_CaseFileName := FormatString(
+			!        "%s/%s_%e.%s",
+				"%s/%s.%s",
+			        _sp_PathCaseFile,
+			        _sp_DataName,
+			!        ep_CurrentOptYear-1,
+			        "data");
+			
+			IsActive := CaseFileLoad(_sp_CaseFileName);
+		}
+		StringParameter _sp_CaseFileName;
+		StringParameter _sp_PathCaseFile;
+		StringParameter _sp_DataName;
+	}
+	Procedure pr_SaveCaseFile {
+		Arguments: (_sp_CaseFilename,_s_IdentifiersToSave);
+		Body: {
+			! This procedure saves all model identifiers without a definition in a data case.
+			if _sp_CaseFilename = "" then
+				_sp_CaseFilename := "MainCase";
+			endif;
+			
+			if ProjectDeveloperMode then
+				_sp_CasePath := "data/";
+			
+			else
+			    _sp_CasePath :=  FormatString( "PRO:/PublicData/Cases/%s", pro::Modelname);
+			
+			endif;
+			
+			CaseFileSave( _sp_CasePath + _sp_CaseFilename + currenttostring("_%c%y%m%d") + ".data", _s_IdentifiersToSave );
+		}
+		StringParameter _sp_CaseFilename {
+			Property: Input;
+		}
+		StringParameter _sp_CasePath;
+		Set _s_IdentifiersToSave {
+			SubsetOf: AllUpdatableIdentifiers;
+			Property: Input;
+		}
+	}
+}

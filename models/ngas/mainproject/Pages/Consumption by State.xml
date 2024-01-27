@@ -1,0 +1,168 @@
+<?xml version="1.0"?>
+<Page Version="4000" TimeStamp="2017-08-18 17:07:27">
+	<PageEditSize Type="Inherited" />
+	<ProjectUUID>BD6A9103-B1FB-4406-840F-21FDB00917E2</ProjectUUID>
+	<TemplatesTabOrderPosition>1</TemplatesTabOrderPosition>
+	<Background Inherited="true" />
+	<PageObject Type="Selection Object">
+		<SelectionType>DropDownList</SelectionType>
+		<Location top="462" left="240" bottom="492" right="318" />
+		<TabOrder>2</TabOrder>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<TextShown>ElementName</TextShown>
+		<Border Style="None" />
+		<BackgroundColor RGB="#ffffff" />
+		<ExplicitIdentifier>
+			<Identifier>DisplayedState50</Identifier>
+		</ExplicitIdentifier>
+	</PageObject>
+	<PageObject Type="Selection Object">
+		<SelectionType>DropDownList</SelectionType>
+		<Location top="462" left="696" bottom="486" right="840" />
+		<TabOrder>3</TabOrder>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<TextShown>ElementName</TextShown>
+		<Border Style="None" />
+		<BackgroundColor RGB="#ffffff" />
+		<ExplicitIdentifier>
+			<Identifier>DisplayedSector</Identifier>
+		</ExplicitIdentifier>
+	</PageObject>
+	<PageObject Type="Selection Object">
+		<SelectionType>DropDownList</SelectionType>
+		<Location top="492" left="756" bottom="516" right="882" />
+		<TabOrder>4</TabOrder>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<TextShown>ElementName</TextShown>
+		<Border Style="None" />
+		<BackgroundColor RGB="#ffffff" />
+		<ExplicitIdentifier>
+			<Identifier>DisplayedCensusRegion</Identifier>
+		</ExplicitIdentifier>
+	</PageObject>
+	<PageObject Type="Selection Object">
+		<SelectionType>DropDownList</SelectionType>
+		<Location top="462" left="1326" bottom="486" right="1386" />
+		<TabOrder>5</TabOrder>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<TextShown>ElementName</TextShown>
+		<Border Style="None" />
+		<BackgroundColor RGB="#ffffff" />
+		<ExplicitIdentifier>
+			<Identifier>DisplayedNNGEMMRegion</Identifier>
+		</ExplicitIdentifier>
+	</PageObject>
+	<PageObject Type="Text">
+		<Location top="462" left="174" bottom="492" right="294" />
+		<StaticText>State</StaticText>
+		<Font GUID="3EEC6209-AF15-406D-9130-A82C6D539593" Name="Title font" />
+		<TextColor RGB="#000000" />
+	</PageObject>
+	<PageObject Type="Text">
+		<Location top="462" left="624" bottom="492" right="744" />
+		<StaticText>Sector</StaticText>
+		<Font GUID="3EEC6209-AF15-406D-9130-A82C6D539593" Name="Title font" />
+		<TextColor RGB="#000000" />
+	</PageObject>
+	<PageObject Type="Text">
+		<Location top="492" left="624" bottom="522" right="756" />
+		<StaticText>Census Region</StaticText>
+		<Font GUID="3EEC6209-AF15-406D-9130-A82C6D539593" Name="Title font" />
+		<TextColor RGB="#000000" />
+	</PageObject>
+	<PageObject Type="Text">
+		<Location top="462" left="1062" bottom="492" right="1332" />
+		<StaticText>Natural Gas-Electricity Region (NNGEMM)</StaticText>
+		<Font GUID="3EEC6209-AF15-406D-9130-A82C6D539593" Name="Title font" />
+		<TextColor RGB="#000000" />
+	</PageObject>
+	<PageObject Type="Text">
+		<Location top="18" left="174" bottom="48" right="612" />
+		<StaticText>End-Use Consumption:  All Sectors</StaticText>
+		<Font GUID="3EEC6209-AF15-406D-9130-A82C6D539593" Name="Title font" />
+		<TextColor RGB="#000000" />
+	</PageObject>
+	<PageObject Type="Text">
+		<Location top="18" left="624" bottom="48" right="1062" />
+		<StaticText>End-Use Consumption:  All States in Census Region</StaticText>
+		<Font GUID="3EEC6209-AF15-406D-9130-A82C6D539593" Name="Title font" />
+		<TextColor RGB="#000000" />
+	</PageObject>
+	<PageObject Type="Text">
+		<Location top="18" left="1062" bottom="48" right="1500" />
+		<StaticText>Electricity Consumption:  All States in NNGEMM Region</StaticText>
+		<Font GUID="3EEC6209-AF15-406D-9130-A82C6D539593" Name="Title font" />
+		<TextColor RGB="#000000" />
+	</PageObject>
+	<PageObject Type="Curve">
+		<Location top="60" left="624" bottom="450" right="1056" />
+		<TabOrder>6</TabOrder>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#ffffff" />
+		<ColorScheme Number="0" />
+		<Title>true</Title>
+		<Legend>true</Legend>
+		<Y-Labels>true</Y-Labels>
+		<X-Labels>true</X-Labels>
+		<StatusLine>true</StatusLine>
+		<ExplicitIdentifier>
+			<Identifier>Cons_State_Yr( year, DisplayedSector, show_cen )</Identifier>
+		</ExplicitIdentifier>
+		<DrawLines>true</DrawLines>
+		<MarkPoints>true</MarkPoints>
+	</PageObject>
+	<PageObject Type="Curve">
+		<Location top="54" left="1068" bottom="450" right="1566" />
+		<TabOrder>7</TabOrder>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#ffffff" />
+		<ColorScheme Number="0" />
+		<Title>true</Title>
+		<Legend>true</Legend>
+		<Y-Labels>true</Y-Labels>
+		<X-Labels>true</X-Labels>
+		<StatusLine>true</StatusLine>
+		<ExplicitIdentifier>
+			<Identifier>Cons_State_Yr( year, 'Electric', show_emm )</Identifier>
+		</ExplicitIdentifier>
+		<DrawLines>true</DrawLines>
+		<MarkPoints>true</MarkPoints>
+	</PageObject>
+	<PageObject Type="Curve">
+		<Location top="60" left="168" bottom="444" right="606" />
+		<TabOrder>14</TabOrder>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#ffffff" />
+		<ColorScheme Number="0" />
+		<Title>true</Title>
+		<Legend>true</Legend>
+		<Y-Labels>true</Y-Labels>
+		<X-Labels>true</X-Labels>
+		<StatusLine>true</StatusLine>
+		<ExplicitIdentifier>
+			<Identifier>Cons_State_Yr( year, sec, DisplayedState50 )</Identifier>
+		</ExplicitIdentifier>
+		<DrawLines>true</DrawLines>
+		<MarkPoints>true</MarkPoints>
+	</PageObject>
+	<UsedReferences>
+		<Model>
+			<Symbol>NNGEMM_</Symbol>
+			<Symbol>Region_Census_</Symbol>
+			<Symbol>States_</Symbol>
+			<Symbol>Sector_</Symbol>
+			<Symbol>Cons_State_Yr</Symbol>
+			<Symbol>DisplayedState50</Symbol>
+			<Symbol>DisplayedCensusRegion</Symbol>
+			<Symbol>DisplayedSector</Symbol>
+			<Symbol>DisplayedNNGEMMRegion</Symbol>
+			<Symbol>year</Symbol>
+			<Symbol>sec</Symbol>
+			<Symbol>show_cen</Symbol>
+			<Symbol>show_emm</Symbol>
+		</Model>
+	</UsedReferences>
+</Page>

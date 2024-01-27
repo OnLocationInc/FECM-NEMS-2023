@@ -1,0 +1,69 @@
+## ams_version=1.0
+
+Section S6_Output {
+	Procedure pr_SaveCase {
+		Body: {
+			s_SavedSets := 
+			{IndexSets |
+			IndexSets in Outputs_Declaration
+			or IndexSets in General_data_input
+			or IndexSets in NEMS_Data
+			or IndexSets in Error_Handling};
+			
+			s_SavedParameters := 
+			{IndexParameters |
+			IndexParameters in Outputs_Declaration
+			or IndexParameters in General_data_input
+			or IndexParameters in NEMS_Data
+			or IndexParameters in Error_Handling};
+			
+			s_SavedResults := {s_SavedSets + s_SavedParameters};
+			
+			
+			_sp_PathCaseFile := "data";
+			_sp_DataName := "HMM_Output" + sp_CurrentOptimizationAndIteration_D;
+			_sp_CaseFileName := FormatString(
+			!        "%s/%s_%e.%s",
+				"%s/%s.%s",
+			        _sp_PathCaseFile,
+			        _sp_DataName,
+			!        ep_CurrentOptYear,
+			        "data");
+			
+			!We first delete all cases in the directory, we only need the last one
+			
+			if not bp_SaveAllCases then 
+				DirectoryGetFiles("data", "*.data", sp_CaseNamesInDirectory(i_CaseNumber));
+				for i_CaseNumber | sp_CaseNamesInDirectory(i_CaseNumber) do
+					FileDelete(_sp_PathCaseFile + "/" + sp_CaseNamesInDirectory(i_CaseNumber));
+				endfor;	
+			endif;
+			
+			casefilesave(_sp_CaseFileName,s_SavedResults);
+		}
+		StringParameter _sp_PathCaseFile;
+		StringParameter _sp_DataName;
+		StringParameter _sp_CaseFileName;
+		Parameter _p_Success;
+	}
+	DeclarationSection Save_Case_Declaration {
+		Set s_SavedResults {
+			SubsetOf: AllIdentifiers;
+			Index: i_SavedResult;
+		}
+		Set s_SavedSets {
+			SubsetOf: AllSets;
+			Index: i_SavedSet;
+		}
+		Set s_SavedParameters {
+			SubsetOf: AllParameters;
+			Index: i_SavedParameter;
+		}
+		ElementParameter ep_SavedResults {
+			Range: AllIdentifiers;
+		}
+		StringParameter sp_CurrentOptimizationAndIteration_D {
+			Definition: "_" + NCNTRL_CURCALYR('1') + "_"+NCNTRL_CURITR('1');
+		}
+	}
+}

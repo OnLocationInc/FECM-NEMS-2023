@@ -1,0 +1,3621 @@
+﻿    NCNTRL_CURCALYR(1) := 2024 ;
+ 
+    NCNTRL_CURITR(1) := 1 ;
+ 
+    ModelYear := 2023 ;
+ 
+    ep_CurrentOptYear := '2024' ;
+ 
+    s_ThirdPeriodYears := data
+    { 2026, 2027, 2028, 2029, 2030, 2031, 2032, 2033, 2034, 2035, 2036, 2037, 2038, 2039, 2040, 2041, 2042, 2043, 2044, 2045, 2046,
+      2047, 2048, 2049, 2050, 2051, 2052, 2053 } ;
+ 
+! Index:
+!    i_calYear
+!        range :  cal_Year ;
+ 
+Composite table:
+    i_ProdActiveOptTech                     i_CensusDivisionOpt  i_calYear    p_ProductionUnplannedCapacity(i_ProdActiveOptTech,i_Ce
+nsusDivisionOpt,i_calYear)
+!   --------------------------------------  -------------------  ---------    ------------------------------------------------------
+--------------------------
+    'NG Steam methane reforming'                              1  2024
+                   145.000
+    'NG Steam methane reforming'                              1  2025
+                   290.000
+    'NG Steam methane reforming'                              1  2026
+                   290.000
+    'NG Steam methane reforming'                              1  2027
+                   290.000
+    'NG Steam methane reforming'                              1  2028
+                   290.000
+    'NG Steam methane reforming'                              1  2029
+                   290.000
+    'NG Steam methane reforming'                              1  2030
+                   290.000
+    'NG Steam methane reforming'                              1  2031
+                   290.000
+    'NG Steam methane reforming'                              1  2032
+                   290.000
+    'NG Steam methane reforming'                              1  2033
+                   290.000
+    'NG Steam methane reforming'                              1  2034
+                   290.000
+    'NG Steam methane reforming'                              1  2035
+                   290.000
+    'NG Steam methane reforming'                              1  2036
+                   290.000
+    'NG Steam methane reforming'                              1  2037
+                   290.000
+    'NG Steam methane reforming'                              1  2038
+                   290.000
+    'NG Steam methane reforming'                              1  2039
+                   290.000
+    'NG Steam methane reforming'                              1  2040
+                   290.000
+    'NG Steam methane reforming'                              1  2041
+                   290.000
+    'NG Steam methane reforming'                              1  2042
+                   290.000
+    'NG Steam methane reforming'                              1  2043
+                   290.000
+    'NG Steam methane reforming'                              1  2044
+                   290.000
+    'NG Steam methane reforming'                              1  2045
+                   290.000
+    'NG Steam methane reforming'                              1  2046
+                   290.000
+    'NG Steam methane reforming'                              1  2047
+                   290.000
+    'NG Steam methane reforming'                              1  2048
+                   290.000
+    'NG Steam methane reforming'                              1  2049
+                   290.000
+    'NG Steam methane reforming'                              1  2050
+                   290.000
+    'NG Steam methane reforming'                              1  2051
+                   290.000
+    'NG Steam methane reforming'                              1  2052
+                   290.000
+    'NG Steam methane reforming'                              1  2053
+                   290.000
+    'NG Steam methane reforming'                              2  2024
+                   100.000
+    'NG Steam methane reforming'                              2  2025
+                   200.000
+    'NG Steam methane reforming'                              2  2026
+                   200.000
+    'NG Steam methane reforming'                              2  2027
+                   200.000
+    'NG Steam methane reforming'                              2  2028
+                   200.000
+    'NG Steam methane reforming'                              2  2029
+                   200.000
+    'NG Steam methane reforming'                              2  2030
+                   200.000
+    'NG Steam methane reforming'                              2  2031
+                   200.000
+    'NG Steam methane reforming'                              2  2032
+                   200.000
+    'NG Steam methane reforming'                              2  2033
+                   200.000
+    'NG Steam methane reforming'                              2  2034
+                   200.000
+    'NG Steam methane reforming'                              2  2035
+                   200.000
+    'NG Steam methane reforming'                              2  2036
+                   200.000
+    'NG Steam methane reforming'                              2  2037
+                   200.000
+    'NG Steam methane reforming'                              2  2038
+                   200.000
+    'NG Steam methane reforming'                              2  2039
+                   200.000
+    'NG Steam methane reforming'                              2  2040
+                   200.000
+    'NG Steam methane reforming'                              2  2041
+                   200.000
+    'NG Steam methane reforming'                              2  2042
+                   200.000
+    'NG Steam methane reforming'                              2  2043
+                   200.000
+    'NG Steam methane reforming'                              2  2044
+                   200.000
+    'NG Steam methane reforming'                              2  2045
+                   200.000
+    'NG Steam methane reforming'                              2  2046
+                   200.000
+    'NG Steam methane reforming'                              2  2047
+                   200.000
+    'NG Steam methane reforming'                              2  2048
+                   200.000
+    'NG Steam methane reforming'                              2  2049
+                   200.000
+    'NG Steam methane reforming'                              2  2050
+                   200.000
+    'NG Steam methane reforming'                              2  2051
+                   200.000
+    'NG Steam methane reforming'                              2  2052
+                   200.000
+    'NG Steam methane reforming'                              2  2053
+                   200.000
+    'NG Steam methane reforming'                              3  2024
+                   100.000
+    'NG Steam methane reforming'                              3  2025
+                   100.000
+    'NG Steam methane reforming'                              3  2026
+                   100.000
+    'NG Steam methane reforming'                              3  2027
+                   100.000
+    'NG Steam methane reforming'                              3  2028
+                   100.000
+    'NG Steam methane reforming'                              3  2029
+                   100.000
+    'NG Steam methane reforming'                              3  2030
+                   100.000
+    'NG Steam methane reforming'                              3  2031
+                   100.000
+    'NG Steam methane reforming'                              3  2032
+                   100.000
+    'NG Steam methane reforming'                              3  2033
+                   100.000
+    'NG Steam methane reforming'                              3  2034
+                   100.000
+    'NG Steam methane reforming'                              3  2035
+                   100.000
+    'NG Steam methane reforming'                              3  2036
+                   100.000
+    'NG Steam methane reforming'                              3  2037
+                   100.000
+    'NG Steam methane reforming'                              3  2038
+                   100.000
+    'NG Steam methane reforming'                              3  2039
+                   100.000
+    'NG Steam methane reforming'                              3  2040
+                   100.000
+    'NG Steam methane reforming'                              3  2041
+                   100.000
+    'NG Steam methane reforming'                              3  2042
+                   100.000
+    'NG Steam methane reforming'                              3  2043
+                   100.000
+    'NG Steam methane reforming'                              3  2044
+                   100.000
+    'NG Steam methane reforming'                              3  2045
+                   100.000
+    'NG Steam methane reforming'                              3  2046
+                   100.000
+    'NG Steam methane reforming'                              3  2047
+                   100.000
+    'NG Steam methane reforming'                              3  2048
+                   100.000
+    'NG Steam methane reforming'                              3  2049
+                   100.000
+    'NG Steam methane reforming'                              3  2050
+                   100.000
+    'NG Steam methane reforming'                              3  2051
+                   100.000
+    'NG Steam methane reforming'                              3  2052
+                   100.000
+    'NG Steam methane reforming'                              3  2053
+                   100.000
+    'NG Steam methane reforming'                              4  2024
+                     6.888
+    'NG Steam methane reforming'                              4  2025
+                     9.129
+    'NG Steam methane reforming'                              4  2026
+                     9.129
+    'NG Steam methane reforming'                              4  2027
+                     9.129
+    'NG Steam methane reforming'                              4  2028
+                     9.129
+    'NG Steam methane reforming'                              4  2029
+                     9.129
+    'NG Steam methane reforming'                              4  2030
+                     9.129
+    'NG Steam methane reforming'                              4  2031
+                     9.129
+    'NG Steam methane reforming'                              4  2032
+                     9.129
+    'NG Steam methane reforming'                              4  2033
+                     9.129
+    'NG Steam methane reforming'                              4  2034
+                     9.129
+    'NG Steam methane reforming'                              4  2035
+                     9.129
+    'NG Steam methane reforming'                              4  2036
+                     9.129
+    'NG Steam methane reforming'                              4  2037
+                     9.129
+    'NG Steam methane reforming'                              4  2038
+                     9.129
+    'NG Steam methane reforming'                              4  2039
+                     9.129
+    'NG Steam methane reforming'                              4  2040
+                     9.129
+    'NG Steam methane reforming'                              4  2041
+                     9.129
+    'NG Steam methane reforming'                              4  2042
+                     9.129
+    'NG Steam methane reforming'                              4  2043
+                     9.129
+    'NG Steam methane reforming'                              4  2044
+                     9.129
+    'NG Steam methane reforming'                              4  2045
+                     9.129
+    'NG Steam methane reforming'                              4  2046
+                     9.129
+    'NG Steam methane reforming'                              4  2047
+                     9.129
+    'NG Steam methane reforming'                              4  2048
+                     9.129
+    'NG Steam methane reforming'                              4  2049
+                     9.129
+    'NG Steam methane reforming'                              4  2050
+                     9.129
+    'NG Steam methane reforming'                              4  2051
+                     9.129
+    'NG Steam methane reforming'                              4  2052
+                     9.129
+    'NG Steam methane reforming'                              4  2053
+                     9.129
+    'NG Steam methane reforming'                              5  2024
+                     2.296
+    'NG Steam methane reforming'                              5  2025
+                     2.296
+    'NG Steam methane reforming'                              5  2026
+                     2.296
+    'NG Steam methane reforming'                              5  2027
+                     2.296
+    'NG Steam methane reforming'                              5  2028
+                     2.296
+    'NG Steam methane reforming'                              5  2029
+                     2.296
+    'NG Steam methane reforming'                              5  2030
+                     2.296
+    'NG Steam methane reforming'                              5  2031
+                     2.296
+    'NG Steam methane reforming'                              5  2032
+                     2.296
+    'NG Steam methane reforming'                              5  2033
+                     2.296
+    'NG Steam methane reforming'                              5  2034
+                     2.296
+    'NG Steam methane reforming'                              5  2035
+                     2.296
+    'NG Steam methane reforming'                              5  2036
+                     2.296
+    'NG Steam methane reforming'                              5  2037
+                     2.296
+    'NG Steam methane reforming'                              5  2038
+                     2.296
+    'NG Steam methane reforming'                              5  2039
+                     2.296
+    'NG Steam methane reforming'                              5  2040
+                     2.296
+    'NG Steam methane reforming'                              5  2041
+                     2.296
+    'NG Steam methane reforming'                              5  2042
+                     2.296
+    'NG Steam methane reforming'                              5  2043
+                     2.296
+    'NG Steam methane reforming'                              5  2044
+                     2.296
+    'NG Steam methane reforming'                              5  2045
+                     2.296
+    'NG Steam methane reforming'                              5  2046
+                     2.296
+    'NG Steam methane reforming'                              5  2047
+                     2.296
+    'NG Steam methane reforming'                              5  2048
+                     2.296
+    'NG Steam methane reforming'                              5  2049
+                     2.296
+    'NG Steam methane reforming'                              5  2050
+                     2.296
+    'NG Steam methane reforming'                              5  2051
+                     2.296
+    'NG Steam methane reforming'                              5  2052
+                     2.296
+    'NG Steam methane reforming'                              5  2053
+                     2.296
+    'NG Steam methane reforming'                              6  2024
+                    12.326
+    'NG Steam methane reforming'                              6  2025
+                    12.326
+    'NG Steam methane reforming'                              6  2026
+                    12.326
+    'NG Steam methane reforming'                              6  2027
+                    12.326
+    'NG Steam methane reforming'                              6  2028
+                    12.326
+    'NG Steam methane reforming'                              6  2029
+                    12.326
+    'NG Steam methane reforming'                              6  2030
+                    12.326
+    'NG Steam methane reforming'                              6  2031
+                    12.326
+    'NG Steam methane reforming'                              6  2032
+                    12.326
+    'NG Steam methane reforming'                              6  2033
+                    12.326
+    'NG Steam methane reforming'                              6  2034
+                    12.326
+    'NG Steam methane reforming'                              6  2035
+                    12.326
+    'NG Steam methane reforming'                              6  2036
+                    12.326
+    'NG Steam methane reforming'                              6  2037
+                    12.326
+    'NG Steam methane reforming'                              6  2038
+                    12.326
+    'NG Steam methane reforming'                              6  2039
+                    12.326
+    'NG Steam methane reforming'                              6  2040
+                    12.326
+    'NG Steam methane reforming'                              6  2041
+                    12.326
+    'NG Steam methane reforming'                              6  2042
+                    12.326
+    'NG Steam methane reforming'                              6  2043
+                    12.326
+    'NG Steam methane reforming'                              6  2044
+                    12.326
+    'NG Steam methane reforming'                              6  2045
+                    12.326
+    'NG Steam methane reforming'                              6  2046
+                    12.326
+    'NG Steam methane reforming'                              6  2047
+                    12.326
+    'NG Steam methane reforming'                              6  2048
+                    12.326
+    'NG Steam methane reforming'                              6  2049
+                    12.326
+    'NG Steam methane reforming'                              6  2050
+                    12.326
+    'NG Steam methane reforming'                              6  2051
+                    12.326
+    'NG Steam methane reforming'                              6  2052
+                    12.326
+    'NG Steam methane reforming'                              6  2053
+                    12.326
+    'NG Steam methane reforming'                              7  2024
+                   145.000
+    'NG Steam methane reforming'                              7  2025
+                   290.000
+    'NG Steam methane reforming'                              7  2026
+                   290.000
+    'NG Steam methane reforming'                              7  2027
+                   290.000
+    'NG Steam methane reforming'                              7  2028
+                   290.000
+    'NG Steam methane reforming'                              7  2029
+                   290.000
+    'NG Steam methane reforming'                              7  2030
+                   290.000
+    'NG Steam methane reforming'                              7  2031
+                   290.000
+    'NG Steam methane reforming'                              7  2032
+                   290.000
+    'NG Steam methane reforming'                              7  2033
+                   290.000
+    'NG Steam methane reforming'                              7  2034
+                   290.000
+    'NG Steam methane reforming'                              7  2035
+                   290.000
+    'NG Steam methane reforming'                              7  2036
+                   290.000
+    'NG Steam methane reforming'                              7  2037
+                   290.000
+    'NG Steam methane reforming'                              7  2038
+                   290.000
+    'NG Steam methane reforming'                              7  2039
+                   290.000
+    'NG Steam methane reforming'                              7  2040
+                   290.000
+    'NG Steam methane reforming'                              7  2041
+                   290.000
+    'NG Steam methane reforming'                              7  2042
+                   290.000
+    'NG Steam methane reforming'                              7  2043
+                   290.000
+    'NG Steam methane reforming'                              7  2044
+                   290.000
+    'NG Steam methane reforming'                              7  2045
+                   290.000
+    'NG Steam methane reforming'                              7  2046
+                   290.000
+    'NG Steam methane reforming'                              7  2047
+                   290.000
+    'NG Steam methane reforming'                              7  2048
+                   290.000
+    'NG Steam methane reforming'                              7  2049
+                   290.000
+    'NG Steam methane reforming'                              7  2050
+                   290.000
+    'NG Steam methane reforming'                              7  2051
+                   290.000
+    'NG Steam methane reforming'                              7  2052
+                   290.000
+    'NG Steam methane reforming'                              7  2053
+                   290.000
+    'NG Steam methane reforming'                              8  2024
+                   100.000
+    'NG Steam methane reforming'                              8  2025
+                   100.000
+    'NG Steam methane reforming'                              8  2026
+                   100.000
+    'NG Steam methane reforming'                              8  2027
+                   100.000
+    'NG Steam methane reforming'                              8  2028
+                   100.000
+    'NG Steam methane reforming'                              8  2029
+                   100.000
+    'NG Steam methane reforming'                              8  2030
+                   100.000
+    'NG Steam methane reforming'                              8  2031
+                   100.000
+    'NG Steam methane reforming'                              8  2032
+                   100.000
+    'NG Steam methane reforming'                              8  2033
+                   100.000
+    'NG Steam methane reforming'                              8  2034
+                   100.000
+    'NG Steam methane reforming'                              8  2035
+                   100.000
+    'NG Steam methane reforming'                              8  2036
+                   100.000
+    'NG Steam methane reforming'                              8  2037
+                   100.000
+    'NG Steam methane reforming'                              8  2038
+                   100.000
+    'NG Steam methane reforming'                              8  2039
+                   100.000
+    'NG Steam methane reforming'                              8  2040
+                   100.000
+    'NG Steam methane reforming'                              8  2041
+                   100.000
+    'NG Steam methane reforming'                              8  2042
+                   100.000
+    'NG Steam methane reforming'                              8  2043
+                   100.000
+    'NG Steam methane reforming'                              8  2044
+                   100.000
+    'NG Steam methane reforming'                              8  2045
+                   100.000
+    'NG Steam methane reforming'                              8  2046
+                   100.000
+    'NG Steam methane reforming'                              8  2047
+                   100.000
+    'NG Steam methane reforming'                              8  2048
+                   100.000
+    'NG Steam methane reforming'                              8  2049
+                   100.000
+    'NG Steam methane reforming'                              8  2050
+                   100.000
+    'NG Steam methane reforming'                              8  2051
+                   100.000
+    'NG Steam methane reforming'                              8  2052
+                   100.000
+    'NG Steam methane reforming'                              8  2053
+                   100.000
+    'NG Steam methane reforming'                              9  2024
+                   100.000
+    'NG Steam methane reforming'                              9  2025
+                   100.000
+    'NG Steam methane reforming'                              9  2026
+                   100.000
+    'NG Steam methane reforming'                              9  2027
+                   100.000
+    'NG Steam methane reforming'                              9  2028
+                   100.000
+    'NG Steam methane reforming'                              9  2029
+                   100.000
+    'NG Steam methane reforming'                              9  2030
+                   100.000
+    'NG Steam methane reforming'                              9  2031
+                   100.000
+    'NG Steam methane reforming'                              9  2032
+                   100.000
+    'NG Steam methane reforming'                              9  2033
+                   100.000
+    'NG Steam methane reforming'                              9  2034
+                   100.000
+    'NG Steam methane reforming'                              9  2035
+                   100.000
+    'NG Steam methane reforming'                              9  2036
+                   100.000
+    'NG Steam methane reforming'                              9  2037
+                   100.000
+    'NG Steam methane reforming'                              9  2038
+                   100.000
+    'NG Steam methane reforming'                              9  2039
+                   100.000
+    'NG Steam methane reforming'                              9  2040
+                   100.000
+    'NG Steam methane reforming'                              9  2041
+                   100.000
+    'NG Steam methane reforming'                              9  2042
+                   100.000
+    'NG Steam methane reforming'                              9  2043
+                   100.000
+    'NG Steam methane reforming'                              9  2044
+                   100.000
+    'NG Steam methane reforming'                              9  2045
+                   100.000
+    'NG Steam methane reforming'                              9  2046
+                   100.000
+    'NG Steam methane reforming'                              9  2047
+                   100.000
+    'NG Steam methane reforming'                              9  2048
+                   100.000
+    'NG Steam methane reforming'                              9  2049
+                   100.000
+    'NG Steam methane reforming'                              9  2050
+                   100.000
+    'NG Steam methane reforming'                              9  2051
+                   100.000
+    'NG Steam methane reforming'                              9  2052
+                   100.000
+    'NG Steam methane reforming'                              9  2053
+                   100.000
+    'NG Steam methane reforming with CCUS'                    1  2024
+                   145.000
+    'NG Steam methane reforming with CCUS'                    1  2025
+                   245.000
+    'NG Steam methane reforming with CCUS'                    1  2026
+                   245.000
+    'NG Steam methane reforming with CCUS'                    1  2027
+                   245.000
+    'NG Steam methane reforming with CCUS'                    1  2028
+                   245.000
+    'NG Steam methane reforming with CCUS'                    1  2029
+                   245.000
+    'NG Steam methane reforming with CCUS'                    1  2030
+                   245.000
+    'NG Steam methane reforming with CCUS'                    1  2031
+                   245.000
+    'NG Steam methane reforming with CCUS'                    1  2032
+                   245.000
+    'NG Steam methane reforming with CCUS'                    1  2033
+                   245.000
+    'NG Steam methane reforming with CCUS'                    1  2034
+                   245.000
+    'NG Steam methane reforming with CCUS'                    1  2035
+                   245.000
+    'NG Steam methane reforming with CCUS'                    1  2036
+                   245.000
+    'NG Steam methane reforming with CCUS'                    1  2037
+                   245.000
+    'NG Steam methane reforming with CCUS'                    1  2038
+                   245.000
+    'NG Steam methane reforming with CCUS'                    1  2039
+                   245.000
+    'NG Steam methane reforming with CCUS'                    1  2040
+                   245.000
+    'NG Steam methane reforming with CCUS'                    1  2041
+                   245.000
+    'NG Steam methane reforming with CCUS'                    1  2042
+                   245.000
+    'NG Steam methane reforming with CCUS'                    1  2043
+                   245.000
+    'NG Steam methane reforming with CCUS'                    1  2044
+                   245.000
+    'NG Steam methane reforming with CCUS'                    1  2045
+                   245.000
+    'NG Steam methane reforming with CCUS'                    1  2046
+                   245.000
+    'NG Steam methane reforming with CCUS'                    1  2047
+                   245.000
+    'NG Steam methane reforming with CCUS'                    1  2048
+                   245.000
+    'NG Steam methane reforming with CCUS'                    1  2049
+                   245.000
+    'NG Steam methane reforming with CCUS'                    1  2050
+                   245.000
+    'NG Steam methane reforming with CCUS'                    1  2051
+                   245.000
+    'NG Steam methane reforming with CCUS'                    1  2052
+                   245.000
+    'NG Steam methane reforming with CCUS'                    1  2053
+                   245.000
+    'NG Steam methane reforming with CCUS'                    2  2024
+                     5.327
+    'NG Steam methane reforming with CCUS'                    2  2025
+                     5.327
+    'NG Steam methane reforming with CCUS'                    2  2026
+                     5.327
+    'NG Steam methane reforming with CCUS'                    2  2027
+                     5.327
+    'NG Steam methane reforming with CCUS'                    2  2028
+                     5.327
+    'NG Steam methane reforming with CCUS'                    2  2029
+                     5.327
+    'NG Steam methane reforming with CCUS'                    2  2030
+                     5.327
+    'NG Steam methane reforming with CCUS'                    2  2031
+                     5.327
+    'NG Steam methane reforming with CCUS'                    2  2032
+                     5.327
+    'NG Steam methane reforming with CCUS'                    2  2033
+                     5.327
+    'NG Steam methane reforming with CCUS'                    2  2034
+                     5.327
+    'NG Steam methane reforming with CCUS'                    2  2035
+                     5.327
+    'NG Steam methane reforming with CCUS'                    2  2036
+                     5.327
+    'NG Steam methane reforming with CCUS'                    2  2037
+                     5.327
+    'NG Steam methane reforming with CCUS'                    2  2038
+                     5.327
+    'NG Steam methane reforming with CCUS'                    2  2039
+                     5.327
+    'NG Steam methane reforming with CCUS'                    2  2040
+                     5.327
+    'NG Steam methane reforming with CCUS'                    2  2041
+                     5.327
+    'NG Steam methane reforming with CCUS'                    2  2042
+                     5.327
+    'NG Steam methane reforming with CCUS'                    2  2043
+                     5.327
+    'NG Steam methane reforming with CCUS'                    2  2044
+                     5.327
+    'NG Steam methane reforming with CCUS'                    2  2045
+                     5.327
+    'NG Steam methane reforming with CCUS'                    2  2046
+                     5.327
+    'NG Steam methane reforming with CCUS'                    2  2047
+                     5.327
+    'NG Steam methane reforming with CCUS'                    2  2048
+                     5.327
+    'NG Steam methane reforming with CCUS'                    2  2049
+                     5.327
+    'NG Steam methane reforming with CCUS'                    2  2050
+                     5.327
+    'NG Steam methane reforming with CCUS'                    2  2051
+                     5.327
+    'NG Steam methane reforming with CCUS'                    2  2052
+                     5.327
+    'NG Steam methane reforming with CCUS'                    2  2053
+                     5.327
+    'NG Steam methane reforming with CCUS'                    4  2024
+                     7.067
+    'NG Steam methane reforming with CCUS'                    4  2025
+                     9.511
+    'NG Steam methane reforming with CCUS'                    4  2026
+                     9.511
+    'NG Steam methane reforming with CCUS'                    4  2027
+                     9.511
+    'NG Steam methane reforming with CCUS'                    4  2028
+                     9.511
+    'NG Steam methane reforming with CCUS'                    4  2029
+                     9.511
+    'NG Steam methane reforming with CCUS'                    4  2030
+                     9.511
+    'NG Steam methane reforming with CCUS'                    4  2031
+                     9.511
+    'NG Steam methane reforming with CCUS'                    4  2032
+                     9.511
+    'NG Steam methane reforming with CCUS'                    4  2033
+                     9.511
+    'NG Steam methane reforming with CCUS'                    4  2034
+                     9.511
+    'NG Steam methane reforming with CCUS'                    4  2035
+                     9.511
+    'NG Steam methane reforming with CCUS'                    4  2036
+                     9.511
+    'NG Steam methane reforming with CCUS'                    4  2037
+                     9.511
+    'NG Steam methane reforming with CCUS'                    4  2038
+                     9.511
+    'NG Steam methane reforming with CCUS'                    4  2039
+                     9.511
+    'NG Steam methane reforming with CCUS'                    4  2040
+                     9.511
+    'NG Steam methane reforming with CCUS'                    4  2041
+                     9.511
+    'NG Steam methane reforming with CCUS'                    4  2042
+                     9.511
+    'NG Steam methane reforming with CCUS'                    4  2043
+                     9.511
+    'NG Steam methane reforming with CCUS'                    4  2044
+                     9.511
+    'NG Steam methane reforming with CCUS'                    4  2045
+                     9.511
+    'NG Steam methane reforming with CCUS'                    4  2046
+                     9.511
+    'NG Steam methane reforming with CCUS'                    4  2047
+                     9.511
+    'NG Steam methane reforming with CCUS'                    4  2048
+                     9.511
+    'NG Steam methane reforming with CCUS'                    4  2049
+                     9.511
+    'NG Steam methane reforming with CCUS'                    4  2050
+                     9.511
+    'NG Steam methane reforming with CCUS'                    4  2051
+                     9.511
+    'NG Steam methane reforming with CCUS'                    4  2052
+                     9.511
+    'NG Steam methane reforming with CCUS'                    4  2053
+                     9.511
+    'NG Steam methane reforming with CCUS'                    5  2024
+                   100.000
+    'NG Steam methane reforming with CCUS'                    5  2025
+                   200.000
+    'NG Steam methane reforming with CCUS'                    5  2026
+                   200.000
+    'NG Steam methane reforming with CCUS'                    5  2027
+                   200.000
+    'NG Steam methane reforming with CCUS'                    5  2028
+                   200.000
+    'NG Steam methane reforming with CCUS'                    5  2029
+                   200.000
+    'NG Steam methane reforming with CCUS'                    5  2030
+                   200.000
+    'NG Steam methane reforming with CCUS'                    5  2031
+                   200.000
+    'NG Steam methane reforming with CCUS'                    5  2032
+                   200.000
+    'NG Steam methane reforming with CCUS'                    5  2033
+                   200.000
+    'NG Steam methane reforming with CCUS'                    5  2034
+                   200.000
+    'NG Steam methane reforming with CCUS'                    5  2035
+                   200.000
+    'NG Steam methane reforming with CCUS'                    5  2036
+                   200.000
+    'NG Steam methane reforming with CCUS'                    5  2037
+                   200.000
+    'NG Steam methane reforming with CCUS'                    5  2038
+                   200.000
+    'NG Steam methane reforming with CCUS'                    5  2039
+                   200.000
+    'NG Steam methane reforming with CCUS'                    5  2040
+                   200.000
+    'NG Steam methane reforming with CCUS'                    5  2041
+                   200.000
+    'NG Steam methane reforming with CCUS'                    5  2042
+                   200.000
+    'NG Steam methane reforming with CCUS'                    5  2043
+                   200.000
+    'NG Steam methane reforming with CCUS'                    5  2044
+                   200.000
+    'NG Steam methane reforming with CCUS'                    5  2045
+                   200.000
+    'NG Steam methane reforming with CCUS'                    5  2046
+                   200.000
+    'NG Steam methane reforming with CCUS'                    5  2047
+                   200.000
+    'NG Steam methane reforming with CCUS'                    5  2048
+                   200.000
+    'NG Steam methane reforming with CCUS'                    5  2049
+                   200.000
+    'NG Steam methane reforming with CCUS'                    5  2050
+                   200.000
+    'NG Steam methane reforming with CCUS'                    5  2051
+                   200.000
+    'NG Steam methane reforming with CCUS'                    5  2052
+                   200.000
+    'NG Steam methane reforming with CCUS'                    5  2053
+                   200.000
+    'NG Steam methane reforming with CCUS'                    6  2024
+                   100.000
+    'NG Steam methane reforming with CCUS'                    6  2025
+                   200.000
+    'NG Steam methane reforming with CCUS'                    6  2026
+                   200.000
+    'NG Steam methane reforming with CCUS'                    6  2027
+                   200.000
+    'NG Steam methane reforming with CCUS'                    6  2028
+                   200.000
+    'NG Steam methane reforming with CCUS'                    6  2029
+                   200.000
+    'NG Steam methane reforming with CCUS'                    6  2030
+                   200.000
+    'NG Steam methane reforming with CCUS'                    6  2031
+                   200.000
+    'NG Steam methane reforming with CCUS'                    6  2032
+                   200.000
+    'NG Steam methane reforming with CCUS'                    6  2033
+                   200.000
+    'NG Steam methane reforming with CCUS'                    6  2034
+                   200.000
+    'NG Steam methane reforming with CCUS'                    6  2035
+                   200.000
+    'NG Steam methane reforming with CCUS'                    6  2036
+                   200.000
+    'NG Steam methane reforming with CCUS'                    6  2037
+                   200.000
+    'NG Steam methane reforming with CCUS'                    6  2038
+                   200.000
+    'NG Steam methane reforming with CCUS'                    6  2039
+                   200.000
+    'NG Steam methane reforming with CCUS'                    6  2040
+                   200.000
+    'NG Steam methane reforming with CCUS'                    6  2041
+                   200.000
+    'NG Steam methane reforming with CCUS'                    6  2042
+                   200.000
+    'NG Steam methane reforming with CCUS'                    6  2043
+                   200.000
+    'NG Steam methane reforming with CCUS'                    6  2044
+                   200.000
+    'NG Steam methane reforming with CCUS'                    6  2045
+                   200.000
+    'NG Steam methane reforming with CCUS'                    6  2046
+                   200.000
+    'NG Steam methane reforming with CCUS'                    6  2047
+                   200.000
+    'NG Steam methane reforming with CCUS'                    6  2048
+                   200.000
+    'NG Steam methane reforming with CCUS'                    6  2049
+                   200.000
+    'NG Steam methane reforming with CCUS'                    6  2050
+                   200.000
+    'NG Steam methane reforming with CCUS'                    6  2051
+                   200.000
+    'NG Steam methane reforming with CCUS'                    6  2052
+                   200.000
+    'NG Steam methane reforming with CCUS'                    6  2053
+                   200.000
+    'NG Steam methane reforming with CCUS'                    7  2024
+                   145.000
+    'NG Steam methane reforming with CCUS'                    7  2025
+                   290.000
+    'NG Steam methane reforming with CCUS'                    7  2026
+                   290.000
+    'NG Steam methane reforming with CCUS'                    7  2027
+                   290.000
+    'NG Steam methane reforming with CCUS'                    7  2028
+                   290.000
+    'NG Steam methane reforming with CCUS'                    7  2029
+                   290.000
+    'NG Steam methane reforming with CCUS'                    7  2030
+                   290.000
+    'NG Steam methane reforming with CCUS'                    7  2031
+                   290.000
+    'NG Steam methane reforming with CCUS'                    7  2032
+                   290.000
+    'NG Steam methane reforming with CCUS'                    7  2033
+                   290.000
+    'NG Steam methane reforming with CCUS'                    7  2034
+                   290.000
+    'NG Steam methane reforming with CCUS'                    7  2035
+                   290.000
+    'NG Steam methane reforming with CCUS'                    7  2036
+                   290.000
+    'NG Steam methane reforming with CCUS'                    7  2037
+                   290.000
+    'NG Steam methane reforming with CCUS'                    7  2038
+                   290.000
+    'NG Steam methane reforming with CCUS'                    7  2039
+                   290.000
+    'NG Steam methane reforming with CCUS'                    7  2040
+                   290.000
+    'NG Steam methane reforming with CCUS'                    7  2041
+                   290.000
+    'NG Steam methane reforming with CCUS'                    7  2042
+                   290.000
+    'NG Steam methane reforming with CCUS'                    7  2043
+                   290.000
+    'NG Steam methane reforming with CCUS'                    7  2044
+                   290.000
+    'NG Steam methane reforming with CCUS'                    7  2045
+                   290.000
+    'NG Steam methane reforming with CCUS'                    7  2046
+                   290.000
+    'NG Steam methane reforming with CCUS'                    7  2047
+                   290.000
+    'NG Steam methane reforming with CCUS'                    7  2048
+                   290.000
+    'NG Steam methane reforming with CCUS'                    7  2049
+                   290.000
+    'NG Steam methane reforming with CCUS'                    7  2050
+                   290.000
+    'NG Steam methane reforming with CCUS'                    7  2051
+                   290.000
+    'NG Steam methane reforming with CCUS'                    7  2052
+                   290.000
+    'NG Steam methane reforming with CCUS'                    7  2053
+                   290.000
+    'NG Steam methane reforming with CCUS'                    8  2024
+                   100.000
+    'NG Steam methane reforming with CCUS'                    8  2025
+                   200.000
+    'NG Steam methane reforming with CCUS'                    8  2026
+                   200.000
+    'NG Steam methane reforming with CCUS'                    8  2027
+                   200.000
+    'NG Steam methane reforming with CCUS'                    8  2028
+                   200.000
+    'NG Steam methane reforming with CCUS'                    8  2029
+                   200.000
+    'NG Steam methane reforming with CCUS'                    8  2030
+                   200.000
+    'NG Steam methane reforming with CCUS'                    8  2031
+                   200.000
+    'NG Steam methane reforming with CCUS'                    8  2032
+                   200.000
+    'NG Steam methane reforming with CCUS'                    8  2033
+                   200.000
+    'NG Steam methane reforming with CCUS'                    8  2034
+                   200.000
+    'NG Steam methane reforming with CCUS'                    8  2035
+                   200.000
+    'NG Steam methane reforming with CCUS'                    8  2036
+                   200.000
+    'NG Steam methane reforming with CCUS'                    8  2037
+                   200.000
+    'NG Steam methane reforming with CCUS'                    8  2038
+                   200.000
+    'NG Steam methane reforming with CCUS'                    8  2039
+                   200.000
+    'NG Steam methane reforming with CCUS'                    8  2040
+                   200.000
+    'NG Steam methane reforming with CCUS'                    8  2041
+                   200.000
+    'NG Steam methane reforming with CCUS'                    8  2042
+                   200.000
+    'NG Steam methane reforming with CCUS'                    8  2043
+                   200.000
+    'NG Steam methane reforming with CCUS'                    8  2044
+                   200.000
+    'NG Steam methane reforming with CCUS'                    8  2045
+                   200.000
+    'NG Steam methane reforming with CCUS'                    8  2046
+                   200.000
+    'NG Steam methane reforming with CCUS'                    8  2047
+                   200.000
+    'NG Steam methane reforming with CCUS'                    8  2048
+                   200.000
+    'NG Steam methane reforming with CCUS'                    8  2049
+                   200.000
+    'NG Steam methane reforming with CCUS'                    8  2050
+                   200.000
+    'NG Steam methane reforming with CCUS'                    8  2051
+                   200.000
+    'NG Steam methane reforming with CCUS'                    8  2052
+                   200.000
+    'NG Steam methane reforming with CCUS'                    8  2053
+                   200.000
+    'Autothermal reforming  with CCUS'                        1  2024
+                   145.000
+    'Autothermal reforming  with CCUS'                        1  2025
+                   275.000
+    'Autothermal reforming  with CCUS'                        1  2026
+                   275.000
+    'Autothermal reforming  with CCUS'                        1  2027
+                   275.000
+    'Autothermal reforming  with CCUS'                        1  2028
+                   275.000
+    'Autothermal reforming  with CCUS'                        1  2029
+                   275.000
+    'Autothermal reforming  with CCUS'                        1  2030
+                   275.000
+    'Autothermal reforming  with CCUS'                        1  2031
+                   275.000
+    'Autothermal reforming  with CCUS'                        1  2032
+                   275.000
+    'Autothermal reforming  with CCUS'                        1  2033
+                   275.000
+    'Autothermal reforming  with CCUS'                        1  2034
+                   275.000
+    'Autothermal reforming  with CCUS'                        1  2035
+                   275.000
+    'Autothermal reforming  with CCUS'                        1  2036
+                   275.000
+    'Autothermal reforming  with CCUS'                        1  2037
+                   275.000
+    'Autothermal reforming  with CCUS'                        1  2038
+                   275.000
+    'Autothermal reforming  with CCUS'                        1  2039
+                   275.000
+    'Autothermal reforming  with CCUS'                        1  2040
+                   275.000
+    'Autothermal reforming  with CCUS'                        1  2041
+                   275.000
+    'Autothermal reforming  with CCUS'                        1  2042
+                   275.000
+    'Autothermal reforming  with CCUS'                        1  2043
+                   275.000
+    'Autothermal reforming  with CCUS'                        1  2044
+                   275.000
+    'Autothermal reforming  with CCUS'                        1  2045
+                   275.000
+    'Autothermal reforming  with CCUS'                        1  2046
+                   275.000
+    'Autothermal reforming  with CCUS'                        1  2047
+                   275.000
+    'Autothermal reforming  with CCUS'                        1  2048
+                   275.000
+    'Autothermal reforming  with CCUS'                        1  2049
+                   275.000
+    'Autothermal reforming  with CCUS'                        1  2050
+                   275.000
+    'Autothermal reforming  with CCUS'                        1  2051
+                   275.000
+    'Autothermal reforming  with CCUS'                        1  2052
+                   275.000
+    'Autothermal reforming  with CCUS'                        1  2053
+                   275.000
+    'Autothermal reforming  with CCUS'                        2  2024
+                   100.000
+    'Autothermal reforming  with CCUS'                        2  2025
+                   200.000
+    'Autothermal reforming  with CCUS'                        2  2026
+                   200.000
+    'Autothermal reforming  with CCUS'                        2  2027
+                   200.000
+    'Autothermal reforming  with CCUS'                        2  2028
+                   200.000
+    'Autothermal reforming  with CCUS'                        2  2029
+                   200.000
+    'Autothermal reforming  with CCUS'                        2  2030
+                   200.000
+    'Autothermal reforming  with CCUS'                        2  2031
+                   200.000
+    'Autothermal reforming  with CCUS'                        2  2032
+                   200.000
+    'Autothermal reforming  with CCUS'                        2  2033
+                   200.000
+    'Autothermal reforming  with CCUS'                        2  2034
+                   200.000
+    'Autothermal reforming  with CCUS'                        2  2035
+                   200.000
+    'Autothermal reforming  with CCUS'                        2  2036
+                   200.000
+    'Autothermal reforming  with CCUS'                        2  2037
+                   200.000
+    'Autothermal reforming  with CCUS'                        2  2038
+                   200.000
+    'Autothermal reforming  with CCUS'                        2  2039
+                   200.000
+    'Autothermal reforming  with CCUS'                        2  2040
+                   200.000
+    'Autothermal reforming  with CCUS'                        2  2041
+                   200.000
+    'Autothermal reforming  with CCUS'                        2  2042
+                   200.000
+    'Autothermal reforming  with CCUS'                        2  2043
+                   200.000
+    'Autothermal reforming  with CCUS'                        2  2044
+                   200.000
+    'Autothermal reforming  with CCUS'                        2  2045
+                   200.000
+    'Autothermal reforming  with CCUS'                        2  2046
+                   200.000
+    'Autothermal reforming  with CCUS'                        2  2047
+                   200.000
+    'Autothermal reforming  with CCUS'                        2  2048
+                   200.000
+    'Autothermal reforming  with CCUS'                        2  2049
+                   200.000
+    'Autothermal reforming  with CCUS'                        2  2050
+                   200.000
+    'Autothermal reforming  with CCUS'                        2  2051
+                   200.000
+    'Autothermal reforming  with CCUS'                        2  2052
+                   200.000
+    'Autothermal reforming  with CCUS'                        2  2053
+                   200.000
+    'Autothermal reforming  with CCUS'                        3  2024
+                   100.000
+    'Autothermal reforming  with CCUS'                        3  2025
+                   200.000
+    'Autothermal reforming  with CCUS'                        3  2026
+                   200.000
+    'Autothermal reforming  with CCUS'                        3  2027
+                   200.000
+    'Autothermal reforming  with CCUS'                        3  2028
+                   200.000
+    'Autothermal reforming  with CCUS'                        3  2029
+                   200.000
+    'Autothermal reforming  with CCUS'                        3  2030
+                   200.000
+    'Autothermal reforming  with CCUS'                        3  2031
+                   200.000
+    'Autothermal reforming  with CCUS'                        3  2032
+                   200.000
+    'Autothermal reforming  with CCUS'                        3  2033
+                   200.000
+    'Autothermal reforming  with CCUS'                        3  2034
+                   200.000
+    'Autothermal reforming  with CCUS'                        3  2035
+                   200.000
+    'Autothermal reforming  with CCUS'                        3  2036
+                   200.000
+    'Autothermal reforming  with CCUS'                        3  2037
+                   200.000
+    'Autothermal reforming  with CCUS'                        3  2038
+                   200.000
+    'Autothermal reforming  with CCUS'                        3  2039
+                   200.000
+    'Autothermal reforming  with CCUS'                        3  2040
+                   200.000
+    'Autothermal reforming  with CCUS'                        3  2041
+                   200.000
+    'Autothermal reforming  with CCUS'                        3  2042
+                   200.000
+    'Autothermal reforming  with CCUS'                        3  2043
+                   200.000
+    'Autothermal reforming  with CCUS'                        3  2044
+                   200.000
+    'Autothermal reforming  with CCUS'                        3  2045
+                   200.000
+    'Autothermal reforming  with CCUS'                        3  2046
+                   200.000
+    'Autothermal reforming  with CCUS'                        3  2047
+                   200.000
+    'Autothermal reforming  with CCUS'                        3  2048
+                   200.000
+    'Autothermal reforming  with CCUS'                        3  2049
+                   200.000
+    'Autothermal reforming  with CCUS'                        3  2050
+                   200.000
+    'Autothermal reforming  with CCUS'                        3  2051
+                   200.000
+    'Autothermal reforming  with CCUS'                        3  2052
+                   200.000
+    'Autothermal reforming  with CCUS'                        3  2053
+                   200.000
+    'Autothermal reforming  with CCUS'                        4  2024
+                   100.000
+    'Autothermal reforming  with CCUS'                        4  2025
+                   230.000
+    'Autothermal reforming  with CCUS'                        4  2026
+                   230.000
+    'Autothermal reforming  with CCUS'                        4  2027
+                   230.000
+    'Autothermal reforming  with CCUS'                        4  2028
+                   230.000
+    'Autothermal reforming  with CCUS'                        4  2029
+                   230.000
+    'Autothermal reforming  with CCUS'                        4  2030
+                   230.000
+    'Autothermal reforming  with CCUS'                        4  2031
+                   230.000
+    'Autothermal reforming  with CCUS'                        4  2032
+                   230.000
+    'Autothermal reforming  with CCUS'                        4  2033
+                   230.000
+    'Autothermal reforming  with CCUS'                        4  2034
+                   230.000
+    'Autothermal reforming  with CCUS'                        4  2035
+                   230.000
+    'Autothermal reforming  with CCUS'                        4  2036
+                   230.000
+    'Autothermal reforming  with CCUS'                        4  2037
+                   230.000
+    'Autothermal reforming  with CCUS'                        4  2038
+                   230.000
+    'Autothermal reforming  with CCUS'                        4  2039
+                   230.000
+    'Autothermal reforming  with CCUS'                        4  2040
+                   230.000
+    'Autothermal reforming  with CCUS'                        4  2041
+                   230.000
+    'Autothermal reforming  with CCUS'                        4  2042
+                   230.000
+    'Autothermal reforming  with CCUS'                        4  2043
+                   230.000
+    'Autothermal reforming  with CCUS'                        4  2044
+                   230.000
+    'Autothermal reforming  with CCUS'                        4  2045
+                   230.000
+    'Autothermal reforming  with CCUS'                        4  2046
+                   230.000
+    'Autothermal reforming  with CCUS'                        4  2047
+                   230.000
+    'Autothermal reforming  with CCUS'                        4  2048
+                   230.000
+    'Autothermal reforming  with CCUS'                        4  2049
+                   230.000
+    'Autothermal reforming  with CCUS'                        4  2050
+                   230.000
+    'Autothermal reforming  with CCUS'                        4  2051
+                   230.000
+    'Autothermal reforming  with CCUS'                        4  2052
+                   230.000
+    'Autothermal reforming  with CCUS'                        4  2053
+                   230.000
+    'Autothermal reforming  with CCUS'                        5  2024
+                   130.000
+    'Autothermal reforming  with CCUS'                        5  2025
+                   260.000
+    'Autothermal reforming  with CCUS'                        5  2026
+                   260.000
+    'Autothermal reforming  with CCUS'                        5  2027
+                   260.000
+    'Autothermal reforming  with CCUS'                        5  2028
+                   260.000
+    'Autothermal reforming  with CCUS'                        5  2029
+                   260.000
+    'Autothermal reforming  with CCUS'                        5  2030
+                   260.000
+    'Autothermal reforming  with CCUS'                        5  2031
+                   260.000
+    'Autothermal reforming  with CCUS'                        5  2032
+                   260.000
+    'Autothermal reforming  with CCUS'                        5  2033
+                   260.000
+    'Autothermal reforming  with CCUS'                        5  2034
+                   260.000
+    'Autothermal reforming  with CCUS'                        5  2035
+                   260.000
+    'Autothermal reforming  with CCUS'                        5  2036
+                   260.000
+    'Autothermal reforming  with CCUS'                        5  2037
+                   260.000
+    'Autothermal reforming  with CCUS'                        5  2038
+                   260.000
+    'Autothermal reforming  with CCUS'                        5  2039
+                   260.000
+    'Autothermal reforming  with CCUS'                        5  2040
+                   260.000
+    'Autothermal reforming  with CCUS'                        5  2041
+                   260.000
+    'Autothermal reforming  with CCUS'                        5  2042
+                   260.000
+    'Autothermal reforming  with CCUS'                        5  2043
+                   260.000
+    'Autothermal reforming  with CCUS'                        5  2044
+                   260.000
+    'Autothermal reforming  with CCUS'                        5  2045
+                   260.000
+    'Autothermal reforming  with CCUS'                        5  2046
+                   260.000
+    'Autothermal reforming  with CCUS'                        5  2047
+                   260.000
+    'Autothermal reforming  with CCUS'                        5  2048
+                   260.000
+    'Autothermal reforming  with CCUS'                        5  2049
+                   260.000
+    'Autothermal reforming  with CCUS'                        5  2050
+                   260.000
+    'Autothermal reforming  with CCUS'                        5  2051
+                   260.000
+    'Autothermal reforming  with CCUS'                        5  2052
+                   260.000
+    'Autothermal reforming  with CCUS'                        5  2053
+                   260.000
+    'Autothermal reforming  with CCUS'                        6  2024
+                   130.000
+    'Autothermal reforming  with CCUS'                        6  2025
+                   260.000
+    'Autothermal reforming  with CCUS'                        6  2026
+                   260.000
+    'Autothermal reforming  with CCUS'                        6  2027
+                   260.000
+    'Autothermal reforming  with CCUS'                        6  2028
+                   260.000
+    'Autothermal reforming  with CCUS'                        6  2029
+                   260.000
+    'Autothermal reforming  with CCUS'                        6  2030
+                   260.000
+    'Autothermal reforming  with CCUS'                        6  2031
+                   260.000
+    'Autothermal reforming  with CCUS'                        6  2032
+                   260.000
+    'Autothermal reforming  with CCUS'                        6  2033
+                   260.000
+    'Autothermal reforming  with CCUS'                        6  2034
+                   260.000
+    'Autothermal reforming  with CCUS'                        6  2035
+                   260.000
+    'Autothermal reforming  with CCUS'                        6  2036
+                   260.000
+    'Autothermal reforming  with CCUS'                        6  2037
+                   260.000
+    'Autothermal reforming  with CCUS'                        6  2038
+                   260.000
+    'Autothermal reforming  with CCUS'                        6  2039
+                   260.000
+    'Autothermal reforming  with CCUS'                        6  2040
+                   260.000
+    'Autothermal reforming  with CCUS'                        6  2041
+                   260.000
+    'Autothermal reforming  with CCUS'                        6  2042
+                   260.000
+    'Autothermal reforming  with CCUS'                        6  2043
+                   260.000
+    'Autothermal reforming  with CCUS'                        6  2044
+                   260.000
+    'Autothermal reforming  with CCUS'                        6  2045
+                   260.000
+    'Autothermal reforming  with CCUS'                        6  2046
+                   260.000
+    'Autothermal reforming  with CCUS'                        6  2047
+                   260.000
+    'Autothermal reforming  with CCUS'                        6  2048
+                   260.000
+    'Autothermal reforming  with CCUS'                        6  2049
+                   260.000
+    'Autothermal reforming  with CCUS'                        6  2050
+                   260.000
+    'Autothermal reforming  with CCUS'                        6  2051
+                   260.000
+    'Autothermal reforming  with CCUS'                        6  2052
+                   260.000
+    'Autothermal reforming  with CCUS'                        6  2053
+                   260.000
+    'Autothermal reforming  with CCUS'                        7  2024
+                   145.000
+    'Autothermal reforming  with CCUS'                        7  2025
+                   290.000
+    'Autothermal reforming  with CCUS'                        7  2026
+                   290.000
+    'Autothermal reforming  with CCUS'                        7  2027
+                   290.000
+    'Autothermal reforming  with CCUS'                        7  2028
+                   290.000
+    'Autothermal reforming  with CCUS'                        7  2029
+                   290.000
+    'Autothermal reforming  with CCUS'                        7  2030
+                   290.000
+    'Autothermal reforming  with CCUS'                        7  2031
+                   290.000
+    'Autothermal reforming  with CCUS'                        7  2032
+                   290.000
+    'Autothermal reforming  with CCUS'                        7  2033
+                   290.000
+    'Autothermal reforming  with CCUS'                        7  2034
+                   290.000
+    'Autothermal reforming  with CCUS'                        7  2035
+                   290.000
+    'Autothermal reforming  with CCUS'                        7  2036
+                   290.000
+    'Autothermal reforming  with CCUS'                        7  2037
+                   290.000
+    'Autothermal reforming  with CCUS'                        7  2038
+                   290.000
+    'Autothermal reforming  with CCUS'                        7  2039
+                   290.000
+    'Autothermal reforming  with CCUS'                        7  2040
+                   290.000
+    'Autothermal reforming  with CCUS'                        7  2041
+                   290.000
+    'Autothermal reforming  with CCUS'                        7  2042
+                   290.000
+    'Autothermal reforming  with CCUS'                        7  2043
+                   290.000
+    'Autothermal reforming  with CCUS'                        7  2044
+                   290.000
+    'Autothermal reforming  with CCUS'                        7  2045
+                   290.000
+    'Autothermal reforming  with CCUS'                        7  2046
+                   290.000
+    'Autothermal reforming  with CCUS'                        7  2047
+                   290.000
+    'Autothermal reforming  with CCUS'                        7  2048
+                   290.000
+    'Autothermal reforming  with CCUS'                        7  2049
+                   290.000
+    'Autothermal reforming  with CCUS'                        7  2050
+                   290.000
+    'Autothermal reforming  with CCUS'                        7  2051
+                   290.000
+    'Autothermal reforming  with CCUS'                        7  2052
+                   290.000
+    'Autothermal reforming  with CCUS'                        7  2053
+                   290.000
+    'Autothermal reforming  with CCUS'                        8  2024
+                   130.000
+    'Autothermal reforming  with CCUS'                        8  2025
+                   260.000
+    'Autothermal reforming  with CCUS'                        8  2026
+                   260.000
+    'Autothermal reforming  with CCUS'                        8  2027
+                   260.000
+    'Autothermal reforming  with CCUS'                        8  2028
+                   260.000
+    'Autothermal reforming  with CCUS'                        8  2029
+                   260.000
+    'Autothermal reforming  with CCUS'                        8  2030
+                   260.000
+    'Autothermal reforming  with CCUS'                        8  2031
+                   260.000
+    'Autothermal reforming  with CCUS'                        8  2032
+                   260.000
+    'Autothermal reforming  with CCUS'                        8  2033
+                   260.000
+    'Autothermal reforming  with CCUS'                        8  2034
+                   260.000
+    'Autothermal reforming  with CCUS'                        8  2035
+                   260.000
+    'Autothermal reforming  with CCUS'                        8  2036
+                   260.000
+    'Autothermal reforming  with CCUS'                        8  2037
+                   260.000
+    'Autothermal reforming  with CCUS'                        8  2038
+                   260.000
+    'Autothermal reforming  with CCUS'                        8  2039
+                   260.000
+    'Autothermal reforming  with CCUS'                        8  2040
+                   260.000
+    'Autothermal reforming  with CCUS'                        8  2041
+                   260.000
+    'Autothermal reforming  with CCUS'                        8  2042
+                   260.000
+    'Autothermal reforming  with CCUS'                        8  2043
+                   260.000
+    'Autothermal reforming  with CCUS'                        8  2044
+                   260.000
+    'Autothermal reforming  with CCUS'                        8  2045
+                   260.000
+    'Autothermal reforming  with CCUS'                        8  2046
+                   260.000
+    'Autothermal reforming  with CCUS'                        8  2047
+                   260.000
+    'Autothermal reforming  with CCUS'                        8  2048
+                   260.000
+    'Autothermal reforming  with CCUS'                        8  2049
+                   260.000
+    'Autothermal reforming  with CCUS'                        8  2050
+                   260.000
+    'Autothermal reforming  with CCUS'                        8  2051
+                   260.000
+    'Autothermal reforming  with CCUS'                        8  2052
+                   260.000
+    'Autothermal reforming  with CCUS'                        8  2053
+                   260.000
+    'Autothermal reforming  with CCUS'                        9  2024
+                   100.000
+    'Autothermal reforming  with CCUS'                        9  2025
+                   200.000
+    'Autothermal reforming  with CCUS'                        9  2026
+                   200.000
+    'Autothermal reforming  with CCUS'                        9  2027
+                   200.000
+    'Autothermal reforming  with CCUS'                        9  2028
+                   200.000
+    'Autothermal reforming  with CCUS'                        9  2029
+                   200.000
+    'Autothermal reforming  with CCUS'                        9  2030
+                   200.000
+    'Autothermal reforming  with CCUS'                        9  2031
+                   200.000
+    'Autothermal reforming  with CCUS'                        9  2032
+                   200.000
+    'Autothermal reforming  with CCUS'                        9  2033
+                   200.000
+    'Autothermal reforming  with CCUS'                        9  2034
+                   200.000
+    'Autothermal reforming  with CCUS'                        9  2035
+                   200.000
+    'Autothermal reforming  with CCUS'                        9  2036
+                   200.000
+    'Autothermal reforming  with CCUS'                        9  2037
+                   200.000
+    'Autothermal reforming  with CCUS'                        9  2038
+                   200.000
+    'Autothermal reforming  with CCUS'                        9  2039
+                   200.000
+    'Autothermal reforming  with CCUS'                        9  2040
+                   200.000
+    'Autothermal reforming  with CCUS'                        9  2041
+                   200.000
+    'Autothermal reforming  with CCUS'                        9  2042
+                   200.000
+    'Autothermal reforming  with CCUS'                        9  2043
+                   200.000
+    'Autothermal reforming  with CCUS'                        9  2044
+                   200.000
+    'Autothermal reforming  with CCUS'                        9  2045
+                   200.000
+    'Autothermal reforming  with CCUS'                        9  2046
+                   200.000
+    'Autothermal reforming  with CCUS'                        9  2047
+                   200.000
+    'Autothermal reforming  with CCUS'                        9  2048
+                   200.000
+    'Autothermal reforming  with CCUS'                        9  2049
+                   200.000
+    'Autothermal reforming  with CCUS'                        9  2050
+                   200.000
+    'Autothermal reforming  with CCUS'                        9  2051
+                   200.000
+    'Autothermal reforming  with CCUS'                        9  2052
+                   200.000
+    'Autothermal reforming  with CCUS'                        9  2053
+                   200.000
+    'CL Gasification with CCUS'                               1  2024
+                    14.983
+    'CL Gasification with CCUS'                               1  2025
+                    14.983
+    'CL Gasification with CCUS'                               1  2026
+                    14.983
+    'CL Gasification with CCUS'                               1  2027
+                    14.983
+    'CL Gasification with CCUS'                               1  2028
+                    14.983
+    'CL Gasification with CCUS'                               1  2029
+                    14.983
+    'CL Gasification with CCUS'                               1  2030
+                    14.983
+    'CL Gasification with CCUS'                               1  2031
+                    14.983
+    'CL Gasification with CCUS'                               1  2032
+                    14.983
+    'CL Gasification with CCUS'                               1  2033
+                    14.983
+    'CL Gasification with CCUS'                               1  2034
+                    14.983
+    'CL Gasification with CCUS'                               1  2035
+                    14.983
+    'CL Gasification with CCUS'                               1  2036
+                    14.983
+    'CL Gasification with CCUS'                               1  2037
+                    14.983
+    'CL Gasification with CCUS'                               1  2038
+                    14.983
+    'CL Gasification with CCUS'                               1  2039
+                    14.983
+    'CL Gasification with CCUS'                               1  2040
+                    14.983
+    'CL Gasification with CCUS'                               1  2041
+                    14.983
+    'CL Gasification with CCUS'                               1  2042
+                    14.983
+    'CL Gasification with CCUS'                               1  2043
+                    14.983
+    'CL Gasification with CCUS'                               1  2044
+                    14.983
+    'CL Gasification with CCUS'                               1  2045
+                    14.983
+    'CL Gasification with CCUS'                               1  2046
+                    14.983
+    'CL Gasification with CCUS'                               1  2047
+                    14.983
+    'CL Gasification with CCUS'                               1  2048
+                    14.983
+    'CL Gasification with CCUS'                               1  2049
+                    14.983
+    'CL Gasification with CCUS'                               1  2050
+                    14.983
+    'CL Gasification with CCUS'                               1  2051
+                    14.983
+    'CL Gasification with CCUS'                               1  2052
+                    14.983
+    'CL Gasification with CCUS'                               1  2053
+                    14.983
+    'CL Gasification with CCUS'                               2  2024
+                     4.082
+    'CL Gasification with CCUS'                               2  2025
+                     4.082
+    'CL Gasification with CCUS'                               2  2026
+                     4.082
+    'CL Gasification with CCUS'                               2  2027
+                     4.082
+    'CL Gasification with CCUS'                               2  2028
+                     4.082
+    'CL Gasification with CCUS'                               2  2029
+                     4.082
+    'CL Gasification with CCUS'                               2  2030
+                     4.082
+    'CL Gasification with CCUS'                               2  2031
+                     4.082
+    'CL Gasification with CCUS'                               2  2032
+                     4.082
+    'CL Gasification with CCUS'                               2  2033
+                     4.082
+    'CL Gasification with CCUS'                               2  2034
+                     4.082
+    'CL Gasification with CCUS'                               2  2035
+                     4.082
+    'CL Gasification with CCUS'                               2  2036
+                     4.082
+    'CL Gasification with CCUS'                               2  2037
+                     4.082
+    'CL Gasification with CCUS'                               2  2038
+                     4.082
+    'CL Gasification with CCUS'                               2  2039
+                     4.082
+    'CL Gasification with CCUS'                               2  2040
+                     4.082
+    'CL Gasification with CCUS'                               2  2041
+                     4.082
+    'CL Gasification with CCUS'                               2  2042
+                     4.082
+    'CL Gasification with CCUS'                               2  2043
+                     4.082
+    'CL Gasification with CCUS'                               2  2044
+                     4.082
+    'CL Gasification with CCUS'                               2  2045
+                     4.082
+    'CL Gasification with CCUS'                               2  2046
+                     4.082
+    'CL Gasification with CCUS'                               2  2047
+                     4.082
+    'CL Gasification with CCUS'                               2  2048
+                     4.082
+    'CL Gasification with CCUS'                               2  2049
+                     4.082
+    'CL Gasification with CCUS'                               2  2050
+                     4.082
+    'CL Gasification with CCUS'                               2  2051
+                     4.082
+    'CL Gasification with CCUS'                               2  2052
+                     4.082
+    'CL Gasification with CCUS'                               2  2053
+                     4.082
+    'CL Gasification with CCUS'                               4  2024
+                     5.364
+    'CL Gasification with CCUS'                               4  2025
+                     7.209
+    'CL Gasification with CCUS'                               4  2026
+                     7.209
+    'CL Gasification with CCUS'                               4  2027
+                     7.209
+    'CL Gasification with CCUS'                               4  2028
+                     7.209
+    'CL Gasification with CCUS'                               4  2029
+                     7.209
+    'CL Gasification with CCUS'                               4  2030
+                     7.209
+    'CL Gasification with CCUS'                               4  2031
+                     7.209
+    'CL Gasification with CCUS'                               4  2032
+                     7.209
+    'CL Gasification with CCUS'                               4  2033
+                     7.209
+    'CL Gasification with CCUS'                               4  2034
+                     7.209
+    'CL Gasification with CCUS'                               4  2035
+                     7.209
+    'CL Gasification with CCUS'                               4  2036
+                     7.209
+    'CL Gasification with CCUS'                               4  2037
+                     7.209
+    'CL Gasification with CCUS'                               4  2038
+                     7.209
+    'CL Gasification with CCUS'                               4  2039
+                     7.209
+    'CL Gasification with CCUS'                               4  2040
+                     7.209
+    'CL Gasification with CCUS'                               4  2041
+                     7.209
+    'CL Gasification with CCUS'                               4  2042
+                     7.209
+    'CL Gasification with CCUS'                               4  2043
+                     7.209
+    'CL Gasification with CCUS'                               4  2044
+                     7.209
+    'CL Gasification with CCUS'                               4  2045
+                     7.209
+    'CL Gasification with CCUS'                               4  2046
+                     7.209
+    'CL Gasification with CCUS'                               4  2047
+                     7.209
+    'CL Gasification with CCUS'                               4  2048
+                     7.209
+    'CL Gasification with CCUS'                               4  2049
+                     7.209
+    'CL Gasification with CCUS'                               4  2050
+                     7.209
+    'CL Gasification with CCUS'                               4  2051
+                     7.209
+    'CL Gasification with CCUS'                               4  2052
+                     7.209
+    'CL Gasification with CCUS'                               4  2053
+                     7.209
+    'CL Gasification with CCUS'                               5  2024
+                     1.678
+    'CL Gasification with CCUS'                               5  2025
+                     1.678
+    'CL Gasification with CCUS'                               5  2026
+                     1.678
+    'CL Gasification with CCUS'                               5  2027
+                     1.678
+    'CL Gasification with CCUS'                               5  2028
+                     1.678
+    'CL Gasification with CCUS'                               5  2029
+                     1.678
+    'CL Gasification with CCUS'                               5  2030
+                     1.678
+    'CL Gasification with CCUS'                               5  2031
+                     1.678
+    'CL Gasification with CCUS'                               5  2032
+                     1.678
+    'CL Gasification with CCUS'                               5  2033
+                     1.678
+    'CL Gasification with CCUS'                               5  2034
+                     1.678
+    'CL Gasification with CCUS'                               5  2035
+                     1.678
+    'CL Gasification with CCUS'                               5  2036
+                     1.678
+    'CL Gasification with CCUS'                               5  2037
+                     1.678
+    'CL Gasification with CCUS'                               5  2038
+                     1.678
+    'CL Gasification with CCUS'                               5  2039
+                     1.678
+    'CL Gasification with CCUS'                               5  2040
+                     1.678
+    'CL Gasification with CCUS'                               5  2041
+                     1.678
+    'CL Gasification with CCUS'                               5  2042
+                     1.678
+    'CL Gasification with CCUS'                               5  2043
+                     1.678
+    'CL Gasification with CCUS'                               5  2044
+                     1.678
+    'CL Gasification with CCUS'                               5  2045
+                     1.678
+    'CL Gasification with CCUS'                               5  2046
+                     1.678
+    'CL Gasification with CCUS'                               5  2047
+                     1.678
+    'CL Gasification with CCUS'                               5  2048
+                     1.678
+    'CL Gasification with CCUS'                               5  2049
+                     1.678
+    'CL Gasification with CCUS'                               5  2050
+                     1.678
+    'CL Gasification with CCUS'                               5  2051
+                     1.678
+    'CL Gasification with CCUS'                               5  2052
+                     1.678
+    'CL Gasification with CCUS'                               5  2053
+                     1.678
+    'CL Gasification with CCUS'                               6  2024
+                     9.102
+    'CL Gasification with CCUS'                               6  2025
+                     9.102
+    'CL Gasification with CCUS'                               6  2026
+                     9.102
+    'CL Gasification with CCUS'                               6  2027
+                     9.102
+    'CL Gasification with CCUS'                               6  2028
+                     9.102
+    'CL Gasification with CCUS'                               6  2029
+                     9.102
+    'CL Gasification with CCUS'                               6  2030
+                     9.102
+    'CL Gasification with CCUS'                               6  2031
+                     9.102
+    'CL Gasification with CCUS'                               6  2032
+                     9.102
+    'CL Gasification with CCUS'                               6  2033
+                     9.102
+    'CL Gasification with CCUS'                               6  2034
+                     9.102
+    'CL Gasification with CCUS'                               6  2035
+                     9.102
+    'CL Gasification with CCUS'                               6  2036
+                     9.102
+    'CL Gasification with CCUS'                               6  2037
+                     9.102
+    'CL Gasification with CCUS'                               6  2038
+                     9.102
+    'CL Gasification with CCUS'                               6  2039
+                     9.102
+    'CL Gasification with CCUS'                               6  2040
+                     9.102
+    'CL Gasification with CCUS'                               6  2041
+                     9.102
+    'CL Gasification with CCUS'                               6  2042
+                     9.102
+    'CL Gasification with CCUS'                               6  2043
+                     9.102
+    'CL Gasification with CCUS'                               6  2044
+                     9.102
+    'CL Gasification with CCUS'                               6  2045
+                     9.102
+    'CL Gasification with CCUS'                               6  2046
+                     9.102
+    'CL Gasification with CCUS'                               6  2047
+                     9.102
+    'CL Gasification with CCUS'                               6  2048
+                     9.102
+    'CL Gasification with CCUS'                               6  2049
+                     9.102
+    'CL Gasification with CCUS'                               6  2050
+                     9.102
+    'CL Gasification with CCUS'                               6  2051
+                     9.102
+    'CL Gasification with CCUS'                               6  2052
+                     9.102
+    'CL Gasification with CCUS'                               6  2053
+                     9.102
+    'CL Gasification with CCUS'                               7  2024
+                   100.000
+    'CL Gasification with CCUS'                               7  2025
+                   100.000
+    'CL Gasification with CCUS'                               7  2026
+                   100.000
+    'CL Gasification with CCUS'                               7  2027
+                   100.000
+    'CL Gasification with CCUS'                               7  2028
+                   100.000
+    'CL Gasification with CCUS'                               7  2029
+                   100.000
+    'CL Gasification with CCUS'                               7  2030
+                   100.000
+    'CL Gasification with CCUS'                               7  2031
+                   100.000
+    'CL Gasification with CCUS'                               7  2032
+                   100.000
+    'CL Gasification with CCUS'                               7  2033
+                   100.000
+    'CL Gasification with CCUS'                               7  2034
+                   100.000
+    'CL Gasification with CCUS'                               7  2035
+                   100.000
+    'CL Gasification with CCUS'                               7  2036
+                   100.000
+    'CL Gasification with CCUS'                               7  2037
+                   100.000
+    'CL Gasification with CCUS'                               7  2038
+                   100.000
+    'CL Gasification with CCUS'                               7  2039
+                   100.000
+    'CL Gasification with CCUS'                               7  2040
+                   100.000
+    'CL Gasification with CCUS'                               7  2041
+                   100.000
+    'CL Gasification with CCUS'                               7  2042
+                   100.000
+    'CL Gasification with CCUS'                               7  2043
+                   100.000
+    'CL Gasification with CCUS'                               7  2044
+                   100.000
+    'CL Gasification with CCUS'                               7  2045
+                   100.000
+    'CL Gasification with CCUS'                               7  2046
+                   100.000
+    'CL Gasification with CCUS'                               7  2047
+                   100.000
+    'CL Gasification with CCUS'                               7  2048
+                   100.000
+    'CL Gasification with CCUS'                               7  2049
+                   100.000
+    'CL Gasification with CCUS'                               7  2050
+                   100.000
+    'CL Gasification with CCUS'                               7  2051
+                   100.000
+    'CL Gasification with CCUS'                               7  2052
+                   100.000
+    'CL Gasification with CCUS'                               7  2053
+                   100.000
+    'CL Gasification'                                         1  2024
+                    14.283
+    'CL Gasification'                                         1  2025
+                    14.283
+    'CL Gasification'                                         1  2026
+                    14.283
+    'CL Gasification'                                         1  2027
+                    14.283
+    'CL Gasification'                                         1  2028
+                    14.283
+    'CL Gasification'                                         1  2029
+                    14.283
+    'CL Gasification'                                         1  2030
+                    14.283
+    'CL Gasification'                                         1  2031
+                    14.283
+    'CL Gasification'                                         1  2032
+                    14.283
+    'CL Gasification'                                         1  2033
+                    14.283
+    'CL Gasification'                                         1  2034
+                    14.283
+    'CL Gasification'                                         1  2035
+                    14.283
+    'CL Gasification'                                         1  2036
+                    14.283
+    'CL Gasification'                                         1  2037
+                    14.283
+    'CL Gasification'                                         1  2038
+                    14.283
+    'CL Gasification'                                         1  2039
+                    14.283
+    'CL Gasification'                                         1  2040
+                    14.283
+    'CL Gasification'                                         1  2041
+                    14.283
+    'CL Gasification'                                         1  2042
+                    14.283
+    'CL Gasification'                                         1  2043
+                    14.283
+    'CL Gasification'                                         1  2044
+                    14.283
+    'CL Gasification'                                         1  2045
+                    14.283
+    'CL Gasification'                                         1  2046
+                    14.283
+    'CL Gasification'                                         1  2047
+                    14.283
+    'CL Gasification'                                         1  2048
+                    14.283
+    'CL Gasification'                                         1  2049
+                    14.283
+    'CL Gasification'                                         1  2050
+                    14.283
+    'CL Gasification'                                         1  2051
+                    14.283
+    'CL Gasification'                                         1  2052
+                    14.283
+    'CL Gasification'                                         1  2053
+                    14.283
+    'CL Gasification'                                         7  2024
+                     3.348
+    'CL Gasification'                                         7  2025
+                     3.348
+    'CL Gasification'                                         7  2026
+                     3.348
+    'CL Gasification'                                         7  2027
+                     3.348
+    'CL Gasification'                                         7  2028
+                     3.348
+    'CL Gasification'                                         7  2029
+                     3.348
+    'CL Gasification'                                         7  2030
+                     3.348
+    'CL Gasification'                                         7  2031
+                     3.348
+    'CL Gasification'                                         7  2032
+                     3.348
+    'CL Gasification'                                         7  2033
+                     3.348
+    'CL Gasification'                                         7  2034
+                     3.348
+    'CL Gasification'                                         7  2035
+                     3.348
+    'CL Gasification'                                         7  2036
+                     3.348
+    'CL Gasification'                                         7  2037
+                     3.348
+    'CL Gasification'                                         7  2038
+                     3.348
+    'CL Gasification'                                         7  2039
+                     3.348
+    'CL Gasification'                                         7  2040
+                     3.348
+    'CL Gasification'                                         7  2041
+                     3.348
+    'CL Gasification'                                         7  2042
+                     3.348
+    'CL Gasification'                                         7  2043
+                     3.348
+    'CL Gasification'                                         7  2044
+                     3.348
+    'CL Gasification'                                         7  2045
+                     3.348
+    'CL Gasification'                                         7  2046
+                     3.348
+    'CL Gasification'                                         7  2047
+                     3.348
+    'CL Gasification'                                         7  2048
+                     3.348
+    'CL Gasification'                                         7  2049
+                     3.348
+    'CL Gasification'                                         7  2050
+                     3.348
+    'CL Gasification'                                         7  2051
+                     3.348
+    'CL Gasification'                                         7  2052
+                     3.348
+    'CL Gasification'                                         7  2053
+                     3.348
+    'CL BM Gasification with CCUS'                            1  2024
+                   100.000
+    'CL BM Gasification with CCUS'                            1  2025
+                   200.000
+    'CL BM Gasification with CCUS'                            1  2026
+                   200.000
+    'CL BM Gasification with CCUS'                            1  2027
+                   200.000
+    'CL BM Gasification with CCUS'                            1  2028
+                   200.000
+    'CL BM Gasification with CCUS'                            1  2029
+                   200.000
+    'CL BM Gasification with CCUS'                            1  2030
+                   200.000
+    'CL BM Gasification with CCUS'                            1  2031
+                   200.000
+    'CL BM Gasification with CCUS'                            1  2032
+                   200.000
+    'CL BM Gasification with CCUS'                            1  2033
+                   200.000
+    'CL BM Gasification with CCUS'                            1  2034
+                   200.000
+    'CL BM Gasification with CCUS'                            1  2035
+                   200.000
+    'CL BM Gasification with CCUS'                            1  2036
+                   200.000
+    'CL BM Gasification with CCUS'                            1  2037
+                   200.000
+    'CL BM Gasification with CCUS'                            1  2038
+                   200.000
+    'CL BM Gasification with CCUS'                            1  2039
+                   200.000
+    'CL BM Gasification with CCUS'                            1  2040
+                   200.000
+    'CL BM Gasification with CCUS'                            1  2041
+                   200.000
+    'CL BM Gasification with CCUS'                            1  2042
+                   200.000
+    'CL BM Gasification with CCUS'                            1  2043
+                   200.000
+    'CL BM Gasification with CCUS'                            1  2044
+                   200.000
+    'CL BM Gasification with CCUS'                            1  2045
+                   200.000
+    'CL BM Gasification with CCUS'                            1  2046
+                   200.000
+    'CL BM Gasification with CCUS'                            1  2047
+                   200.000
+    'CL BM Gasification with CCUS'                            1  2048
+                   200.000
+    'CL BM Gasification with CCUS'                            1  2049
+                   200.000
+    'CL BM Gasification with CCUS'                            1  2050
+                   200.000
+    'CL BM Gasification with CCUS'                            1  2051
+                   200.000
+    'CL BM Gasification with CCUS'                            1  2052
+                   200.000
+    'CL BM Gasification with CCUS'                            1  2053
+                   200.000
+    'CL BM Gasification with CCUS'                            2  2024
+                     5.218
+    'CL BM Gasification with CCUS'                            2  2025
+                     5.218
+    'CL BM Gasification with CCUS'                            2  2026
+                     5.218
+    'CL BM Gasification with CCUS'                            2  2027
+                     5.218
+    'CL BM Gasification with CCUS'                            2  2028
+                     5.218
+    'CL BM Gasification with CCUS'                            2  2029
+                     5.218
+    'CL BM Gasification with CCUS'                            2  2030
+                     5.218
+    'CL BM Gasification with CCUS'                            2  2031
+                     5.218
+    'CL BM Gasification with CCUS'                            2  2032
+                     5.218
+    'CL BM Gasification with CCUS'                            2  2033
+                     5.218
+    'CL BM Gasification with CCUS'                            2  2034
+                     5.218
+    'CL BM Gasification with CCUS'                            2  2035
+                     5.218
+    'CL BM Gasification with CCUS'                            2  2036
+                     5.218
+    'CL BM Gasification with CCUS'                            2  2037
+                     5.218
+    'CL BM Gasification with CCUS'                            2  2038
+                     5.218
+    'CL BM Gasification with CCUS'                            2  2039
+                     5.218
+    'CL BM Gasification with CCUS'                            2  2040
+                     5.218
+    'CL BM Gasification with CCUS'                            2  2041
+                     5.218
+    'CL BM Gasification with CCUS'                            2  2042
+                     5.218
+    'CL BM Gasification with CCUS'                            2  2043
+                     5.218
+    'CL BM Gasification with CCUS'                            2  2044
+                     5.218
+    'CL BM Gasification with CCUS'                            2  2045
+                     5.218
+    'CL BM Gasification with CCUS'                            2  2046
+                     5.218
+    'CL BM Gasification with CCUS'                            2  2047
+                     5.218
+    'CL BM Gasification with CCUS'                            2  2048
+                     5.218
+    'CL BM Gasification with CCUS'                            2  2049
+                     5.218
+    'CL BM Gasification with CCUS'                            2  2050
+                     5.218
+    'CL BM Gasification with CCUS'                            2  2051
+                     5.218
+    'CL BM Gasification with CCUS'                            2  2052
+                     5.218
+    'CL BM Gasification with CCUS'                            2  2053
+                     5.218
+    'CL BM Gasification with CCUS'                            4  2024
+                     6.873
+    'CL BM Gasification with CCUS'                            4  2025
+                     9.236
+    'CL BM Gasification with CCUS'                            4  2026
+                     9.236
+    'CL BM Gasification with CCUS'                            4  2027
+                     9.236
+    'CL BM Gasification with CCUS'                            4  2028
+                     9.236
+    'CL BM Gasification with CCUS'                            4  2029
+                     9.236
+    'CL BM Gasification with CCUS'                            4  2030
+                     9.236
+    'CL BM Gasification with CCUS'                            4  2031
+                     9.236
+    'CL BM Gasification with CCUS'                            4  2032
+                     9.236
+    'CL BM Gasification with CCUS'                            4  2033
+                     9.236
+    'CL BM Gasification with CCUS'                            4  2034
+                     9.236
+    'CL BM Gasification with CCUS'                            4  2035
+                     9.236
+    'CL BM Gasification with CCUS'                            4  2036
+                     9.236
+    'CL BM Gasification with CCUS'                            4  2037
+                     9.236
+    'CL BM Gasification with CCUS'                            4  2038
+                     9.236
+    'CL BM Gasification with CCUS'                            4  2039
+                     9.236
+    'CL BM Gasification with CCUS'                            4  2040
+                     9.236
+    'CL BM Gasification with CCUS'                            4  2041
+                     9.236
+    'CL BM Gasification with CCUS'                            4  2042
+                     9.236
+    'CL BM Gasification with CCUS'                            4  2043
+                     9.236
+    'CL BM Gasification with CCUS'                            4  2044
+                     9.236
+    'CL BM Gasification with CCUS'                            4  2045
+                     9.236
+    'CL BM Gasification with CCUS'                            4  2046
+                     9.236
+    'CL BM Gasification with CCUS'                            4  2047
+                     9.236
+    'CL BM Gasification with CCUS'                            4  2048
+                     9.236
+    'CL BM Gasification with CCUS'                            4  2049
+                     9.236
+    'CL BM Gasification with CCUS'                            4  2050
+                     9.236
+    'CL BM Gasification with CCUS'                            4  2051
+                     9.236
+    'CL BM Gasification with CCUS'                            4  2052
+                     9.236
+    'CL BM Gasification with CCUS'                            4  2053
+                     9.236
+    'CL BM Gasification with CCUS'                            5  2024
+                     2.220
+    'CL BM Gasification with CCUS'                            5  2025
+                     2.220
+    'CL BM Gasification with CCUS'                            5  2026
+                     2.220
+    'CL BM Gasification with CCUS'                            5  2027
+                     2.220
+    'CL BM Gasification with CCUS'                            5  2028
+                     2.220
+    'CL BM Gasification with CCUS'                            5  2029
+                     2.220
+    'CL BM Gasification with CCUS'                            5  2030
+                     2.220
+    'CL BM Gasification with CCUS'                            5  2031
+                     2.220
+    'CL BM Gasification with CCUS'                            5  2032
+                     2.220
+    'CL BM Gasification with CCUS'                            5  2033
+                     2.220
+    'CL BM Gasification with CCUS'                            5  2034
+                     2.220
+    'CL BM Gasification with CCUS'                            5  2035
+                     2.220
+    'CL BM Gasification with CCUS'                            5  2036
+                     2.220
+    'CL BM Gasification with CCUS'                            5  2037
+                     2.220
+    'CL BM Gasification with CCUS'                            5  2038
+                     2.220
+    'CL BM Gasification with CCUS'                            5  2039
+                     2.220
+    'CL BM Gasification with CCUS'                            5  2040
+                     2.220
+    'CL BM Gasification with CCUS'                            5  2041
+                     2.220
+    'CL BM Gasification with CCUS'                            5  2042
+                     2.220
+    'CL BM Gasification with CCUS'                            5  2043
+                     2.220
+    'CL BM Gasification with CCUS'                            5  2044
+                     2.220
+    'CL BM Gasification with CCUS'                            5  2045
+                     2.220
+    'CL BM Gasification with CCUS'                            5  2046
+                     2.220
+    'CL BM Gasification with CCUS'                            5  2047
+                     2.220
+    'CL BM Gasification with CCUS'                            5  2048
+                     2.220
+    'CL BM Gasification with CCUS'                            5  2049
+                     2.220
+    'CL BM Gasification with CCUS'                            5  2050
+                     2.220
+    'CL BM Gasification with CCUS'                            5  2051
+                     2.220
+    'CL BM Gasification with CCUS'                            5  2052
+                     2.220
+    'CL BM Gasification with CCUS'                            5  2053
+                     2.220
+    'CL BM Gasification with CCUS'                            6  2024
+                    11.897
+    'CL BM Gasification with CCUS'                            6  2025
+                    11.897
+    'CL BM Gasification with CCUS'                            6  2026
+                    11.897
+    'CL BM Gasification with CCUS'                            6  2027
+                    11.897
+    'CL BM Gasification with CCUS'                            6  2028
+                    11.897
+    'CL BM Gasification with CCUS'                            6  2029
+                    11.897
+    'CL BM Gasification with CCUS'                            6  2030
+                    11.897
+    'CL BM Gasification with CCUS'                            6  2031
+                    11.897
+    'CL BM Gasification with CCUS'                            6  2032
+                    11.897
+    'CL BM Gasification with CCUS'                            6  2033
+                    11.897
+    'CL BM Gasification with CCUS'                            6  2034
+                    11.897
+    'CL BM Gasification with CCUS'                            6  2035
+                    11.897
+    'CL BM Gasification with CCUS'                            6  2036
+                    11.897
+    'CL BM Gasification with CCUS'                            6  2037
+                    11.897
+    'CL BM Gasification with CCUS'                            6  2038
+                    11.897
+    'CL BM Gasification with CCUS'                            6  2039
+                    11.897
+    'CL BM Gasification with CCUS'                            6  2040
+                    11.897
+    'CL BM Gasification with CCUS'                            6  2041
+                    11.897
+    'CL BM Gasification with CCUS'                            6  2042
+                    11.897
+    'CL BM Gasification with CCUS'                            6  2043
+                    11.897
+    'CL BM Gasification with CCUS'                            6  2044
+                    11.897
+    'CL BM Gasification with CCUS'                            6  2045
+                    11.897
+    'CL BM Gasification with CCUS'                            6  2046
+                    11.897
+    'CL BM Gasification with CCUS'                            6  2047
+                    11.897
+    'CL BM Gasification with CCUS'                            6  2048
+                    11.897
+    'CL BM Gasification with CCUS'                            6  2049
+                    11.897
+    'CL BM Gasification with CCUS'                            6  2050
+                    11.897
+    'CL BM Gasification with CCUS'                            6  2051
+                    11.897
+    'CL BM Gasification with CCUS'                            6  2052
+                    11.897
+    'CL BM Gasification with CCUS'                            6  2053
+                    11.897
+    'CL BM Gasification with CCUS'                            7  2024
+                   130.000
+    'CL BM Gasification with CCUS'                            7  2025
+                   260.000
+    'CL BM Gasification with CCUS'                            7  2026
+                   260.000
+    'CL BM Gasification with CCUS'                            7  2027
+                   260.000
+    'CL BM Gasification with CCUS'                            7  2028
+                   260.000
+    'CL BM Gasification with CCUS'                            7  2029
+                   260.000
+    'CL BM Gasification with CCUS'                            7  2030
+                   260.000
+    'CL BM Gasification with CCUS'                            7  2031
+                   260.000
+    'CL BM Gasification with CCUS'                            7  2032
+                   260.000
+    'CL BM Gasification with CCUS'                            7  2033
+                   260.000
+    'CL BM Gasification with CCUS'                            7  2034
+                   260.000
+    'CL BM Gasification with CCUS'                            7  2035
+                   260.000
+    'CL BM Gasification with CCUS'                            7  2036
+                   260.000
+    'CL BM Gasification with CCUS'                            7  2037
+                   260.000
+    'CL BM Gasification with CCUS'                            7  2038
+                   260.000
+    'CL BM Gasification with CCUS'                            7  2039
+                   260.000
+    'CL BM Gasification with CCUS'                            7  2040
+                   260.000
+    'CL BM Gasification with CCUS'                            7  2041
+                   260.000
+    'CL BM Gasification with CCUS'                            7  2042
+                   260.000
+    'CL BM Gasification with CCUS'                            7  2043
+                   260.000
+    'CL BM Gasification with CCUS'                            7  2044
+                   260.000
+    'CL BM Gasification with CCUS'                            7  2045
+                   260.000
+    'CL BM Gasification with CCUS'                            7  2046
+                   260.000
+    'CL BM Gasification with CCUS'                            7  2047
+                   260.000
+    'CL BM Gasification with CCUS'                            7  2048
+                   260.000
+    'CL BM Gasification with CCUS'                            7  2049
+                   260.000
+    'CL BM Gasification with CCUS'                            7  2050
+                   260.000
+    'CL BM Gasification with CCUS'                            7  2051
+                   260.000
+    'CL BM Gasification with CCUS'                            7  2052
+                   260.000
+    'CL BM Gasification with CCUS'                            7  2053
+                   260.000
+    'PEM electrolysis'                                        1  2024
+                    15.388
+    'PEM electrolysis'                                        1  2025
+                    15.388
+    'PEM electrolysis'                                        1  2026
+                    15.388
+    'PEM electrolysis'                                        1  2027
+                    15.388
+    'PEM electrolysis'                                        1  2028
+                    15.388
+    'PEM electrolysis'                                        1  2029
+                    15.388
+    'PEM electrolysis'                                        1  2030
+                    15.388
+    'PEM electrolysis'                                        1  2031
+                    15.388
+    'PEM electrolysis'                                        1  2032
+                    15.388
+    'PEM electrolysis'                                        1  2033
+                    15.388
+    'PEM electrolysis'                                        1  2034
+                    15.388
+    'PEM electrolysis'                                        1  2035
+                    15.388
+    'PEM electrolysis'                                        1  2036
+                    15.388
+    'PEM electrolysis'                                        1  2037
+                    15.388
+    'PEM electrolysis'                                        1  2038
+                    15.388
+    'PEM electrolysis'                                        1  2039
+                    15.388
+    'PEM electrolysis'                                        1  2040
+                    15.388
+    'PEM electrolysis'                                        1  2041
+                    15.388
+    'PEM electrolysis'                                        1  2042
+                    15.388
+    'PEM electrolysis'                                        1  2043
+                    15.388
+    'PEM electrolysis'                                        1  2044
+                    15.388
+    'PEM electrolysis'                                        1  2045
+                    15.388
+    'PEM electrolysis'                                        1  2046
+                    15.388
+    'PEM electrolysis'                                        1  2047
+                    15.388
+    'PEM electrolysis'                                        1  2048
+                    15.388
+    'PEM electrolysis'                                        1  2049
+                    15.388
+    'PEM electrolysis'                                        1  2050
+                    15.388
+    'PEM electrolysis'                                        1  2051
+                    15.388
+    'PEM electrolysis'                                        1  2052
+                    15.388
+    'PEM electrolysis'                                        1  2053
+                    15.388
+    'PEM electrolysis'                                        2  2024
+                     4.376
+    'PEM electrolysis'                                        2  2025
+                     4.376
+    'PEM electrolysis'                                        2  2026
+                     4.376
+    'PEM electrolysis'                                        2  2027
+                     4.376
+    'PEM electrolysis'                                        2  2028
+                     4.376
+    'PEM electrolysis'                                        2  2029
+                     4.376
+    'PEM electrolysis'                                        2  2030
+                     4.376
+    'PEM electrolysis'                                        2  2031
+                     4.376
+    'PEM electrolysis'                                        2  2032
+                     4.376
+    'PEM electrolysis'                                        2  2033
+                     4.376
+    'PEM electrolysis'                                        2  2034
+                     4.376
+    'PEM electrolysis'                                        2  2035
+                     4.376
+    'PEM electrolysis'                                        2  2036
+                     4.376
+    'PEM electrolysis'                                        2  2037
+                     4.376
+    'PEM electrolysis'                                        2  2038
+                     4.376
+    'PEM electrolysis'                                        2  2039
+                     4.376
+    'PEM electrolysis'                                        2  2040
+                     4.376
+    'PEM electrolysis'                                        2  2041
+                     4.376
+    'PEM electrolysis'                                        2  2042
+                     4.376
+    'PEM electrolysis'                                        2  2043
+                     4.376
+    'PEM electrolysis'                                        2  2044
+                     4.376
+    'PEM electrolysis'                                        2  2045
+                     4.376
+    'PEM electrolysis'                                        2  2046
+                     4.376
+    'PEM electrolysis'                                        2  2047
+                     4.376
+    'PEM electrolysis'                                        2  2048
+                     4.376
+    'PEM electrolysis'                                        2  2049
+                     4.376
+    'PEM electrolysis'                                        2  2050
+                     4.376
+    'PEM electrolysis'                                        2  2051
+                     4.376
+    'PEM electrolysis'                                        2  2052
+                     4.376
+    'PEM electrolysis'                                        2  2053
+                     4.376
+    'PEM electrolysis'                                        4  2024
+                     5.600
+    'PEM electrolysis'                                        4  2025
+                     7.567
+    'PEM electrolysis'                                        4  2026
+                     7.567
+    'PEM electrolysis'                                        4  2027
+                     7.567
+    'PEM electrolysis'                                        4  2028
+                     7.567
+    'PEM electrolysis'                                        4  2029
+                     7.567
+    'PEM electrolysis'                                        4  2030
+                     7.567
+    'PEM electrolysis'                                        4  2031
+                     7.567
+    'PEM electrolysis'                                        4  2032
+                     7.567
+    'PEM electrolysis'                                        4  2033
+                     7.567
+    'PEM electrolysis'                                        4  2034
+                     7.567
+    'PEM electrolysis'                                        4  2035
+                     7.567
+    'PEM electrolysis'                                        4  2036
+                     7.567
+    'PEM electrolysis'                                        4  2037
+                     7.567
+    'PEM electrolysis'                                        4  2038
+                     7.567
+    'PEM electrolysis'                                        4  2039
+                     7.567
+    'PEM electrolysis'                                        4  2040
+                     7.567
+    'PEM electrolysis'                                        4  2041
+                     7.567
+    'PEM electrolysis'                                        4  2042
+                     7.567
+    'PEM electrolysis'                                        4  2043
+                     7.567
+    'PEM electrolysis'                                        4  2044
+                     7.567
+    'PEM electrolysis'                                        4  2045
+                     7.567
+    'PEM electrolysis'                                        4  2046
+                     7.567
+    'PEM electrolysis'                                        4  2047
+                     7.567
+    'PEM electrolysis'                                        4  2048
+                     7.567
+    'PEM electrolysis'                                        4  2049
+                     7.567
+    'PEM electrolysis'                                        4  2050
+                     7.567
+    'PEM electrolysis'                                        4  2051
+                     7.567
+    'PEM electrolysis'                                        4  2052
+                     7.567
+    'PEM electrolysis'                                        4  2053
+                     7.567
+    'PEM electrolysis'                                        5  2024
+                     1.826
+    'PEM electrolysis'                                        5  2025
+                     1.826
+    'PEM electrolysis'                                        5  2026
+                     1.826
+    'PEM electrolysis'                                        5  2027
+                     1.826
+    'PEM electrolysis'                                        5  2028
+                     1.826
+    'PEM electrolysis'                                        5  2029
+                     1.826
+    'PEM electrolysis'                                        5  2030
+                     1.826
+    'PEM electrolysis'                                        5  2031
+                     1.826
+    'PEM electrolysis'                                        5  2032
+                     1.826
+    'PEM electrolysis'                                        5  2033
+                     1.826
+    'PEM electrolysis'                                        5  2034
+                     1.826
+    'PEM electrolysis'                                        5  2035
+                     1.826
+    'PEM electrolysis'                                        5  2036
+                     1.826
+    'PEM electrolysis'                                        5  2037
+                     1.826
+    'PEM electrolysis'                                        5  2038
+                     1.826
+    'PEM electrolysis'                                        5  2039
+                     1.826
+    'PEM electrolysis'                                        5  2040
+                     1.826
+    'PEM electrolysis'                                        5  2041
+                     1.826
+    'PEM electrolysis'                                        5  2042
+                     1.826
+    'PEM electrolysis'                                        5  2043
+                     1.826
+    'PEM electrolysis'                                        5  2044
+                     1.826
+    'PEM electrolysis'                                        5  2045
+                     1.826
+    'PEM electrolysis'                                        5  2046
+                     1.826
+    'PEM electrolysis'                                        5  2047
+                     1.826
+    'PEM electrolysis'                                        5  2048
+                     1.826
+    'PEM electrolysis'                                        5  2049
+                     1.826
+    'PEM electrolysis'                                        5  2050
+                     1.826
+    'PEM electrolysis'                                        5  2051
+                     1.826
+    'PEM electrolysis'                                        5  2052
+                     1.826
+    'PEM electrolysis'                                        5  2053
+                     1.826
+    'PEM electrolysis'                                        6  2024
+                     9.502
+    'PEM electrolysis'                                        6  2025
+                     9.502
+    'PEM electrolysis'                                        6  2026
+                     9.502
+    'PEM electrolysis'                                        6  2027
+                     9.502
+    'PEM electrolysis'                                        6  2028
+                     9.502
+    'PEM electrolysis'                                        6  2029
+                     9.502
+    'PEM electrolysis'                                        6  2030
+                     9.502
+    'PEM electrolysis'                                        6  2031
+                     9.502
+    'PEM electrolysis'                                        6  2032
+                     9.502
+    'PEM electrolysis'                                        6  2033
+                     9.502
+    'PEM electrolysis'                                        6  2034
+                     9.502
+    'PEM electrolysis'                                        6  2035
+                     9.502
+    'PEM electrolysis'                                        6  2036
+                     9.502
+    'PEM electrolysis'                                        6  2037
+                     9.502
+    'PEM electrolysis'                                        6  2038
+                     9.502
+    'PEM electrolysis'                                        6  2039
+                     9.502
+    'PEM electrolysis'                                        6  2040
+                     9.502
+    'PEM electrolysis'                                        6  2041
+                     9.502
+    'PEM electrolysis'                                        6  2042
+                     9.502
+    'PEM electrolysis'                                        6  2043
+                     9.502
+    'PEM electrolysis'                                        6  2044
+                     9.502
+    'PEM electrolysis'                                        6  2045
+                     9.502
+    'PEM electrolysis'                                        6  2046
+                     9.502
+    'PEM electrolysis'                                        6  2047
+                     9.502
+    'PEM electrolysis'                                        6  2048
+                     9.502
+    'PEM electrolysis'                                        6  2049
+                     9.502
+    'PEM electrolysis'                                        6  2050
+                     9.502
+    'PEM electrolysis'                                        6  2051
+                     9.502
+    'PEM electrolysis'                                        6  2052
+                     9.502
+    'PEM electrolysis'                                        6  2053
+                     9.502
+    'PEM electrolysis'                                        7  2024
+                     2.887
+    'PEM electrolysis'                                        7  2025
+                     2.887
+    'PEM electrolysis'                                        7  2026
+                     2.887
+    'PEM electrolysis'                                        7  2027
+                     2.887
+    'PEM electrolysis'                                        7  2028
+                     2.887
+    'PEM electrolysis'                                        7  2029
+                     2.887
+    'PEM electrolysis'                                        7  2030
+                     2.887
+    'PEM electrolysis'                                        7  2031
+                     2.887
+    'PEM electrolysis'                                        7  2032
+                     2.887
+    'PEM electrolysis'                                        7  2033
+                     2.887
+    'PEM electrolysis'                                        7  2034
+                     2.887
+    'PEM electrolysis'                                        7  2035
+                     2.887
+    'PEM electrolysis'                                        7  2036
+                     2.887
+    'PEM electrolysis'                                        7  2037
+                     2.887
+    'PEM electrolysis'                                        7  2038
+                     2.887
+    'PEM electrolysis'                                        7  2039
+                     2.887
+    'PEM electrolysis'                                        7  2040
+                     2.887
+    'PEM electrolysis'                                        7  2041
+                     2.887
+    'PEM electrolysis'                                        7  2042
+                     2.887
+    'PEM electrolysis'                                        7  2043
+                     2.887
+    'PEM electrolysis'                                        7  2044
+                     2.887
+    'PEM electrolysis'                                        7  2045
+                     2.887
+    'PEM electrolysis'                                        7  2046
+                     2.887
+    'PEM electrolysis'                                        7  2047
+                     2.887
+    'PEM electrolysis'                                        7  2048
+                     2.887
+    'PEM electrolysis'                                        7  2049
+                     2.887
+    'PEM electrolysis'                                        7  2050
+                     2.887
+    'PEM electrolysis'                                        7  2051
+                     2.887
+    'PEM electrolysis'                                        7  2052
+                     2.887
+    'PEM electrolysis'                                        7  2053
+                     2.887
+    'PEM electrolysis  Renewables'                            1  2024
+                    16.296
+    'PEM electrolysis  Renewables'                            1  2025
+                    16.296
+    'PEM electrolysis  Renewables'                            1  2026
+                    16.296
+    'PEM electrolysis  Renewables'                            1  2027
+                    16.296
+    'PEM electrolysis  Renewables'                            1  2028
+                    16.296
+    'PEM electrolysis  Renewables'                            1  2029
+                    16.296
+    'PEM electrolysis  Renewables'                            1  2030
+                    16.296
+    'PEM electrolysis  Renewables'                            1  2031
+                    16.296
+    'PEM electrolysis  Renewables'                            1  2032
+                    16.296
+    'PEM electrolysis  Renewables'                            1  2033
+                    16.296
+    'PEM electrolysis  Renewables'                            1  2034
+                    16.296
+    'PEM electrolysis  Renewables'                            1  2035
+                    16.296
+    'PEM electrolysis  Renewables'                            1  2036
+                    16.296
+    'PEM electrolysis  Renewables'                            1  2037
+                    16.296
+    'PEM electrolysis  Renewables'                            1  2038
+                    16.296
+    'PEM electrolysis  Renewables'                            1  2039
+                    16.296
+    'PEM electrolysis  Renewables'                            1  2040
+                    16.296
+    'PEM electrolysis  Renewables'                            1  2041
+                    16.296
+    'PEM electrolysis  Renewables'                            1  2042
+                    16.296
+    'PEM electrolysis  Renewables'                            1  2043
+                    16.296
+    'PEM electrolysis  Renewables'                            1  2044
+                    16.296
+    'PEM electrolysis  Renewables'                            1  2045
+                    16.296
+    'PEM electrolysis  Renewables'                            1  2046
+                    16.296
+    'PEM electrolysis  Renewables'                            1  2047
+                    16.296
+    'PEM electrolysis  Renewables'                            1  2048
+                    16.296
+    'PEM electrolysis  Renewables'                            1  2049
+                    16.296
+    'PEM electrolysis  Renewables'                            1  2050
+                    16.296
+    'PEM electrolysis  Renewables'                            1  2051
+                    16.296
+    'PEM electrolysis  Renewables'                            1  2052
+                    16.296
+    'PEM electrolysis  Renewables'                            1  2053
+                    16.296
+    'PEM electrolysis  Renewables'                            2  2024
+                     4.009
+    'PEM electrolysis  Renewables'                            2  2025
+                     4.009
+    'PEM electrolysis  Renewables'                            2  2026
+                     4.009
+    'PEM electrolysis  Renewables'                            2  2027
+                     4.009
+    'PEM electrolysis  Renewables'                            2  2028
+                     4.009
+    'PEM electrolysis  Renewables'                            2  2029
+                     4.009
+    'PEM electrolysis  Renewables'                            2  2030
+                     4.009
+    'PEM electrolysis  Renewables'                            2  2031
+                     4.009
+    'PEM electrolysis  Renewables'                            2  2032
+                     4.009
+    'PEM electrolysis  Renewables'                            2  2033
+                     4.009
+    'PEM electrolysis  Renewables'                            2  2034
+                     4.009
+    'PEM electrolysis  Renewables'                            2  2035
+                     4.009
+    'PEM electrolysis  Renewables'                            2  2036
+                     4.009
+    'PEM electrolysis  Renewables'                            2  2037
+                     4.009
+    'PEM electrolysis  Renewables'                            2  2038
+                     4.009
+    'PEM electrolysis  Renewables'                            2  2039
+                     4.009
+    'PEM electrolysis  Renewables'                            2  2040
+                     4.009
+    'PEM electrolysis  Renewables'                            2  2041
+                     4.009
+    'PEM electrolysis  Renewables'                            2  2042
+                     4.009
+    'PEM electrolysis  Renewables'                            2  2043
+                     4.009
+    'PEM electrolysis  Renewables'                            2  2044
+                     4.009
+    'PEM electrolysis  Renewables'                            2  2045
+                     4.009
+    'PEM electrolysis  Renewables'                            2  2046
+                     4.009
+    'PEM electrolysis  Renewables'                            2  2047
+                     4.009
+    'PEM electrolysis  Renewables'                            2  2048
+                     4.009
+    'PEM electrolysis  Renewables'                            2  2049
+                     4.009
+    'PEM electrolysis  Renewables'                            2  2050
+                     4.009
+    'PEM electrolysis  Renewables'                            2  2051
+                     4.009
+    'PEM electrolysis  Renewables'                            2  2052
+                     4.009
+    'PEM electrolysis  Renewables'                            2  2053
+                     4.009
+    'PEM electrolysis  Renewables'                            7  2024
+                     3.642
+    'PEM electrolysis  Renewables'                            7  2025
+                     3.642
+    'PEM electrolysis  Renewables'                            7  2026
+                     3.642
+    'PEM electrolysis  Renewables'                            7  2027
+                     3.642
+    'PEM electrolysis  Renewables'                            7  2028
+                     3.642
+    'PEM electrolysis  Renewables'                            7  2029
+                     3.642
+    'PEM electrolysis  Renewables'                            7  2030
+                     3.642
+    'PEM electrolysis  Renewables'                            7  2031
+                     3.642
+    'PEM electrolysis  Renewables'                            7  2032
+                     3.642
+    'PEM electrolysis  Renewables'                            7  2033
+                     3.642
+    'PEM electrolysis  Renewables'                            7  2034
+                     3.642
+    'PEM electrolysis  Renewables'                            7  2035
+                     3.642
+    'PEM electrolysis  Renewables'                            7  2036
+                     3.642
+    'PEM electrolysis  Renewables'                            7  2037
+                     3.642
+    'PEM electrolysis  Renewables'                            7  2038
+                     3.642
+    'PEM electrolysis  Renewables'                            7  2039
+                     3.642
+    'PEM electrolysis  Renewables'                            7  2040
+                     3.642
+    'PEM electrolysis  Renewables'                            7  2041
+                     3.642
+    'PEM electrolysis  Renewables'                            7  2042
+                     3.642
+    'PEM electrolysis  Renewables'                            7  2043
+                     3.642
+    'PEM electrolysis  Renewables'                            7  2044
+                     3.642
+    'PEM electrolysis  Renewables'                            7  2045
+                     3.642
+    'PEM electrolysis  Renewables'                            7  2046
+                     3.642
+    'PEM electrolysis  Renewables'                            7  2047
+                     3.642
+    'PEM electrolysis  Renewables'                            7  2048
+                     3.642
+    'PEM electrolysis  Renewables'                            7  2049
+                     3.642
+    'PEM electrolysis  Renewables'                            7  2050
+                     3.642
+    'PEM electrolysis  Renewables'                            7  2051
+                     3.642
+    'PEM electrolysis  Renewables'                            7  2052
+                     3.642
+    'PEM electrolysis  Renewables'                            7  2053
+                     3.642
+    'PEM electrolysis  Renewables'                           10  2024
+                   145.000
+    'PEM electrolysis  Renewables'                           10  2025
+                   290.000
+    'PEM electrolysis  Renewables'                           10  2026
+                   290.000
+    'PEM electrolysis  Renewables'                           10  2027
+                   290.000
+    'PEM electrolysis  Renewables'                           10  2028
+                   290.000
+    'PEM electrolysis  Renewables'                           10  2029
+                   290.000
+    'PEM electrolysis  Renewables'                           10  2030
+                   290.000
+    'PEM electrolysis  Renewables'                           10  2031
+                   290.000
+    'PEM electrolysis  Renewables'                           10  2032
+                   290.000
+    'PEM electrolysis  Renewables'                           10  2033
+                   290.000
+    'PEM electrolysis  Renewables'                           10  2034
+                   290.000
+    'PEM electrolysis  Renewables'                           10  2035
+                   290.000
+    'PEM electrolysis  Renewables'                           10  2036
+                   290.000
+    'PEM electrolysis  Renewables'                           10  2037
+                   290.000
+    'PEM electrolysis  Renewables'                           10  2038
+                   290.000
+    'PEM electrolysis  Renewables'                           10  2039
+                   290.000
+    'PEM electrolysis  Renewables'                           10  2040
+                   290.000
+    'PEM electrolysis  Renewables'                           10  2041
+                   290.000
+    'PEM electrolysis  Renewables'                           10  2042
+                   290.000
+    'PEM electrolysis  Renewables'                           10  2043
+                   290.000
+    'PEM electrolysis  Renewables'                           10  2044
+                   290.000
+    'PEM electrolysis  Renewables'                           10  2045
+                   290.000
+    'PEM electrolysis  Renewables'                           10  2046
+                   290.000
+    'PEM electrolysis  Renewables'                           10  2047
+                   290.000
+    'PEM electrolysis  Renewables'                           10  2048
+                   290.000
+    'PEM electrolysis  Renewables'                           10  2049
+                   290.000
+    'PEM electrolysis  Renewables'                           10  2050
+                   290.000
+    'PEM electrolysis  Renewables'                           10  2051
+                   290.000
+    'PEM electrolysis  Renewables'                           10  2052
+                   290.000
+    'PEM electrolysis  Renewables'                           10  2053
+                   290.000
+    'Solid Oxide electrolysis  Nuc'                           1  2024
+                   145.000
+    'Solid Oxide electrolysis  Nuc'                           1  2025
+                   145.000
+    'Solid Oxide electrolysis  Nuc'                           1  2026
+                   145.000
+    'Solid Oxide electrolysis  Nuc'                           1  2027
+                   145.000
+    'Solid Oxide electrolysis  Nuc'                           1  2028
+                   145.000
+    'Solid Oxide electrolysis  Nuc'                           1  2029
+                   145.000
+    'Solid Oxide electrolysis  Nuc'                           1  2030
+                   145.000
+    'Solid Oxide electrolysis  Nuc'                           1  2031
+                   145.000
+    'Solid Oxide electrolysis  Nuc'                           1  2032
+                   145.000
+    'Solid Oxide electrolysis  Nuc'                           1  2033
+                   145.000
+    'Solid Oxide electrolysis  Nuc'                           1  2034
+                   145.000
+    'Solid Oxide electrolysis  Nuc'                           1  2035
+                   145.000
+    'Solid Oxide electrolysis  Nuc'                           1  2036
+                   145.000
+    'Solid Oxide electrolysis  Nuc'                           1  2037
+                   145.000
+    'Solid Oxide electrolysis  Nuc'                           1  2038
+                   145.000
+    'Solid Oxide electrolysis  Nuc'                           1  2039
+                   145.000
+    'Solid Oxide electrolysis  Nuc'                           1  2040
+                   145.000
+    'Solid Oxide electrolysis  Nuc'                           1  2041
+                   145.000
+    'Solid Oxide electrolysis  Nuc'                           1  2042
+                   145.000
+    'Solid Oxide electrolysis  Nuc'                           1  2043
+                   145.000
+    'Solid Oxide electrolysis  Nuc'                           1  2044
+                   145.000
+    'Solid Oxide electrolysis  Nuc'                           1  2045
+                   145.000
+    'Solid Oxide electrolysis  Nuc'                           1  2046
+                   145.000
+    'Solid Oxide electrolysis  Nuc'                           1  2047
+                   145.000
+    'Solid Oxide electrolysis  Nuc'                           1  2048
+                   145.000
+    'Solid Oxide electrolysis  Nuc'                           1  2049
+                   145.000
+    'Solid Oxide electrolysis  Nuc'                           1  2050
+                   145.000
+    'Solid Oxide electrolysis  Nuc'                           1  2051
+                   145.000
+    'Solid Oxide electrolysis  Nuc'                           1  2052
+                   145.000
+    'Solid Oxide electrolysis  Nuc'                           1  2053
+                   145.000
+    'Solid Oxide electrolysis  Nuc'                           4  2024
+                   100.000
+    'Solid Oxide electrolysis  Nuc'                           4  2025
+                   102.410
+    'Solid Oxide electrolysis  Nuc'                           4  2026
+                   102.410
+    'Solid Oxide electrolysis  Nuc'                           4  2027
+                   102.410
+    'Solid Oxide electrolysis  Nuc'                           4  2028
+                   102.410
+    'Solid Oxide electrolysis  Nuc'                           4  2029
+                   102.410
+    'Solid Oxide electrolysis  Nuc'                           4  2030
+                   102.410
+    'Solid Oxide electrolysis  Nuc'                           4  2031
+                   102.410
+    'Solid Oxide electrolysis  Nuc'                           4  2032
+                   102.410
+    'Solid Oxide electrolysis  Nuc'                           4  2033
+                   102.410
+    'Solid Oxide electrolysis  Nuc'                           4  2034
+                   102.410
+    'Solid Oxide electrolysis  Nuc'                           4  2035
+                   102.410
+    'Solid Oxide electrolysis  Nuc'                           4  2036
+                   102.410
+    'Solid Oxide electrolysis  Nuc'                           4  2037
+                   102.410
+    'Solid Oxide electrolysis  Nuc'                           4  2038
+                   102.410
+    'Solid Oxide electrolysis  Nuc'                           4  2039
+                   102.410
+    'Solid Oxide electrolysis  Nuc'                           4  2040
+                   102.410
+    'Solid Oxide electrolysis  Nuc'                           4  2041
+                   102.410
+    'Solid Oxide electrolysis  Nuc'                           4  2042
+                   102.410
+    'Solid Oxide electrolysis  Nuc'                           4  2043
+                   102.410
+    'Solid Oxide electrolysis  Nuc'                           4  2044
+                   102.410
+    'Solid Oxide electrolysis  Nuc'                           4  2045
+                   102.410
+    'Solid Oxide electrolysis  Nuc'                           4  2046
+                   102.410
+    'Solid Oxide electrolysis  Nuc'                           4  2047
+                   102.410
+    'Solid Oxide electrolysis  Nuc'                           4  2048
+                   102.410
+    'Solid Oxide electrolysis  Nuc'                           4  2049
+                   102.410
+    'Solid Oxide electrolysis  Nuc'                           4  2050
+                   102.410
+    'Solid Oxide electrolysis  Nuc'                           4  2051
+                   102.410
+    'Solid Oxide electrolysis  Nuc'                           4  2052
+                   102.410
+    'Solid Oxide electrolysis  Nuc'                           4  2053
+                   102.410
+    'Solid Oxide electrolysis  Nuc'                           5  2024
+                     2.054
+    'Solid Oxide electrolysis  Nuc'                           5  2025
+                     2.054
+    'Solid Oxide electrolysis  Nuc'                           5  2026
+                     2.054
+    'Solid Oxide electrolysis  Nuc'                           5  2027
+                     2.054
+    'Solid Oxide electrolysis  Nuc'                           5  2028
+                     2.054
+    'Solid Oxide electrolysis  Nuc'                           5  2029
+                     2.054
+    'Solid Oxide electrolysis  Nuc'                           5  2030
+                     2.054
+    'Solid Oxide electrolysis  Nuc'                           5  2031
+                     2.054
+    'Solid Oxide electrolysis  Nuc'                           5  2032
+                     2.054
+    'Solid Oxide electrolysis  Nuc'                           5  2033
+                     2.054
+    'Solid Oxide electrolysis  Nuc'                           5  2034
+                     2.054
+    'Solid Oxide electrolysis  Nuc'                           5  2035
+                     2.054
+    'Solid Oxide electrolysis  Nuc'                           5  2036
+                     2.054
+    'Solid Oxide electrolysis  Nuc'                           5  2037
+                     2.054
+    'Solid Oxide electrolysis  Nuc'                           5  2038
+                     2.054
+    'Solid Oxide electrolysis  Nuc'                           5  2039
+                     2.054
+    'Solid Oxide electrolysis  Nuc'                           5  2040
+                     2.054
+    'Solid Oxide electrolysis  Nuc'                           5  2041
+                     2.054
+    'Solid Oxide electrolysis  Nuc'                           5  2042
+                     2.054
+    'Solid Oxide electrolysis  Nuc'                           5  2043
+                     2.054
+    'Solid Oxide electrolysis  Nuc'                           5  2044
+                     2.054
+    'Solid Oxide electrolysis  Nuc'                           5  2045
+                     2.054
+    'Solid Oxide electrolysis  Nuc'                           5  2046
+                     2.054
+    'Solid Oxide electrolysis  Nuc'                           5  2047
+                     2.054
+    'Solid Oxide electrolysis  Nuc'                           5  2048
+                     2.054
+    'Solid Oxide electrolysis  Nuc'                           5  2049
+                     2.054
+    'Solid Oxide electrolysis  Nuc'                           5  2050
+                     2.054
+    'Solid Oxide electrolysis  Nuc'                           5  2051
+                     2.054
+    'Solid Oxide electrolysis  Nuc'                           5  2052
+                     2.054
+    'Solid Oxide electrolysis  Nuc'                           5  2053
+                     2.054
+    'Solid Oxide electrolysis  Nuc'                           6  2024
+                   100.000
+    'Solid Oxide electrolysis  Nuc'                           6  2025
+                   100.000
+    'Solid Oxide electrolysis  Nuc'                           6  2026
+                   100.000
+    'Solid Oxide electrolysis  Nuc'                           6  2027
+                   100.000
+    'Solid Oxide electrolysis  Nuc'                           6  2028
+                   100.000
+    'Solid Oxide electrolysis  Nuc'                           6  2029
+                   100.000
+    'Solid Oxide electrolysis  Nuc'                           6  2030
+                   100.000
+    'Solid Oxide electrolysis  Nuc'                           6  2031
+                   100.000
+    'Solid Oxide electrolysis  Nuc'                           6  2032
+                   100.000
+    'Solid Oxide electrolysis  Nuc'                           6  2033
+                   100.000
+    'Solid Oxide electrolysis  Nuc'                           6  2034
+                   100.000
+    'Solid Oxide electrolysis  Nuc'                           6  2035
+                   100.000
+    'Solid Oxide electrolysis  Nuc'                           6  2036
+                   100.000
+    'Solid Oxide electrolysis  Nuc'                           6  2037
+                   100.000
+    'Solid Oxide electrolysis  Nuc'                           6  2038
+                   100.000
+    'Solid Oxide electrolysis  Nuc'                           6  2039
+                   100.000
+    'Solid Oxide electrolysis  Nuc'                           6  2040
+                   100.000
+    'Solid Oxide electrolysis  Nuc'                           6  2041
+                   100.000
+    'Solid Oxide electrolysis  Nuc'                           6  2042
+                   100.000
+    'Solid Oxide electrolysis  Nuc'                           6  2043
+                   100.000
+    'Solid Oxide electrolysis  Nuc'                           6  2044
+                   100.000
+    'Solid Oxide electrolysis  Nuc'                           6  2045
+                   100.000
+    'Solid Oxide electrolysis  Nuc'                           6  2046
+                   100.000
+    'Solid Oxide electrolysis  Nuc'                           6  2047
+                   100.000
+    'Solid Oxide electrolysis  Nuc'                           6  2048
+                   100.000
+    'Solid Oxide electrolysis  Nuc'                           6  2049
+                   100.000
+    'Solid Oxide electrolysis  Nuc'                           6  2050
+                   100.000
+    'Solid Oxide electrolysis  Nuc'                           6  2051
+                   100.000
+    'Solid Oxide electrolysis  Nuc'                           6  2052
+                   100.000
+    'Solid Oxide electrolysis  Nuc'                           6  2053
+                   100.000
+    'Solid Oxide electrolysis  Nuc'                           7  2024
+                   145.000
+    'Solid Oxide electrolysis  Nuc'                           7  2025
+                   145.000
+    'Solid Oxide electrolysis  Nuc'                           7  2026
+                   145.000
+    'Solid Oxide electrolysis  Nuc'                           7  2027
+                   145.000
+    'Solid Oxide electrolysis  Nuc'                           7  2028
+                   145.000
+    'Solid Oxide electrolysis  Nuc'                           7  2029
+                   145.000
+    'Solid Oxide electrolysis  Nuc'                           7  2030
+                   145.000
+    'Solid Oxide electrolysis  Nuc'                           7  2031
+                   145.000
+    'Solid Oxide electrolysis  Nuc'                           7  2032
+                   145.000
+    'Solid Oxide electrolysis  Nuc'                           7  2033
+                   145.000
+    'Solid Oxide electrolysis  Nuc'                           7  2034
+                   145.000
+    'Solid Oxide electrolysis  Nuc'                           7  2035
+                   145.000
+    'Solid Oxide electrolysis  Nuc'                           7  2036
+                   145.000
+    'Solid Oxide electrolysis  Nuc'                           7  2037
+                   145.000
+    'Solid Oxide electrolysis  Nuc'                           7  2038
+                   145.000
+    'Solid Oxide electrolysis  Nuc'                           7  2039
+                   145.000
+    'Solid Oxide electrolysis  Nuc'                           7  2040
+                   145.000
+    'Solid Oxide electrolysis  Nuc'                           7  2041
+                   145.000
+    'Solid Oxide electrolysis  Nuc'                           7  2042
+                   145.000
+    'Solid Oxide electrolysis  Nuc'                           7  2043
+                   145.000
+    'Solid Oxide electrolysis  Nuc'                           7  2044
+                   145.000
+    'Solid Oxide electrolysis  Nuc'                           7  2045
+                   145.000
+    'Solid Oxide electrolysis  Nuc'                           7  2046
+                   145.000
+    'Solid Oxide electrolysis  Nuc'                           7  2047
+                   145.000
+    'Solid Oxide electrolysis  Nuc'                           7  2048
+                   145.000
+    'Solid Oxide electrolysis  Nuc'                           7  2049
+                   145.000
+    'Solid Oxide electrolysis  Nuc'                           7  2050
+                   145.000
+    'Solid Oxide electrolysis  Nuc'                           7  2051
+                   145.000
+    'Solid Oxide electrolysis  Nuc'                           7  2052
+                   145.000
+    'Solid Oxide electrolysis  Nuc'                           7  2053
+                   145.000
+    'Solid Oxide electrolysis  Nuc'                           9  2024
+                   100.000
+    'Solid Oxide electrolysis  Nuc'                           9  2025
+                   200.000
+    'Solid Oxide electrolysis  Nuc'                           9  2026
+                   200.000
+    'Solid Oxide electrolysis  Nuc'                           9  2027
+                   200.000
+    'Solid Oxide electrolysis  Nuc'                           9  2028
+                   200.000
+    'Solid Oxide electrolysis  Nuc'                           9  2029
+                   200.000
+    'Solid Oxide electrolysis  Nuc'                           9  2030
+                   200.000
+    'Solid Oxide electrolysis  Nuc'                           9  2031
+                   200.000
+    'Solid Oxide electrolysis  Nuc'                           9  2032
+                   200.000
+    'Solid Oxide electrolysis  Nuc'                           9  2033
+                   200.000
+    'Solid Oxide electrolysis  Nuc'                           9  2034
+                   200.000
+    'Solid Oxide electrolysis  Nuc'                           9  2035
+                   200.000
+    'Solid Oxide electrolysis  Nuc'                           9  2036
+                   200.000
+    'Solid Oxide electrolysis  Nuc'                           9  2037
+                   200.000
+    'Solid Oxide electrolysis  Nuc'                           9  2038
+                   200.000
+    'Solid Oxide electrolysis  Nuc'                           9  2039
+                   200.000
+    'Solid Oxide electrolysis  Nuc'                           9  2040
+                   200.000
+    'Solid Oxide electrolysis  Nuc'                           9  2041
+                   200.000
+    'Solid Oxide electrolysis  Nuc'                           9  2042
+                   200.000
+    'Solid Oxide electrolysis  Nuc'                           9  2043
+                   200.000
+    'Solid Oxide electrolysis  Nuc'                           9  2044
+                   200.000
+    'Solid Oxide electrolysis  Nuc'                           9  2045
+                   200.000
+    'Solid Oxide electrolysis  Nuc'                           9  2046
+                   200.000
+    'Solid Oxide electrolysis  Nuc'                           9  2047
+                   200.000
+    'Solid Oxide electrolysis  Nuc'                           9  2048
+                   200.000
+    'Solid Oxide electrolysis  Nuc'                           9  2049
+                   200.000
+    'Solid Oxide electrolysis  Nuc'                           9  2050
+                   200.000
+    'Solid Oxide electrolysis  Nuc'                           9  2051
+                   200.000
+    'Solid Oxide electrolysis  Nuc'                           9  2052
+                   200.000
+    'Solid Oxide electrolysis  Nuc'                           9  2053
+                   200.000
+    'Solid Oxide electrolysis  Nuc'                          10  2024
+                   145.000
+    'Solid Oxide electrolysis  Nuc'                          10  2025
+                   290.000
+    'Solid Oxide electrolysis  Nuc'                          10  2026
+                   290.000
+    'Solid Oxide electrolysis  Nuc'                          10  2027
+                   290.000
+    'Solid Oxide electrolysis  Nuc'                          10  2028
+                   290.000
+    'Solid Oxide electrolysis  Nuc'                          10  2029
+                   290.000
+    'Solid Oxide electrolysis  Nuc'                          10  2030
+                   290.000
+    'Solid Oxide electrolysis  Nuc'                          10  2031
+                   290.000
+    'Solid Oxide electrolysis  Nuc'                          10  2032
+                   290.000
+    'Solid Oxide electrolysis  Nuc'                          10  2033
+                   290.000
+    'Solid Oxide electrolysis  Nuc'                          10  2034
+                   290.000
+    'Solid Oxide electrolysis  Nuc'                          10  2035
+                   290.000
+    'Solid Oxide electrolysis  Nuc'                          10  2036
+                   290.000
+    'Solid Oxide electrolysis  Nuc'                          10  2037
+                   290.000
+    'Solid Oxide electrolysis  Nuc'                          10  2038
+                   290.000
+    'Solid Oxide electrolysis  Nuc'                          10  2039
+                   290.000
+    'Solid Oxide electrolysis  Nuc'                          10  2040
+                   290.000
+    'Solid Oxide electrolysis  Nuc'                          10  2041
+                   290.000
+    'Solid Oxide electrolysis  Nuc'                          10  2042
+                   290.000
+    'Solid Oxide electrolysis  Nuc'                          10  2043
+                   290.000
+    'Solid Oxide electrolysis  Nuc'                          10  2044
+                   290.000
+    'Solid Oxide electrolysis  Nuc'                          10  2045
+                   290.000
+    'Solid Oxide electrolysis  Nuc'                          10  2046
+                   290.000
+    'Solid Oxide electrolysis  Nuc'                          10  2047
+                   290.000
+    'Solid Oxide electrolysis  Nuc'                          10  2048
+                   290.000
+    'Solid Oxide electrolysis  Nuc'                          10  2049
+                   290.000
+    'Solid Oxide electrolysis  Nuc'                          10  2050
+                   290.000
+    'Solid Oxide electrolysis  Nuc'                          10  2051
+                   290.000
+    'Solid Oxide electrolysis  Nuc'                          10  2052
+                   290.000
+    'Solid Oxide electrolysis  Nuc'                          10  2053
+                   290.000
+    'Solid Oxide electrolysis'                                1  2024
+                    15.474
+    'Solid Oxide electrolysis'                                1  2025
+                    15.474
+    'Solid Oxide electrolysis'                                1  2026
+                    15.474
+    'Solid Oxide electrolysis'                                1  2027
+                    15.474
+    'Solid Oxide electrolysis'                                1  2028
+                    15.474
+    'Solid Oxide electrolysis'                                1  2029
+                    15.474
+    'Solid Oxide electrolysis'                                1  2030
+                    15.474
+    'Solid Oxide electrolysis'                                1  2031
+                    15.474
+    'Solid Oxide electrolysis'                                1  2032
+                    15.474
+    'Solid Oxide electrolysis'                                1  2033
+                    15.474
+    'Solid Oxide electrolysis'                                1  2034
+                    15.474
+    'Solid Oxide electrolysis'                                1  2035
+                    15.474
+    'Solid Oxide electrolysis'                                1  2036
+                    15.474
+    'Solid Oxide electrolysis'                                1  2037
+                    15.474
+    'Solid Oxide electrolysis'                                1  2038
+                    15.474
+    'Solid Oxide electrolysis'                                1  2039
+                    15.474
+    'Solid Oxide electrolysis'                                1  2040
+                    15.474
+    'Solid Oxide electrolysis'                                1  2041
+                    15.474
+    'Solid Oxide electrolysis'                                1  2042
+                    15.474
+    'Solid Oxide electrolysis'                                1  2043
+                    15.474
+    'Solid Oxide electrolysis'                                1  2044
+                    15.474
+    'Solid Oxide electrolysis'                                1  2045
+                    15.474
+    'Solid Oxide electrolysis'                                1  2046
+                    15.474
+    'Solid Oxide electrolysis'                                1  2047
+                    15.474
+    'Solid Oxide electrolysis'                                1  2048
+                    15.474
+    'Solid Oxide electrolysis'                                1  2049
+                    15.474
+    'Solid Oxide electrolysis'                                1  2050
+                    15.474
+    'Solid Oxide electrolysis'                                1  2051
+                    15.474
+    'Solid Oxide electrolysis'                                1  2052
+                    15.474
+    'Solid Oxide electrolysis'                                1  2053
+                    15.474
+    'Solid Oxide electrolysis'                                2  2024
+                     3.934
+    'Solid Oxide electrolysis'                                2  2025
+                     3.934
+    'Solid Oxide electrolysis'                                2  2026
+                     3.934
+    'Solid Oxide electrolysis'                                2  2027
+                     3.934
+    'Solid Oxide electrolysis'                                2  2028
+                     3.934
+    'Solid Oxide electrolysis'                                2  2029
+                     3.934
+    'Solid Oxide electrolysis'                                2  2030
+                     3.934
+    'Solid Oxide electrolysis'                                2  2031
+                     3.934
+    'Solid Oxide electrolysis'                                2  2032
+                     3.934
+    'Solid Oxide electrolysis'                                2  2033
+                     3.934
+    'Solid Oxide electrolysis'                                2  2034
+                     3.934
+    'Solid Oxide electrolysis'                                2  2035
+                     3.934
+    'Solid Oxide electrolysis'                                2  2036
+                     3.934
+    'Solid Oxide electrolysis'                                2  2037
+                     3.934
+    'Solid Oxide electrolysis'                                2  2038
+                     3.934
+    'Solid Oxide electrolysis'                                2  2039
+                     3.934
+    'Solid Oxide electrolysis'                                2  2040
+                     3.934
+    'Solid Oxide electrolysis'                                2  2041
+                     3.934
+    'Solid Oxide electrolysis'                                2  2042
+                     3.934
+    'Solid Oxide electrolysis'                                2  2043
+                     3.934
+    'Solid Oxide electrolysis'                                2  2044
+                     3.934
+    'Solid Oxide electrolysis'                                2  2045
+                     3.934
+    'Solid Oxide electrolysis'                                2  2046
+                     3.934
+    'Solid Oxide electrolysis'                                2  2047
+                     3.934
+    'Solid Oxide electrolysis'                                2  2048
+                     3.934
+    'Solid Oxide electrolysis'                                2  2049
+                     3.934
+    'Solid Oxide electrolysis'                                2  2050
+                     3.934
+    'Solid Oxide electrolysis'                                2  2051
+                     3.934
+    'Solid Oxide electrolysis'                                2  2052
+                     3.934
+    'Solid Oxide electrolysis'                                2  2053
+                     3.934
+    'Solid Oxide electrolysis'                                7  2024
+                     3.425
+    'Solid Oxide electrolysis'                                7  2025
+                     3.425
+    'Solid Oxide electrolysis'                                7  2026
+                     3.425
+    'Solid Oxide electrolysis'                                7  2027
+                     3.425
+    'Solid Oxide electrolysis'                                7  2028
+                     3.425
+    'Solid Oxide electrolysis'                                7  2029
+                     3.425
+    'Solid Oxide electrolysis'                                7  2030
+                     3.425
+    'Solid Oxide electrolysis'                                7  2031
+                     3.425
+    'Solid Oxide electrolysis'                                7  2032
+                     3.425
+    'Solid Oxide electrolysis'                                7  2033
+                     3.425
+    'Solid Oxide electrolysis'                                7  2034
+                     3.425
+    'Solid Oxide electrolysis'                                7  2035
+                     3.425
+    'Solid Oxide electrolysis'                                7  2036
+                     3.425
+    'Solid Oxide electrolysis'                                7  2037
+                     3.425
+    'Solid Oxide electrolysis'                                7  2038
+                     3.425
+    'Solid Oxide electrolysis'                                7  2039
+                     3.425
+    'Solid Oxide electrolysis'                                7  2040
+                     3.425
+    'Solid Oxide electrolysis'                                7  2041
+                     3.425
+    'Solid Oxide electrolysis'                                7  2042
+                     3.425
+    'Solid Oxide electrolysis'                                7  2043
+                     3.425
+    'Solid Oxide electrolysis'                                7  2044
+                     3.425
+    'Solid Oxide electrolysis'                                7  2045
+                     3.425
+    'Solid Oxide electrolysis'                                7  2046
+                     3.425
+    'Solid Oxide electrolysis'                                7  2047
+                     3.425
+    'Solid Oxide electrolysis'                                7  2048
+                     3.425
+    'Solid Oxide electrolysis'                                7  2049
+                     3.425
+    'Solid Oxide electrolysis'                                7  2050
+                     3.425
+    'Solid Oxide electrolysis'                                7  2051
+                     3.425
+    'Solid Oxide electrolysis'                                7  2052
+                     3.425
+    'Solid Oxide electrolysis'                                7  2053
+                     3.425
+    ;
+ 
+Composite table:
+    i_NH3ExportStep  i_CensusDivisionOpt    v_AmmoniaExportStep(i_NH3ExportStep,i_CensusDivisionOpt,'Current Year').basic
+!   ---------------  -------------------    -----------------------------------------------------------------------------
+    1                                  1    NonBasic
+    1                                  2    NonBasic
+    1                                  3    NonBasic
+    1                                  4    NonBasic
+    1                                  5    NonBasic
+    1                                  6    NonBasic
+    1                                  7    NonBasic
+    1                                  8    NonBasic
+    1                                  9    NonBasic
+    1                                 10    NonBasic
+    2                                  1    NonBasic
+    2                                  2    NonBasic
+    2                                  3    NonBasic
+    2                                  4    NonBasic
+    2                                  5    NonBasic
+    2                                  6    NonBasic
+    2                                  7    NonBasic
+    2                                  8    NonBasic
+    2                                  9    NonBasic
+    2                                 10    NonBasic
+    3                                  1    NonBasic
+    3                                  2    NonBasic
+    3                                  3    NonBasic
+    3                                  4    NonBasic
+    3                                  5    NonBasic
+    3                                  6    NonBasic
+    3                                  7    NonBasic
+    3                                  8    NonBasic
+    3                                  9    NonBasic
+    3                                 10    NonBasic
+    4                                  1    NonBasic
+    4                                  2    NonBasic
+    4                                  3    NonBasic
+    4                                  4    NonBasic
+    4                                  5    NonBasic
+    4                                  6    NonBasic
+    4                                  7    NonBasic
+    4                                  8    NonBasic
+    4                                  9    NonBasic
+    4                                 10    NonBasic
+    5                                  1    NonBasic
+    5                                  2    NonBasic
+    5                                  3    NonBasic
+    5                                  4    NonBasic
+    5                                  5    NonBasic
+    5                                  6    NonBasic
+    5                                  7    NonBasic
+    5                                  8    NonBasic
+    5                                  9    NonBasic
+    5                                 10    NonBasic
+    ;
+ 
+    v_TotalCost       := 104422.584 ;
+    v_TotalCost.basic :=    'Basic' ;
+ 

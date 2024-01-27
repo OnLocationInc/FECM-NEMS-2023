@@ -1,0 +1,105 @@
+<?xml version="1.0"?>
+<Page Version="4000" TimeStamp="2022-07-25 17:32:44">
+	<PageEditSize Type="Inherited" />
+	<ProjectUUID>BD6A9103-B1FB-4406-840F-21FDB00917E2</ProjectUUID>
+	<TemplatesTabOrderPosition>1</TemplatesTabOrderPosition>
+	<Background Inherited="true" />
+	<PageObject Type="Curve">
+		<MultipleCases>true</MultipleCases>
+		<Location top="30" left="1014" bottom="864" right="1530" />
+		<TabOrder>2</TabOrder>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#ffffff" />
+		<ColorScheme Number="0" />
+		<Title>true</Title>
+		<Legend>true</Legend>
+		<Y-Labels>true</Y-Labels>
+		<X-Labels>true</X-Labels>
+		<HorizontalGridLines>true</HorizontalGridLines>
+		<VerticalGridLines>true</VerticalGridLines>
+		<StatusLine>true</StatusLine>
+		<YRange>
+			<NumGridPoints>15</NumGridPoints>
+		</YRange>
+		<ExplicitIdentifier>
+			<Identifier>HenryHubPrice( fyear )</Identifier>
+		</ExplicitIdentifier>
+		<DrawLines>true</DrawLines>
+		<MarkPoints>true</MarkPoints>
+	</PageObject>
+	<PageObject Type="Navigation Object">
+		<Location top="12" left="210" bottom="678" right="588" />
+		<TabOrder>3</TabOrder>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<Display>Button+Text</Display>
+		<Spacing>6</Spacing>
+		<BackgroundColor Transparent="true" />
+		<NavigationData>
+			<ReferencePage>ThisPage</ReferencePage>
+			<NumberOfGenerations>1</NumberOfGenerations>
+			<ActionSequence>
+				<Action Type="GotoNavigationPage" />
+			</ActionSequence>
+		</NavigationData>
+	</PageObject>
+	<PageObject Type="Button">
+		<Location top="54" left="654" bottom="108" right="870" />
+		<TabOrder>5</TabOrder>
+		<LeaveOnEnter>false</LeaveOnEnter>
+		<ButtonType>Text</ButtonType>
+		<Title>"Load Case File as Active"</Title>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<ActionSequence>
+			<Action Type="MenuCommand">
+				<Command>Case-Load As Active</Command>
+			</Action>
+		</ActionSequence>
+	</PageObject>
+	<PageObject Type="Button">
+		<Location top="120" left="654" bottom="180" right="870" />
+		<TabOrder>4</TabOrder>
+		<LeaveOnEnter>false</LeaveOnEnter>
+		<ButtonType>Text</ButtonType>
+		<Title>"Load Multiple Case Files"</Title>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<ActionSequence>
+			<Action Type="MenuCommand">
+				<Command>Data-Multiple Cases</Command>
+			</Action>
+		</ActionSequence>
+	</PageObject>
+	<PageObject Type="Button">
+		<Location top="240" left="630" bottom="318" right="900" />
+		<TabOrder>7</TabOrder>
+		<LeaveOnEnter>false</LeaveOnEnter>
+		<ButtonType>Text</ButtonType>
+		<Title>"EMM NGMM:  Old NERC Regions"</Title>
+		<Font GUID="43613FB2-AB0B-43E5-A7E3-6D7699FD7B8C" Name="Selection Object" />
+		<ActionSequence>
+			<Action Type="LinkedPage">
+				<Page PageGUID="C8FC0293-25E8-4339-BE41-116ED31D89A0" Name="Old EMM Debug" />
+			</Action>
+		</ActionSequence>
+	</PageObject>
+	<PageObject Type="Button">
+		<Location top="354" left="630" bottom="432" right="900" />
+		<TabOrder>6</TabOrder>
+		<LeaveOnEnter>false</LeaveOnEnter>
+		<ButtonType>Text</ButtonType>
+		<Title>"EMM NGMM:  New NERC Regions"</Title>
+		<Font GUID="43613FB2-AB0B-43E5-A7E3-6D7699FD7B8C" Name="Selection Object" />
+		<ActionSequence>
+			<Action Type="LinkedPage">
+				<Page PageGUID="F4BC77EC-E003-49F2-9D9A-BE89CA391D7C" Name="New EMM Debug" />
+			</Action>
+		</ActionSequence>
+	</PageObject>
+	<UsedReferences>
+		<Model>
+			<Symbol>HenryHubPrice</Symbol>
+			<Symbol>fyear</Symbol>
+		</Model>
+	</UsedReferences>
+</Page>

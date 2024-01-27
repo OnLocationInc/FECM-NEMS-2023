@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<TemplateManager>
+	<Page Name="All Data Pages" PageGUID="05E402D1-5228-4736-91FA-EAF087966413" />
+	<Page Name="[Data Page] v_ProductionOperate" PageGUID="BB47BD4E-FEAD-40AA-BD6B-436ED05D0ECE" />
+	<Page Name="[Data Page] v_ProductionUnplannedCapacitySecond" PageGUID="2334D975-731E-4899-900D-76D13F79BB56" />
+	<Page Name="[Data Page] p_CO2CaptureQty45QCreditbyYear" PageGUID="DC828A65-41AF-40DE-88BE-C989E06C0D43" />
+	<Page Name="[Data Page] p_Section45QSalineCredit" PageGUID="47C532C5-8F54-4ECF-BD4E-E232E4A81EBE" />
+	<Page Name="[Data Page] p_Section45QEORCredit" PageGUID="0BD0F7E5-0DB1-4FB3-A500-0DEE23107A19" />
+	<Page Name="[Data Page] v_CO2CapturetoSaline" PageGUID="D9F12637-78AD-4DF6-A8FF-FF0B326ED16B" />
+	<Page Name="[Data Page] v_CO2Capture45QCredit" PageGUID="166452AF-75DE-4B7A-B624-EBB0886F2EA8" />
+	<Page Name="[Data Page] v_CO2CapturetoSaline45Q" PageGUID="5DC76411-9E3E-4F63-9EA1-6C30B9FA906F" />
+	<Page Name="[Data Page] v_CO2EmissionstoCapture" PageGUID="46A754AE-3AF8-4C03-B095-B4E55393E5FC" />
+	<Page Name="[Data Page] p_CO2CaptureQtybyTech" PageGUID="98E4D237-6435-4807-9B88-80BB529ABFEA" />
+	<Page Name="[Data Page] p_HydrogenPrice" PageGUID="692ABC5C-10FC-4E5F-8674-2259F3D49278" />
+	<Page Name="[Data Page] p_AmmoniaPrice" PageGUID="8D60B84B-8513-43C4-BE92-586209DAA131" />
+	<Page Name="[Data Page] p_CO2CaptureSalinebyTech" PageGUID="A3496A87-69A5-4AF2-9820-BC5E36A3FBF2" />
+	<Page Name="[Data Page] p_CO2CaptureEORbyTech" PageGUID="1AAA4AB0-D49B-4633-8BCC-7EE8050F6402" />
+	<Page Name="[Data Page] p_ProductionCapacityAvailable" PageGUID="76A203B5-1306-4920-92EA-CBEA61392081" />
+</TemplateManager>

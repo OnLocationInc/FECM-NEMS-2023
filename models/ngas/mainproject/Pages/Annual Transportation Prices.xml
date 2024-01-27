@@ -1,0 +1,148 @@
+<?xml version="1.0"?>
+<Page Version="4000" TimeStamp="2017-04-12 17:21:48">
+	<PageEditSize Type="Inherited" />
+	<ProjectUUID>BD6A9103-B1FB-4406-840F-21FDB00917E2</ProjectUUID>
+	<TemplatesTabOrderPosition>1</TemplatesTabOrderPosition>
+	<Background Inherited="true" />
+	<PageObject Type="Selection Object">
+		<SelectionType>DropDownList</SelectionType>
+		<Location top="354" left="18" bottom="378" right="162" />
+		<TabOrder>2</TabOrder>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<TextShown>ElementName</TextShown>
+		<Border Style="None" />
+		<BackgroundColor RGB="#ffffff" />
+		<ExplicitIdentifier>
+			<Identifier>DisplayedCensusRegion</Identifier>
+		</ExplicitIdentifier>
+	</PageObject>
+	<PageObject Type="Text">
+		<Location top="330" left="18" bottom="348" right="198" />
+		<StaticText>Select Census Division:</StaticText>
+		<Font GUID="3EEC6209-AF15-406D-9130-A82C6D539593" Name="Title font" />
+		<TextColor RGB="#000000" />
+	</PageObject>
+	<PageObject Type="Curve">
+		<Location top="24" left="240" bottom="384" right="636" />
+		<TabOrder>3</TabOrder>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#ffffff" />
+		<ColorScheme Number="0" />
+		<Title>true</Title>
+		<Legend>true</Legend>
+		<Y-Labels>true</Y-Labels>
+		<X-Labels>true</X-Labels>
+		<StatusLine>true</StatusLine>
+		<ExplicitIdentifier>
+			<Identifier>HistoricalAnnualPriceEERE( year, Fuel_CNG, DisplayedCensusRegion )</Identifier>
+		</ExplicitIdentifier>
+		<ExplicitIdentifier>
+			<Identifier>HistoricalAnnualRoadPriceEERE( year, Fuel_CNG, 'personal', DisplayedCensusRegion -&gt; DisplayedCensusRegion )</Identifier>
+		</ExplicitIdentifier>
+		<ExplicitIdentifier>
+			<Identifier>HistoricalAnnualRoadPriceEERE( year, Fuel_CNG, 'fleet', DisplayedCensusRegion )</Identifier>
+		</ExplicitIdentifier>
+		<ExplicitIdentifier>
+			<Identifier>HistoricalAnnualEndUseCDPrice( year, Sector_Transportation, DisplayedCensusRegion )</Identifier>
+		</ExplicitIdentifier>
+		<DrawLines>true</DrawLines>
+		<MarkPoints>true</MarkPoints>
+	</PageObject>
+	<PageObject Type="Selection Object">
+		<SelectionType>DropDownList</SelectionType>
+		<Location top="438" left="18" bottom="480" right="156" />
+		<TabOrder>6</TabOrder>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<TextShown>ElementName</TextShown>
+		<Border Style="None" />
+		<BackgroundColor RGB="#ffffff" />
+		<ExplicitIdentifier>
+			<Identifier>DisplayedTransFuel</Identifier>
+		</ExplicitIdentifier>
+	</PageObject>
+	<PageObject Type="Selection Object">
+		<SelectionType>DropDownList</SelectionType>
+		<Location top="528" left="24" bottom="576" right="162" />
+		<TabOrder>5</TabOrder>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<TextShown>ElementName</TextShown>
+		<Border Style="None" />
+		<BackgroundColor RGB="#ffffff" />
+		<ExplicitIdentifier>
+			<Identifier>DisplayedVehicle</Identifier>
+		</ExplicitIdentifier>
+	</PageObject>
+	<PageObject Type="Text">
+		<Location top="408" left="18" bottom="426" right="198" />
+		<StaticText>Select Trans Fuel:</StaticText>
+		<Font GUID="3EEC6209-AF15-406D-9130-A82C6D539593" Name="Title font" />
+		<TextColor RGB="#000000" />
+	</PageObject>
+	<PageObject Type="Text">
+		<Location top="498" left="18" bottom="516" right="198" />
+		<StaticText>Select Vehicle Type:</StaticText>
+		<Font GUID="3EEC6209-AF15-406D-9130-A82C6D539593" Name="Title font" />
+		<TextColor RGB="#000000" />
+	</PageObject>
+	<PageObject Type="Curve">
+		<Location top="30" left="684" bottom="390" right="1200" />
+		<TabOrder>4</TabOrder>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#ffffff" />
+		<ColorScheme Number="0" />
+		<Title>true</Title>
+		<Legend>true</Legend>
+		<Y-Labels>true</Y-Labels>
+		<X-Labels>true</X-Labels>
+		<StatusLine>true</StatusLine>
+		<YRange Automatic="false">
+			<Lower>0</Lower>
+			<Upper>20</Upper>
+		</YRange>
+		<ExplicitIdentifier>
+			<Identifier>Price_EndUseTransportation( year, DisplayedTransFuel, DisplayedVehicle, DisplayedCensusRegion, '1' )</Identifier>
+		</ExplicitIdentifier>
+		<ExplicitIdentifier>
+			<Identifier>Price_EndUseTransportation( year, DisplayedTransFuel, DisplayedVehicle, DisplayedCensusRegion, '2' )</Identifier>
+		</ExplicitIdentifier>
+		<ExplicitIdentifier>
+			<Identifier>Price_EndUseTransportation( year, DisplayedTransFuel, DisplayedVehicle, DisplayedCensusRegion, '3' )</Identifier>
+		</ExplicitIdentifier>
+		<ExplicitIdentifier>
+			<Identifier>Price_EndUseTransportation( year, DisplayedTransFuel, DisplayedVehicle, DisplayedCensusRegion, '4' )</Identifier>
+		</ExplicitIdentifier>
+		<ExplicitIdentifier>
+			<Identifier>NEMS_AnnualPriceByMode( year, DisplayedTransFuel, DisplayedVehicle, DisplayedCensusRegion )</Identifier>
+		</ExplicitIdentifier>
+		<ExplicitIdentifier>
+			<Identifier>HistoricalAnnualRoadPriceEERE_Tax( year, DisplayedTransFuel, DisplayedVehicle, DisplayedCensusRegion )</Identifier>
+		</ExplicitIdentifier>
+		<ExplicitIdentifier>
+			<Identifier>HistoricalAnnualPriceEERE_Tax( year, DisplayedTransFuel, DisplayedCensusRegion )</Identifier>
+		</ExplicitIdentifier>
+		<DrawLines>true</DrawLines>
+		<MarkPoints>true</MarkPoints>
+	</PageObject>
+	<UsedReferences>
+		<Model>
+			<Symbol>Region_Census_</Symbol>
+			<Symbol>Sector_Transportation</Symbol>
+			<Symbol>HistoricalAnnualEndUseCDPrice</Symbol>
+			<Symbol>Price_EndUseTransportation</Symbol>
+			<Symbol>TransFuel_</Symbol>
+			<Symbol>VehicleType_</Symbol>
+			<Symbol>Fuel_CNG</Symbol>
+			<Symbol>HistoricalAnnualPriceEERE</Symbol>
+			<Symbol>HistoricalAnnualRoadPriceEERE</Symbol>
+			<Symbol>NEMS_AnnualPriceByMode</Symbol>
+			<Symbol>DisplayedCensusRegion</Symbol>
+			<Symbol>year</Symbol>
+			<Symbol>DisplayedTransFuel</Symbol>
+			<Symbol>DisplayedVehicle</Symbol>
+			<Symbol>HistoricalAnnualPriceEERE_Tax</Symbol>
+			<Symbol>HistoricalAnnualRoadPriceEERE_Tax</Symbol>
+		</Model>
+	</UsedReferences>
+</Page>

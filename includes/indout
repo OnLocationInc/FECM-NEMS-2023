@@ -1,0 +1,53 @@
+!  $Header: m:/default/includes/RCS/indout,v 1.6 2013/06/18 19:00:17 pkc Exp $
+!  INDUSTRIAL MODULE OUTPUT COMMON BLOCK
+!  The dimension parameters are &6005PRJ.NEMS.COMMON.PDS.datecode:PARAMETR
+!  the user should add the following INCLUDE statement
+!     INCLUDE(PARAMETR)
+!   Industrial Module output variables
+      integer MAX_KILNS
+      parameter (MAX_KILNS=150)     !   share this parameter with OGSM (not in the restart file)
+      REAL INQNGPF(MNUMCR,MNUMYR)   !   Consumption of NG feedstocks
+      REAL INQLGPF(MNUMCR,MNUMYR)   !   Consumption of LPG feedstocks
+      REAL QELINP(MNUMCR,MNUMYR)    !   Industrial primary electricity
+      REAL QELINS(MNUMCR,MNUMYR)    !   Industrial shift electricity
+      REAL QELINM(MNUMCR,MNUMYR)    !   Industrial miscellaneous electricity
+      REAL MWIN(4,MNUMYR)           !   Waste from mills
+      REAL INQLGHP(MNUMCR,MNUMYR)   !   Consumption of LPG for heat and power (excludes refining use)
+      REAL LIMEOUTPUT(MNUMYR)       !   Lime industry output
+      REAL HYDROGEN2REF(MNUMYR)     !   Hydrogen sent to refineries
+      REAL INCM_CO2BEP(MAX_KILNS,MNUMYR) !   Break even price for Co2 to EOR from Cement by kiln
+	  REAL INCM_CCSPOTQ(MAX_KILNS,MNUMYR)!  Potential CCS quanitiy by kiln
+      INTEGER INCM_CCSREG(MAX_KILNS)     !  OGSM region where kiln is located
+      REAL I_RY(MAX_KILNS)               !  First CCS year by Kiln
+      REAL I_CPTY(MAX_KILNS)             !Capture quanity for existing cement unit
+      REAL I_PTP(MAX_KILNS)              !PTP Plant type(=70, for future use)
+      INTEGER INUM_KILN                  ! number of kilns in the cement industry
+      REAL I_CPTY_NEW(MNUMCR,MNUMYR)     !capture quantity for cement 
+      REAL I_CFR_NEW(MNUMCR,MNUMYR,MNUMYR)      ! new capture Q cement
+      REAL I_CFR(MAX_KILNS,MNUMYR)       ! capture existing sites 
+      REAL INCM_CPTYF(9,MNUMYR)          ! CCS by fuel 
+      REAL INCM_PREM(MNUMCR,MNUMYR)      ! Process Emissions captured
+      REAL INCO2_45QE(MNUMCR,MNUMYR)     ! cement CO2 purchased EOR and receives 45Q credit
+      REAL INCO2_45QS(MNUMCR,MNUMYR)     ! cement CO2 purchased Saline and receives 45Q credit 
+      REAL I_CCS_Q(MNUMYR)               ! CCS quantity from industry excl. cement																				  
+      REAL NEW_CAP_FLG(MNUMCR,MNUMYR,MNUMYR)      ! new capture flag for 45Q
+      REAL NEW_ROT_TYP(MNUMCR,MNUMYR)    ! Rotary type picked for new capacity
+	  REAL I_IGRP(MAX_KILNS)             ! facility+kilnid for existing capture sites
+!   Industrial Module output Common block
+      COMMON/INDOUT/INQNGPF,INQLGPF,QELINP,QELINS,QELINM,MWIN,INQLGHP, LIMEOUTPUT, HYDROGEN2REF, INCM_CO2BEP, &
+                     INCM_CCSPOTQ, INCM_CCSREG, I_RY,I_CPTY,I_PTP,INUM_KILN,I_CPTY_NEW,I_CFR_NEW,I_CFR,I_IGRP, &
+                     INCM_CPTYF,INCM_PREM,INCO2_45QE,INCO2_45QS,I_CCS_Q
+!   Equivalence for FILER used for data storage
+      REAL EQ_INOUT(6*MNUMCR*MNUMYR + &   ! INQNGPF, INQLGPF, QELINP, QELINS, QELINM, and INQLGHP
+					5*MNUMCR*MNUMYR + &        ! I_CPTY_NEW, INCM_PREM, INCO2_45QE, INCO2_45QS, NEW_ROT_TYP
+					MNUMCR*MNUMYR*MNUMYR + & ! I_CFR_NEW
+                    4*MNUMYR + &    ! MWIN
+                    2*MNUMYR + &    ! LIMEOUTPUT and HYDROGEN2REF
+                    3*MAX_KILNS*MNUMYR + &     ! INCM_CO2BEP,INCM_CCSPOTQ,I_CFR
+					5*MAX_KILNS + &            ! INCM_CCSREG,I_RY,I_CPTY,I_PTP,I_IGRP
+                    10*MNUMYR + &              ! INCM_CPTYF,I_CCS_Q
+                    1)                         ! INUM_KILN
+      EQUIVALENCE (EQ_INOUT,INQNGPF)
+!   Equivalence for uldsm
+      REAL QELINOUT(MNUMCR,MNUMYR,3)
+      EQUIVALENCE (QELINOUT,QELINP)

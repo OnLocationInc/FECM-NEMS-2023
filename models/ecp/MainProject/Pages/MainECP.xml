@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<Page Version="4000" TimeStamp="2015-08-26 18:46:49">
+	<PageEditSize Type="Inherited" />
+	<ProjectUUID>A4E50B56-1C37-4A54-BFE1-C8C2356EEE0F</ProjectUUID>
+	<TemplatesTabOrderPosition>1</TemplatesTabOrderPosition>
+	<Background Inherited="true" />
+	<PageObject Type="Scalar">
+		<Location top="30" left="150" bottom="66" right="240" />
+		<TabOrder>2</TabOrder>
+		<Font GUID="CADEC028-E767-4F1A-850A-6114FADD13D0" Name="Body" />
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#ffffff" />
+		<Layout>SingleLineEditField</Layout>
+		<SeparatorSign>=</SeparatorSign>
+		<ExplicitIdentifier>
+			<Identifier>CURCALYR( '1' )</Identifier>
+			<NumberFormat Width="5" Decimals="0" Scientific="IfTooSmallorLarge" Alignment="Center" ShowDefaults="true" />
+		</ExplicitIdentifier>
+	</PageObject>
+	<PageObject Type="Text">
+		<Location top="36" left="30" bottom="78" right="144" />
+		<StaticText>Run Year</StaticText>
+		<Font GUID="CADEC028-E767-4F1A-850A-6114FADD13D0" Name="Body" />
+		<TextColor RGB="#000000" />
+	</PageObject>
+	<PageObject Type="Button">
+		<Location top="24" left="276" bottom="66" right="402" />
+		<TabOrder>1</TabOrder>
+		<LeaveOnEnter>false</LeaveOnEnter>
+		<ButtonType>Text</ButtonType>
+		<Title>"Run ECP"</Title>
+		<Font GUID="CADEC028-E767-4F1A-850A-6114FADD13D0" Name="Body" />
+		<ActionSequence>
+			<Action Type="Run">
+				<RunWhat>SpecificProcecure</RunWhat>
+				<Procedure>MainExecution</Procedure>
+				<AbortOnError>true</AbortOnError>
+			</Action>
+		</ActionSequence>
+	</PageObject>
+	<PageObject Type="Navigation Object">
+		<Location top="126" left="48" bottom="270" right="456" />
+		<TabOrder>3</TabOrder>
+		<Font GUID="CADEC028-E767-4F1A-850A-6114FADD13D0" Name="Body" />
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<Display>Button+Text</Display>
+		<Spacing>6</Spacing>
+		<BackgroundColor RGB="#ffffff" />
+		<NavigationData>
+			<ReferencePage>ThisPage</ReferencePage>
+			<NumberOfGenerations>1</NumberOfGenerations>
+			<ActionSequence>
+				<Action Type="GotoNavigationPage" />
+			</ActionSequence>
+		</NavigationData>
+	</PageObject>
+	<UsedReferences>
+		<Model>
+			<Symbol>CURCALYR</Symbol>
+			<Symbol>MainExecution</Symbol>
+		</Model>
+	</UsedReferences>
+</Page>

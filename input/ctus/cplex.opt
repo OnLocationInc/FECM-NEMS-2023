@@ -1,0 +1,14 @@
+relaxfixedinfeas 1
+lpmethod 4
+subalg 4
+startalg 4
+auxrootthreads 0
+parallelmode 1
+threads 1
+solvefinal 0
+mipstart 1
+cutpass 10
+mipordind 1
+nodesel 3
+varsel 3
+polishaftertime 14400

@@ -1,0 +1,199 @@
+<?xml version="1.0"?>
+<Page Version="4000" TimeStamp="2017-04-21 21:21:01">
+	<PageEditSize Type="Inherited" />
+	<ProjectUUID>BD6A9103-B1FB-4406-840F-21FDB00917E2</ProjectUUID>
+	<TemplatesTabOrderPosition>1</TemplatesTabOrderPosition>
+	<Background Inherited="true" />
+	<PageObject Type="Network Object">
+		<Location top="18" left="6" bottom="756" right="972" />
+		<TabOrder>1</TabOrder>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#ffffff" />
+		<HorizontalScrollbar>true</HorizontalScrollbar>
+		<VerticalScrollbar>true</VerticalScrollbar>
+		<ScrollControl>NavigationButtons</ScrollControl>
+		<VisibleArea>
+			<Left>-145.242035176</Left>
+			<Right>-62.8359143031</Right>
+			<Top>62.4158513591</Top>
+			<Bottom>12.7332020476</Bottom>
+		</VisibleArea>
+		<Background>
+			<Background_Image_Source ID="101">"From GIS Source"</Background_Image_Source>
+			<Source>
+				<Name ID="1001">"NA states"</Name>
+				<Type ID="1002">"ESRI"</Type>
+				<Shape_File ID="1011">"_GIS\North_America.shp"</Shape_File>
+			</Source>
+			<Source>
+				<Name ID="1001">"Pipelines"</Name>
+				<Type ID="1002">"ESRI"</Type>
+				<Shape_File ID="1011">"_GIS\NaturalGas_Pipelines_US_2015.shp"</Shape_File>
+			</Source>
+			<Layer>
+				<Name ID="2001">"North America Layer"</Name>
+				<Source ID="2012">"NA states"</Source>
+				<Appearance>
+					<Fill_Color ID="2011">4C29CF98-3E51-4BAA-8563-90FCE3E3DF3B default background</Fill_Color>
+				</Appearance>
+			</Layer>
+			<Layer>
+				<Name ID="2001">"Pipelines"</Name>
+				<Source ID="2012">"Pipelines"</Source>
+				<Appearance>
+					<Line>
+						<Color ID="2005">RGB 808080</Color>
+					</Line>
+				</Appearance>
+			</Layer>
+		</Background>
+		<Node>
+			<Identifier>reg</Identifier>
+			<XCoordinate>Longitude_center( reg )</XCoordinate>
+			<YCoordinate>Latitude_center( reg )</YCoordinate>
+			<NumberFormat Width="6" Decimals="2" />
+			<MaximumSize>10</MaximumSize>
+			<ScaleFactor>10</ScaleFactor>
+			<TextPosition>Top</TextPosition>
+			<TextShowWhat>ElementName</TextShowWhat>
+			<Color>RGB 000000</Color>
+			<ProcedureUponSelect>SelectRegionOnMap( reg )</ProcedureUponSelect>
+			<Shape>Circle</Shape>
+		</Node>
+		<Arc>
+			<Identifier>FlowsAnnual( ModelYear, h, h1 )</Identifier>
+			<NumberFormat Width="6" Decimals="2" />
+			<MinimumSize>2</MinimumSize>
+			<MaximumSize>5</MaximumSize>
+			<ScaleFactor>0.05</ScaleFactor>
+			<TextPosition>Right</TextPosition>
+			<Color>FlowColor1( ModelYear, h, h1 )</Color>
+			<ProcedureUponSelect>SelectArcOnMap( h, h1 )</ProcedureUponSelect>
+			<ShapeExtraData>25</ShapeExtraData>
+			<Shape>Curved</Shape>
+			<FirstSegment>Horizontal</FirstSegment>
+			<ClickWhere>ArrowHead</ClickWhere>
+		</Arc>
+	</PageObject>
+	<PageObject Type="Button">
+		<Location top="768" left="30" bottom="810" right="162" />
+		<TabOrder>2</TabOrder>
+		<LeaveOnEnter>false</LeaveOnEnter>
+		<ButtonType>Text</ButtonType>
+		<Title>"Rerun NGMM"</Title>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<ActionSequence>
+			<Action Type="Run">
+				<RunWhat>SpecificProcecure</RunWhat>
+				<Procedure>MainExecution_Standalone</Procedure>
+				<AbortOnError>true</AbortOnError>
+			</Action>
+		</ActionSequence>
+	</PageObject>
+	<PageObject Type="Selection Object">
+		<SelectionType>DropDownList</SelectionType>
+		<Location top="18" left="984" bottom="48" right="1158" />
+		<TabOrder>3</TabOrder>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<TextShown>ElementName</TextShown>
+		<Border Style="None" />
+		<BackgroundColor RGB="#ffffff" />
+		<ExplicitIdentifier>
+			<Identifier>ModelYear</Identifier>
+		</ExplicitIdentifier>
+	</PageObject>
+	<PageObject Type="Pivot Table">
+		<Location top="84" left="990" bottom="738" right="1566" />
+		<TabOrder>4</TabOrder>
+		<ObjectUUID>A8CA589C-F044-4869-924A-0D14D3349FB6</ObjectUUID>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<Contents>
+			<Explicit_Identifier>
+				<Identifier ID="4110">FlowsMonthlyDebug( modelyrmn, h, h1 )</Identifier>
+				<Title ID="4120">"Flow"</Title>
+			</Explicit_Identifier>
+			<Explicit_Identifier>
+				<Identifier ID="4110">CapacityMonthlyDebug( modelyrmn, h, h1 )</Identifier>
+				<Title ID="4120">"Capacity"</Title>
+			</Explicit_Identifier>
+			<Explicit_Identifier>
+				<Identifier ID="4110">TariffMonthlyDebug( modelyrmn, h, h1 )</Identifier>
+				<Title ID="4120">"Tariff"</Title>
+			</Explicit_Identifier>
+		</Contents>
+		<Indices>
+			<Identifier_Index>
+				<Hide_if_Single_Identifier ID="6270">"No"</Hide_if_Single_Identifier>
+			</Identifier_Index>
+		</Indices>
+		<General>
+			<Dense_Aggregation_restricts_to_Domain ID="1022">"Yes"</Dense_Aggregation_restricts_to_Domain>
+		</General>
+		<Row_Area>
+			<Background_Color ID="2010">RGB&lt;255,255,200&gt;</Background_Color>
+			<Text_Color ExtraInfo="D4F48705-BFDF-4DF8-8E1F-D38EFF981024" ID="2020">"default selection"</Text_Color>
+			<Headers>
+				<Background_Color ExtraInfo="D4F48705-BFDF-4DF8-8E1F-D38EFF981024" ID="2120">"default selection"</Background_Color>
+				<Text_Color ID="2130">RGB&lt;255,255,255&gt;</Text_Color>
+				<Show_Sub_Headers ID="2150">"No"</Show_Sub_Headers>
+			</Headers>
+			<Grid_Focus_Indicator>
+				<Background_Color ID="2270">RGB&lt;0,0,168&gt;</Background_Color>
+				<Text_Color ID="2280">RGB&lt;255,255,200&gt;</Text_Color>
+			</Grid_Focus_Indicator>
+		</Row_Area>
+		<Column_Area>
+			<Headers>
+				<Show_Sub_Headers ID="3150">"No"</Show_Sub_Headers>
+			</Headers>
+		</Column_Area>
+		<Grid_Area>
+			<Background_Color ID="5010">RGB&lt;255,255,255&gt;</Background_Color>
+			<Alternating_Background_Color ID="5011">RGB&lt;225,225,225&gt;</Alternating_Background_Color>
+			<Aggregators>
+				<Background_Color ID="5220">RGB&lt;255,128,128&gt;</Background_Color>
+			</Aggregators>
+			<Sub_Header_Row_or_Column>
+				<Background_Color ID="5320">RGB&lt;255,255,200&gt;</Background_Color>
+			</Sub_Header_Row_or_Column>
+		</Grid_Area>
+	</PageObject>
+	<PageObject Type="Button">
+		<Location top="18" left="1194" bottom="48" right="1344" />
+		<TabOrder>5</TabOrder>
+		<LeaveOnEnter>false</LeaveOnEnter>
+		<ButtonType>Text</ButtonType>
+		<Title>"Clear Selections"</Title>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<ActionSequence>
+			<Action Type="Run">
+				<RunWhat>SpecificProcecure</RunWhat>
+				<Procedure>DeselectAllArcsOnMap</Procedure>
+				<AbortOnError>true</AbortOnError>
+			</Action>
+		</ActionSequence>
+	</PageObject>
+	<UsedReferences>
+		<Model>
+			<Symbol>MainExecution_Standalone</Symbol>
+			<Symbol>Years_</Symbol>
+			<Symbol>ModelYear</Symbol>
+			<Symbol>SelectRegionOnMap</Symbol>
+			<Symbol>SelectArcOnMap</Symbol>
+			<Symbol>DeselectAllArcsOnMap</Symbol>
+			<Symbol>FlowsAnnual</Symbol>
+			<Symbol>Longitude_center</Symbol>
+			<Symbol>Latitude_center</Symbol>
+			<Symbol>FlowColor1</Symbol>
+			<Symbol>FlowsMonthlyDebug</Symbol>
+			<Symbol>CapacityMonthlyDebug</Symbol>
+			<Symbol>TariffMonthlyDebug</Symbol>
+			<Symbol>modelyrmn</Symbol>
+			<Symbol>reg</Symbol>
+			<Symbol>h</Symbol>
+			<Symbol>h1</Symbol>
+		</Model>
+	</UsedReferences>
+</Page>

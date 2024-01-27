@@ -1,0 +1,835 @@
+## ams_version=1.0
+
+Section DBase {
+	Procedure pr_InputDatabase {
+		Body: {
+			! Read sets in SQLite database
+			pr_ReadSetsInformation;	
+			! Read data in SQLite database
+			pr_ReadAllData;
+			! Add hydrogen as a fuel
+			Setelementadd(S_Fuels, Ep_Fuel, 'Hydrogen');
+		}
+	}
+	Section Sets_Information {
+		Comment: {
+			"Set descriptions keep information about indexes in the model. 
+			Specially interesting for accronym identification
+			
+			BP_ReadSetDescriptionsFlag need to be set to 1 in order to get the data. 
+			This avoids reading inneccessary information for the optimization"
+		}
+		Procedure pr_ReadSetsInformation {
+			Body: {
+				! Read in tables from h2_inputs.db See text for each table
+				read from table db_FuelDescriptions in merge mode;
+				!read from table db_HydrogenDemandCodeDescriptions in merge mode;
+				read from table db_MarketPriceSeasons in merge mode;
+				read from table db_MarketQuantitySeasons in merge mode;
+				read from table db_MarketPriceTransport in merge mode;
+				read from table db_MarketQuantityTransport in merge mode;
+				read from table db_PlanningPeriodDescriptions in merge mode;
+				read from table db_ProductionCodeDescriptions in merge mode;
+				read from table db_ProductionCapacitySteps in merge mode;
+				read from table db_SeasonDescriptions in merge mode;
+				read from table db_StorageDescriptions in merge mode;
+				read from table db_TransportationDescriptions in merge mode;
+				read from table db_TransportationCapacitySteps in merge mode;
+			}
+			Comment: "Read Descriptions of sets";
+		}
+		DatabaseProcedure db_FuelDescriptions {
+			DataSource: "H2_Inputs.dsn";
+			SqlQuery: "select Description from 'Fuel Code'";
+			Property: UseResultSet;
+			Mapping: "Description" --> i_Fuel;
+			Comment: "Electricity, biomass etc.";
+		}
+		DatabaseProcedure db_MarketPriceSeasons {
+			DataSource: "H2_Inputs.dsn";
+			SqlQuery: "select L2,Value from 'Market Price Code Season'";
+			Property: UseResultSet;
+			Mapping: {
+				"L2" --> i_MarketPriceCode,
+				"Value" --> ep_MarketPriceSeasons(i_MarketPriceCode)
+			}
+			Comment: "Right now whether sector code is annual or disaggregated by season (some pqs are by season)";
+		}
+		DatabaseProcedure db_MarketPriceTransport {
+			DataSource: "H2_Inputs.dsn";
+			SqlQuery: "select L2,Value from 'Market Price Code Transport'";
+			Property: UseResultSet;
+			Mapping: {
+				"L2" --> i_MarketPriceCode,
+				"Value" --> ep_MarketPriceTransport(i_MarketPriceCode)
+			}
+			Comment: "sector uses local transportation or pipeline. For future use.";
+		}
+		DatabaseProcedure db_MarketQuantitySeasons {
+			DataSource: "H2_Inputs.dsn";
+			SqlQuery: "select L2,Value from 'Market Quantity Code Season'";
+			Property: UseResultSet;
+			Mapping: {
+				"L2" --> i_MarketQuantityCode,
+				"Value" --> ep_MarketQuantitySeasons(i_MarketQuantityCode)
+			}
+			Comment: "Fraction of year associated with each season. Right now 1/4 or 1/2";
+		}
+		DatabaseProcedure db_MarketQuantityTransport {
+			DataSource: "H2_Inputs.dsn";
+			SqlQuery: "select L2,Value from 'Market Quantity Code Transport'";
+			Property: UseResultSet;
+			Mapping: {
+				"L2" --> i_MarketQuantityCode,
+				"Value" --> ep_MarketQuantityTransport(i_MarketQuantityCode)
+			}
+			Comment: "quantity goes  in local or pipeline transport. Future use.";
+		}
+		DatabaseProcedure db_PlanningPeriodDescriptions {
+			DataSource: "H2_Inputs.dsn";
+			SqlQuery: "select Description from 'Planning Period Code'";
+			Property: UseResultSet;
+			Mapping: "Description" --> i_PlanningPeriod;
+			Comment: "Three planning periods now.";
+		}
+		DatabaseProcedure db_ProductionCodeDescriptions {
+			DataSource: "H2_Inputs.dsn";
+			SqlQuery: "select * from 'Production Code'";
+			Property: UseResultSet;
+			Mapping: {
+				"HMM_Index" --> i_Tech,
+				"Description" --> ep_ProductionTech(i_Tech)
+			}
+			Comment: "Mapping between production technology code and full name";
+		}
+		DatabaseProcedure db_ProductionCapacitySteps {
+			DataSource: "H2_Inputs.dsn";
+			SqlQuery: "select Description from 'Production Steps'";
+			Property: UseResultSet;
+			Mapping: "Description" --> i_ProductionStep;
+			Comment: "set of production capacity build steps";
+		}
+		DatabaseProcedure db_SeasonDescriptions {
+			DataSource: "H2_Inputs.dsn";
+			SqlQuery: "select Description from 'Season Code'";
+			Property: UseResultSet;
+			Mapping: "Description" --> i_Season;
+			Comment: "seasons";
+		}
+		DatabaseProcedure db_StorageDescriptions {
+			DataSource: "H2_Inputs.dsn";
+			SqlQuery: "select Description from 'Storage Code'";
+			Property: UseResultSet;
+			Mapping: "Description" --> i_StorageTech;
+			Comment: "storage technologies (e.g. saline)";
+		}
+		DatabaseProcedure db_TransportationDescriptions {
+			DataSource: "H2_Inputs.dsn";
+			SqlQuery: "select Description from 'Transportation Code'";
+			Property: UseResultSet;
+			Mapping: "Description" --> i_TranTech;
+			Comment: "types of transportation (e.g. pipeline)";
+		}
+		DatabaseProcedure db_TransportationCapacitySteps {
+			DataSource: "H2_Inputs.dsn";
+			SqlQuery: "select Description from 'Transportation Steps'";
+			Property: UseResultSet;
+			Mapping: "Description" --> i_TransportationStep;
+			Comment: "capacity expansion steps for transportation";
+		}
+	}
+	Section General_data_input {
+		Procedure pr_ReadAllData {
+			Body: {
+				!See description in each of the definitions of the parameters read in
+				read from table db_HMMCNTLSpec in replace mode;
+				read from table db_CompSpecPerTech in replace mode;
+				read from table db_ProdSpecPerTech in replace mode;
+				read from table db_StorSpecPerTech in replace mode;
+				read from table db_PipeSpecPerTech in replace mode;
+				read from table db_CenDivTransportMap in replace mode;
+				read from table db_NH3ProdTechProps in merge mode;
+				read from table db_NH3Exports in merge mode;
+				read from table db_NH3ProductionCapacity in merge mode;
+				read from table db_NH3ProductionStepCostFraction in merge mode;
+				read from table db_NH3ProductionStepSize in merge mode;
+				read from table db_SeasonFraction in replace mode;
+				read from table db_StorageMap in merge mode;
+				read from table db_ProductionCapacity in merge mode;
+				read from table db_ProductionStepSize in merge mode;
+				read from table db_ProductionStepCostFraction in merge mode;
+				read from table db_LCAbyTech in merge mode;
+				read from table db_PTCbyStep in merge mode;
+				read from table db_ITCbyStep in merge mode;
+				read from table db_LCAbyStep in merge mode;
+				read from table db_StorageCapacity in merge mode;
+				read from table db_TransportationCapacity in merge mode;
+				read from table db_TransportationStepSize in merge mode;
+				read from table db_TransportationStepCostFraction in merge mode;
+				read from table db_FuelRegionCensusRegionMap in replace mode;
+				read from table db_CensustoCoalRegion in replace mode;
+				read from table db_HMMMarkup in replace mode;
+			}
+		}
+		DatabaseProcedure db_HMMMarkup {
+			DataSource: "H2_Inputs.dsn";
+			SqlQuery: "Select L2, Value from 'HMMMARKUP'";
+			Property: UseResultSet;
+			Mapping: {
+				"L2" --> i_MarketPriceCode,
+				"VALUE" --> sp_HMMMarkup(i_MarketPriceCode)
+			}
+			Comment: "Markup by sector";
+		}
+		DatabaseProcedure db_HMMCNTLSpec {
+			DataSource: "H2_Inputs.dsn";
+			SqlQuery: "Select L2, Value from HMMCntl";
+			Property: UseResultSet;
+			Mapping: {
+				"L2" --> i_HMMCNTLSpec,
+				"Value" --> sp_HMMCNTLSpec(i_HMMCNTLSpec)
+			}
+			Comment: "Various control switches and values";
+		}
+		DatabaseProcedure db_ProdSpecPerTech {
+			DataSource: "H2_Inputs.dsn";
+			SqlQuery: "Select spec, tech, value from prod_tech_props";
+			Property: UseResultSet;
+			Mapping: {
+				"spec" --> i_ProdSpec,
+				"tech" --> i_ProdTech,
+				"Value" --> sp_ProdSpecPerTech(i_ProdSpec, i_ProdTech)
+			}
+			Comment: "production tech specs by technology and spec";
+		}
+		DatabaseProcedure db_PipeSpecPerTech {
+			DataSource: "H2_Inputs.dsn";
+			SqlQuery: "Select spec, tech, value from pipe_tech_props";
+			Property: UseResultSet;
+			Mapping: {
+				"spec" --> i_PipeSpec,
+				"tech" --> i_TranTech,
+				"Value" --> p_PipeSpecPerTech(i_PipeSpec, i_TranTech)
+			}
+			Comment: "transportation tech spec by technology and spec type";
+		}
+		DatabaseProcedure db_CompSpecPerTech {
+			DataSource: "H2_Inputs.dsn";
+			SqlQuery: "Select spec, tech, value from comp_tech_props";
+			Property: UseResultSet;
+			Mapping: {
+				"spec" --> i_PipeCompSpec,
+				"tech" --> i_PipeCompTech,
+				"Value" --> p_PipeCompSpecPerTech(i_PipeCompSpec, i_PipeCompTech)
+			}
+			Comment: "compressor spec by spec type for transportation";
+		}
+		DatabaseProcedure db_StorSpecPerTech {
+			DataSource: "H2_Inputs.dsn";
+			SqlQuery: "Select spec, tech, value from stor_tech_props";
+			Property: UseResultSet;
+			Mapping: {
+				"spec" --> i_StorSpec,
+				"tech" --> i_StorageTech,
+				"Value" --> p_StorSpecPerTech(i_StorSpec, i_StorageTech)
+			}
+			Comment: "storage spec by tech and spec type";
+		}
+		DatabaseProcedure db_ProductionCapacity {
+			DataSource: "H2_Inputs.dsn";
+			SqlQuery: "Select Tech, MNUMCR, MNUMYR, CAPAVAIL, CAPLAN from 'Production Capacity'";
+			Property: UseResultSet;
+			Mapping: {
+				"TECH" --> i_Tech,
+				"MNUMCR" --> i_CensusDivision,
+				"MNUMYR" --> i_NEMSYear,
+				"CAPAVAIL" --> p_ProductionCapacityAvailable(i_Tech, i_CensusDivision, i_NEMSYear),
+				"CAPLAN" --> p_ProductionCapacityPlanned(i_Tech, i_CensusDivision, i_NEMSYear)
+			}
+			Comment: {
+				" starting available and planned production capacity
+				needed or slacks start immediately"
+			}
+		}
+		DatabaseProcedure db_ProductionStepSize {
+			DataSource: "H2_Inputs.dsn";
+			SqlQuery: "select L2,Value from 'Production Step Size'";
+			Property: UseResultSet;
+			Mapping: {
+				"L2" --> i_ProductionStep,
+				"Value" --> sp_ProductionStepSize(i_ProductionStep)
+			}
+			Comment: "production capacity planning step size";
+		}
+		DatabaseProcedure db_ProductionStepCostFraction {
+			DataSource: "H2_Inputs.dsn";
+			SqlQuery: "select L2,Value from 'Production Step Cost Fraction'";
+			Property: UseResultSet;
+			Mapping: {
+				"L2" --> i_ProductionStep,
+				"Value" --> sp_ProductionStepCostFraction(i_ProductionStep)
+			}
+			Comment: "production capacity step increment above base cost for each step";
+		}
+		DatabaseProcedure db_LCAbyTech {
+			DataSource: "H2_Inputs.dsn";
+			SqlQuery: "Select Tech, MNUMYR, Value from 'LCA_TECH'";
+			Property: UseResultSet;
+			Mapping: {
+				"TECH" --> i_Tech,
+				"MNUMYR" --> i_NEMSYear,
+				"VALUE" --> p_LCAbyTech(i_Tech, i_NEMSYear)
+			}
+			Comment: "LCA score (co2 equiv per kg H2) by technology. Proxy for entire path";
+		}
+		DatabaseProcedure db_PTCbyStep {
+			DataSource: "H2_Inputs.dsn";
+			SqlQuery: "select L2,VALUE from 'HMMIRA' where L1='PTC'";
+			Property: UseResultSet;
+			Mapping: {
+				"L2" --> i_LCAStep,
+				"VALUE" --> sp_PTCbyStep(i_LCAStep)
+			}
+			Comment: "PTC credit for each step (lower LCA gets more dollars)";
+		}
+		DatabaseProcedure db_ITCbyStep {
+			DataSource: "H2_Inputs.dsn";
+			SqlQuery: "select L2,VALUE from 'HMMIRA' where L1='ITC'";
+			Property: UseResultSet;
+			Mapping: {
+				"L2" --> i_LCAStep,
+				"VALUE" --> sp_ITCbyStep(i_LCAStep)
+			}
+			Comment: "IRA ITC by LCA";
+		}
+		DatabaseProcedure db_LCAbyStep {
+			DataSource: "H2_Inputs.dsn";
+			SqlQuery: "select L2,VALUE from 'HMMIRA' where L1='LCA'";
+			Property: UseResultSet;
+			Mapping: {
+				"L2" --> i_LCAStep,
+				"VALUE" --> sp_LCAbyStep(i_LCAStep)
+			}
+			Comment: "LCA steps (cutoffs for each level of PTC or ITC)";
+		}
+		DatabaseProcedure db_TransportationCapacity {
+			DataSource: "H2_Inputs.dsn";
+			SqlQuery: "Select Tech, MNUMCR, MNUMCR2, MNUMYR, CAPAVAIL, CAPLAN from 'Transportation Capacity'";
+			Property: UseResultSet;
+			Mapping: {
+				"TECH" --> i_TranTech,
+				"MNUMCR" --> i_CensusDivision,
+				"MNUMCR2" --> j_CensusDivision,
+				"MNUMYR" --> i_NEMSYear,
+				"CAPAVAIL" --> p_TransportationCapacityAvailable(i_TranTech,i_CensusDivision,j_CensusDivision,i_NEMSYear),
+				"CAPLAN" --> p_TransportationCapacityPlanned(i_TranTech,i_CensusDivision,j_CensusDivision,i_NEMSYear)
+			}
+			Comment: "planned and initially available transport (i.e. pipelines so far)";
+		}
+		DatabaseProcedure db_TransportationStepSize {
+			DataSource: "H2_Inputs.dsn";
+			SqlQuery: "select L2,Value from 'Transportation Step Size'";
+			Property: UseResultSet;
+			Mapping: {
+				"L2" --> i_TransportationStep,
+				"Value" --> sp_TransportationStepSize(i_TransportationStep)
+			}
+			Comment: "transportation build step size";
+		}
+		DatabaseProcedure db_TransportationStepCostFraction {
+			DataSource: "H2_Inputs.dsn";
+			SqlQuery: "select L2,Value from 'Transportation Step Cost Fraction'";
+			Property: UseResultSet;
+			Mapping: {
+				"L2" --> i_TransportationStep,
+				"Value" --> sp_TransportationStepCostFraction(i_TransportationStep)
+			}
+			Comment: "transportation capacity step increment above base cost for each step";
+		}
+		DatabaseProcedure db_StorageCapacity {
+			DataSource: "H2_Inputs.dsn";
+			SqlQuery: "Select Tech, MNUMCR, MNUMYR, CAPAVAIL, CAPLAN from 'Storage Capacity'";
+			Property: UseResultSet;
+			Mapping: {
+				"TECH" --> i_StorageTech,
+				"MNUMCR" --> i_CensusDivision,
+				"MNUMYR" --> i_NEMSYear,
+				"CAPAVAIL" --> p_StorageCapacityAvailable(i_StorageTech,i_CensusDivision,i_NEMSYear),
+				"CAPLAN" --> p_StorageCapacityPlanned(i_StorageTech,i_CensusDivision,i_NEMSYear)
+			}
+			Comment: "planned and initially available storage";
+		}
+		DatabaseProcedure db_CenDivTransportMap {
+			DataSource: "H2_Inputs.dsn";
+			SqlQuery: "select * from 'Census Division Links'";
+			Property: UseResultSet;
+			Mapping: {
+				"L1" --> i_CensusDivision,
+				"L2" --> j_CensusDivision,
+				"Value" --> sp_CenDivTransportMap(i_CensusDivision, j_CensusDivision)
+			}
+			Comment: "Allowed links between transportation regions i.e. census regions";
+		}
+		DatabaseProcedure db_FuelRegionCensusRegionMap {
+			DataSource: "H2_Inputs.dsn";
+			SqlQuery: "select L2,Value from 'Fuel Region Map'";
+			Property: UseResultSet;
+			Mapping: {
+				"L2" --> i_EMMFuelRegion,
+				"Value" --> ep_FuelRegionCensusRegionMap(i_EMMFuelRegion)
+			}
+			Comment: "Mapping between fuel region and census region for TnS Costs";
+		}
+		DatabaseProcedure db_CensustoCoalRegion {
+			DataSource: "H2_Inputs.dsn";
+			SqlQuery: "select L2,Value from 'Coal Region Map'";
+			Property: UseResultSet;
+			Mapping: {
+				"L2" --> i_CensusDivision,
+				"Value" --> ep_CensustoCoalRegion(i_CensusDivision)
+			}
+			Comment: "Mapping between fuel region and census region for TnS Costs";
+		}
+		DatabaseProcedure db_StorageMap {
+			DataSource: "H2_Inputs.dsn";
+			SqlQuery: "select * from 'Storage Season Links'";
+			Property: UseResultSet;
+			Mapping: {
+				"L1" --> i_Season,
+				"L2" --> j_Season,
+				"Value" --> sp_SeasonStorageMap(i_Season, j_Season)
+			}
+			Comment: "Allowed links between seasons for storage";
+		}
+		DatabaseProcedure db_SeasonFraction {
+			DataSource: "H2_Inputs.dsn";
+			SqlQuery: "select L2,Value from 'Season Fraction'";
+			Property: UseResultSet;
+			Mapping: {
+				"L2" --> i_Season,
+				"Value" --> sp_SeasonFraction(i_Season)
+			}
+			Comment: "Fraction of hours in each season";
+		}
+		DatabaseProcedure db_NH3ProdTechProps {
+			DataSource: "H2_Inputs.dsn";
+			SqlQuery: "select spec, tech, value from 'NH3_prod_tech_props'";
+			Property: UseResultSet;
+			Mapping: {
+				"spec" --> i_NH3Spec,
+				"tech" --> i_NH3Tech,
+				"Value" --> p_NH3ProdTechProps(i_NH3Spec, i_NH3Tech)
+			}
+			Comment: "ammonia production specs";
+		}
+		DatabaseProcedure db_NH3Exports {
+			DataSource: "H2_Inputs.dsn";
+			SqlQuery: "select * from 'NH3 Exports'";
+			Property: UseResultSet;
+			Mapping: {
+				"Step" --> i_NH3ExportStep,
+				"Upper Bound (thousand tons NH3)" --> p_NH3StepsUpperBound(i_NH3ExportStep),
+				"Price ($87)/ton" --> p_NH3StepsPrice(i_NH3ExportStep)
+			}
+			Comment: "Steps for Ammonia export";
+		}
+		DatabaseProcedure db_NH3ProductionCapacity {
+			DataSource: "H2_Inputs.dsn";
+			SqlQuery: "select TECH, MNUMCR, MNUMYR, CAPAVAIL, CAPLAN, CAPNEW from 'NH3 Production Capacity'";
+			Property: UseResultSet;
+			Mapping: {
+				"TECH" --> i_NH3Tech,
+				"MNUMCR" --> i_CensusDivision,
+				"MNUMYR" --> i_NEMSYear,
+				"CAPAVAIL" --> p_AmmoniaCapacityAvailable(i_NH3Tech, i_CensusDivision, i_NEMSYear),
+				"CAPLAN" --> p_AmmoniaCapacityPlanned(i_NH3Tech, i_CensusDivision, i_NEMSYear),
+				"CAPNEW" --> p_AmmoniaCapacityNew(i_NH3Tech, i_CensusDivision, i_NEMSYear)
+			}
+			Comment: {
+				" starting available and planned production capacity
+				needed or slacks start immediately"
+			}
+		}
+		DatabaseProcedure db_NH3ProductionStepCostFraction {
+			DataSource: "H2_Inputs.dsn";
+			SqlQuery: "select L2, CAST(Value as decimal) Value from 'NH3 Production Step Cost Fraction'";
+			Property: UseResultSet;
+			Mapping: {
+				"L2" --> i_NH3ProductionStep,
+				"Value" --> p_NH3ProductionStepCostFraction(i_NH3ProductionStep)
+			}
+			Comment: "Ammonia production capacity step increment above base cost for each step";
+		}
+		DatabaseProcedure db_NH3ProductionStepSize {
+			DataSource: "H2_Inputs.dsn";
+			SqlQuery: "select L2, CAST(Value as decimal) Value from 'NH3 Production Step Size'";
+			Property: UseResultSet;
+			Mapping: {
+				"L2" --> i_NH3ProductionStep,
+				"Value" --> p_NH3ProductionStepSize(i_NH3ProductionStep)
+			}
+			Comment: "Ammonia production capacity planning step size";
+		}
+		DeclarationSection Ammonia_Identifiers {
+			Set s_NH3ExportSteps {
+				Index: i_NH3ExportStep, j_NH3ExportStep;
+			}
+			Set s_NH3ProductionSteps {
+				Index: i_NH3ProductionStep;
+			}
+			Set s_NH3Specs {
+				Index: i_NH3Spec;
+				Parameter: ep_NH3Spec;
+			}
+			Set s_NH3Techs {
+				Index: i_NH3Tech;
+			}
+			Parameter p_NH3ProdTechProps {
+				IndexDomain: (i_NH3Spec, i_NH3Tech);
+			}
+			Parameter p_NH3StepsUpperBound {
+				IndexDomain: i_NH3ExportStep;
+				Comment: "Unit: Thousands od tons NH3";
+			}
+			Parameter p_NH3StepsPrice {
+				IndexDomain: i_NH3ExportStep;
+				Comment: "Unit: Price is $87/ton of NH3";
+			}
+			Parameter p_AmmoniaCapacityAvailable {
+				IndexDomain: (i_NH3Tech,i_CensusDivision,i_NEMSYear);
+			}
+			Parameter p_AmmoniaCapacityPlanned {
+				IndexDomain: (i_NH3Tech,i_CensusDivision,i_NEMSYear);
+			}
+			Parameter p_AmmoniaCapacityNew {
+				IndexDomain: (i_NH3Tech,i_CensusDivision,i_NEMSYear);
+			}
+			Parameter p_NH3ProductionStepSize {
+				IndexDomain: i_NH3ProductionStep;
+			}
+			Parameter p_NH3ProductionStepCostFraction {
+				IndexDomain: i_NH3ProductionStep;
+			}
+			Parameter p_AmmoniaProdLearningAlphaPerTech {
+				IndexDomain: i_NH3Tech;
+				Comment: "Units: -";
+			}
+			Parameter p_AmmoniaProdLearningBetaPerTech {
+				IndexDomain: i_NH3TEch;
+				Comment: "Units: -";
+			}
+		}
+		DeclarationSection General_identifiers {
+			Set s_MarketCodes;
+			ElementParameter ep_MarketQuantityCode {
+				Range: s_MarketQuantityCodes;
+			}
+			StringParameter sp_HMMMARKUP {
+				IndexDomain: i_MarketPriceCode;
+				Comment: "markups by sector in87$";
+			}
+			Set s_HMMCNTLSpecs {
+				Index: i_HMMCNTLSpec;
+				Parameter: ep_HMMCNTLSpec;
+			}
+			Set s_Fuels {
+				Index: i_Fuel;
+				Parameter: ep_Fuel;
+				Comment: "Electricity, biomass etc.";
+			}
+			Set s_MarketPriceCodes {
+				SubsetOf: s_MarketCodes;
+				Index: i_MarketPriceCode;
+				Parameter: ep_MarketPriceCode;
+			}
+			Set s_MarketQuantityCodes {
+				SubsetOf: s_MarketCodes;
+				Index: i_MarketQuantityCode;
+			}
+			Set s_PlanningPeriods {
+				Text: "Planning Period";
+				Index: i_PlanningPeriod, j_PlanningPeriod;
+				Comment: "Three planning periods now.";
+			}
+			Set s_Seasons {
+				Text: "Seasons";
+				Index: i_Season, j_Season;
+				Comment: "seasons summer winter spring/fall";
+			}
+			ElementParameter ep_MarketPriceSeasons {
+				IndexDomain: i_MarketPriceCode;
+				Range: s_Seasons;
+				Comment: "Right now whether sector code is annual or disaggregated by season (some pqs are by season)";
+			}
+			ElementParameter ep_MarketPriceTransport {
+				IndexDomain: i_MarketPriceCode;
+				Range: s_TransportTypes;
+				Comment: "sector uses local transportation or pipeline. For future use.";
+			}
+			ElementParameter ep_MarketQuantitySeasons {
+				IndexDomain: i_MarketQuantityCode;
+				Range: s_Seasons;
+				Comment: "Fraction of year associated with each season. Right now 1/4 or 1/2";
+			}
+			ElementParameter ep_MarketQuantityTransport {
+				IndexDomain: i_MarketQuantityCode;
+				Range: s_TransportTypes;
+				Comment: "quantity goes  in local or pipeline transport. Future use.";
+			}
+			ElementParameter ep_FuelRegionCensusRegionMap {
+				IndexDomain: i_EMMFuelRegion;
+				Range: MNUMCR;
+			}
+			ElementParameter ep_CensustoCoalRegion {
+				IndexDomain: i_CensusDivision;
+				Range: NDRGN1;
+				Definition: {
+					!data { 1 : 1,  2 : 2,  3 : 6,  4 : 10,  5 : 3,  6 : 8,  7 : 12,  8 : 13,  9 : 16 }
+				}
+				Comment: "map coal division to census";
+			}
+			StringParameter sp_HMMCNTLSpec {
+				IndexDomain: i_HMMCNTLSpec;
+			}
+			StringParameter sp_SeasonFraction {
+				IndexDomain: i_Season;
+			}
+			Parameter p_SeasonFraction {
+				IndexDomain: i_Season;
+			}
+		}
+		DeclarationSection Production_Identifiers {
+			Set s_LCASteps {
+				Index: i_LCAStep;
+			}
+			Set s_ProdCodes {
+				Index: i_ProdCode;
+			}
+			Set s_ProdTechs {
+				Index: i_ProdTech, j_ProdTech;
+				Parameter: ep_ProdTech;
+			}
+			ElementParameter ep_ProductionTech {
+				IndexDomain: i_Tech;
+				Range: s_ProdTechs;
+				Comment: "Mapping between production technology code and full name";
+			}
+			Set s_ProdSpecs {
+				Index: i_ProdSpec, j_ProdSpec;
+				Parameter: ep_ProdSpec;
+			}
+			Set s_ProductionSteps {
+				Index: i_ProductionStep;
+				Parameter: ep_ProductionStep;
+				Comment: "set of production capacity build steps";
+			}
+			StringParameter sp_ProdSpecPerTech {
+				IndexDomain: (i_ProdSpec, i_ProdTech);
+			}
+			StringParameter sp_ProductionStepSize {
+				IndexDomain: i_ProductionStep;
+			}
+			StringParameter sp_ProductionStepCostFraction {
+				IndexDomain: i_ProductionStep;
+			}
+			StringParameter sp_PTCbyStep {
+				IndexDomain: i_LCAStep;
+			}
+			StringParameter sp_ITCbyStep {
+				IndexDomain: i_LCAStep;
+			}
+			StringParameter sp_LCAbyStep {
+				IndexDomain: i_LCAStep;
+			}
+			Parameter p_ProductionCapacityPlanned {
+				IndexDomain: (i_Tech,i_CensusDivision,i_NEMSYear);
+			}
+			Parameter p_ProductionCapacityAvailable {
+				IndexDomain: (i_Tech,i_CensusDivision,i_NEMSYear);
+			}
+			Parameter p_LCAbyTech {
+				IndexDomain: (i_Tech,i_NEMSYear);
+			}
+		}
+		DeclarationSection Transportation_Identifiers {
+			Set s_TransportTechs {
+				Index: i_TranTech, j_TranTech;
+				Parameter: ep_TranTech;
+				Comment: "types of transportation (e.g. pipeline)";
+			}
+			Set s_PipeSpecs {
+				Index: i_PipeSpec, j_PipeSpec;
+				Parameter: ep_PipeSpec;
+			}
+			Set s_TransportationSteps {
+				Index: i_TransportationStep;
+				Comment: "capacity expansion steps for transportation";
+			}
+			StringParameter sp_CenDivTransportMap {
+				IndexDomain: (i_CensusDivision,j_CensusDivision);
+			}
+			Parameter p_CenDivTransportMap {
+				IndexDomain: (i_CensusDivision,j_CensusDivision);
+			}
+			Parameter p_PipeSpecPerTech {
+				IndexDomain: (i_PipeSpec, i_TranTech);
+			}
+			Parameter p_TransportationCapacityPlanned {
+				IndexDomain: (i_TranTech,i_CensusDivision,j_CensusDivision,i_NEMSYear);
+			}
+			Parameter p_TransportationCapacityAvailable {
+				IndexDomain: (i_TranTech,i_CensusDivision,j_CensusDivision,i_NEMSYear);
+			}
+			StringParameter sp_TransportationStepSize {
+				IndexDomain: i_TransportationStep;
+			}
+			StringParameter sp_TransportationStepCostFraction {
+				IndexDomain: i_TransportationStep;
+			}
+		}
+		DeclarationSection Compression_Identifiers {
+			Set s_PipeCompTechs {
+				Index: i_PipeCompTech;
+			}
+			Set s_PipeCompSpecs {
+				Index: i_PipeCompSpec;
+				Parameter: ep_PipeCompSpec;
+			}
+			Parameter p_PipeCompSpecPerTech {
+				IndexDomain: (i_PipeCompSpec, i_PipeCompTech);
+			}
+		}
+		DeclarationSection Storage_Identifiers {
+			Set s_StorageTechs {
+				Index: i_StorageTech, j_StorageTech;
+				Parameter: ep_StorageTech;
+				Comment: "storage technologies (e.g. saline)";
+			}
+			Set s_StorSpecs {
+				Index: i_StorSpec, j_StorSpec;
+				Parameter: EP_StorSpec;
+			}
+			Parameter p_StorSpecPerTech {
+				IndexDomain: (i_StorSpec, i_StorageTech);
+			}
+			StringParameter sp_SeasonStorageMap {
+				IndexDomain: (i_Season,j_Season);
+			}
+			Parameter p_SeasonStorageMap {
+				IndexDomain: (i_Season,j_Season);
+			}
+			Parameter p_StorageCapacityPlanned {
+				IndexDomain: (i_StorageTech,i_CensusDivision,i_NEMSYear);
+			}
+			Parameter p_StorageCapacityAvailable {
+				IndexDomain: (i_StorageTech,i_CensusDivision,i_NEMSYear);
+			}
+		}
+		DeclarationSection Unused_Identifiers {
+			StringParameter sp_ConnectionString;
+			Parameter bp_IndexCode {
+				IndexDomain: (i_IndexCode,i_IndexDescription);
+				Range: binary;
+			}
+			ElementParameter ep_IndexCodeDescriptions {
+				IndexDomain: (i_IndexCode,i_HMMCode);
+				Range: s_IndexDescriptions;
+			}
+			Set s_IndexCodes {
+				Index: i_IndexCode;
+			}
+			Set s_IndexDescriptions {
+				Index: i_IndexDescription;
+			}
+			Set s_HMMCodes {
+				Index: i_HMMCode;
+			}
+			Set s_HydrogenDemandCodes {
+				Index: i_HydrogenDemandCode;
+			}
+			Set s_TransportTech {
+				Index: i_TransportTech;
+			}
+			Set s_TransportTypes {
+				Index: i_TransportType;
+			}
+			ElementParameter ep_TransportationTech {
+				IndexDomain: i_TransportTech;
+				Range: s_TransportTechs;
+			}
+			Set s_StorageTypes {
+				Index: i_StorageType;
+			}
+		}
+	}
+	Section Unused_Sets {
+		DatabaseProcedure db_ProductionTaxCredit {
+			DataSource: "H2_Inputs.dsn";
+			SqlQuery: "Select Tech, MNUMYR, Value from 'PTC'";
+			Property: UseResultSet;
+			Mapping: {
+				"TECH" --> i_Tech,
+				"MNUMYR" --> i_NEMSYear,
+				"VALUE" --> p_ProductionTaxCreditbyTech(i_Tech, i_NEMSYear)
+			}
+			Comment: "\"Select Tech, MNUMCR, MNUMYR, CAPAVAIL, CAPLAN from \'Production Capacity\'\"";
+		}
+		DatabaseProcedure db_InvestmentTaxCredit {
+			DataSource: "H2_Inputs.dsn";
+			SqlQuery: "Select Tech, MNUMYR, Value from 'ITC'";
+			Property: UseResultSet;
+			Mapping: {
+				"TECH" --> i_Tech,
+				"MNUMYR" --> i_NEMSYear,
+				"VALUE" --> p_InvestmentTaxCreditbyTech(i_Tech, i_NEMSYear)
+			}
+			Comment: "\"Select Tech, MNUMCR, MNUMYR, CAPAVAIL, CAPLAN from \'Production Capacity\'\"";
+		}
+		DatabaseProcedure db_IndexCodeDescriptions {
+			DataSource: "H2_Inputs";
+			SqlQuery: "select * from index_data";
+			Property: UseResultSet;
+			Mapping: {
+				"Index_Name" --> i_IndexCode,
+				"HMM_Index" --> i_HMMCode,
+				"Description" --> ep_IndexCodeDescriptions(i_IndexCode, i_HMMCode)
+			}
+		}
+		DatabaseProcedure db_HydrogenDemandCodeDescriptions {
+			DataSource: sp_ConnectionString;
+			SqlQuery: "select * from 'Hydrogen Demand  Code'";
+			Property: UseResultSet;
+			Mapping: {
+				"HMM_Index" --> i_HydrogenDemandCode,
+				"Description" --> sp_HydrogenDemandCodesDescription(i_HydrogenDemandCode)
+			}
+		}
+		StringParameter sp_FuelCodesDescription {
+			IndexDomain: i_Fuel;
+		}
+		StringParameter sp_HydrogenDemandCodesDescription {
+			IndexDomain: i_HydrogenDemandCode;
+		}
+		StringParameter sp_MarketPriceCodesDescription {
+			IndexDomain: i_marketpricecode;
+		}
+		StringParameter sp_MarketQuantityCodesDescription {
+			IndexDomain: i_MarketQuantityCode;
+		}
+		StringParameter sp_PlanningPeriodCodesDescription {
+			IndexDomain: i_PlanningPeriod;
+		}
+		StringParameter sp_ProductionCodesDescription {
+			IndexDomain: i_Tech;
+		}
+		StringParameter sp_SeasonCodesDescription {
+			IndexDomain: i_Season;
+		}
+		StringParameter sp_StorageCodesDescription {
+			IndexDomain: i_StorageType;
+		}
+		StringParameter sp_TransportationCodesDescription {
+			IndexDomain: i_TransportType;
+		}
+	}
+}

@@ -1,0 +1,7 @@
+#  $Header: m:/default/scripts/RCS/submit_outmenu.txt,v 1.2 2019/12/06 20:58:00 pkc Exp $
+#  List of NEMS output folder for submit.sh (jognems) output menu. 
+#  The submit.sh script searches for "testing"  and "zzz"
+#  Omitting drives L and M with user folders to preserve space
+#  Omitting V: at least temporarily because we are letting WEPS use it in the near future
+1, zzz/output/user     ,Store on the testing drive with most available space 
+2, other directory   ,you specify the location

@@ -1,0 +1,180 @@
+<?xml version="1.0"?>
+<Page Version="4000" TimeStamp="2022-04-26 14:31:40">
+	<PageEditSize Type="Inherited" />
+	<ProjectUUID>BD6A9103-B1FB-4406-840F-21FDB00917E2</ProjectUUID>
+	<TemplatesTabOrderPosition>1</TemplatesTabOrderPosition>
+	<Background Inherited="true" />
+	<PageObject Type="Curve">
+		<Location top="96" left="222" bottom="468" right="798" />
+		<TabOrder>4</TabOrder>
+		<Font GUID="DBEBAEE2-DD81-4C22-9805-2E58FD341D9F" Name="Legend" />
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#ffffff" />
+		<ColorScheme Number="0" />
+		<Title>true</Title>
+		<Legend>true</Legend>
+		<Y-Labels>true</Y-Labels>
+		<X-Labels>true</X-Labels>
+		<YRange Automatic="false">
+			<Lower>0</Lower>
+			<Upper>7.5</Upper>
+		</YRange>
+		<ExplicitIdentifier>
+			<Identifier>PriceSpotAnnualElectric( year, DisplayedNNGEMMRegion, 'peak' )</Identifier>
+			<IdentifierTextInTitle>true</IdentifierTextInTitle>
+			<TitleText>"Spot Price (Electric)"</TitleText>
+		</ExplicitIdentifier>
+		<ExplicitIdentifier>
+			<Identifier>Price_EnduseElectric( year, DisplayedNNGEMMRegion, 'peak', '1' )</Identifier>
+			<IdentifierTextInTitle>true</IdentifierTextInTitle>
+			<TitleText>"Electric Price: Option1"</TitleText>
+		</ExplicitIdentifier>
+		<ExplicitIdentifier>
+			<Identifier>Price_EnduseElectric( year, DisplayedNNGEMMRegion, 'peak', '2' )</Identifier>
+			<TitleText>"Electric Price: Option2"</TitleText>
+		</ExplicitIdentifier>
+		<ExplicitIdentifier>
+			<Identifier>Price_EnduseElectric( year, DisplayedNNGEMMRegion, 'peak', '3' )</Identifier>
+			<TitleText>"Electric Price: Option3"</TitleText>
+		</ExplicitIdentifier>
+		<DrawLines>true</DrawLines>
+		<MarkPoints>true</MarkPoints>
+	</PageObject>
+	<PageObject Type="Text">
+		<Location top="12" left="282" bottom="42" right="606" />
+		<StaticText>Electric Enduse Prices, Option Selected:</StaticText>
+		<Font GUID="3EEC6209-AF15-406D-9130-A82C6D539593" Name="Title font" />
+		<TextColor RGB="#000000" />
+	</PageObject>
+	<PageObject Type="Selection Object">
+		<SelectionType>DropDownList</SelectionType>
+		<Location top="114" left="12" bottom="138" right="156" />
+		<TabOrder>5</TabOrder>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<TextShown>ElementName</TextShown>
+		<Border Style="None" />
+		<BackgroundColor RGB="#ffffff" />
+		<ExplicitIdentifier>
+			<Identifier>DisplayedNNGEMMRegion</Identifier>
+		</ExplicitIdentifier>
+	</PageObject>
+	<PageObject Type="Table">
+		<Location top="6" left="624" bottom="42" right="774" />
+		<TabOrder>6</TabOrder>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#ffffff" />
+		<RowIndentation>3</RowIndentation>
+		<ExplicitIdentifier>
+			<Identifier>ElectricOption</Identifier>
+			<FirstColumn>0</FirstColumn>
+			<NumberFormat Width="15" Decimals="0" />
+		</ExplicitIdentifier>
+	</PageObject>
+	<PageObject Type="Text">
+		<Location top="402" left="18" bottom="456" right="198" />
+		<StaticText>Select NNGEMM Region:</StaticText>
+		<Font GUID="3EEC6209-AF15-406D-9130-A82C6D539593" Name="Title font" />
+		<TextColor RGB="#000000" />
+	</PageObject>
+	<PageObject Type="Text">
+		<Location top="60" left="294" bottom="90" right="510" />
+		<StaticText>Peak season</StaticText>
+		<Font GUID="3EEC6209-AF15-406D-9130-A82C6D539593" Name="Title font" />
+		<TextColor RGB="#000000" />
+	</PageObject>
+	<PageObject Type="Text">
+		<Location top="60" left="930" bottom="90" right="1146" />
+		<StaticText>Offpeak season</StaticText>
+		<Font GUID="3EEC6209-AF15-406D-9130-A82C6D539593" Name="Title font" />
+		<TextColor RGB="#000000" />
+	</PageObject>
+	<PageObject Type="Text">
+		<Location top="498" left="282" bottom="528" right="498" />
+		<StaticText>Shoulder season</StaticText>
+		<Font GUID="3EEC6209-AF15-406D-9130-A82C6D539593" Name="Title font" />
+		<TextColor RGB="#000000" />
+	</PageObject>
+	<PageObject Type="Curve">
+		<Location top="96" left="852" bottom="468" right="1428" />
+		<TabOrder>3</TabOrder>
+		<Font GUID="DBEBAEE2-DD81-4C22-9805-2E58FD341D9F" Name="Legend" />
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#ffffff" />
+		<ColorScheme Number="0" />
+		<Title>true</Title>
+		<Legend>true</Legend>
+		<Y-Labels>true</Y-Labels>
+		<X-Labels>true</X-Labels>
+		<YRange Automatic="false">
+			<Lower>0</Lower>
+			<Upper>7.5</Upper>
+		</YRange>
+		<ExplicitIdentifier>
+			<Identifier>PriceSpotAnnualElectric( year, DisplayedNNGEMMRegion, 'offpeak' )</Identifier>
+			<IdentifierTextInTitle>true</IdentifierTextInTitle>
+			<TitleText>"Spot Price (Electric)"</TitleText>
+		</ExplicitIdentifier>
+		<ExplicitIdentifier>
+			<Identifier>Price_EnduseElectric( year, DisplayedNNGEMMRegion, 'offpeak', '1' )</Identifier>
+			<IdentifierTextInTitle>true</IdentifierTextInTitle>
+			<TitleText>"Electric Price: Option1"</TitleText>
+		</ExplicitIdentifier>
+		<ExplicitIdentifier>
+			<Identifier>Price_EnduseElectric( year, DisplayedNNGEMMRegion, 'offpeak', '2' )</Identifier>
+			<TitleText>"Electric Price: Option2"</TitleText>
+		</ExplicitIdentifier>
+		<ExplicitIdentifier>
+			<Identifier>Price_EnduseElectric( year, DisplayedNNGEMMRegion, 'offpeak', '3' )</Identifier>
+			<TitleText>"Electric Price: Option3"</TitleText>
+		</ExplicitIdentifier>
+		<DrawLines>true</DrawLines>
+		<MarkPoints>true</MarkPoints>
+	</PageObject>
+	<PageObject Type="Curve">
+		<Location top="534" left="222" bottom="906" right="798" />
+		<TabOrder>2</TabOrder>
+		<Font GUID="DBEBAEE2-DD81-4C22-9805-2E58FD341D9F" Name="Legend" />
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#ffffff" />
+		<ColorScheme Number="0" />
+		<Title>true</Title>
+		<Legend>true</Legend>
+		<Y-Labels>true</Y-Labels>
+		<X-Labels>true</X-Labels>
+		<YRange Automatic="false">
+			<Lower>0</Lower>
+			<Upper>7.5</Upper>
+		</YRange>
+		<ExplicitIdentifier>
+			<Identifier>PriceSpotAnnualElectric( year, DisplayedNNGEMMRegion, 'shoulder' )</Identifier>
+			<IdentifierTextInTitle>true</IdentifierTextInTitle>
+			<TitleText>"Spot Price (Electric)"</TitleText>
+		</ExplicitIdentifier>
+		<ExplicitIdentifier>
+			<Identifier>Price_EnduseElectric( year, DisplayedNNGEMMRegion, 'shoulder', '1' )</Identifier>
+			<IdentifierTextInTitle>true</IdentifierTextInTitle>
+			<TitleText>"Electric Price: Option1"</TitleText>
+		</ExplicitIdentifier>
+		<ExplicitIdentifier>
+			<Identifier>Price_EnduseElectric( year, DisplayedNNGEMMRegion, 'shoulder', '2' )</Identifier>
+			<TitleText>"Electric Price: Option2"</TitleText>
+		</ExplicitIdentifier>
+		<ExplicitIdentifier>
+			<Identifier>Price_EnduseElectric( year, DisplayedNNGEMMRegion, 'shoulder', '3' )</Identifier>
+			<TitleText>"Electric Price: Option3"</TitleText>
+		</ExplicitIdentifier>
+		<DrawLines>true</DrawLines>
+		<MarkPoints>true</MarkPoints>
+	</PageObject>
+	<UsedReferences>
+		<Model>
+			<Symbol>NNGEMM_</Symbol>
+			<Symbol>ElectricOption</Symbol>
+			<Symbol>Price_EnduseElectric</Symbol>
+			<Symbol>PriceSpotAnnualElectric</Symbol>
+			<Symbol>DisplayedNNGEMMRegion</Symbol>
+			<Symbol>year</Symbol>
+		</Model>
+	</UsedReferences>
+</Page>

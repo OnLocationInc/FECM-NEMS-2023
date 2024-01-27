@@ -1,0 +1,315 @@
+<?xml version="1.0"?>
+<Page Version="4000" TimeStamp="2021-08-24 16:19:35">
+	<PageEditSize Type="Inherited" />
+	<ProjectUUID>3C1E27EB-95CC-4E52-BBB5-D70269E0E21B</ProjectUUID>
+	<TemplatesTabOrderPosition>1</TemplatesTabOrderPosition>
+	<Background Inherited="true" />
+	<PageObject Type="Button">
+		<Location top="24" left="30" bottom="72" right="150" />
+		<TabOrder>7</TabOrder>
+		<LeaveOnEnter>false</LeaveOnEnter>
+		<ButtonType>Text</ButtonType>
+		<Title>"Year Loop"</Title>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<ActionSequence>
+			<Action Type="Run">
+				<RunWhat>SpecificProcecure</RunWhat>
+				<Procedure>YearLoop_new</Procedure>
+				<AbortOnError>true</AbortOnError>
+			</Action>
+		</ActionSequence>
+	</PageObject>
+	<PageObject Type="Composite Table">
+		<Location top="126" left="48" bottom="252" right="1194" />
+		<TabOrder>1</TabOrder>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#ffffff" />
+		<Domain>
+			<Identifier>ElecTonsResult( steoyr )</Identifier>
+			<Index Name="steoyr" />
+		</Domain>
+		<ExplicitIdentifier>
+			<Identifier>ElecTonsSTEO( steoyr )</Identifier>
+			<NumberFormat Width="7" Decimals="3" Alignment="Center" />
+		</ExplicitIdentifier>
+		<ExplicitIdentifier>
+			<Identifier>TotElectricTranportUSCoalTons( steoyr )</Identifier>
+			<NumberFormat Width="7" Decimals="3" Alignment="Center" />
+		</ExplicitIdentifier>
+		<ExplicitIdentifier>
+			<Identifier>TotElecImportsTons( steoyr )</Identifier>
+			<NumberFormat Width="5" Decimals="2" Alignment="Center" />
+		</ExplicitIdentifier>
+		<ExplicitIdentifier>
+			<Identifier>StocksChangeEP( steoyr )</Identifier>
+			<NumberFormat Width="7" Decimals="3" Alignment="Center" />
+		</ExplicitIdentifier>
+		<ExplicitIdentifier>
+			<Identifier>EOYStocksEP( steoyr )</Identifier>
+			<NumberFormat Width="7" Decimals="3" Alignment="Center" />
+		</ExplicitIdentifier>
+		<ExplicitIdentifier>
+			<Identifier>ElecTonsResult( steoyr )</Identifier>
+			<NumberFormat Width="8" Decimals="3" Alignment="Center" />
+		</ExplicitIdentifier>
+		<ExplicitIdentifier>
+			<Identifier>ElecTonsLower( steoyr )</Identifier>
+			<NumberFormat Width="8" Decimals="2" Alignment="Center" />
+		</ExplicitIdentifier>
+		<ExplicitIdentifier>
+			<Identifier>ElecTonsUpper( steoyr )</Identifier>
+			<NumberFormat Width="8" Decimals="2" Alignment="Center" />
+		</ExplicitIdentifier>
+	</PageObject>
+	<PageObject Type="Composite Table">
+		<Location top="264" left="42" bottom="390" right="462" />
+		<TabOrder>4</TabOrder>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#ffffff" />
+		<Domain>
+			<Identifier>CokeTonsResult( steoyr )</Identifier>
+			<Index Name="steoyr" />
+		</Domain>
+		<ExplicitIdentifier>
+			<Identifier>CokeTonsSTEO( steoyr )</Identifier>
+			<NumberFormat Width="8" Decimals="2" Alignment="Center" />
+		</ExplicitIdentifier>
+		<ExplicitIdentifier>
+			<Identifier>CokeTonsResult( steoyr )</Identifier>
+			<NumberFormat Width="8" Decimals="2" Alignment="Center" />
+		</ExplicitIdentifier>
+		<ExplicitIdentifier>
+			<Identifier>CokeStocksTons( steoyr )</Identifier>
+			<NumberFormat Width="5" Decimals="2" Alignment="Center" />
+		</ExplicitIdentifier>
+	</PageObject>
+	<PageObject Type="Composite Table">
+		<Location top="402" left="42" bottom="528" right="462" />
+		<TabOrder>5</TabOrder>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#ffffff" />
+		<Domain>
+			<Identifier>IndustrialTonsResult( steoyr )</Identifier>
+			<Index Name="steoyr" />
+		</Domain>
+		<ExplicitIdentifier>
+			<Identifier>IndustrialTonsSTEO( steoyr )</Identifier>
+			<NumberFormat Width="8" Decimals="2" Alignment="Center" />
+		</ExplicitIdentifier>
+		<ExplicitIdentifier>
+			<Identifier>IndustrialTonsResult( steoyr )</Identifier>
+			<NumberFormat Width="8" Decimals="2" Alignment="Center" />
+		</ExplicitIdentifier>
+		<ExplicitIdentifier>
+			<Identifier>IndustrialStocksTons( steoyr )</Identifier>
+			<NumberFormat Width="8" Decimals="2" Alignment="Center" />
+		</ExplicitIdentifier>
+	</PageObject>
+	<PageObject Type="Composite Table">
+		<Location top="0" left="168" bottom="120" right="876" />
+		<TabOrder>8</TabOrder>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#ffffff" />
+		<Domain>
+			<Identifier>SteoFlagC( steoyr )</Identifier>
+			<Index Name="steoyr" />
+		</Domain>
+		<ExplicitIdentifier>
+			<Identifier>SteoFlagC( steoyr )</Identifier>
+			<NumberFormat Width="5" Decimals="2" Alignment="Center" />
+		</ExplicitIdentifier>
+		<ExplicitIdentifier>
+			<Identifier>SteoFlagI( steoyr )</Identifier>
+			<NumberFormat Width="5" Decimals="2" Alignment="Center" />
+		</ExplicitIdentifier>
+		<ExplicitIdentifier>
+			<Identifier>SteoFlagET( steoyr )</Identifier>
+			<NumberFormat Width="7" Decimals="3" Alignment="Center" />
+		</ExplicitIdentifier>
+		<ExplicitIdentifier>
+			<Identifier>SteoFlagRT( steoyr )</Identifier>
+			<NumberFormat Width="5" Decimals="2" Alignment="Center" />
+		</ExplicitIdentifier>
+		<ExplicitIdentifier>
+			<Identifier>SteoFlagIMP( steoyr )</Identifier>
+			<NumberFormat Width="5" Decimals="2" Alignment="Center" />
+		</ExplicitIdentifier>
+		<ExplicitIdentifier>
+			<Identifier>SteoFlagStocks( steoyr )</Identifier>
+			<NumberFormat Width="5" Decimals="2" Alignment="Center" />
+		</ExplicitIdentifier>
+		<ExplicitIdentifier>
+			<Identifier>SteoFlagExports( steoyr )</Identifier>
+			<NumberFormat Width="7" Decimals="3" Alignment="Center" />
+		</ExplicitIdentifier>
+		<ExplicitIdentifier>
+			<Identifier>SteoFlagW( steoyr )</Identifier>
+			<NumberFormat Width="5" Decimals="2" Alignment="Center" />
+		</ExplicitIdentifier>
+	</PageObject>
+	<PageObject Type="Composite Table">
+		<Location top="258" left="606" bottom="396" right="966" />
+		<TabOrder>2</TabOrder>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#ffffff" />
+		<Domain>
+			<Identifier>CokeTonsResult( steoyr )</Identifier>
+			<Index Name="steoyr" />
+		</Domain>
+		<ExplicitIdentifier>
+			<Identifier>CokingExpSTEO( steoyr )</Identifier>
+			<NumberFormat Width="5" Decimals="1" Alignment="Center" />
+		</ExplicitIdentifier>
+		<ExplicitIdentifier>
+			<Identifier>CokeExpTonsResult( steoyr )</Identifier>
+			<NumberFormat Width="4" Decimals="1" Alignment="Center" />
+		</ExplicitIdentifier>
+	</PageObject>
+	<PageObject Type="Composite Table">
+		<Location top="402" left="606" bottom="528" right="966" />
+		<TabOrder>3</TabOrder>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#ffffff" />
+		<Domain>
+			<Identifier>CokeTonsResult( steoyr )</Identifier>
+			<Index Name="steoyr" />
+		</Domain>
+		<ExplicitIdentifier>
+			<Identifier>SteamExpSTEO( steoyr )</Identifier>
+			<NumberFormat Width="5" Decimals="1" Alignment="Center" />
+		</ExplicitIdentifier>
+		<ExplicitIdentifier>
+			<Identifier>SteamExpTonsResult( steoyr )</Identifier>
+			<NumberFormat Width="4" Decimals="1" Alignment="Center" />
+		</ExplicitIdentifier>
+	</PageObject>
+	<PageObject Type="Composite Table">
+		<Location top="552" left="696" bottom="672" right="1230" />
+		<TabOrder>6</TabOrder>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#ffffff" />
+		<Domain>
+			<Identifier>ImportTonsResult( steoyr )</Identifier>
+			<Index Name="steoyr" />
+		</Domain>
+		<ExplicitIdentifier>
+			<Identifier>ImportsSTEO( steoyr )</Identifier>
+			<NumberFormat Width="6" Decimals="1" Alignment="Center" />
+		</ExplicitIdentifier>
+		<ExplicitIdentifier>
+			<Identifier>ImportTonsLower( steoyr )</Identifier>
+			<NumberFormat Width="5" Decimals="1" Alignment="Center" />
+		</ExplicitIdentifier>
+		<ExplicitIdentifier>
+			<Identifier>ImportTonsResult( steoyr )</Identifier>
+			<NumberFormat Width="6" Decimals="1" Alignment="Center" />
+		</ExplicitIdentifier>
+		<ExplicitIdentifier>
+			<Identifier>ImportTonsUpper( steoyr )</Identifier>
+			<NumberFormat Width="6" Decimals="1" Alignment="Center" />
+		</ExplicitIdentifier>
+	</PageObject>
+	<PageObject Type="Composite Table">
+		<Location top="552" left="42" bottom="678" right="456" />
+		<TabOrder>9</TabOrder>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#ffffff" />
+		<Domain>
+			<Identifier>ElecTonsResult( steoyr )</Identifier>
+			<Index Name="steoyr" />
+		</Domain>
+		<ExplicitIdentifier>
+			<Identifier>BSRZR_util_a( steoyr )</Identifier>
+			<NumberFormat Width="5" Decimals="2" Alignment="Center" />
+		</ExplicitIdentifier>
+		<ExplicitIdentifier>
+			<Identifier>ElecPriceSTEO( steoyr )</Identifier>
+			<NumberFormat Width="5" Decimals="2" Alignment="Center" />
+		</ExplicitIdentifier>
+		<ExplicitIdentifier>
+			<Identifier>ElecPriceResult( steoyr )</Identifier>
+			<NumberFormat Width="5" Decimals="2" Alignment="Center" />
+		</ExplicitIdentifier>
+	</PageObject>
+	<PageObject Type="Composite Table">
+		<Location top="0" left="894" bottom="120" right="1194" />
+		<TabOrder>11</TabOrder>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#ffffff" />
+		<Domain>
+			<Identifier>SteoFlagStocks( steoyr )</Identifier>
+			<Index Name="steoyr" />
+		</Domain>
+		<ExplicitIdentifier>
+			<Identifier>EOYStocksPrim( steoyr )</Identifier>
+			<NumberFormat Width="7" Decimals="3" Alignment="Center" />
+		</ExplicitIdentifier>
+		<ExplicitIdentifier>
+			<Identifier>EOYStocksSecd( steoyr )</Identifier>
+			<NumberFormat Width="7" Decimals="3" Alignment="Center" />
+		</ExplicitIdentifier>
+	</PageObject>
+	<PageObject Type="Table">
+		<Location top="552" left="462" bottom="708" right="672" />
+		<TabOrder>10</TabOrder>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#ffffff" />
+		<RowIndentation>3</RowIndentation>
+		<ExplicitIdentifier>
+			<Identifier>BSRZR_util_a( steoyr )</Identifier>
+			<FirstColumn>1</FirstColumn>
+			<NumberFormat Width="5" Decimals="2" />
+		</ExplicitIdentifier>
+	</PageObject>
+	<UsedReferences>
+		<Model>
+			<Symbol>YearLoop_new</Symbol>
+			<Symbol>TotElectricTranportUSCoalTons</Symbol>
+			<Symbol>TotElecImportsTons</Symbol>
+			<Symbol>SteoFlagW</Symbol>
+			<Symbol>SteoFlagET</Symbol>
+			<Symbol>SteoFlagC</Symbol>
+			<Symbol>SteoFlagI</Symbol>
+			<Symbol>SteoFlagRT</Symbol>
+			<Symbol>SteoFlagIMP</Symbol>
+			<Symbol>SteoFlagStocks</Symbol>
+			<Symbol>SteoFlagExports</Symbol>
+			<Symbol>ElecTonsSTEO</Symbol>
+			<Symbol>ElecTonsLower</Symbol>
+			<Symbol>ElecTonsUpper</Symbol>
+			<Symbol>ElecTonsResult</Symbol>
+			<Symbol>EOYStocksPrim</Symbol>
+			<Symbol>EOYStocksSecd</Symbol>
+			<Symbol>EOYStocksEP</Symbol>
+			<Symbol>StocksChangeEP</Symbol>
+			<Symbol>CokeTonsSTEO</Symbol>
+			<Symbol>CokeStocksTons</Symbol>
+			<Symbol>CokeTonsResult</Symbol>
+			<Symbol>IndustrialTonsSTEO</Symbol>
+			<Symbol>IndustrialStocksTons</Symbol>
+			<Symbol>IndustrialTonsResult</Symbol>
+			<Symbol>BSRZR_util_a</Symbol>
+			<Symbol>ElecPriceSTEO</Symbol>
+			<Symbol>ElecPriceResult</Symbol>
+			<Symbol>CokingExpSTEO</Symbol>
+			<Symbol>CokeExpTonsResult</Symbol>
+			<Symbol>SteamExpSTEO</Symbol>
+			<Symbol>SteamExpTonsResult</Symbol>
+			<Symbol>ImportsSTEO</Symbol>
+			<Symbol>ImportTonsResult</Symbol>
+			<Symbol>ImportTonsLower</Symbol>
+			<Symbol>ImportTonsUpper</Symbol>
+			<Symbol>steoyr</Symbol>
+		</Model>
+	</UsedReferences>
+</Page>

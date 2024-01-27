@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<Page Version="4000" TimeStamp="2015-12-10 18:28:56" NeedsCompiledModel="false">
+	<PageEditSize Type="Inherited">
+		<Size Width="968" Height="390" />
+	</PageEditSize>
+	<ProjectUUID>3C1E27EB-95CC-4E52-BBB5-D70269E0E21B</ProjectUUID>
+	<TemplatesTabOrderPosition>1</TemplatesTabOrderPosition>
+	<ResizeData>
+		<MainArea Line="FixedFromTop" Value="63">
+			<BottomArea Line="FixedFromLeft" Value="185" />
+		</MainArea>
+	</ResizeData>
+	<Background>
+		<UserColor GUID="33BB2465-9D09-4035-9765-4D4D12BABAAE">white</UserColor>
+	</Background>
+	<PageObject Type="Navigation Object">
+		<Location top="18" left="24" bottom="60" right="414" />
+		<TabOrder>1</TabOrder>
+		<Font GUID="286FE85D-26AF-4DF1-A4B3-8647E236E326" Name="Title (Arial 28)" />
+		<Border Style="None" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<Display>Text</Display>
+		<Spacing>6</Spacing>
+		<BackgroundColor RGB="#ffffff" />
+		<NavigationData>
+			<ReferencePage>ThisPage</ReferencePage>
+			<NumberOfAncestors>1</NumberOfAncestors>
+		</NavigationData>
+	</PageObject>
+	<PageObject Type="Navigation Object">
+		<Location top="66" left="24" bottom="342" right="180" />
+		<TabOrder>2</TabOrder>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<Display>Tree</Display>
+		<Spacing>6</Spacing>
+		<BackgroundColor RGB="#ffffff" />
+		<NavigationData>
+			<ReferencePage>Other</ReferencePage>
+			<OtherPage PageGUID="2A0115EF-1628-4164-89C5-FB745F815421" Name="International Summary" />
+			<NumberOfGenerations>2</NumberOfGenerations>
+			<NumberOfAncestors>1</NumberOfAncestors>
+		</NavigationData>
+	</PageObject>
+	<UsedReferences>
+		<Model />
+	</UsedReferences>
+</Page>

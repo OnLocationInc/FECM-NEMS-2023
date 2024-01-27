@@ -1,0 +1,119 @@
+!***************************************************************
+!wlco2.txt
+%*****************************************************************************
+%  Industrial CO2 data
+%*****************************************************************************
+%
+%   Section 4: CO2 Constraints
+%
+@
+Y      C Use NATURAL sources of CO2 (Y/N)
+Y      C Use INDUSTRIAL sources of CO2 (Y/N)
+%
+% BASE CO2 VOLUMES BY REGION AND SOURCE (BCF/YR)
+%   EAST COAST   GULF COAST   MIDCONTINENT   SOUTHWEST   ROCKY MOUNTAINS   WEST COAST   NORTHERN GREAT PLAINS     C  SOURCE
+@
+       0.00       291.96         16.02       657.00          79.92             0.00              0.00             C  NATURAL      
+%
+% BIN Dollar Amount Breakpoints
+@
+  35.0 40.0 43.0 47.0 50.0 53.0 70.0 150.0
+%
+%Cnt R ID      S Source   D_tonne  MMT         Bin
+@
+  13 2 1009795 2 Ammonia    45.74  0.378949919 4
+  18 2 1004183 2 Ammonia    47.67  0.436822688 5
+   7 3 1002170 2 Ammonia    45.28  0.412728328 4
+   0 0 0       0 EOF         0.00  0.0         0
+%
+%   CO2 Availibility constraint multiplier
+@
+1.0
+%
+%
+% DEVELOPMENT LEVERS TO BE APPLIED TO EXISTING CO2 SOURCES
+%
+% YEARS TO DEVELOP TECHNOLOGY (R&D PHASE) BY SOURCE
+%     YEARS          SOURCE
+@
+        0         C  HYDROGEN
+        0         C  AMMONIA
+        0         C  ETHANOL
+        0         C  NATURAL
+        0         C  CEMENT
+        0         C  HYDROGEN REFINERIES
+        0         C  PLANNED POWER PLANTS        
+        0         C  POWER PLANTS
+        0         C  NATURAL GAS PROCESSING
+        0         C  PLANNED COAL TO LIQUIDS
+        0         C  COAL TO LIQUIDS
+        0         C  NEW SOURCE 1 
+        0         C  NEW SOURCE 2
+%
+% YEARS TO DEVELOP INFRASTRUCTURE (CAPTURE TECHNOLOGY AND PIPELINE CONSTRUCTION PHASE) BY SOURCE
+%     YEARS          SOURCE
+@
+        4         C  HYDROGEN
+        2         C  AMMONIA
+        4         C  ETHANOL
+        0         C  NATURAL
+        0         C  CEMENT
+        4         C  HYDROGEN REFINERIES
+        100       C  PLANNED POWER PLANTS
+        12        C  POWER PLANTS
+        2         C  NATURAL GAS PROCESSING
+        100       C  PLANNED COAL TO LIQUIDS
+        100       C  COAL TO LIQUIDS
+        100       C  NEW SOURCE 1
+        100       C  NEW SOURCE 2
+%
+% YEARS TO REACH FULL CAPACITY (MARKET ACCEPTANCE) BY SOURCE
+%     YEARS          SOURCE
+@
+        10         C  HYDROGEN
+        10         C  AMMONIA
+        10         C  ETHANOL
+        10         C  NATURAL        
+        0          C  CEMENT
+        10         C  HYDROGEN REFINERIES
+        100        C  PLANNED POWER PLANTS 
+        10         C  POWER PLANTS
+        10         C  NATURAL GAS PROCESSING
+        100        C  PLANNED COAL TO LIQUIDS
+        100        C  COAL TO LIQUIDS
+        100        C  NEW SOURCE 1
+        100        C  NEW SOURCE 2
+%
+%
+% ANNUAL ACCEPTANCE RATE (% OF ULTIMATE MARKET ACCEPTANCE / YEAR OF MARKET ACCEPTANCE) BY SOURCE
+@
+       5.0     5.0     5.0     5.0     5.0    10.0    10.0   10.0   10.0   35.0    C HYDROGEN
+       5.0     5.0     5.0     5.0     5.0    10.0    10.0   10.0   10.0   35.0    C AMMONIA
+       3.0     3.0     3.0     3.0     3.0     5.0    10.0   15.0   15.0   40.0    C ETHANOL
+      25.0    25.0    50.0     0.0     0.0     0.0     0.0    0.0    0.0    0.0    C NATURAL
+     100.0     0.0     0.0     0.0     0.0     0.0     0.0    0.0    0.0    0.0    C CEMENT
+       5.0     5.0     5.0     5.0     5.0    10.0    10.0   10.0   10.0   35.0    C HYDROGEN REFINERIES
+       0.0     0.0     0.0     0.0     0.0     0.0     0.0    0.0    0.0    0.0    C PLANNED POWER PLANTS
+       1.0     2.0     2.0     5.0    10.0    10.0    10.0   10.0   10.0   40.0    C POWER PLANTS
+       5.0    10.0    10.0    10.0    10.0    10.0    10.0   10.0   10.0   15.0    C NATURAL GAS PROCESSING
+       0.0     0.0     0.0     0.0     0.0     0.0     0.0    0.0    0.0    0.0    C PLANNED COAL TO LIQUIDS
+       0.0     0.0     0.0     0.0     0.0     0.0     0.0    0.0    0.0    0.0    C COAL TO LIQUIDS
+       0.0     0.0     0.0     0.0     0.0     0.0     0.0    0.0    0.0    0.0    C NEW SOURCE 1
+       0.0     0.0     0.0     0.0     0.0     0.0     0.0    0.0    0.0    0.0    C NEW SOURCE 2
+%
+%
+% ULTIMATE MARKET ACCEPTANCE (%) BY SOURCE
+@
+      100.0    C HYDROGEN
+      100.0    C AMMONIA
+      100.0    C ETHANOL
+      100.0    C NATURAL      
+      100.0    C CEMENT
+      100.0    C HYDROGEN REFINERIES
+        0.0    C PLANNED POWER PLANTS
+      100.0    C POWER PLANTS
+      100.0    C NATURAL GAS PROCESSING
+        0.0    C PLANNED COAL TO LIQUIDS
+        0.0    C COAL TO LIQUIDS
+        0.0    C NEW SOURCE 1
+        0.0    C NEW SOURCE 2

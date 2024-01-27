@@ -1,0 +1,182 @@
+<?xml version="1.0"?>
+<Page Version="4000" TimeStamp="2019-10-21 18:04:57">
+	<PageEditSize Type="Inherited" />
+	<ProjectUUID>BD6A9103-B1FB-4406-840F-21FDB00917E2</ProjectUUID>
+	<TemplatesTabOrderPosition>1</TemplatesTabOrderPosition>
+	<Background Inherited="true" />
+	<PageObject Type="Selection Object">
+		<SelectionType>DropDownList</SelectionType>
+		<Location top="24" left="48" bottom="66" right="162" />
+		<TabOrder>2</TabOrder>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<TextShown>ElementName</TextShown>
+		<Border Style="None" />
+		<BackgroundColor RGB="#ffffff" />
+		<ExplicitIdentifier>
+			<Identifier>Displayed_Fuel_Group</Identifier>
+		</ExplicitIdentifier>
+	</PageObject>
+	<PageObject Type="Selection Object">
+		<SelectionType>DropDownList</SelectionType>
+		<Location top="78" left="48" bottom="114" right="180" />
+		<TabOrder>1</TabOrder>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<TextShown>ElementName</TextShown>
+		<Border Style="None" />
+		<BackgroundColor RGB="#ffffff" />
+		<ExplicitIdentifier>
+			<Identifier>Displayed_Energy_Source</Identifier>
+		</ExplicitIdentifier>
+	</PageObject>
+	<PageObject Type="Selection Object">
+		<SelectionType>DropDownList</SelectionType>
+		<Location top="174" left="54" bottom="228" right="222" />
+		<TabOrder>4</TabOrder>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<TextShown>ElementName</TextShown>
+		<Border Style="None" />
+		<BackgroundColor RGB="#ffffff" />
+		<ExplicitIdentifier>
+			<Identifier>DisplayedYear</Identifier>
+		</ExplicitIdentifier>
+	</PageObject>
+	<PageObject Type="2D Chart">
+		<Location top="30" left="264" bottom="312" right="594" />
+		<TabOrder>7</TabOrder>
+		<Border Style="InShadow" Width="2" />
+		<X_Axis>
+			<Domain ID="1004">PlantCapacity( p, Displayed_Fuel_Group )</Domain>
+			<Annotation>
+				<Tick_spacing ID="1024">1000</Tick_spacing>
+				<Label_spacing ID="1031">1000</Label_spacing>
+			</Annotation>
+		</X_Axis>
+		<Y_Axis>
+			<Identifier>
+				<Value ID="2007">PlantCapacityFactor_Annual( DisplayedYear, p, Displayed_Fuel_Group )</Value>
+				<Appearance>
+					<Line>
+						<Pattern ID="2024">"None"</Pattern>
+						<Width ID="2025">0</Width>
+					</Line>
+					<Symbol>
+						<Color ID="2029">257CED91-8909-41AC-BED6-911268D7BBCE blue</Color>
+						<Shape ID="2030">"Box"</Shape>
+						<Size ID="2031">5</Size>
+					</Symbol>
+				</Appearance>
+			</Identifier>
+			<Scale>
+				<Minimum ID="2035">0</Minimum>
+				<Maximum ID="2036">1</Maximum>
+			</Scale>
+		</Y_Axis>
+	</PageObject>
+	<PageObject Type="2D Chart">
+		<Location top="36" left="624" bottom="318" right="954" />
+		<TabOrder>5</TabOrder>
+		<Border Style="InShadow" Width="2" />
+		<X_Axis>
+			<Domain ID="1004">PlantCapacity( show_p_nerc, Displayed_Fuel_Group )</Domain>
+			<Annotation>
+				<Tick_spacing ID="1024">1000</Tick_spacing>
+				<Label_spacing ID="1031">1000</Label_spacing>
+			</Annotation>
+		</X_Axis>
+		<Y_Axis>
+			<Identifier>
+				<Value ID="2007">PlantCapacityFactor_Annual( DisplayedYear, show_p_nerc, Displayed_Fuel_Group )</Value>
+				<Appearance>
+					<Line>
+						<Pattern ID="2024">"None"</Pattern>
+						<Width ID="2025">0</Width>
+					</Line>
+					<Symbol>
+						<Color ID="2029">257CED91-8909-41AC-BED6-911268D7BBCE blue</Color>
+						<Shape ID="2030">"Box"</Shape>
+						<Size ID="2031">5</Size>
+					</Symbol>
+				</Appearance>
+			</Identifier>
+			<Scale>
+				<Minimum ID="2035">0</Minimum>
+				<Maximum ID="2036">1</Maximum>
+			</Scale>
+		</Y_Axis>
+	</PageObject>
+	<PageObject Type="Selection Object">
+		<SelectionType>DropDownList</SelectionType>
+		<Location top="330" left="636" bottom="372" right="792" />
+		<TabOrder>3</TabOrder>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<TextShown>ElementName</TextShown>
+		<Border Style="None" />
+		<BackgroundColor RGB="#ffffff" />
+		<ExplicitIdentifier>
+			<Identifier>Displayed_NERC_Region</Identifier>
+		</ExplicitIdentifier>
+	</PageObject>
+	<PageObject Type="Selection Object">
+		<SelectionType>DropDownList</SelectionType>
+		<Location top="318" left="1020" bottom="342" right="1158" />
+		<TabOrder>8</TabOrder>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<TextShown>ElementName</TextShown>
+		<Border Style="None" />
+		<BackgroundColor RGB="#ffffff" />
+		<ExplicitIdentifier>
+			<Identifier>Displayed_BalancingAuthority</Identifier>
+		</ExplicitIdentifier>
+	</PageObject>
+	<PageObject Type="2D Chart">
+		<Location top="24" left="972" bottom="306" right="1302" />
+		<TabOrder>6</TabOrder>
+		<Border Style="InShadow" Width="2" />
+		<X_Axis>
+			<Domain ID="1004">PlantCapacity( show_p_ba, Displayed_Fuel_Group )</Domain>
+			<Annotation>
+				<Tick_spacing ID="1024">1000</Tick_spacing>
+				<Label_spacing ID="1031">1000</Label_spacing>
+			</Annotation>
+		</X_Axis>
+		<Y_Axis>
+			<Identifier>
+				<Value ID="2007">PlantCapacityFactor_Annual( DisplayedYear, show_p_ba, Displayed_Fuel_Group )</Value>
+				<Appearance>
+					<Line>
+						<Pattern ID="2024">"None"</Pattern>
+						<Width ID="2025">0</Width>
+					</Line>
+					<Symbol>
+						<Color ID="2029">257CED91-8909-41AC-BED6-911268D7BBCE blue</Color>
+						<Shape ID="2030">"Box"</Shape>
+						<Size ID="2031">5</Size>
+					</Symbol>
+				</Appearance>
+			</Identifier>
+			<Scale>
+				<Minimum ID="2035">0</Minimum>
+				<Maximum ID="2036">1</Maximum>
+			</Scale>
+		</Y_Axis>
+	</PageObject>
+	<UsedReferences>
+		<Model>
+			<Symbol>Years_</Symbol>
+			<Symbol>DisplayedYear</Symbol>
+			<Symbol>Displayed_Fuel_Group</Symbol>
+			<Symbol>Displayed_BalancingAuthority</Symbol>
+			<Symbol>Displayed_Energy_Source</Symbol>
+			<Symbol>Displayed_NERC_Region</Symbol>
+			<Symbol>NERC_Region_</Symbol>
+			<Symbol>Energy_Source_</Symbol>
+			<Symbol>Fuel_Group_</Symbol>
+			<Symbol>Balancing_Authority_</Symbol>
+			<Symbol>PlantCapacityFactor_Annual</Symbol>
+			<Symbol>PlantCapacity</Symbol>
+			<Symbol>show_p_nerc</Symbol>
+			<Symbol>show_p_ba</Symbol>
+			<Symbol>p</Symbol>
+		</Model>
+	</UsedReferences>
+</Page>

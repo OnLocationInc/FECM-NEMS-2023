@@ -1,0 +1,8 @@
+algorithm barrier
+reslim 900
+threads 1
+covercuts 2
+loadmipsol 1
+cutstrategy 3
+mippresolve 9
+preprobing 3

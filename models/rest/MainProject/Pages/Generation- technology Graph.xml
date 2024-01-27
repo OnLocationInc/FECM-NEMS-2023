@@ -1,0 +1,125 @@
+<?xml version="1.0"?>
+<Page Version="4000" TimeStamp="2018-02-23 13:55:09">
+	<PageEditSize Type="Inherited">
+		<Size Width="1609" Height="670" />
+	</PageEditSize>
+	<ProjectUUID>240AD1D4-C5B8-4B93-BFD3-79EF080CCD8D</ProjectUUID>
+	<TemplatesTabOrderPosition>1</TemplatesTabOrderPosition>
+	<ResizeData>
+		<MainArea Line="PercentageFromLeft" Value="0.740832815413">
+			<LeftArea Line="PercentageFromLeft" Value="0.129194630872">
+				<RightArea Line="PercentageFromTop" Value="0.0835820895522">
+					<BottomArea Line="PercentageFromTop" Value="0.464169381107">
+						<BottomArea Line="PercentageFromTop" Value="0.965671641791">
+							<TopArea Line="PercentageFromTop" Value="0.132492113565">
+								<BottomArea Line="PercentageFromLeft" Value="0.974200206398">
+									<LeftArea Line="PercentageFromLeft" Value="0.140425531915">
+										<LeftArea Line="PercentageFromTop" Value="0.484848484848">
+											<BottomArea Line="PercentageFromLeft" Value="0.531914893617" />
+										</LeftArea>
+									</LeftArea>
+								</BottomArea>
+							</TopArea>
+						</BottomArea>
+					</BottomArea>
+				</RightArea>
+			</LeftArea>
+		</MainArea>
+	</ResizeData>
+	<Background Inherited="true" />
+	<PageObject Type="Selection Object">
+		<SelectionType>RadioButtons</SelectionType>
+		<Location top="60" left="90" bottom="330" right="210" />
+		<TabOrder>2</TabOrder>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<TextShown>ElementName</TextShown>
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#ffffff" />
+		<ExplicitIdentifier>
+			<Identifier>epselect</Identifier>
+		</ExplicitIdentifier>
+	</PageObject>
+	<PageObject Type="2D Chart">
+		<Location top="54" left="378" bottom="336" right="1128" />
+		<TabOrder>1</TabOrder>
+		<Border Style="InShadow" Width="2" />
+		<X_Axis>
+			<Domain ID="1004">hr</Domain>
+			<Scale>
+				<Minimum ID="1014">0</Minimum>
+				<Maximum ID="1015">0</Maximum>
+			</Scale>
+		</X_Axis>
+		<Y_Axis>
+			<Chart_type ID="2001">"Stacking Bar"</Chart_type>
+			<Identifier>
+				<Value ExtraInfo="2 0 1 3 " ID="2007">GenerationBy_Group( grpselect, y, hr, epselect )</Value>
+			</Identifier>
+			<Title>
+				<Text ID="2003">"GW"</Text>
+			</Title>
+			<Scale>
+				<Minimum ID="2035">0</Minimum>
+				<Maximum ID="2036">0</Maximum>
+			</Scale>
+		</Y_Axis>
+		<Y2_Axis>
+			<Hide_axis_use_Y_scale ID="3062">1</Hide_axis_use_Y_scale>
+			<Chart_type ID="3002">"Stacking Bar"</Chart_type>
+			<Identifier>
+				<Value ExtraInfo="2 0 1 3 " ID="3009">GenerationBy_Group( grpselect, y, hr, epselect )</Value>
+			</Identifier>
+		</Y2_Axis>
+		<Header_Footer>
+			<Header>
+				<Text ID="23">"Generation by Tech"</Text>
+			</Header>
+			<Footer>
+				<Text ID="36">"Hour(h)"</Text>
+			</Footer>
+		</Header_Footer>
+		<Legend>
+			<Misc_display_settings>
+				<Reversed ID="52">1</Reversed>
+			</Misc_display_settings>
+		</Legend>
+	</PageObject>
+	<PageObject Type="Selection Object">
+		<SelectionType>RadioButtons</SelectionType>
+		<Location top="60" left="234" bottom="330" right="360" />
+		<TabOrder>3</TabOrder>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<TextShown>ElementName</TextShown>
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#ffffff" />
+		<ExplicitIdentifier>
+			<Identifier>grpselect</Identifier>
+		</ExplicitIdentifier>
+	</PageObject>
+	<PageObject Type="Selection Object">
+		<SelectionType>ListBox</SelectionType>
+		<SingleSelect>true</SingleSelect>
+		<Location top="24" left="90" bottom="54" right="180" />
+		<TabOrder>4</TabOrder>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<TextShown>ElementName</TextShown>
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#ffffff" />
+		<ExplicitIdentifier>
+			<Identifier>yrselect</Identifier>
+		</ExplicitIdentifier>
+	</PageObject>
+	<UsedReferences>
+		<Model>
+			<Symbol>Year</Symbol>
+			<Symbol>yrselect</Symbol>
+			<Symbol>grpselect</Symbol>
+			<Symbol>GroupECP</Symbol>
+			<Symbol>GenerationBy_Group</Symbol>
+			<Symbol>epselect</Symbol>
+			<Symbol>hr</Symbol>
+			<Symbol>y</Symbol>
+			<Symbol>SubEMMReg</Symbol>
+		</Model>
+	</UsedReferences>
+</Page>

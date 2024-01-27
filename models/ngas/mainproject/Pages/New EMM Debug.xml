@@ -1,0 +1,238 @@
+<?xml version="1.0"?>
+<Page Version="4000" TimeStamp="2019-08-06 17:07:33">
+	<PageEditSize Type="Inherited" />
+	<ProjectUUID>BD6A9103-B1FB-4406-840F-21FDB00917E2</ProjectUUID>
+	<TemplatesTabOrderPosition>1</TemplatesTabOrderPosition>
+	<Background Inherited="true" />
+	<PageObject Type="Curve">
+		<MultipleCases>true</MultipleCases>
+		<Location top="438" left="36" bottom="828" right="330" />
+		<TabOrder>9</TabOrder>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#ffffff" />
+		<ColorScheme Number="0" />
+		<InactiveData>true</InactiveData>
+		<Title>true</Title>
+		<Legend>true</Legend>
+		<Y-Labels>true</Y-Labels>
+		<X-Labels>true</X-Labels>
+		<VerticalGridLines>true</VerticalGridLines>
+		<StatusLine>true</StatusLine>
+		<ExplicitIdentifier>
+			<Identifier>NetGeneration( year, DisplayedNERCRegion, 'natgas' )</Identifier>
+		</ExplicitIdentifier>
+		<DrawLines>true</DrawLines>
+		<MarkPoints>true</MarkPoints>
+	</PageObject>
+	<PageObject Type="Selection Object">
+		<SelectionType>DropDownList</SelectionType>
+		<Location top="390" left="666" bottom="420" right="780" />
+		<TabOrder>2</TabOrder>
+		<Font GUID="43613FB2-AB0B-43E5-A7E3-6D7699FD7B8C" Name="Selection Object" />
+		<TextShown>ElementName</TextShown>
+		<Border Style="None" />
+		<BackgroundColor RGB="#ffffff" />
+		<ExplicitIdentifier>
+			<Identifier>DisplayedGenerationType</Identifier>
+		</ExplicitIdentifier>
+	</PageObject>
+	<PageObject Type="Selection Object">
+		<SelectionType>DropDownList</SelectionType>
+		<Location top="18" left="48" bottom="54" right="162" />
+		<TabOrder>1</TabOrder>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<TextShown>ElementName</TextShown>
+		<Border Style="None" />
+		<BackgroundColor RGB="#ffffff" />
+		<ExplicitIdentifier>
+			<Identifier>DisplayedNERCRegion</Identifier>
+		</ExplicitIdentifier>
+	</PageObject>
+	<PageObject Type="Bar Chart">
+		<MultipleCases>true</MultipleCases>
+		<Location top="54" left="48" bottom="366" right="954" />
+		<TabOrder>3</TabOrder>
+		<Font GUID="DBEBAEE2-DD81-4C22-9805-2E58FD341D9F" Name="Legend" />
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#ffffff" />
+		<ColorScheme Number="0" />
+		<Title>true</Title>
+		<Legend>true</Legend>
+		<Y-Labels>true</Y-Labels>
+		<X-Labels>true</X-Labels>
+		<HorizontalGridLines>true</HorizontalGridLines>
+		<StatusLine>true</StatusLine>
+		<ExplicitIdentifier>
+			<Identifier>NetGeneration( DisplayedYear, DisplayedNERCRegion, gen )</Identifier>
+		</ExplicitIdentifier>
+		<FillWithColor>true</FillWithColor>
+	</PageObject>
+	<PageObject Type="Scalar">
+		<Location top="12" left="360" bottom="48" right="492" />
+		<TabOrder>4</TabOrder>
+		<Font GUID="43613FB2-AB0B-43E5-A7E3-6D7699FD7B8C" Name="Selection Object" />
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#ffffff" />
+		<Layout>Text-Value</Layout>
+		<SeparatorSign>=</SeparatorSign>
+		<ExplicitIdentifier>
+			<Identifier>DisplayedNERCName</Identifier>
+			<NumberFormat Width="15" Decimals="0" Alignment="Left" ShowDefaults="true" />
+		</ExplicitIdentifier>
+	</PageObject>
+	<PageObject Type="Selection Object">
+		<SelectionType>DropDownList</SelectionType>
+		<Location top="18" left="816" bottom="48" right="948" />
+		<TabOrder>5</TabOrder>
+		<Font GUID="43613FB2-AB0B-43E5-A7E3-6D7699FD7B8C" Name="Selection Object" />
+		<TextShown>ElementName</TextShown>
+		<Border Style="None" />
+		<BackgroundColor RGB="#ffffff" />
+		<ExplicitIdentifier>
+			<Identifier>DisplayedYear</Identifier>
+		</ExplicitIdentifier>
+	</PageObject>
+	<PageObject Type="Text">
+		<Location top="408" left="48" bottom="444" right="156" />
+		<StaticText>Natural Gas</StaticText>
+		<Font GUID="43613FB2-AB0B-43E5-A7E3-6D7699FD7B8C" Name="Selection Object" />
+		<TextColor RGB="#000000" />
+	</PageObject>
+	<PageObject Type="Text">
+		<Location top="402" left="360" bottom="438" right="468" />
+		<StaticText>Renewables</StaticText>
+		<Font GUID="43613FB2-AB0B-43E5-A7E3-6D7699FD7B8C" Name="Selection Object" />
+		<TextColor RGB="#000000" />
+	</PageObject>
+	<PageObject Type="Text">
+		<Location top="18" left="174" bottom="48" right="372" />
+		<StaticText>NERC Region/Name</StaticText>
+		<Font GUID="43613FB2-AB0B-43E5-A7E3-6D7699FD7B8C" Name="Selection Object" />
+		<TextColor RGB="#000000" />
+	</PageObject>
+	<PageObject Type="Text">
+		<Location top="18" left="678" bottom="42" right="810" />
+		<StaticText>Year Shown</StaticText>
+		<Font GUID="43613FB2-AB0B-43E5-A7E3-6D7699FD7B8C" Name="Selection Object" />
+		<TextColor RGB="#000000" />
+	</PageObject>
+	<PageObject Type="Text">
+		<Location top="378" left="48" bottom="402" right="456" />
+		<StaticText>Generation by Type for All Cycles:</StaticText>
+		<Font GUID="3EEC6209-AF15-406D-9130-A82C6D539593" Name="Title font" />
+		<TextColor RGB="#000000" />
+	</PageObject>
+	<PageObject Type="Text">
+		<Location top="396" left="1032" bottom="426" right="1182" />
+		<StaticText>X-axis start year:</StaticText>
+		<Font GUID="43613FB2-AB0B-43E5-A7E3-6D7699FD7B8C" Name="Selection Object" />
+		<TextColor RGB="#000000" />
+	</PageObject>
+	<PageObject Type="Selection Object">
+		<SelectionType>DropDownList</SelectionType>
+		<Location top="432" left="1032" bottom="480" right="1158" />
+		<TabOrder>10</TabOrder>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<TextShown>ElementName</TextShown>
+		<Border Style="None" />
+		<BackgroundColor RGB="#ffffff" />
+		<ExplicitIdentifier>
+			<Identifier>DisplayedEMMStartYear</Identifier>
+		</ExplicitIdentifier>
+	</PageObject>
+	<PageObject Type="Button">
+		<Location top="492" left="1038" bottom="534" right="1206" />
+		<TabOrder>11</TabOrder>
+		<LeaveOnEnter>false</LeaveOnEnter>
+		<ButtonType>Text</ButtonType>
+		<Title>"Reset Graphs"</Title>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<ActionSequence>
+			<Action Type="UpdateIdentifier">
+				<Identifier>DisplayedEMMYears_</Identifier>
+			</Action>
+		</ActionSequence>
+	</PageObject>
+	<PageObject Type="Curve">
+		<MultipleCases>true</MultipleCases>
+		<Location top="456" left="1248" bottom="858" right="1542" />
+		<TabOrder>6</TabOrder>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#ffffff" />
+		<ColorScheme Number="0" />
+		<Title>true</Title>
+		<Legend>true</Legend>
+		<Y-Labels>true</Y-Labels>
+		<X-Labels>true</X-Labels>
+		<StatusLine>true</StatusLine>
+		<ExplicitIdentifier>
+			<Identifier>NetGeneration( yr_xaxis, DisplayedNERCRegion, DisplayedGenerationType )</Identifier>
+		</ExplicitIdentifier>
+		<DrawLines>true</DrawLines>
+		<MarkPoints>true</MarkPoints>
+	</PageObject>
+	<PageObject Type="Curve">
+		<MultipleCases>true</MultipleCases>
+		<Location top="438" left="660" bottom="816" right="948" />
+		<TabOrder>8</TabOrder>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#ffffff" />
+		<ColorScheme Number="0" />
+		<Title>true</Title>
+		<Legend>true</Legend>
+		<Y-Labels>true</Y-Labels>
+		<X-Labels>true</X-Labels>
+		<VerticalGridLines>true</VerticalGridLines>
+		<StatusLine>true</StatusLine>
+		<ExplicitIdentifier>
+			<Identifier>NetGeneration( year, DisplayedNERCRegion, DisplayedGenerationType )</Identifier>
+		</ExplicitIdentifier>
+		<DrawLines>true</DrawLines>
+		<MarkPoints>true</MarkPoints>
+	</PageObject>
+	<PageObject Type="Line">
+		<Location top="516" left="216" bottom="624" right="216" />
+		<LineColor RGB="#000000" />
+	</PageObject>
+	<PageObject Type="Curve">
+		<MultipleCases>true</MultipleCases>
+		<Location top="438" left="360" bottom="828" right="636" />
+		<TabOrder>9</TabOrder>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#ffffff" />
+		<ColorScheme Number="0" />
+		<InactiveData>true</InactiveData>
+		<Title>true</Title>
+		<Legend>true</Legend>
+		<Y-Labels>true</Y-Labels>
+		<X-Labels>true</X-Labels>
+		<VerticalGridLines>true</VerticalGridLines>
+		<StatusLine>true</StatusLine>
+		<ExplicitIdentifier>
+			<Identifier>NetGeneration( year, DisplayedNERCRegion, 'renew' )</Identifier>
+		</ExplicitIdentifier>
+		<DrawLines>true</DrawLines>
+		<MarkPoints>true</MarkPoints>
+	</PageObject>
+	<UsedReferences>
+		<Model>
+			<Symbol>MNUMNR_</Symbol>
+			<Symbol>Years_</Symbol>
+			<Symbol>DisplayedYear</Symbol>
+			<Symbol>GenerationTypes_</Symbol>
+			<Symbol>DisplayedEMMYears_</Symbol>
+			<Symbol>DisplayedGenerationType</Symbol>
+			<Symbol>DisplayedNERCRegion</Symbol>
+			<Symbol>DisplayedNERCName</Symbol>
+			<Symbol>DisplayedEMMStartYear</Symbol>
+			<Symbol>NetGeneration</Symbol>
+			<Symbol>year</Symbol>
+			<Symbol>gen</Symbol>
+			<Symbol>yr_xaxis</Symbol>
+		</Model>
+	</UsedReferences>
+</Page>

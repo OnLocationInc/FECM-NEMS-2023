@@ -1,0 +1,166 @@
+Component,L1,L2,Value
+Market Price Code Season,PHTDM_LOC,1,All Seasons
+Market Price Code Season,PHTDM_CEN,2,All Seasons
+Market Price Code Season,PHCDM,3,All Seasons
+Market Price Code Season,PHEMM1,4,Summer 
+Market Price Code Season,PHEMM2,5,Winter 
+Market Price Code Season,PHEMM3,6,Spring/Fall
+Market Price Code Season,PHNGMM,7,All Seasons
+Market Price Code Season,PHIDM_LOC,8,All Seasons
+Market Price Code Season,PHIDM_CEN,9,All Seasons
+Market Price Code Season,PHLFMM,10,All Seasons
+Market Price Code Transport,PHTDM_LOC,1,Local production 
+Market Price Code Transport,PHTDM_CEN,2,Pipeline 
+Market Price Code Transport,PHCDM,3,Pipeline 
+Market Price Code Transport,PHEMM1,4,Pipeline 
+Market Price Code Transport,PHEMM2,5,Pipeline 
+Market Price Code Transport,PHEMM3,6,Pipeline 
+Market Price Code Transport,PHNGMM,7,Pipeline 
+Market Price Code Transport,PHIDM_LOC,8,Local production 
+Market Price Code Transport,PHIDM_CEN,9,Pipeline 
+Market Price Code Transport,PHLFMM,10,Pipeline 
+Market Quantity Code Season,QHTDM_LOC,1,All Seasons
+Market Quantity Code Season,QHTDM_CEN,2,All Seasons
+Market Quantity Code Season,QHCDM,3,All Seasons
+Market Quantity Code Season,QHEMM1,4,Summer 
+Market Quantity Code Season,QHEMM2,5,Winter 
+Market Quantity Code Season,QHEMM3,6,Spring/Fall
+Market Quantity Code Season,QHNGMM,7,All Seasons
+Market Quantity Code Season,QHIDM_LOC,8,All Seasons
+Market Quantity Code Season,QHIDM_CEN,9,All Seasons
+Market Quantity Code Season,QHLFMM,10,All Seasons
+Market Quantity Code Transport,QHTDM_LOC,1,Local production 
+Market Quantity Code Transport,QHTDM_CEN,2,Pipeline 
+Market Quantity Code Transport,QHCDM,3,Pipeline 
+Market Quantity Code Transport,QHEMM1,4,Pipeline 
+Market Quantity Code Transport,QHEMM2,5,Pipeline 
+Market Quantity Code Transport,QHEMM3,6,Pipeline 
+Market Quantity Code Transport,QHNGMM,7,Pipeline 
+Market Quantity Code Transport,QHIDM_LOC,8,Local production 
+Market Quantity Code Transport,QHIDM_CEN,9,Pipeline 
+Market Quantity Code Transport,QHLFMM,10,Pipeline 
+Census Division Links,1,1,1
+Census Division Links,1,2,1
+Census Division Links,2,2,1
+Census Division Links,2,3,1
+Census Division Links,2,5,1
+Census Division Links,2,6,1
+Census Division Links,3,3,1
+Census Division Links,3,4,1
+Census Division Links,3,6,1
+Census Division Links,3,7,1
+Census Division Links,4,4,1
+Census Division Links,4,7,1
+Census Division Links,4,8,1
+Census Division Links,5,5,1
+Census Division Links,5,6,1
+Census Division Links,6,6,1
+Census Division Links,6,7,1
+Census Division Links,7,7,1
+Census Division Links,7,8,1
+Census Division Links,8,8,1
+Census Division Links,8,9,1
+Census Division Links,9,9,1
+Census Division Links,10,10,1
+Census Division Links,11,11,1
+Census Division Links,2,1,1
+Census Division Links,3,2,1
+Census Division Links,5,2,1
+Census Division Links,6,2,1
+Census Division Links,4,3,1
+Census Division Links,6,3,1
+Census Division Links,7,3,1
+Census Division Links,7,4,1
+Census Division Links,8,4,1
+Census Division Links,6,5,1
+Census Division Links,7,6,1
+Census Division Links,8,7,1
+Census Division Links,9,8,1
+Storage Season Links,Summer ,Spring/Fall,25
+Storage Season Links,Winter,Spring/Fall,0
+Storage Season Links,Spring/Fall,Winter ,25
+Storage Season Links,Summer ,Summer,100
+Storage Season Links,Winter,Winter ,100
+Storage Season Links,Spring/Fall,Spring/Fall,100
+Season Fraction,S1,Summer ,0.25
+Season Fraction,S2,Winter ,0.25
+Season Fraction,S3,Spring/Fall,0.5
+Season Fraction,S0,All Seasons,1
+Fuel Region Map,Northeast,2,1
+Fuel Region Map,Northeast,3,2
+Fuel Region Map,Northeast,4,2
+Fuel Region Map,Midwest,5,3
+Fuel Region Map,Midwest,6,3
+Fuel Region Map,Midwest,7,3
+Fuel Region Map,Midwest,8,4
+Fuel Region Map,Midwest,9,4
+Fuel Region Map,Midwest,10,4
+Fuel Region Map,South,11,5
+Fuel Region Map,South,12,5
+Fuel Region Map,South,13,5
+Fuel Region Map,South,14,5
+Fuel Region Map,South,15,5
+Fuel Region Map,South,16,5
+Fuel Region Map,South,17,6
+Fuel Region Map,South,18,6
+Fuel Region Map,South,19,7
+Fuel Region Map,West,20,8
+Fuel Region Map,West,21,8
+Fuel Region Map,West,22,8
+Fuel Region Map,West,23,9
+Fuel Region Map,West,24,9
+HMMCntl,Misc,Forecastyr,2023
+HMMCntl,Misc,PTC,2023
+HMMCntl,Misc,EITC,2023
+HMMCntl,Misc,CleanH2,2051
+HMMCntl,PTC,I_45V_SYR ,2023
+HMMCntl,PTC,I_45V_LYR_NEW,2032
+HMMCntl,PTC,I_45V_DURATION,10
+HMMCntl,PTC,I_45V_Multiplier,5
+HMMIRA,LCA,Step1,4
+HMMIRA,LCA,Step2,2.5
+HMMIRA,LCA,Step3,1.5
+HMMIRA,LCA,Step4,0.45
+HMMIRA,PTC,Step1,0.056
+HMMIRA,PTC,Step2,0.07
+HMMIRA,PTC,Step3,0.093
+HMMIRA,PTC,Step4,0.28
+HMMIRA,ITC,Step1,0.012
+HMMIRA,ITC,Step2,0.015
+HMMIRA,ITC,Step3,0.02
+HMMIRA,ITC,Step4,0.06
+HMMMARKUP,PHTDM_LOC,1,1.5
+HMMMARKUP,PHTDM_CEN,2,1
+HMMMARKUP,PHCDM,3,0.48
+HMMMARKUP,PHEMM1,4,0.48
+HMMMARKUP,PHEMM2,5,0.48
+HMMMARKUP,PHEMM3,6,0.48
+HMMMARKUP,PHNGMM,7,0.48
+HMMMARKUP,PHIDM_LOC,8,0.72
+HMMMARKUP,PHIDM_CEN,9,0.48
+HMMMARKUP,PHLFMM,10,0.72
+Production Step Size,S1,Step1,0.2
+Production Step Size,S2,Step2,0.06
+Production Step Size,S3,Step3,0.03
+Production Step Cost Fraction,S1,Step1,1
+Production Step Cost Fraction,S2,Step2,1.5
+Production Step Cost Fraction,S3,Step3,2
+Transportation Step Size,S1,Step1,0.2
+Transportation Step Size,S2,Step2,0.06
+Transportation Step Size,S3,Step3,0.03
+Transportation Step Cost Fraction,S1,Step1,1
+Transportation Step Cost Fraction,S2,Step2,1.5
+Transportation Step Cost Fraction,S3,Step3,2
+NH3 Production Step Size,S1,Step1,0.2
+NH3 Production Step Size,S2,Step2,0.06
+NH3 Production Step Size,S3,Step3,0.03
+NH3 Production Step Cost Fraction,S1,Step1,1
+NH3 Production Step Cost Fraction,S2,Step2,1.5
+NH3 Production Step Cost Fraction,S3,Step3,2
+HMMCntl,Market Sharing,MS Cutoff,0.2
+HMMCntl,Market Sharing,MS Alpha,0.2
+HMMCntl,Market Sharing,MS ON/OFF,1
+HMMCntl,Misc,NucHrtRt,10442
+HMMCntl,Misc,Lim_Renew_Share,0.2
+HMMCntl,Misc,Lim_Nuc_Share,0.2
+HMMCntl,Misc,Production Growth Rate,0.8

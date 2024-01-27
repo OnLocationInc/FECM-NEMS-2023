@@ -1,0 +1,117 @@
+<?xml version="1.0"?>
+<Page Version="4000" TimeStamp="2021-09-13 18:47:15">
+	<PageEditSize Type="Inherited" />
+	<ProjectUUID>FD4E5DBD-7B49-4BC0-8952-143FD8233A59</ProjectUUID>
+	<TemplatesTabOrderPosition>1</TemplatesTabOrderPosition>
+	<Background Inherited="true" />
+	<PageObject Type="Scalar">
+		<Location top="30" left="96" bottom="66" right="186" />
+		<TabOrder>5</TabOrder>
+		<Font GUID="E39160A5-11ED-48BA-8392-5F965B185846" Name="Body" />
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#ffffff" />
+		<Layout>SingleLineEditField</Layout>
+		<SeparatorSign>=</SeparatorSign>
+		<ExplicitIdentifier>
+			<Identifier>CURCALYR( '1' )</Identifier>
+			<NumberFormat Width="5" Decimals="0" Scientific="IfTooSmallorLarge" Alignment="Center" ShowDefaults="true" />
+		</ExplicitIdentifier>
+	</PageObject>
+	<PageObject Type="Text">
+		<Location top="36" left="30" bottom="78" right="144" />
+		<StaticText>Run Year</StaticText>
+		<Font GUID="E39160A5-11ED-48BA-8392-5F965B185846" Name="Body" />
+		<TextColor RGB="#000000" />
+	</PageObject>
+	<PageObject Type="Button">
+		<Location top="30" left="216" bottom="66" right="330" />
+		<TabOrder>3</TabOrder>
+		<LeaveOnEnter>false</LeaveOnEnter>
+		<ButtonType>Text</ButtonType>
+		<Title>"Unzip"</Title>
+		<TooltipText>"Open WinZip for composite_yyyy_ii.txt, OutToNEMS_yyyy_ii.txt" and PassBack_yyyy_ii.txt"</TooltipText>
+		<Font GUID="E39160A5-11ED-48BA-8392-5F965B185846" Name="Body" />
+		<ActionSequence>
+			<Action Type="Run">
+				<RunWhat>SpecificProcecure</RunWhat>
+				<Procedure>UncompressInputFiles</Procedure>
+				<AbortOnError>true</AbortOnError>
+			</Action>
+		</ActionSequence>
+	</PageObject>
+	<PageObject Type="Navigation Object">
+		<Location top="126" left="48" bottom="270" right="456" />
+		<TabOrder>6</TabOrder>
+		<Font GUID="E39160A5-11ED-48BA-8392-5F965B185846" Name="Body" />
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<Display>Button+Text</Display>
+		<Spacing>6</Spacing>
+		<BackgroundColor RGB="#ffffff" />
+		<NavigationData>
+			<ReferencePage>ThisPage</ReferencePage>
+			<NumberOfGenerations>1</NumberOfGenerations>
+			<ActionSequence>
+				<Action Type="GotoNavigationPage" />
+			</ActionSequence>
+		</NavigationData>
+	</PageObject>
+	<PageObject Type="Scalar">
+		<Location top="73" left="96" bottom="109" right="186" />
+		<TabOrder>4</TabOrder>
+		<Font GUID="E39160A5-11ED-48BA-8392-5F965B185846" Name="Body" />
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#ffffff" />
+		<Layout>SingleLineEditField</Layout>
+		<SeparatorSign>=</SeparatorSign>
+		<ExplicitIdentifier>
+			<Identifier>CURITR( '1' )</Identifier>
+			<NumberFormat Width="5" Decimals="0" Scientific="IfTooSmallorLarge" Alignment="Center" ShowDefaults="true" />
+		</ExplicitIdentifier>
+	</PageObject>
+	<PageObject Type="Text">
+		<Location top="78" left="30" bottom="108" right="96" />
+		<StaticText>Iteration</StaticText>
+		<Font GUID="E39160A5-11ED-48BA-8392-5F965B185846" Name="Body" />
+		<TextColor RGB="#000000" />
+	</PageObject>
+	<PageObject Type="Button">
+		<Location top="72" left="216" bottom="108" right="330" />
+		<TabOrder>2</TabOrder>
+		<LeaveOnEnter>false</LeaveOnEnter>
+		<ButtonType>Text</ButtonType>
+		<Title>"Run EFD"</Title>
+		<Font GUID="E39160A5-11ED-48BA-8392-5F965B185846" Name="Body" />
+		<ActionSequence>
+			<Action Type="Run">
+				<RunWhat>SpecificProcecure</RunWhat>
+				<Procedure>MainExecution</Procedure>
+				<AbortOnError>true</AbortOnError>
+			</Action>
+		</ActionSequence>
+	</PageObject>
+	<PageObject Type="Button">
+		<Location top="72" left="342" bottom="108" right="456" />
+		<TabOrder>1</TabOrder>
+		<LeaveOnEnter>false</LeaveOnEnter>
+		<ButtonType>Text</ButtonType>
+		<Title>"Empty"</Title>
+		<TooltipText>"Empty the previous run results"</TooltipText>
+		<Font GUID="E39160A5-11ED-48BA-8392-5F965B185846" Name="Body" />
+		<ActionSequence>
+			<Action Type="Run">
+				<RunWhat>SpecificProcecure</RunWhat>
+				<Procedure>EmptyAllParametersForNewRun</Procedure>
+				<AbortOnError>true</AbortOnError>
+			</Action>
+		</ActionSequence>
+	</PageObject>
+	<UsedReferences>
+		<Model>
+			<Symbol>CURCALYR</Symbol>
+			<Symbol>CURITR</Symbol>
+			<Symbol>MainExecution</Symbol>
+			<Symbol>UncompressInputFiles</Symbol>
+			<Symbol>EmptyAllParametersForNewRun</Symbol>
+		</Model>
+	</UsedReferences>
+</Page>

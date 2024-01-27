@@ -1,0 +1,243 @@
+<?xml version="1.0"?>
+<Page Version="4000" TimeStamp="2017-08-18 13:22:23">
+	<PageEditSize Type="Inherited" />
+	<ProjectUUID>BD6A9103-B1FB-4406-840F-21FDB00917E2</ProjectUUID>
+	<TemplatesTabOrderPosition>1</TemplatesTabOrderPosition>
+	<Background Inherited="true" />
+	<PageObject Type="Network Object">
+		<Location top="48" left="6" bottom="798" right="996" />
+		<TabOrder>1</TabOrder>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#ffffff" />
+		<HorizontalScrollbar>true</HorizontalScrollbar>
+		<VerticalScrollbar>true</VerticalScrollbar>
+		<ScrollControl>NavigationButtons</ScrollControl>
+		<VisibleArea>
+			<Left>-126.698811666</Left>
+			<Right>-66.1621033384</Right>
+			<Top>54.9737879535</Top>
+			<Bottom>18.343764269</Bottom>
+		</VisibleArea>
+		<Background>
+			<Background_Image_Source ID="101">"From GIS Source"</Background_Image_Source>
+			<Source>
+				<Name ID="1001">"NA states"</Name>
+				<Type ID="1002">"ESRI"</Type>
+				<Shape_File ID="1011">"_GIS\North_America.shp"</Shape_File>
+			</Source>
+			<Source>
+				<Name ID="1001">"Pipelines"</Name>
+				<Type ID="1002">"ESRI"</Type>
+				<Shape_File ID="1011">"_GIS\NaturalGas_Pipelines_US_2015.shp"</Shape_File>
+			</Source>
+			<Layer>
+				<Name ID="2001">"North America Layer"</Name>
+				<Source ID="2012">"NA states"</Source>
+				<Appearance>
+					<Fill_Color ID="2011">4C29CF98-3E51-4BAA-8563-90FCE3E3DF3B default background</Fill_Color>
+				</Appearance>
+			</Layer>
+			<Layer>
+				<Name ID="2001">"Pipelines"</Name>
+				<Source ID="2012">"Pipelines"</Source>
+				<Appearance>
+					<Line>
+						<Color ID="2005">RGB 808080</Color>
+					</Line>
+				</Appearance>
+			</Layer>
+		</Background>
+		<Node>
+			<Identifier>reg</Identifier>
+			<XCoordinate>Longitude_center( reg )</XCoordinate>
+			<YCoordinate>Latitude_center( reg )</YCoordinate>
+			<NumberFormat Width="6" Decimals="2" />
+			<MaximumSize>10</MaximumSize>
+			<ScaleFactor>10</ScaleFactor>
+			<TextPosition>Top</TextPosition>
+			<TextShowWhat>ElementName</TextShowWhat>
+			<Shape>Circle</Shape>
+		</Node>
+		<Arc>
+			<Identifier>FlowsAnnual( HQPYear, h, h1 )</Identifier>
+			<NumberFormat Width="6" Decimals="2" />
+			<MaximumSize>5</MaximumSize>
+			<ScaleFactor>0.2</ScaleFactor>
+			<ScaleFactorUnit>CoordinatePoints</ScaleFactorUnit>
+			<TextPosition>Right</TextPosition>
+			<Color>FlowColor2( h, h1 )</Color>
+			<ShapeExtraData>25</ShapeExtraData>
+			<Shape>Curved</Shape>
+			<FirstSegment>Horizontal</FirstSegment>
+			<ClickWhere>ArrowHead</ClickWhere>
+		</Arc>
+	</PageObject>
+	<PageObject Type="Text">
+		<Location top="24" left="1308" bottom="54" right="1488" />
+		<StaticText>Annual Flows (Bcf)</StaticText>
+		<Alignment>Center</Alignment>
+		<Font GUID="3EEC6209-AF15-406D-9130-A82C6D539593" Name="Title font" />
+		<TextColor RGB="#000000" />
+	</PageObject>
+	<PageObject Type="Rectangle">
+		<Location top="750" left="1128" bottom="780" right="1164" />
+		<FillColor>
+			<UserColor GUID="8C1FFC91-A781-4272-831D-2D86F23592E4">red</UserColor>
+		</FillColor>
+		<LineColor RGB="#000000" />
+	</PageObject>
+	<PageObject Type="Rectangle">
+		<Location top="786" left="1128" bottom="816" right="1164" />
+		<FillColor>
+			<UserColor GUID="E185A605-0CD0-44C0-913D-FDDB4E18CFE5">cyan</UserColor>
+		</FillColor>
+		<LineColor RGB="#000000" />
+	</PageObject>
+	<PageObject Type="Text">
+		<Location top="756" left="1170" bottom="786" right="1422" />
+		<StaticText>Change &gt; Upper Limit</StaticText>
+		<Font GUID="DBEBAEE2-DD81-4C22-9805-2E58FD341D9F" Name="Legend" />
+		<TextColor RGB="#000000" />
+	</PageObject>
+	<PageObject Type="Text">
+		<Location top="792" left="1170" bottom="828" right="1368" />
+		<StaticText>Change &lt; Lower Limit</StaticText>
+		<Font GUID="DBEBAEE2-DD81-4C22-9805-2E58FD341D9F" Name="Legend" />
+		<TextColor RGB="#000000" />
+	</PageObject>
+	<PageObject Type="Scalar">
+		<Location top="708" left="1368" bottom="744" right="1428" />
+		<TabOrder>3</TabOrder>
+		<Font GUID="3EEC6209-AF15-406D-9130-A82C6D539593" Name="Title font" />
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#ffffff" />
+		<Layout>SingleLineEditField</Layout>
+		<SeparatorSign>=</SeparatorSign>
+		<ExplicitIdentifier>
+			<Identifier>FlowColorThreshold</Identifier>
+			<NumberFormat Width="5" Decimals="1" Scientific="IfTooSmallorLarge" Alignment="Center" ShowDefaults="true" />
+			<ProcedureUponChange>Colors_Flows_Report</ProcedureUponChange>
+		</ExplicitIdentifier>
+	</PageObject>
+	<PageObject Type="Text">
+		<Location top="714" left="1110" bottom="744" right="1362" />
+		<StaticText>Upper/Lower Limit (percentage)</StaticText>
+		<Alignment>Right</Alignment>
+		<Font GUID="3EEC6209-AF15-406D-9130-A82C6D539593" Name="Title font" />
+		<TextColor RGB="#000000" />
+	</PageObject>
+	<PageObject Type="Pivot Table">
+		<Location top="48" left="1014" bottom="696" right="1566" />
+		<TabOrder>2</TabOrder>
+		<ObjectUUID>84EBFF68-C94C-44EF-8A0E-88233D45275A</ObjectUUID>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<Contents>
+			<Explicit_Identifier>
+				<Identifier ID="4110">FlowsAnnual( HQPYear, usbx, usbx1 )</Identifier>
+				<Title ID="4120">"Historical Flows"</Title>
+				<Colors>
+					<Background_Color ID="4160">FlowColor2( usbx, usbx1 )</Background_Color>
+				</Colors>
+			</Explicit_Identifier>
+			<Explicit_Identifier>
+				<Identifier ID="4110">FlowDifference( HQPYear, usbx, usbx1 )</Identifier>
+				<Title ID="4120">"Solution Difference"</Title>
+				<Colors>
+					<Background_Color ID="4160">FlowColor2( usbx, usbx1 )</Background_Color>
+				</Colors>
+			</Explicit_Identifier>
+			<Explicit_Identifier>
+				<Identifier ID="4110">delta_chk( usbx, usbx1 )</Identifier>
+				<Title ID="4120">"percentage"</Title>
+				<Colors>
+					<Background_Color ID="4160">FlowColor2( usbx, usbx1 )</Background_Color>
+				</Colors>
+			</Explicit_Identifier>
+		</Contents>
+		<Indices>
+			<Identifier_Index>
+				<Hide_if_Single_Identifier ID="6270">"No"</Hide_if_Single_Identifier>
+			</Identifier_Index>
+		</Indices>
+		<General>
+			<Dense_Aggregation_restricts_to_Domain ID="1022">"Yes"</Dense_Aggregation_restricts_to_Domain>
+		</General>
+		<Row_Area>
+			<Background_Color ID="2010">RGB&lt;255,255,200&gt;</Background_Color>
+			<Text_Color ExtraInfo="D4F48705-BFDF-4DF8-8E1F-D38EFF981024" ID="2020">"default selection"</Text_Color>
+			<Headers>
+				<Background_Color ExtraInfo="D4F48705-BFDF-4DF8-8E1F-D38EFF981024" ID="2120">"default selection"</Background_Color>
+				<Text_Color ID="2130">RGB&lt;255,255,255&gt;</Text_Color>
+				<Show_Sub_Headers ID="2150">"No"</Show_Sub_Headers>
+			</Headers>
+			<Grid_Focus_Indicator>
+				<Background_Color ID="2270">RGB&lt;0,0,168&gt;</Background_Color>
+				<Text_Color ID="2280">RGB&lt;255,255,200&gt;</Text_Color>
+			</Grid_Focus_Indicator>
+		</Row_Area>
+		<Column_Area>
+			<Headers>
+				<Show_Sub_Headers ID="3150">"No"</Show_Sub_Headers>
+			</Headers>
+		</Column_Area>
+		<Grid_Area>
+			<Background_Color ID="5010">RGB&lt;255,255,255&gt;</Background_Color>
+			<Alternating_Background_Color ID="5011">RGB&lt;225,225,225&gt;</Alternating_Background_Color>
+			<Aggregators>
+				<Background_Color ID="5220">RGB&lt;255,128,128&gt;</Background_Color>
+			</Aggregators>
+			<Sub_Header_Row_or_Column>
+				<Background_Color ID="5320">RGB&lt;255,255,200&gt;</Background_Color>
+			</Sub_Header_Row_or_Column>
+		</Grid_Area>
+	</PageObject>
+	<PageObject Type="Table">
+		<Location top="6" left="1056" bottom="48" right="1254" />
+		<TabOrder>4</TabOrder>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#ffffff" />
+		<RowIndentation>3</RowIndentation>
+		<ExplicitIdentifier>
+			<Identifier>HQPYear</Identifier>
+			<FirstColumn>0</FirstColumn>
+			<NumberFormat Width="15" Decimals="0" />
+		</ExplicitIdentifier>
+	</PageObject>
+	<PageObject Type="Button">
+		<Location top="6" left="24" bottom="48" right="174" />
+		<TabOrder>11</TabOrder>
+		<LeaveOnEnter>false</LeaveOnEnter>
+		<ButtonType>Text</ButtonType>
+		<Title>"Calibrate"</Title>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<ActionSequence>
+			<Action Type="Run">
+				<RunWhat>SpecificProcecure</RunWhat>
+				<Procedure>Calibrate</Procedure>
+				<AbortOnError>true</AbortOnError>
+			</Action>
+		</ActionSequence>
+	</PageObject>
+	<UsedReferences>
+		<Model>
+			<Symbol>Calibrate</Symbol>
+			<Symbol>delta_chk</Symbol>
+			<Symbol>HQPYear</Symbol>
+			<Symbol>FlowsAnnual</Symbol>
+			<Symbol>Longitude_center</Symbol>
+			<Symbol>Latitude_center</Symbol>
+			<Symbol>FlowDifference</Symbol>
+			<Symbol>FlowColor2</Symbol>
+			<Symbol>FlowColorThreshold</Symbol>
+			<Symbol>Colors_Flows_Report</Symbol>
+			<Symbol>reg</Symbol>
+			<Symbol>h</Symbol>
+			<Symbol>h1</Symbol>
+			<Symbol>usbx</Symbol>
+			<Symbol>usbx1</Symbol>
+		</Model>
+	</UsedReferences>
+</Page>

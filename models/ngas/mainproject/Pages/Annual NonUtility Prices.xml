@@ -1,0 +1,210 @@
+<?xml version="1.0"?>
+<Page Version="4000" TimeStamp="2019-07-31 12:10:39">
+	<PageEditSize Type="Inherited" />
+	<ProjectUUID>BD6A9103-B1FB-4406-840F-21FDB00917E2</ProjectUUID>
+	<TemplatesTabOrderPosition>1</TemplatesTabOrderPosition>
+	<Background Inherited="true" />
+	<PageObject Type="Curve">
+		<Location top="54" left="210" bottom="426" right="786" />
+		<TabOrder>3</TabOrder>
+		<Font GUID="DBEBAEE2-DD81-4C22-9805-2E58FD341D9F" Name="Legend" />
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#ffffff" />
+		<ColorScheme Number="0" />
+		<Title>true</Title>
+		<Legend>true</Legend>
+		<Y-Labels>true</Y-Labels>
+		<X-Labels>true</X-Labels>
+		<YRange Automatic="false">
+			<Lower>0</Lower>
+			<Upper>16</Upper>
+		</YRange>
+		<ExplicitIdentifier>
+			<Identifier>PriceCitygateAnnualforMarkups( year, 'Residential', DisplayedCensusRegion, '1' )</Identifier>
+			<IdentifierTextInTitle>true</IdentifierTextInTitle>
+			<TitleText>"Citygate Price"</TitleText>
+		</ExplicitIdentifier>
+		<ExplicitIdentifier>
+			<Identifier>Price_Enduse( year, 'Residential', DisplayedCensusRegion, '1' )</Identifier>
+			<IdentifierTextInTitle>true</IdentifierTextInTitle>
+			<TitleText>"Residential Price: Option1"</TitleText>
+		</ExplicitIdentifier>
+		<ExplicitIdentifier>
+			<Identifier>Price_Enduse( year, 'Residential', DisplayedCensusRegion, '2' )</Identifier>
+			<TitleText>"Residential Price: Option2"</TitleText>
+		</ExplicitIdentifier>
+		<ExplicitIdentifier>
+			<Identifier>Price_Enduse( year, 'Residential', DisplayedCensusRegion, '3' )</Identifier>
+			<TitleText>"Residential Price: Option3"</TitleText>
+		</ExplicitIdentifier>
+		<ExplicitIdentifier>
+			<Identifier>Price_Enduse( year, 'Residential', DisplayedCensusRegion, '4' )</Identifier>
+			<TitleText>"Residential Price: Option4"</TitleText>
+		</ExplicitIdentifier>
+		<DrawLines>true</DrawLines>
+		<MarkPoints>true</MarkPoints>
+	</PageObject>
+	<PageObject Type="Text">
+		<Location top="12" left="210" bottom="42" right="534" />
+		<StaticText>Residential Enduse Prices, Option Selected:</StaticText>
+		<Font GUID="3EEC6209-AF15-406D-9130-A82C6D539593" Name="Title font" />
+		<TextColor RGB="#000000" />
+	</PageObject>
+	<PageObject Type="Selection Object">
+		<SelectionType>DropDownList</SelectionType>
+		<Location top="540" left="834" bottom="564" right="978" />
+		<TabOrder>5</TabOrder>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<TextShown>ElementName</TextShown>
+		<Border Style="None" />
+		<BackgroundColor RGB="#ffffff" />
+		<ExplicitIdentifier>
+			<Identifier>DisplayedCensusRegion</Identifier>
+		</ExplicitIdentifier>
+	</PageObject>
+	<PageObject Type="Table">
+		<Location top="6" left="522" bottom="42" right="672" />
+		<TabOrder>8</TabOrder>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#ffffff" />
+		<RowIndentation>3</RowIndentation>
+		<ExplicitIdentifier>
+			<Identifier>ResidentialOption</Identifier>
+			<FirstColumn>0</FirstColumn>
+			<NumberFormat Width="15" Decimals="0" />
+		</ExplicitIdentifier>
+	</PageObject>
+	<PageObject Type="Curve">
+		<Location top="54" left="822" bottom="426" right="1398" />
+		<TabOrder>4</TabOrder>
+		<Font GUID="DBEBAEE2-DD81-4C22-9805-2E58FD341D9F" Name="Legend" />
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#ffffff" />
+		<ColorScheme Number="0" />
+		<Title>true</Title>
+		<Legend>true</Legend>
+		<Y-Labels>true</Y-Labels>
+		<X-Labels>true</X-Labels>
+		<YRange Automatic="false">
+			<Lower>0</Lower>
+			<Upper>16</Upper>
+		</YRange>
+		<ExplicitIdentifier>
+			<Identifier>PriceCitygateAnnualforMarkups( year, 'Commercial', DisplayedCensusRegion, '1' )</Identifier>
+			<IdentifierTextInTitle>true</IdentifierTextInTitle>
+			<TitleText>"Citygate Price"</TitleText>
+		</ExplicitIdentifier>
+		<ExplicitIdentifier>
+			<Identifier>Price_Enduse( year, 'Commercial', DisplayedCensusRegion, '1' )</Identifier>
+			<IdentifierTextInTitle>true</IdentifierTextInTitle>
+			<TitleText>"Commercial Price: Option1"</TitleText>
+		</ExplicitIdentifier>
+		<ExplicitIdentifier>
+			<Identifier>Price_Enduse( year, 'Commercial', DisplayedCensusRegion, '2' )</Identifier>
+			<TitleText>"Commercial Price: Option2"</TitleText>
+		</ExplicitIdentifier>
+		<ExplicitIdentifier>
+			<Identifier>Price_Enduse( year, 'Commercial', DisplayedCensusRegion, '3' )</Identifier>
+			<TitleText>"Commercial Price: Option3"</TitleText>
+		</ExplicitIdentifier>
+		<ExplicitIdentifier>
+			<Identifier>Price_Enduse( year, 'Commercial', DisplayedCensusRegion, '4' )</Identifier>
+			<TitleText>"Commercial Price: Option4"</TitleText>
+		</ExplicitIdentifier>
+		<DrawLines>true</DrawLines>
+		<MarkPoints>true</MarkPoints>
+	</PageObject>
+	<PageObject Type="Text">
+		<Location top="12" left="822" bottom="42" right="1146" />
+		<StaticText>Commercial Enduse Prices, Option Selected:</StaticText>
+		<Font GUID="3EEC6209-AF15-406D-9130-A82C6D539593" Name="Title font" />
+		<TextColor RGB="#000000" />
+	</PageObject>
+	<PageObject Type="Table">
+		<Location top="6" left="1134" bottom="42" right="1284" />
+		<TabOrder>6</TabOrder>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#ffffff" />
+		<RowIndentation>3</RowIndentation>
+		<ExplicitIdentifier>
+			<Identifier>CommercialOption</Identifier>
+			<FirstColumn>0</FirstColumn>
+			<NumberFormat Width="15" Decimals="0" />
+		</ExplicitIdentifier>
+	</PageObject>
+	<PageObject Type="Curve">
+		<Location top="492" left="210" bottom="864" right="786" />
+		<TabOrder>2</TabOrder>
+		<Font GUID="DBEBAEE2-DD81-4C22-9805-2E58FD341D9F" Name="Legend" />
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#ffffff" />
+		<ColorScheme Number="0" />
+		<Title>true</Title>
+		<Legend>true</Legend>
+		<Y-Labels>true</Y-Labels>
+		<X-Labels>true</X-Labels>
+		<YRange Automatic="false">
+			<Lower>0</Lower>
+			<Upper>10</Upper>
+		</YRange>
+		<ExplicitIdentifier>
+			<Identifier>PriceCitygateAnnualforMarkups( year, 'Industrial', DisplayedCensusRegion, '2' )</Identifier>
+			<IdentifierTextInTitle>true</IdentifierTextInTitle>
+			<TitleText>"Spot Price (Industrial)"</TitleText>
+		</ExplicitIdentifier>
+		<ExplicitIdentifier>
+			<Identifier>Price_Enduse( year, 'Industrial', DisplayedCensusRegion, '1' )</Identifier>
+			<IdentifierTextInTitle>true</IdentifierTextInTitle>
+			<TitleText>"Industrial Price: Option1"</TitleText>
+		</ExplicitIdentifier>
+		<ExplicitIdentifier>
+			<Identifier>Price_Enduse( year, 'Industrial', DisplayedCensusRegion, '2' )</Identifier>
+			<TitleText>"Industrial Price: Option2"</TitleText>
+		</ExplicitIdentifier>
+		<ExplicitIdentifier>
+			<Identifier>Price_Enduse( year, 'Industrial', DisplayedCensusRegion, '3' )</Identifier>
+			<TitleText>"Industrial Price: Option3"</TitleText>
+		</ExplicitIdentifier>
+		<DrawLines>true</DrawLines>
+		<MarkPoints>true</MarkPoints>
+	</PageObject>
+	<PageObject Type="Text">
+		<Location top="450" left="210" bottom="480" right="534" />
+		<StaticText>Industrial Enduse Prices, Option Selected:</StaticText>
+		<Font GUID="3EEC6209-AF15-406D-9130-A82C6D539593" Name="Title font" />
+		<TextColor RGB="#000000" />
+	</PageObject>
+	<PageObject Type="Table">
+		<Location top="444" left="522" bottom="480" right="672" />
+		<TabOrder>7</TabOrder>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#ffffff" />
+		<RowIndentation>3</RowIndentation>
+		<ExplicitIdentifier>
+			<Identifier>IndustrialOption</Identifier>
+			<FirstColumn>0</FirstColumn>
+			<NumberFormat Width="15" Decimals="0" />
+		</ExplicitIdentifier>
+	</PageObject>
+	<PageObject Type="Text">
+		<Location top="486" left="834" bottom="540" right="1014" />
+		<StaticText>Select Census Division:</StaticText>
+		<Font GUID="3EEC6209-AF15-406D-9130-A82C6D539593" Name="Title font" />
+		<TextColor RGB="#000000" />
+	</PageObject>
+	<UsedReferences>
+		<Model>
+			<Symbol>Region_Census_</Symbol>
+			<Symbol>ResidentialOption</Symbol>
+			<Symbol>CommercialOption</Symbol>
+			<Symbol>IndustrialOption</Symbol>
+			<Symbol>Price_Enduse</Symbol>
+			<Symbol>PriceCitygateAnnualforMarkups</Symbol>
+			<Symbol>DisplayedCensusRegion</Symbol>
+			<Symbol>year</Symbol>
+		</Model>
+	</UsedReferences>
+</Page>

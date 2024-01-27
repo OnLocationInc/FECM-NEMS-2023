@@ -1,0 +1,123 @@
+<?xml version="1.0"?>
+<Page Version="4000" TimeStamp="2016-07-07 03:24:16">
+	<PageEditSize Type="Inherited" />
+	<ProjectUUID>BD6A9103-B1FB-4406-840F-21FDB00917E2</ProjectUUID>
+	<TemplatesTabOrderPosition>1</TemplatesTabOrderPosition>
+	<Background Inherited="true" />
+	<PageObject Type="2D Chart">
+		<Location top="42" left="198" bottom="390" right="774" />
+		<TabOrder>4</TabOrder>
+		<Border Style="InShadow" Width="2" />
+		<X_Axis>
+			<Domain ID="1004">year</Domain>
+			<Annotation>
+				<Rotation_angle ID="1010">90</Rotation_angle>
+				<Show_every_n_th_label ID="1025">5</Show_every_n_th_label>
+			</Annotation>
+		</X_Axis>
+		<Y_Axis>
+			<Identifier>
+				<Value ID="2007">TotalExpectedUSSupplyAnnual( year )</Value>
+			</Identifier>
+			<Identifier>
+				<Value ID="2007">TotalUSDemandAnnual( year )</Value>
+			</Identifier>
+			<Identifier>
+				<Value ID="2007">TotalUSSupplyAnnual( year )</Value>
+			</Identifier>
+		</Y_Axis>
+		<Legend>
+			<Show ID="53">"Show"</Show>
+			<Title_text ID="57">"Total US supply and demand"</Title_text>
+			<Misc_display_settings>
+				<Anchor ID="41">"North"</Anchor>
+			</Misc_display_settings>
+		</Legend>
+	</PageObject>
+	<PageObject Type="2D Chart">
+		<Location top="42" left="846" bottom="366" right="1350" />
+		<TabOrder>3</TabOrder>
+		<Border Style="InShadow" Width="2" />
+		<X_Axis>
+			<Domain ID="1004">year</Domain>
+			<Annotation>
+				<Rotation_angle ID="1010">90</Rotation_angle>
+				<Show_every_n_th_label ID="1025">5</Show_every_n_th_label>
+			</Annotation>
+		</X_Axis>
+		<Y_Axis>
+			<Chart_type ID="2001">"Area"</Chart_type>
+			<Identifier>
+				<Value ID="2007">TotalUSProductionAnnual( year )</Value>
+			</Identifier>
+			<Identifier>
+				<Value ID="2007">TotalUSStorageWthAnnual( year )</Value>
+			</Identifier>
+			<Identifier>
+				<Value ID="2007">TotalImportsAnnual( year )</Value>
+			</Identifier>
+			<Misc_settings>
+				<Stacked ID="2054">1</Stacked>
+			</Misc_settings>
+		</Y_Axis>
+		<Legend>
+			<Show ID="53">"Show"</Show>
+			<Title_text ID="57">"US Supply"</Title_text>
+			<Misc_display_settings>
+				<Anchor ID="41">"North"</Anchor>
+			</Misc_display_settings>
+		</Legend>
+	</PageObject>
+	<PageObject Type="2D Chart">
+		<Location top="378" left="852" bottom="702" right="1356" />
+		<TabOrder>2</TabOrder>
+		<Border Style="InShadow" Width="2" />
+		<X_Axis>
+			<Domain ID="1004">year</Domain>
+			<Annotation>
+				<Rotation_angle ID="1010">90</Rotation_angle>
+				<Show_every_n_th_label ID="1025">5</Show_every_n_th_label>
+			</Annotation>
+		</X_Axis>
+		<Y_Axis>
+			<Chart_type ID="2001">"Area"</Chart_type>
+			<Identifier>
+				<Value ID="2007">TotalUSConsumptionAnnual( year )</Value>
+			</Identifier>
+			<Identifier>
+				<Value ID="2007">TotalUSStorageInjAnnual( year )</Value>
+			</Identifier>
+			<Identifier>
+				<Value ID="2007">TotalUSLNGexports( year )</Value>
+			</Identifier>
+			<Identifier>
+				<Value ID="2007">TotalExportsAnnual( year )</Value>
+			</Identifier>
+			<Misc_settings>
+				<Stacked ID="2054">1</Stacked>
+			</Misc_settings>
+		</Y_Axis>
+		<Legend>
+			<Show ID="53">"Show"</Show>
+			<Title_text ID="57">"US Demand"</Title_text>
+			<Misc_display_settings>
+				<Anchor ID="41">"North"</Anchor>
+			</Misc_display_settings>
+		</Legend>
+	</PageObject>
+	<UsedReferences>
+		<Model>
+			<Symbol>TotalUSProductionAnnual</Symbol>
+			<Symbol>TotalUSStorageWthAnnual</Symbol>
+			<Symbol>TotalUSStorageInjAnnual</Symbol>
+			<Symbol>TotalUSLNGexports</Symbol>
+			<Symbol>TotalUSSupplyAnnual</Symbol>
+			<Symbol>TotalExpectedUSSupplyAnnual</Symbol>
+			<Symbol>TotalUSDemandAnnual</Symbol>
+			<Symbol>TotalUSConsumptionAnnual</Symbol>
+			<Symbol>year</Symbol>
+			<Symbol>TotalImportsAnnual</Symbol>
+			<Symbol>TotalExportsAnnual</Symbol>
+		</Model>
+	</UsedReferences>
+</Page>

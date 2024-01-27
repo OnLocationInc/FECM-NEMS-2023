@@ -1,0 +1,184 @@
+! -*- f90 -*-
+!  $Header: m:/default/includes/RCS/hmmblk,v 1.6 2009/05/22 15:38:13 RSC Exp $
+!  NEMS Hydrogen Market Model Variables 
+!
+! PARAMETERS
+      INTEGER HSIZE
+      INTEGER HMKT
+      INTEGER NUMFUEL
+      PARAMETER (NUMFUEL=6)
+      PARAMETER(HMKT=3)
+      INTEGER PCHTCH
+      PARAMETER (PCHTCH=8)
+      INTEGER PGHTCH
+      PARAMETER (PGHTCH=2)
+      INTEGER PFHTCH
+      PARAMETER (PFHTCH=3)
+      INTEGER TCHTCH
+      PARAMETER (TCHTCH=3)
+      INTEGER TGHTCH
+      PARAMETER (TGHTCH=3)
+      INTEGER DOHTCH
+      PARAMETER (DOHTCH=5)
+      INTEGER SOHTCH
+      PARAMETER (SOHTCH=3)
+      INTEGER SGHTCH
+      PARAMETER (SGHTCH=1)
+	  Integer*4 H2OFFSET
+	  Parameter (H2OFFSET = 3) ! electricity quantity (seasonal) for QHMM start at index 4	
+      !Parameter (HMM_Relax =0.5)    !    /.5,.5,.5,.5,.5,.5,.5,.5,.5,.5/
+	  !INDEX numbers for QHMM/PHMM
+	  INTEGER PHTDM_LOC  !TDM Local Hydrogen Production
+      INTEGER PHTDM_CEN	 !TDM Centralized Hydrogen Production 
+	  INTEGER PHCDM      !CDM Hydrogen 
+	  INTEGER PHEMM1     !EMM Hydrogen season 1
+	  INTEGER PHEMM2     !EMM Hydrogen season 2
+	  INTEGER PHEMM3     !EMM Hydrogen season 3
+	  INTEGER PHNGMM     !NGMM Hydrogen
+	  INTEGER PHIDM_LOC  !IDM Local Hydrogen Production
+	  INTEGER PHIDM_CEN  !IDM Centralized Hydrogen Production
+	  INTEGER PHLFMM	 !LFMM Hydrogen
+      INTEGER PHNUMSEC   !Number of sectors 
+	  PARAMETER (PHTDM_LOC=1)
+      PARAMETER (PHTDM_CEN=2)  
+	  PARAMETER (PHCDM=3)
+	  PARAMETER (PHEMM1=4)
+	  PARAMETER (PHEMM2=5)
+	  PARAMETER (PHEMM3=6)
+	  PARAMETER (PHNGMM=7)
+	  PARAMETER (PHIDM_LOC=8)
+	  PARAMETER (PHIDM_CEN=9)
+	  PARAMETER (PHLFMM=10)
+      PARAMETER (PHNUMSEC=10)
+!
+!      INTEGER TTDNDX
+!      PARAMETER (TTDNDX=27)
+!
+      INTEGER TOTNDX
+      PARAMETER (TOTNDX=PCHTCH+PGHTCH-1+PFHTCH+TCHTCH+TGHTCH+DOHTCH+SOHTCH-1+SGHTCH)
+	     
+!      
+! PRICES
+!
+
+!
+! Quantities
+!
+      REAL HMMPRD(MNUMYR,MNUMCR,HMKT,TOTNDX)  ! hydrogen quantities (bil. kg)
+      
+!
+! BTUs of produced hydrogen by fuel type
+!
+!            
+      REAL HMGSPRD(MNUMYR,MNUMCR)  ! trills gas
+      REAL HMCLPRD(MNUMYR,MNUMCR)  ! trills coal
+      REAL HMBIPRD(MNUMYR,MNUMCR)  ! trills bio
+      REAL HMELPRD(MNUMYR,MNUMCR)  ! trills elec
+      REAL HMURPRD(MNUMYR,MNUMCR)  ! trills uranium
+      REAL HMETPRD(MNUMYR,MNUMCR)  ! trills ethanol
+      
+!
+     REAL HMOTPRD(MNUMYR,MNUMCR) !Other Conventional Hydrogen Production
+!
+! Inputs to hydrogen production by fuel type (Heat and Power)
+!
+!      REAL HMGSHP(MNUMYR,MNUMCR)  ! trills gas
+      REAL HMCLHP(MNUMYR,MNUMCR)  ! trills coal
+      REAL HMBIHP(MNUMYR,MNUMCR)  ! trills bio
+      REAL HMELHP(MNUMYR,MNUMCR)  ! trills elec
+      REAL HMURHP(MNUMYR,MNUMCR)  ! trills uranium
+      REAL HMETHP(MNUMYR,MNUMCR)  ! trills ethanol
+      
+!
+! Consumption by submarket
+!
+      REAL HMGSCNS(MNUMYR,MNUMCR,HMKT)  ! quads gas
+      REAL HMCLCNS(MNUMYR,MNUMCR,HMKT)  ! quads coal
+      REAL HMBICNS(MNUMYR,MNUMCR,HMKT)  ! quads bio
+      REAL HMELCNS(MNUMYR,MNUMCR,HMKT)  ! quads elec
+      REAL HMURCNS(MNUMYR,MNUMCR,HMKT)  ! quads uranium
+      REAL HMETCNS(MNUMYR,MNUMCR,HMKT)  ! quads ethanol
+!
+! VMT Market Shares
+!
+      REAL MSHARE(MNUMCR,HMKT)
+      
+!
+! Input - hmmindat.txt 
+!
+! Fraction CaPtured   (used in sequestration tech price and emission calculations)
+!
+      REAL PCFCP(MNUMYR,PCHTCH)    !Fraction Captured-central
+      REAL PGFCP(MNUMYR,PGHTCH)    !Fraction Captured-citygate
+      REAL PFFCP(MNUMYR,PFHTCH)    !Fraction Captured-forecourt
+
+!
+! Consumption by technology (quads)
+!
+      REAL HCNSTECH(MNUMYR,MNUMCR,PCHTCH+PGHTCH+PFHTCH)      
+      
+!
+! Number of hydrogen fueling station by region,market
+!
+      REAL HSTAT(MNUMYR,MNUMCR,HMKT)        
+
+
+! added for HMM project
+      REAL QBMHMM(MNUMCR,MNUMYR)     !Quantity of Biomass	
+      REAL QBHMM(MNUMCR,MNUMYR)      !Quantity of Biomass	from HMM
+      REAL QHMM(10,MNUMCR,MNUMYR)    !Quantity of Hydrogen, 10 Market Price Codes		               
+      REAL PHMM(10,MNUMCR,MNUMYR)    !Price of Hydrogen, 10 Market Price Codes
+      REAL QNGHMM(MNUMCR,MNUMYR)     !NG Quantity from HMM		 		                                
+      REAL QCLHMM(MNUMCR,MNUMYR)     !CL Quantity from HMM 		                               
+      REAL QELHMM(MNUMCR,MNUMYR,3)   !Electricity quantity from HMM, 3 seasons		                    
+      REAL PELHMM(MNUMCR,MNUMYR,3)   !Electricity price to HMM, 3 seasons		                        
+      REAL QCO2HMM(MNUMCR,MNUMYR)    !CO2 to be stored from HMM			                            
+      REAL PNH3EMM(MNUMCR,MNUMYR)    !Price of Ammonia			                                    
+      REAL QNH3EMM(MNUMCR,MNUMYR)    !Quantity of Ammonia from EMM			                        
+      REAL PHTHMM(MNUMCR,MNUMYR)     !HT heat price for H2 production from EMM				            
+      REAL QHTHMM(MNUMCR,MNUMYR)     !HT heat quantity for H2 production from HMM	
+      REAL HMPRODSEQ(3,MNUMCR,MNUMYR) !CO2 by fuel
+      REAL CO2CAPFUEL(3,MNUMCR,MNUMYR)
+      REAL INVCST(50,MNUMCR,MNUMYR)  !summarized investments
+      REAL NH3EXPORT(MNUMCR,MNUMYR) !Ammonia exports
+COMMON/HMMBLK/HMMPRD, &
+              HMGSCNS,HMCLCNS,HMBICNS,HMELCNS,HMURCNS,HMETCNS,PHMM, &
+              HMGSPRD,HMCLPRD,HMBIPRD,HMELPRD,HMURPRD,HMETPRD, &
+              HMOTPRD,HMCLHP,HMBIHP,HMELHP,HMURHP,HMETHP, &
+              MSHARE,PCFCP,PGFCP,PFFCP,HCNSTECH,HSTAT, &
+			  QBMHMM,QHMM, QNGHMM, QCLHMM, QELHMM, PELHMM, QCO2HMM, PNH3EMM, QNH3EMM, PHTHMM, QHTHMM, HMPRODSEQ,CO2CAPFUEL,INVCST,NH3EXPORT
+     PARAMETER (HSIZE = &                     
+     (10*MNUMCR*MNUMYR)+&   !PHMM
+     (MNUMYR*MNUMCR*HMKT*TOTNDX)+&   !HMMPRD
+     6*(MNUMYR*MNUMCR*HMKT)+&        !HMGSCNS ,HMCLCNS ,HMBICNS ,HMELCNS,HMURCNS ,HMETCNS
+     6*(MNUMYR*MNUMCR)+&        !HMGSPRD  !HMCLPRD  !HMBIPRD  !HMELPRD  !HMURPRD  !HMETPRD
+     6*(MNUMYR*MNUMCR)+&         !HMOTPRD  !HMCLHP !HMBIHP !HMELHP  !HMURHP !HMETHP
+     (MNUMCR*HMKT) +&               !MSHARE
+     (MNUMYR*PCHTCH) +&  !PCFCP
+     (MNUMYR*PGHTCH) +&  !PGFCP
+     (MNUMYR*PFHTCH) +&  !PFFCP
+     (MNUMYR*MNUMCR*(PCHTCH+PGHTCH+PFHTCH))+& !HCNSTECH
+     (MNUMYR*MNUMCR*HMKT)+& !HSTAT
+	 (MNUMCR*MNUMYR)+& !QBMHMM
+     (10*MNUMCR*MNUMYR)+& !QHMM
+     (MNUMCR*MNUMYR)+& !QNGHMM
+     (MNUMCR*MNUMYR)+& !QCLHMM
+     (MNUMCR*MNUMYR*3)+& !QELHMM
+     (MNUMCR*MNUMYR*3)+& !PELHMM
+     (MNUMCR*MNUMYR)+& !QCO2HMM
+     (MNUMCR*MNUMYR)+& !PNH3EMM
+     (MNUMCR*MNUMYR)+& !QNH3EMM
+     (MNUMCR*MNUMYR)+& !PHTHMM
+     (MNUMCR*MNUMYR)+&  !QHTHMM
+     (3*MNUMCR*MNUMYR)+& !HMPRODSEQ  
+     (3*MNUMCR*MNUMYR)+& !CO2CAPFUEL  
+     (50*MNUMCR*MNUMYR)+& !INVCST     
+     (MNUMCR*MNUMYR))!NH3EXPORT
+REAL HMARRY(HSIZE)
+EQUIVALENCE(HMARRY,HMMPRD)
+
+
+!added but not in restart file
+    real PHMM_Prev(PHNUMSEC,MNUMCR,MNUMYR)
+    REAL HMM_Relax(PHLFMM)
+    common/PHMM_Smoothing/PHMM_Prev,HMM_Relax

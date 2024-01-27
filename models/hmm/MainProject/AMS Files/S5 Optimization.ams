@@ -1,0 +1,2053 @@
+## ams_version=1.0
+
+Section S5_Optimization {
+	Procedure pr_PreOptimize {
+		Body: {
+			pr_IntializeOptParameters;
+			
+			pr_FuelPricesandDemands;
+			
+			pr_CapacityLimits;
+			
+			pr_TechnologyCosts;
+			
+			pr_TaxCredits;
+		}
+	}
+	Procedure pr_Optimize {
+		Body: {
+			!Pre-Optimization calculations and processing
+			pr_PreOptimize;
+			
+			solve mp_HMM;
+			
+			if mp_HMM.ProgramStatus <> 'Optimal' then 
+				raise error "WARNING! SOLUTION IS NOT OPTIMAL";
+			endif;
+			
+			
+			!Post-Optimization processing
+			pr_PostOptimize;
+		}
+	}
+	Procedure pr_PostOptimize {
+		Body: {
+			pr_OutputParameterCreation;
+			
+			pr_WriteGlobalDataToNEMS;
+			
+			pr_SaveCase;
+		}
+	}
+	DeclarationSection Model_Structure {
+		Set s_OptimizedVariables {
+			SubsetOf: AllVariables;
+			Index: i_OptimizedVariable;
+			Definition: {
+				AllVariables *
+				(Optimization_Variables)
+			}
+		}
+		Set s_OptimizedConstraints {
+			SubsetOf: AllConstraints;
+			Index: i_OptimizedConstraint;
+			Definition: {
+				AllConstraints *
+				(Optimization_Constraints)
+				!(Production_Constraints + Transportation_Constraints + Storage_Constraints)
+			}
+		}
+		MathematicalProgram mp_HMM {
+			Objective: v_TotalCost;
+			Direction: minimize;
+			Constraints: s_OptimizedConstraints;
+			Variables: s_OptimizedVariables;
+			Type: LP;
+		}
+	}
+	Section Optimization_Procedures {
+		Section PreOptimization_Procedures {
+			Function p_NPVAnnuitizedCost {
+				Arguments: (p_AnnuitizedCost,p_DiscountRate,p_Type);
+				IndexDomain: i_PlanningPeriod;
+				Body: {
+					p_NPVAnnuitizedCost(i_PlanningPeriodFirst) := p_AnnuitizedCost(ep_CurrentOptYear);
+					
+					if p_Type = 1 then
+						p_NPVAnnuitizedCost(i_PlanningPeriodSecond) := p_AnnuitizedCost(ep_NextOptYear)/$(1 + p_EquityRate);
+					!what is the point for testing for zero? Note negative numbers are otherwise set to blanks, which is a problem
+						p_NPVAnnuitizedCost(i_PlanningPeriod)
+						| (((not i_PlanningPeriod in s_PlanningPeriodsFirst) and (not i_PlanningPeriod in s_PlanningPeriodsSecond)) and sum(i_ThirdPeriodYear, p_AnnuitizedCost(i_ThirdPeriodYear)) <> 0)
+							:= InvestmentVariablePresentValue(
+								p_AnnuitizedCost(i_ThirdPeriodYear),                   ! (input) one-dimensional numerical parameter
+								p_EquityRate             ! (input) numerical expression
+								)
+								/$ power(1 + p_EquityRate,2);
+					
+					elseif p_Type = 2 then
+						p_Ones(i_calYear) := 1;
+						p_NPVAnnuitizedCost(i_PlanningPeriodSecond) := p_AnnuitizedCost(ep_NextOptYear);
+					
+						p_NPVAnnuitizedCost(i_PlanningPeriod)
+						| (((not i_PlanningPeriod in s_PlanningPeriodsFirst) and (not i_PlanningPeriod in s_PlanningPeriodsSecond)) and sum(i_ThirdPeriodYear, p_AnnuitizedCost(i_ThirdPeriodYear)) <> 0)
+							:= InvestmentVariablePresentValue(
+								p_AnnuitizedCost(i_ThirdPeriodYear),                   ! (input) one-dimensional numerical parameter
+								p_EquityRate             ! (input) numerical expression
+								)
+							/ $InvestmentVariablePresentValue(
+								p_Ones(i_ThirdPeriodYear),                   ! (input) one-dimensional numerical parameter
+								p_EquityRate             ! (input) numerical expression
+								);
+					
+					elseif p_Type = 3 then
+						p_NPVAnnuitizedCost(i_PlanningPeriodSecond) 
+							:= p_AnnuitizedCost(ep_NextOptYear)/$(1 + p_EquityRate)
+							+ InvestmentVariablePresentValue(
+								p_AnnuitizedCost(i_ThirdPeriodYear),                   ! (input) one-dimensional numerical parameter
+								p_EquityRate             ! (input) numerical expression
+								)
+								/ $power(1 + p_EquityRate,2);
+					
+						p_NPVAnnuitizedCost(i_PlanningPeriod) 
+						| (((not i_PlanningPeriod in s_PlanningPeriodsFirst) and (not i_PlanningPeriod in s_PlanningPeriodsSecond)) and sum(i_ThirdPeriodYear, p_AnnuitizedCost(i_ThirdPeriodYear)) <> 0)
+							:= InvestmentVariablePresentValue(
+								p_AnnuitizedCost(i_ThirdPeriodYear),                   ! (input) one-dimensional numerical parameter
+								p_EquityRate             ! (input) numerical expression
+								)
+								/ $power(1 + p_EquityRate,2);
+					
+					endif;
+				}
+				Parameter p_AnnuitizedCost {
+					IndexDomain: i_calYear;
+					Property: Input;
+				}
+				Parameter p_Ones {
+					IndexDomain: i_calYear;
+				}
+				Parameter p_DiscountRate {
+					Property: Input;
+				}
+				Parameter p_Type {
+					Property: Input;
+				}
+			}
+			Procedure pr_IntializeOptParameters {
+				Body: {
+					! Creates element parameters for NEMS year, iteration, and first model year
+					ep_CurrentOptYear := StringToElement(i_calYear,NCNTRL_CURCALYR('1'));
+					ep_FirstModelYear := StringToElement(i_calYear,FirstModelYear);
+					ep_CurrentIteration := StringToElement(i_IterationNumber,NCNTRL_CURITR('1'));
+					
+					! Comment this out for NEMS runs
+					!ep_CurrentOptYear := '2023';
+					!ep_NextOptYear := '2023';
+					
+					ep_NextOptYear := ep_CurrentOptYear+1;
+					
+					! set up planning period subsets for unplanned capacity
+					s_PlanningPeriodsFirst :={i_PlanningPeriod | i_PlanningPeriod = 'Current Year'};
+					s_PlanningPeriodsSecondThird :={i_PlanningPeriod | i_PlanningPeriod <> 'Current Year'};
+					s_PlanningPeriodsSecond :={i_PlanningPeriod | i_PlanningPeriod = 'Next Year'};
+					!s_PlanningPeriodsSecond :={i_PlanningPeriod | i_PlanningPeriod = 'Remaining Years'};
+					
+					s_ThirdPeriodYears := {i_calYear|(i_calYear > ep_NextOptYear and i_calYear < ep_CurrentOptYear+30)};
+					
+					ep_PeriodofYear(ep_CurrentOptYear) := StringToElement(s_PlanningPeriods,'Current Year');
+					!ep_PeriodofYear(ep_NextOptYear) := StringToElement(s_PlanningPeriods,'Next Year');;
+					!ep_PeriodofYear(i_calYear)|(i_calYear > ep_NextOptYear and i_calYear < ep_CurrentOptYear+30) := StringToElement(s_PlanningPeriods,'Remaining Years');
+					! only technologies active during current opt year.
+					s_ProdActiveOptTechs := {i_ProdTech|ep_ProdStartYearPerTech(i_ProdTech) <= ep_CurrentOptYear};
+					
+					s_AmmoniaActiveOptTechs := {i_NH3Tech | ep_AmmoniaStartYearPerTech(i_NH3Tech) <= ep_CurrentOptYear};
+					
+					p_StorageExpansionFraction(i_StorageTech) := 0.1;
+					s_StorageOptTechs := {first(s_StorageTechs)};
+				}
+			}
+			Procedure pr_FuelPricesandDemands {
+				Body: {
+					!annuitizes fuel price by period third period is a composite
+					for (i_Fuel,i_CensusDivisionOpt) do
+						p_FuelPricebyPeriod(i_Fuel, i_CensusDivisionOpt, i_PlanningPeriod) := p_NPVAnnuitizedCost(
+							p_AnnuitizedCost : p_FuelPrice(i_Fuel, i_CensusDivisionOpt, i_calYear) , 
+							p_DiscountRate   : p_EquityRate ,
+							p_Type   	 : 1 )(i_PlanningPeriod);
+					endfor;
+					
+					! The total fuel emissions are used to split the CO2 emissions by fuel when reporting outputs
+					p_TotalFuelEmissionsPerTech(i_ProdActiveTech, i_calYear) 
+						:= p_ProdFuelConsumptionPerTech('Natural Gas',i_ProdActiveTech)*p_EmissionFactors('Natural Gas',i_calYear) 
+							+ p_ProdFuelConsumptionPerTech('Coal',i_ProdActiveTech)*p_EmissionFactors('Coal',i_calYear)
+						 	+ p_ProdFuelConsumptionPerTech('Biomass',i_ProdActiveTech)*p_EmissionFactors('Biomass',i_calYear);
+					
+					!subtract out carbon tax from fuel price i proportion to carbon captured
+					p_AdjustedFuelPricebyTech(i_Fuel, i_ProdActiveOptTech, i_CensusDivisionOpt, i_calYear) := p_FuelPrice(i_Fuel, i_CensusDivisionOpt, i_calYear)
+					    - p_Emission_Tax(i_calYear) * p_GDPDeflator(i_calYear) * p_EmissionFactors(i_Fuel, i_calYear) * p_ProdProcessCO2FracCapturedPerTech(i_ProdActiveOptTech);
+					!	halt("halt in 1");
+					
+					!annuitize fuel prices
+					for (i_Fuel,i_ProdActiveOptTech,i_CensusDivisionOpt) do
+						p_AdjustedFuelPricebyPeriod(i_Fuel, i_ProdActiveOptTech, i_CensusDivisionOpt, i_PlanningPeriod) := p_NPVAnnuitizedCost(
+							p_AnnuitizedCost : p_AdjustedFuelPricebyTech(i_Fuel, i_ProdActiveOptTech, i_CensusDivisionOpt, i_calYear) , 
+							p_DiscountRate   : p_EquityRate ,
+							p_Type   	 : 1 )(i_PlanningPeriod);
+					endfor;
+					! halt("halt in 2");
+					!Set up slack prices
+					p_SlackCost(i_PlanningPeriod) := 150 * p_GDPDeflator(ep_CurrentOptYear);
+					p_SlackCost(i_PlanningPeriodFirst) := 5.0 * p_GDPDeflator(ep_CurrentOptYear);
+					p_SlackCost(i_PlanningPeriodSecond) := 5.0 * p_GDPDeflator(ep_NextOptYear);
+					
+					p_HydrogenPrice(i_CensusDivisionOpt, i_SeasonOpt, i_calYear) | (i_calYear > ep_CurrentOptYear) := 0;
+					
+					p_MarketH2DemandSeasonFraction(i_MarketQuantityCode, i_SeasonOpt) | (not p_SeasonFraction(ep_MarketQuantitySeasons(i_MarketQuantityCode))) 
+						:= p_SeasonFraction(i_SeasonOpt);
+					p_MarketH2DemandSeasonFraction(i_MarketQuantityCode, i_SeasonOpt) | (i_SeasonOpt = ep_MarketQuantitySeasons(i_MarketQuantityCode)) := 1;
+					
+					! sector 10 removed
+					!ep_MarketQuantityCode := StringtoElement(s_MarketQuantityCodes,'10');
+					!HMMBLK_QHMM(ep_MarketQuantityCode, i_CensusDivision, ep_NUMYRtoCal(ep_CurrentOptYear)) := 0;
+					
+					! convert to thousand tons of hydrogen from trills
+					p_MarketH2DemandbySeason(i_MarketQuantityCode, i_CensusDivisionOpt, i_SeasonOpt, i_calYear)
+						:= HMMBLK_QHMM(i_MarketQuantityCode, i_CensusDivisionOpt, ep_NUMYRtoCal(i_calYear)) * p_MarketH2DemandSeasonFraction(i_MarketQuantityCode, i_SeasonOpt)
+						 /p_HydrogenHHV * 10^6;
+					p_MarketH2DemandbySeason(i_MarketQuantityCode, i_CensusDivisionOpt, i_SeasonOpt, i_calYear) | (i_calYear > '2050') 
+						:= p_MarketH2DemandbySeason(i_MarketQuantityCode, i_CensusDivisionOpt, i_SeasonOpt, '2050');
+					
+					
+					!
+					! Calculate total hydrogen demand
+					p_TotalH2MarketDemand(i_CensusDivisionOpt, i_SeasonOpt, i_calYear)
+						:= sum(i_MarketQuantityCode, p_MarketH2DemandbySeason(i_MarketQuantityCode, i_CensusDivisionOpt, i_SeasonOpt, i_calYear));
+					for (i_CensusDivisionOpt,i_SeasonOpt) do
+						p_TotalH2Demand(i_CensusDivisionOpt, i_SeasonOpt, i_PlanningPeriod) := p_NPVAnnuitizedCost(
+							p_AnnuitizedCost : p_TotalH2MarketDemand(i_CensusDivisionOpt, i_SeasonOpt, i_calYear) , 
+							p_DiscountRate   : p_EquityRate ,
+							p_Type   	 : 2 )(i_PlanningPeriod);
+					endfor;
+					!  
+					ep_PlanningPeriodSecond := StringToElement(i_PlanningPeriodSecond,"Next Year");
+					p_TotalH2Demand(i_CensusDivisionOpt, i_SeasonOpt,ep_PlanningPeriodSecond) := 
+					      p_TotalH2Demand(i_CensusDivisionOpt, i_SeasonOpt, ep_PlanningPeriodSecond) * (1.0 + p_ProductionCapacityReserve);
+				}
+				Comment: "Calculate fuel prices and demands for each period";
+			}
+			Procedure pr_CapacityLimits {
+				Body: {
+					! set available capacity as near zero as shouuld no longer be needed. Set in input file
+					!p_ProductionCapacityAvailable(i_Tech, i_CensusDivisionOpt, ep_NUMYRtoCal(i_calYear))  :=0;
+					
+					!Reset unplanned capacity to zero past current year
+					! Carry planned, available and unplanned  forward through rest of horizon
+					!then annuitize capacity 
+					p_ProductionUnplannedCapacity(i_ProdTech, i_CensusDivision, i_calYear) | (i_calYear > ep_CurrentOptYear) := 0;
+					p_TotalProductionCapacity(ep_ProductionTech(i_Tech), i_CensusDivisionOpt, i_calYear)  | (i_calYear >= ep_CurrentOptYear)
+						:= p_ProductionCapacityAvailable(i_Tech, i_CensusDivisionOpt, ep_NUMYRtoCal(i_calYear)) ! + p_ProductionCapacityPlanned(i_Tech, i_CensusDivisionOpt, ep_NUMYRtoCal(i_calYear))
+							+ p_ProductionUnplannedCapacity(ep_ProductionTech(i_Tech), i_CensusDivisionOpt, ep_CurrentOptYear);
+					
+					for (i_ProdActiveOptTech, i_CensusDivisionOpt) do
+						p_ProdCapacityLimit(i_ProdActiveOptTech, i_CensusDivisionOpt, i_PlanningPeriod) := p_NPVAnnuitizedCost(
+						p_AnnuitizedCost : p_TotalProductionCapacity(i_ProdActiveOptTech, i_CensusDivisionOpt, i_calYear) , 
+						p_DiscountRate   : p_EquityRate , 
+						p_Type           : 2 )(i_PlanningPeriod);
+					endfor;
+					
+					! calculate multiple from base capacity by tech or a minimum of 100 for learning purposes
+					p_TotalProductionCapacityMultiple(i_ProdActiveOptTech, i_CensusDivisionOpt, ep_CurrentOptYear) := 1;
+					p_TotalProductionCapacityMultiple(i_ProdActiveOptTech, i_CensusDivisionOpt, ep_CurrentOptYear) | p_TotalProductionCapacity(i_ProdActiveOptTech, i_CensusDivisionOpt, ep_CurrentOptYear) > 100
+						:= p_TotalProductionCapacity(i_ProdActiveOptTech, i_CensusDivisionOpt, ep_CurrentOptYear) / $p_TotalProductionCapacity(i_ProdActiveOptTech, i_CensusDivisionOpt, ep_FirstModelYear);
+					
+					! Set upper limits on each step of unplanned production capacity
+					ep_ProductionStep := 'Step1';
+					v_ProductionUnplannedCapacityByStep.Upper(i_ProdActiveOptTech, i_CensusDivisionOpt, i_PlanningPeriodSecondThird, ep_ProductionStep) 
+						:= max(100, p_ProdCapacityLimit(i_ProdActiveOptTech, i_CensusDivisionOpt, i_PlanningPeriodSecondThird) * val(sp_ProductionStepSize(ep_ProductionStep)));
+					v_ProductionUnplannedCapacityByStep.Upper(i_ProdActiveOptTech, i_CensusDivisionOpt, i_PlanningPeriodSecondThird, i_ProductionStep) 
+						:= max(v_ProductionUnplannedCapacityByStep.Upper(i_ProdActiveOptTech, i_CensusDivisionOpt, i_PlanningPeriodSecondThird, ep_ProductionStep)
+							* val(sp_ProductionStepSize(i_ProductionStep)) / $val(sp_ProductionStepSize(ep_ProductionStep)), 
+							p_ProdCapacityLimit(i_ProdActiveOptTech, i_CensusDivisionOpt, i_PlanningPeriodSecondThird) * val(sp_ProductionStepSize(i_ProductionStep)));
+					
+					! Annuitize the CO2 capture quantity getting 45Q credit
+					for (i_ProdActiveOptTech, i_CensusDivisionOpt) do
+						p_CO2CaptureQty45QCredit(i_ProdActiveOptTech, i_CensusDivisionOpt, i_PlanningPeriod) := p_NPVAnnuitizedCost(
+						p_AnnuitizedCost : p_CO2CaptureQty45QCreditbyYear(i_ProdActiveOptTech, i_CensusDivisionOpt, i_calYear) , 
+						p_DiscountRate   : p_EquityRate , 
+						p_Type           : 2 )(i_PlanningPeriod);
+					endfor;
+					
+					! Annuitize the capacity quantity getting 45V PTC credit
+					for (i_ProdActiveOptTech, i_CensusDivisionOpt) do
+						p_CapacityProductionTaxCredit(i_ProdActiveOptTech, i_CensusDivisionOpt, i_PlanningPeriod) := p_NPVAnnuitizedCost(
+						p_AnnuitizedCost : p_CapacityProductionTaxCreditbyYear(i_ProdActiveOptTech, i_CensusDivisionOpt, i_calYear) , 
+						p_DiscountRate   : p_EquityRate , 
+						p_Type           : 2 )(i_PlanningPeriod);
+					endfor;
+					
+					! SOE-NUC capacity limit
+					p_ElectricityGenerationNuclearbyYear(i_CensusDivisionOpt, i_calYear) := QBLK_QUREL(i_CensusDivisionOpt,ep_NUMYRtoCal(i_calYear)) / p_HeatRateNuclear * 1000; ! Unit = BkWh
+					p_ElectricityGenerationNuclearbyYear(i_CensusDivisionOpt, i_calYear)|(i_calYear > '2050') := p_ElectricityGenerationNuclearbyYear(i_CensusDivisionOpt,'2050');
+					for i_CensusDivisionOpt do
+						p_ElectricityGenerationNuclear(i_CensusDivisionOpt, i_PlanningPeriod) := p_NPVAnnuitizedCost(
+						p_AnnuitizedCost : p_ElectricityGenerationNuclearbyYear(i_CensusDivisionOpt, i_calYear) , 
+						p_DiscountRate   : p_EquityRate , 
+						p_Type           : 2 )(i_PlanningPeriod);
+					endfor;
+					
+					! Electrolysis from renewable capacity limit
+					p_ElectricityGenerationRenewablebyYear(i_CensusDivisionOpt, i_calYear) 
+						:= (QBLK_QPVEL(i_CensusDivisionOpt,ep_NUMYRtoCal(i_calYear)) + QBLK_QWIEL(i_CensusDivisionOpt,ep_NUMYRtoCal(i_calYear))) 
+							/ $COGEN_WHRFOSS(i_CensusDivisionOpt, ep_NUMYRtoCal(i_calYear)) * 1000; ! Units=BkWh
+					p_ElectricityGenerationRenewablebyYear(i_CensusDivisionOpt, i_calYear)|(i_calYear > '2050') := p_ElectricityGenerationRenewablebyYear(i_CensusDivisionOpt,'2050');
+					for i_CensusDivisionOpt do
+						p_ElectricityGenerationRenewable(i_CensusDivisionOpt, i_PlanningPeriod) := p_NPVAnnuitizedCost(
+						p_AnnuitizedCost : p_ElectricityGenerationRenewablebyYear(i_CensusDivisionOpt, i_calYear) , 
+						p_DiscountRate   : p_EquityRate , 
+						p_Type           : 2 )(i_PlanningPeriod);
+					endfor;
+					
+					!Transportation Need to fill out   1 step
+					!Reset unplanned capacity to zero past current year
+					! Carry planned, available and unplanned  forward through rest of horizon
+					!then annuitize capacity Only one step
+					p_TransportUnplannedCapacity(i_TranTech, i_CensusDivision, j_CensusDivision, i_calYear) | (i_calYear > ep_CurrentOptYear) := 0;
+					p_TotalTransportCapacity(i_TranTech, i_CensusDivisionOpt, j_CensusDivisionOpt, i_calYear)  | (i_calYear >= ep_CurrentOptYear)
+						:= p_TransportationCapacityAvailable(i_TranTech, i_CensusDivisionOpt, j_CensusDivisionOpt, ep_NUMYRtoCal(i_calYear)) 
+							+ p_TransportationCapacityPlanned(i_TranTech, i_CensusDivisionOpt, j_CensusDivisionOpt, ep_NUMYRtoCal(i_calYear))
+							+ p_TransportUnplannedCapacity(i_TranTech, i_CensusDivisionOpt, j_CensusDivisionOpt, ep_CurrentOptYear);
+					for (i_TranTech, i_CensusDivisionOpt, j_CensusDivisionOpt) do
+						p_TransportCapacityLimit(i_TranTech, i_CensusDivisionOpt, j_CensusDivisionOpt, i_PlanningPeriod) := p_NPVAnnuitizedCost(
+						p_AnnuitizedCost : p_TotalTransportCapacity(i_TranTech, i_CensusDivisionOpt, j_CensusDivisionOpt, i_calYear) , 
+						p_DiscountRate   : p_EquityRate , 
+						p_Type           : 2 )(i_PlanningPeriod);
+					endfor;
+					
+					! Set upper limits on each step of unplanned production capacity
+					v_TransportUnplannedCapacityByStep.Upper(i_TranTech, i_CensusDivisionOpt, j_CensusDivisionOpt, i_PlanningPeriodSecondThird, i_TransportationStep)
+						:= p_TransportCapacityLimit(i_TranTech, i_CensusDivisionOpt, j_CensusDivisionOpt, i_PlanningPeriodSecondThird) * val(sp_TransportationStepSize(i_TransportationStep));
+					
+					!Storage Need to fill out  1 step capacity limit.
+					!Transportation Need to fill out   1 step
+					!Reset unplanned capacity to zero past current year
+					! Carry planned, available and unplanned  forward through rest of horizon
+					!then annuitize capacity Only one step
+					p_StorageUnplannedCapacity(i_StorageTech, i_CensusDivision, i_calYear) | (i_calYear > ep_CurrentOptYear) := 0;
+					p_TotalStorageCapacity(i_StorageOptTech, i_CensusDivisionOpt, i_calYear)  | (i_calYear >= ep_CurrentOptYear)
+						:= p_StorageCapacityAvailable(i_StorageOptTech, i_CensusDivisionOpt, ep_NUMYRtoCal(i_calYear)) 
+							+ p_StorageCapacityPlanned(i_StorageOptTech, i_CensusDivisionOpt, ep_NUMYRtoCal(i_calYear))
+							+ p_StorageUnplannedCapacity(i_StorageOptTech, i_CensusDivisionOpt, ep_CurrentOptYear);
+					for (i_StorageOptTech, i_CensusDivisionOpt) do
+						p_StorageCapacityLimit(i_StorageOptTech, i_CensusDivisionOpt, i_PlanningPeriod) := p_NPVAnnuitizedCost(
+						p_AnnuitizedCost : p_TotalStorageCapacity(i_StorageOptTech, i_CensusDivisionOpt, i_calYear) , 
+						p_DiscountRate   : p_EquityRate , 
+						p_Type           : 2 )(i_PlanningPeriod);
+					endfor;
+					
+					!Ammonia Capacity Limits
+					p_AmmoniaUnplannedCapacity(i_NH3Tech, i_CensusDivision, i_calYear) | (i_calYear > ep_CurrentOptYear) := 0;
+					p_TotalAmmoniaProductionCapacity(i_AmmoniaActiveOptTech, i_CensusDivisionOpt, i_calYear)  | (i_calYear >= ep_CurrentOptYear)
+						:= p_AmmoniaCapacityAvailable(i_AmmoniaActiveOptTech, i_CensusDivisionOpt, ep_NUMYRtoCal(i_calYear)) 
+							+ p_AmmoniaCapacityPlanned(i_AmmoniaActiveOptTech, i_CensusDivisionOpt, ep_NUMYRtoCal(i_calYear))
+							+ p_AmmoniaUnplannedCapacity(i_AmmoniaActiveOptTech, i_CensusDivisionOpt, ep_CurrentOptYear);
+					for (i_AmmoniaActiveOptTech, i_CensusDivisionOpt) do
+						p_AmmoniaCapacityLimit(i_AmmoniaActiveOptTech, i_CensusDivisionOpt, i_PlanningPeriod) 
+						:= p_NPVAnnuitizedCost(
+						p_AnnuitizedCost : p_TotalAmmoniaProductionCapacity(i_AmmoniaActiveOptTech, i_CensusDivisionOpt, i_calYear) , 
+						p_DiscountRate   : p_EquityRate , 
+						p_Type           : 2 )(i_PlanningPeriod);
+					endfor;
+					! 1 step for ammonia production limit
+					p_TotalAmmoniaProductionCapacityMultiple(i_AmmoniaActiveOptTech, i_CensusDivisionOpt, ep_CurrentOptYear)
+						:= p_TotalAmmoniaProductionCapacity(i_AmmoniaActiveOptTech, i_CensusDivisionOpt, ep_CurrentOptYear) 
+						/$ p_TotalAmmoniaProductionCapacity(i_AmmoniaActiveOptTech, i_CensusDivisionOpt, ep_FirstModelYear);
+					
+					! Set upper limits on each step of unplanned production capacity
+					v_AmmoniaProductionUnplannedCapacityByStep.Upper(i_AmmoniaActiveOptTech, i_CensusDivisionOpt, i_PlanningPeriodSecondThird, i_NH3ProductionStep) 
+						:= p_AmmoniaCapacityLimit(i_AmmoniaActiveOptTech, i_CensusDivisionOpt, i_PlanningPeriodSecondThird) 
+						* p_NH3ProductionStepSize(i_NH3ProductionStep);
+				}
+			}
+			Procedure pr_TechnologyCosts {
+				Body: {
+					! Calculate and annuitize unplanned production capacity costs
+					p_ProductionUnplannedCapacityCostbyYear(i_ProdActiveOptTech, i_CensusDivisionOpt, i_calYear)
+					:= p_ProdCapitalCostsPerTech(i_ProdActiveOptTech) * p_CRF / p_GDPDeflator(ep_ProdReferenceYearPerTech(i_ProdActiveOptTech)) * p_GDPDeflator(i_calYear);
+					
+					for (i_ProdActiveOptTech, i_CensusDivisionOpt) do
+						p_ProductionUnplannedCapacityCost(i_ProdActiveOptTech, i_CensusDivisionopt, i_PlanningPeriod) := p_NPVAnnuitizedCost(
+							p_AnnuitizedCost : p_ProductionUnplannedCapacityCostbyYear(i_ProdActiveOptTech, i_CensusDivisionOpt, i_calYear) , 
+							p_DiscountRate   : p_EquityRate ,
+							p_Type   	 : 3 )(i_PlanningPeriod);
+					endfor;
+					
+					! Apply learning to unplanned capacity built so far
+					p_ProductionUnplannedCapacityCost(i_ProdActiveOptTech, i_CensusDivisionopt, i_PlanningPeriod) | p_TotalProductionCapacityMultiple(i_ProdActiveOptTech, i_CensusDivisionOpt, ep_CurrentOptYear) >0
+					:= p_ProductionUnplannedCapacityCost(i_ProdActiveOptTech, i_CensusDivisionopt, i_PlanningPeriod)
+						* ((1 - p_ProdLearningAlphaPerTech(i_ProdActiveOptTech)) + p_ProdLearningAlphaPerTech(i_ProdActiveOptTech) 
+						* power(p_TotalProductionCapacityMultiple(i_ProdActiveOptTech, i_CensusDivisionOpt, ep_CurrentOptYear),p_ProdLearningBetaPerTech(i_ProdActiveOptTech)));
+					
+					! Calculate and annuitize production o&m costs
+					p_ProductionFixedO_MCostbyYear(i_ProdActiveOptTech, i_CensusDivisionOpt, i_calYear)
+					:= p_ProdFixedO_MCostsPerTech(i_ProdActiveOptTech) / p_GDPDeflator(ep_ProdReferenceYearPerTech(i_ProdActiveOptTech)) * p_GDPDeflator(i_calYear);
+					
+					for (i_ProdActiveOptTech, i_CensusDivisionOpt) do
+						p_ProductionFixedO_MCost(i_ProdActiveOptTech, i_CensusDivisionopt, i_PlanningPeriod) := p_NPVAnnuitizedCost(
+							p_AnnuitizedCost : p_ProductionFixedO_MCostbyYear(i_ProdActiveOptTech, i_CensusDivisionOpt, i_calYear) , 
+							p_DiscountRate   : p_EquityRate ,
+							p_Type   	 : 1 )(i_PlanningPeriod);
+					endfor;
+					
+					! Calculate CO2 captured by production tech
+					p_ProdProcessCO2CapturedPerTech(i_ProdActiveOptTech) 
+					:= p_ProdProcessCO2PerTech(i_ProdActiveOptTech) * p_ProdProcessCO2FracCapturedPerTech(i_ProdActiveOptTech) / $(1. - p_ProdProcessCO2FracCapturedPerTech(i_ProdActiveOptTech));
+					
+					! Calculate and annuitize production o&m costs
+					p_ProductionVariableO_MCostbyYear(i_ProdActiveOptTech, i_CensusDivisionOpt, i_calYear)
+					:= (p_ProdVariableO_MCostsPerTech(i_ProdActiveOptTech) / p_GDPDeflator(ep_ProdReferenceYearPerTech(i_ProdActiveOptTech)) 
+						+ p_ProdProcessCO2CapturedPerTech(i_ProdActiveOptTech) * p_TnSCosts(i_CensusDivisionOpt, i_calYear)/1000) * p_GDPDeflator(i_calYear);
+					
+					for (i_ProdActiveOptTech, i_CensusDivisionOpt) do
+						p_ProductionVariableO_MCost(i_ProdActiveOptTech, i_CensusDivisionopt, i_PlanningPeriod) := p_NPVAnnuitizedCost(
+							p_AnnuitizedCost : p_ProductionVariableO_MCostbyYear(i_ProdActiveOptTech, i_CensusDivisionOpt, i_calYear) , 
+							p_DiscountRate   : p_EquityRate ,
+							p_Type   	 : 1 )(i_PlanningPeriod);
+					endfor;
+					
+					! Calculate and annuitize unplanned transportation capacity cost
+					p_TransportUnplannedCapacityCostbyYear(i_TranTech, i_CensusDivisionOpt, j_CensusDivisionOpt, i_calYear)
+					:= (p_PipeCapitalCosts(i_TranTech) * p_CRF + p_PipeO_MCosts(i_TranTech)) 
+						/ p_GDPDeflator(ep_PipelineReferenceYearPerTech(first(i_TranTech))) * p_GDPDeflator(i_calYear)
+						+ (p_PipeCompressorCapitalCosts(first(i_PipeCompTech)) * p_CRF + p_PipeCompressorFixedO_MCosts(first(i_PipeCompTech)))
+							/ p_GDPDeflator(ep_PipeCompressorReferenceYear(first(i_PipeCompTech))) * p_GDPDeflator(i_calYear);
+					
+					for (i_TranTech, i_CensusDivisionOpt, j_CensusDivisionOpt) | p_CenDivTransportMap(i_CensusDivisionOpt, j_CensusDivisionOpt) do
+						p_TransportUnplannedCapacityCost(i_TranTech, i_CensusDivisionOpt, j_CensusDivisionOpt, i_PlanningPeriod) := p_NPVAnnuitizedCost(
+							p_AnnuitizedCost : p_TransportUnplannedCapacityCostbyYear(i_TranTech, i_CensusDivisionOpt, j_CensusDivisionOpt, i_calYear) , 
+							p_DiscountRate   : p_EquityRate ,
+							p_Type   	 : 3 )(i_PlanningPeriod);
+					endfor;
+					p_TransportUnplannedCapacityCost(i_TranTech, i_CensusDivisionOpt, j_CensusDivisionOpt, i_PlanningPeriod) | (i_CensusDivisionOpt = j_CensusDivisionOpt) := 0;
+					
+					! Calculate and annuitize unplanned storage capacity cost
+					p_StorageUnplannedCapacityCostbyYear(i_StorageOptTech, i_CensusDivisionOpt, i_calYear)
+					:= (p_StorageCapitalCosts(i_StorageOptTech) * p_CRF + p_StorageFixedO_MCosts(i_StorageOptTech))
+						/ p_GDPDeflator(ep_StorageReferenceYearPerTech(i_StorageOptTech)) * p_GDPDeflator(i_calYear);
+					
+					for (i_StorageOptTech, i_CensusDivisionOpt) do
+						p_StorageUnplannedCapacityCost(i_StorageOptTech, i_CensusDivisionOpt, i_PlanningPeriod) := p_NPVAnnuitizedCost(
+							p_AnnuitizedCost : p_StorageUnplannedCapacityCostbyYear(i_StorageOptTech, i_CensusDivisionOpt, i_calYear) , 
+							p_DiscountRate   : p_EquityRate ,
+							p_Type   	 : 3 )(i_PlanningPeriod);
+					endfor;
+					
+					
+					! Calculate and annuitize unplanned ammonia production capacity costs
+					p_AmmoniaUnplannedCapacityCostbyYear(i_AmmoniaActiveOptTech, i_CensusDivisionOpt, i_calYear)
+					:= (p_AmmoniaCapitalCostsPerTech(i_AmmoniaActiveOptTech) * p_CRF + p_AmmoniaFixedO_MCostsPerTech(i_AmmoniaActiveOptTech))
+						/$ p_GDPDeflator(ep_AmmoniaReferenceYearPerTech(i_AmmoniaActiveOptTech)) * p_GDPDeflator(i_calYear);
+					
+					for (i_ProdActiveOptTech, i_CensusDivisionOpt) do
+						p_AmmoniaUnplannedCapacityCost(i_AmmoniaActiveOptTech, i_CensusDivisionopt, i_PlanningPeriod) := p_NPVAnnuitizedCost(
+							p_AnnuitizedCost : p_AmmoniaUnplannedCapacityCostbyYear(i_AmmoniaActiveOptTech, i_CensusDivisionOpt, i_calYear) , 
+							p_DiscountRate   : p_EquityRate ,
+							p_Type   	 : 3 )(i_PlanningPeriod);
+					endfor;
+					
+					! Apply learning to unplanned capacity built so far
+					p_AmmoniaUnplannedCapacityCost(i_AmmoniaActiveOptTech, i_CensusDivisionopt, i_PlanningPeriod) 
+					| p_TotalAmmoniaProductionCapacityMultiple(i_AmmoniaActiveOptTech, i_CensusDivisionOpt, ep_CurrentOptYear) >0
+					:= p_AmmoniaUnplannedCapacityCost(i_AmmoniaActiveOptTech, i_CensusDivisionopt, i_PlanningPeriod)
+						* ((1 - p_AmmoniaProdLearningAlphaPerTech(i_AmmoniaActiveOptTech)) + p_AmmoniaProdLearningAlphaPerTech(i_AmmoniaActiveOptTech) 
+						* power(p_TotalAmmoniaProductionCapacityMultiple(i_AmmoniaActiveOptTech, i_CensusDivisionOpt, ep_CurrentOptYear),p_AmmoniaProdLearningBetaPerTech(i_AmmoniaActiveOptTech)));
+					
+					! Annuitize ammonia o&m costs
+					for (i_AmmoniaActiveOptTech, i_CensusDivisionOpt) do
+						p_AmmoniaVariableO_MCost(i_AmmoniaActiveOptTech, i_CensusDivisionopt, i_PlanningPeriod) := p_NPVAnnuitizedCost(
+							p_AnnuitizedCost : p_AmmoniaVariableO_MCostbyYear(i_AmmoniaActiveOptTech, i_CensusDivisionOpt, i_calYear) , 
+							p_DiscountRate   : p_EquityRate ,
+							p_Type   	 : 1 )(i_PlanningPeriod);
+					endfor;
+				}
+			}
+			Procedure pr_TaxCredits {
+				Body: {
+					! Section 45Q Tax Credits
+					p_Section45QSalineCreditbyYear(i_ProdActiveOptTech, i_CensusDivisionOpt, i_calYear)
+						 | (p_CO2CaptureQty45QCreditbyYear(i_ProdActiveOptTech, i_CensusDivisionOpt, i_calYear) > 0  
+						 	or (ep_CurrentOptYear = StringToElement(i_calYear, FirstModelYear) and p_ProdProcessCO2FracCapturedPerTech(i_ProdActiveOptTech) > 0)) 
+						:= TCS45Q_CCS_SALINE_45Q(ep_NUMYRtoCal(i_calYear)) * p_GDPDeflator(i_calYear);
+					for (i_ProdActiveOptTech, i_CensusDivisionOpt) do
+						p_Section45QSalineCredit(i_ProdActiveOptTech, i_CensusDivisionOpt, i_PlanningPeriod) := p_NPVAnnuitizedCost(
+							p_AnnuitizedCost : p_Section45QSalineCreditbyYear(i_ProdActiveOptTech, i_CensusDivisionOpt, i_calYear) , 
+							p_DiscountRate   : p_EquityRate ,
+							p_Type   	 : 1 )(i_PlanningPeriod);
+					endfor;
+					
+					p_Section45QEORCreditbyYear(i_ProdActiveOptTech, i_CensusDivisionOpt, i_calYear)
+						 | (p_CO2CaptureQty45QCreditbyYear(i_ProdActiveOptTech, i_CensusDivisionOpt, i_calYear) > 0  
+						 	or (ep_CurrentOptYear = StringToElement(i_calYear, FirstModelYear) and p_ProdProcessCO2FracCapturedPerTech(i_ProdActiveOptTech) > 0)) 
+						:= TCS45Q_CCS_EOR_45Q(ep_NUMYRtoCal(i_calYear)) * p_GDPDeflator(i_calYear);
+					for (i_ProdActiveOptTech, i_CensusDivisionOpt) do
+						p_Section45QEORCredit(i_ProdActiveOptTech, i_CensusDivisionOpt, i_PlanningPeriod) := p_NPVAnnuitizedCost(
+							p_AnnuitizedCost : p_Section45QEORCreditbyYear(i_ProdActiveOptTech, i_CensusDivisionOpt, i_calYear) , 
+							p_DiscountRate   : p_EquityRate ,
+							p_Type   	 : 1 )(i_PlanningPeriod);
+					endfor;
+					
+					! Production Tax Credit
+					for i_LCAStep do
+					p_ProductionTaxCreditbyTech(i_Tech, i_NEMSYear) | (p_LCAbyTech(i_Tech, i_NEMSYear) <= val(sp_LCAbyStep(i_LCAStep))) 
+						:= val(sp_PTCbyStep(i_LCAStep));
+					endfor;
+					p_ProductionTaxCreditbyTech(i_Tech, i_NEMSYear)|(i_NEMSYear > '61') := p_ProductionTaxCreditbyTech(i_Tech, '61');
+					p_ProductionTaxCreditbyYear(ep_ProductionTech(i_Tech), i_CensusDivisionOpt, i_calYear) | (i_calYear >= ep_PTCStartYear) and (i_calYear < StringToElement(i_calYear, p_45V_LYR_NEW+p_45V_DURATION)) 
+						and (p_CapacityProductionTaxCreditbyYear(ep_ProductionTech(i_Tech), i_CensusDivisionOpt, i_calYear) > 0  or ep_CurrentOptYear = StringToElement(i_calYear, FirstModelYear))
+						:= p_ProductionTaxCreditbyTech(i_Tech, ep_NUMYRtoCal(i_calYear)) * p_GDPDeflator(i_calYear) * p_45V_Multiplier;
+					for (i_ProdActiveOptTech, i_CensusDivisionOpt) do
+						p_ProductionTaxCreditUsed(i_ProdActiveOptTech, i_CensusDivisionopt, i_PlanningPeriod) := p_NPVAnnuitizedCost(
+							p_AnnuitizedCost : p_ProductionTaxCreditbyYear(i_ProdActiveOptTech, i_CensusDivisionOpt, i_calYear) , 
+							p_DiscountRate   : p_EquityRate ,
+							p_Type   	 : 1 )(i_PlanningPeriod);
+					endfor;
+					p_ProductionTaxCreditActual(i_ProdActiveOptTech, i_CensusDivisionopt, i_PlanningPeriod) := p_ProductionTaxCreditUsed(i_ProdActiveOptTech, i_CensusDivisionopt, i_PlanningPeriod);
+					
+					! Investment Tax Credit
+					for i_LCAStep do
+					p_InvestmentTaxCreditbyTech(i_Tech, i_NEMSYear) | (p_LCAbyTech(i_Tech, i_NEMSYear) <= val(sp_LCAbyStep(i_LCAStep))) 
+						:= (p_ProdCapitalCostsPerTech(ep_ProductionTech(i_Tech)) * p_CRF + p_ProdFixedO_MCostsPerTech(ep_ProductionTech(i_Tech))/$p_ProdCapacityFactorPerTech(ep_ProductionTech(i_Tech)))
+						* val(sp_ITCbyStep(i_LCAStep));
+					endfor;
+					p_InvestmentTaxCreditbyTech(i_Tech, i_NEMSYear)|(i_NEMSYear > '61') := p_InvestmentTaxCreditbyTech(i_Tech, '61');
+					p_InvestmentTaxCreditbyYear(ep_ProductionTech(i_Tech), i_CensusDivisionOpt, i_calYear) | (i_calYear >= ep_ITCStartYear) and (i_calYear < StringToElement(i_calYear, p_45V_LYR_NEW+p_45V_DURATION))
+						and (p_CapacityInvestmentTaxCreditbyYear(ep_ProductionTech(i_Tech), i_CensusDivisionOpt, i_calYear) > 0  or ep_CurrentOptYear = StringToElement(i_calYear, FirstModelYear))
+						:= p_InvestmentTaxCreditbyTech(i_Tech, ep_NUMYRtoCal(i_calYear)) / $p_GDPDeflator(ep_ProdReferenceYearPerTech(ep_ProductionTech(i_Tech))) * p_GDPDeflator(i_calYear) * p_45V_Multiplier;
+					for (i_ProdActiveOptTech, i_CensusDivisionOpt) do
+						p_InvestmentTaxCredit(i_ProdActiveOptTech, i_CensusDivisionopt, i_PlanningPeriod) := p_NPVAnnuitizedCost(
+							p_AnnuitizedCost : p_InvestmentTaxCreditbyYear(i_ProdActiveOptTech, i_CensusDivisionOpt, i_calYear) , 
+							p_DiscountRate   : p_EquityRate ,
+							p_Type   	 : 1 )(i_PlanningPeriod);
+					endfor;
+					
+					! Calculate 45Q credits per H2 quantity for comparison
+					p_Section45QSalineCreditH2(i_ProdActiveOptTech, i_CensusDivisionOpt, i_PlanningPeriod)
+						:= p_Section45QSalineCredit(i_ProdActiveOptTech, i_CensusDivisionOpt, i_PlanningPeriod) * p_ProdProcessCO2CapturedPerTech(i_ProdActiveOptTech) / 1000;
+					p_Section45QEORCreditH2(i_ProdActiveOptTech, i_CensusDivisionOpt, i_PlanningPeriod)
+						:= p_Section45QEORCredit(i_ProdActiveOptTech, i_CensusDivisionOpt, i_PlanningPeriod) * p_ProdProcessCO2CapturedPerTech(i_ProdActiveOptTech) / 1000;
+					
+					! Calculate the maximum credit to use for any technology
+					p_MaxCredit(i_ProdActiveOptTech, i_CensusDivisionOpt, i_PlanningPeriod) 
+						:= max(p_Section45QSalineCredit(i_ProdActiveOptTech, i_CensusDivisionOpt, i_PlanningPeriod) * p_ProdProcessCO2CapturedPerTech(i_ProdActiveOptTech) / 1000,
+							p_Section45QEORCredit(i_ProdActiveOptTech, i_CensusDivisionOpt, i_PlanningPeriod)* p_ProdProcessCO2CapturedPerTech(i_ProdActiveOptTech) / 1000,
+							p_ProductionTaxCreditUsed(i_ProdActiveOptTech, i_CensusDivisionopt, i_PlanningPeriod),
+							p_InvestmentTaxCredit(i_ProdActiveOptTech, i_CensusDivisionopt, i_PlanningPeriod));
+					
+					p_Section45QSalineCredit(i_ProdActiveOptTech, i_CensusDivisionOpt, i_PlanningPeriod) 
+					| (p_MaxCredit(i_ProdActiveOptTech, i_CensusDivisionOpt, i_PlanningPeriod) > p_Section45QSalineCreditH2(i_ProdActiveOptTech, i_CensusDivisionOpt, i_PlanningPeriod)) := 0;
+					p_Section45QEORCredit(i_ProdActiveOptTech, i_CensusDivisionOpt, i_PlanningPeriod) 
+					| (p_MaxCredit(i_ProdActiveOptTech, i_CensusDivisionOpt, i_PlanningPeriod) > p_Section45QEORCreditH2(i_ProdActiveOptTech, i_CensusDivisionOpt, i_PlanningPeriod)) := 0;
+					p_ProductionTaxCreditUsed(i_ProdActiveOptTech, i_CensusDivisionOpt, i_PlanningPeriod) 
+					| (p_MaxCredit(i_ProdActiveOptTech, i_CensusDivisionOpt, i_PlanningPeriod) > p_ProductionTaxCreditUsed(i_ProdActiveOptTech, i_CensusDivisionOpt, i_PlanningPeriod)) := 0;
+					p_InvestmentTaxCredit(i_ProdActiveOptTech, i_CensusDivisionOpt, i_PlanningPeriod) 
+					| (p_MaxCredit(i_ProdActiveOptTech, i_CensusDivisionOpt, i_PlanningPeriod) > p_InvestmentTaxCredit(i_ProdActiveOptTech, i_CensusDivisionOpt, i_PlanningPeriod)) := 0;
+				}
+				Comment: "added multiplier to PTC";
+			}
+			DeclarationSection Ammonia_Parameters {
+				Set s_AmmoniaActiveOptTechs {
+					SubsetOf: s_ActiveNH3Technologies;
+					Index: i_AmmoniaActiveOptTech;
+				}
+				Parameter p_AmmoniaCapacityLimit {
+					IndexDomain: (i_NH3Tech,i_CensusDivision,i_PlanningPeriod);
+				}
+				Parameter p_TotalAmmoniaProductionCapacity {
+					IndexDomain: (i_NH3Tech,i_CensusDivision,i_calYear);
+				}
+				Parameter p_AmmoniaVariableO_MCost {
+					IndexDomain: (i_NH3Tech,i_CensusDivision,i_PlanningPeriod);
+					Comment: "Units: (Millions of 2018$ * day) /  (kTon NH3 * Year)";
+				}
+				Parameter p_AmmoniaVariableO_MCostbyYear {
+					IndexDomain: (i_NH3Tech,i_CensusDivision,i_calYear);
+					Comment: "Units: (Millions of 2018$ * day) /  (kTon NH3 * Year)";
+				}
+				Parameter p_AmmoniaUnplannedCapacityCost {
+					IndexDomain: (i_NH3Tech,i_CensusDivision,i_PlanningPeriod);
+				}
+				Parameter p_AmmoniaUnplannedCapacityCostbyYear {
+					IndexDomain: (i_NH3Tech, i_CensusDivisionOpt, i_calYear);
+				}
+				Parameter p_TotalAmmoniaProductionCapacityMultiple {
+					IndexDomain: (i_NH3Tech, i_CensusDivision, i_CalYear);
+				}
+			}
+			DeclarationSection General_Parameters {
+				ElementParameter ep_FirstModelYear {
+					Range: cal_Year;
+				}
+				ElementParameter ep_DollarYear {
+					Range: cal_Year;
+				}
+				ElementParameter ep_CurrentOptYear {
+					Range: cal_Year;
+				}
+				ElementParameter ep_CurrentIteration {
+					Range: s_IterationNumbers_D;
+				}
+				ElementParameter ep_NextOptYear {
+					Range: cal_Year;
+				}
+				ElementParameter ep_PeriodofYear {
+					IndexDomain: i_calYear;
+					Range: s_PlanningPeriods;
+				}
+				Set s_ThirdPeriodYears {
+					SubsetOf: cal_Year;
+					Index: i_ThirdPeriodYear;
+				}
+				Set s_PlanningPeriodsFirst {
+					SubsetOf: s_PlanningPeriods;
+					Index: i_PlanningPeriodFirst;
+					Parameter: ep_PlanningPeriodFirst;
+				}
+				Set s_PlanningPeriodsSecond {
+					SubsetOf: s_PlanningPeriods;
+					Index: i_PlanningPeriodSecond;
+					Parameter: ep_PlanningPeriodSecond;
+				}
+				Set s_PlanningPeriodsSecondThird {
+					SubsetOf: s_PlanningPeriods;
+					Index: i_PlanningPeriodSecondThird;
+				}
+				Set s_SeasonOpt {
+					SubsetOf: s_Seasons;
+					Index: i_SeasonOpt, j_SeasonOpt, k_SeasonOpt;
+				}
+				Parameter p_TotalH2Demand {
+					IndexDomain: (i_CensusDivision,i_Season,i_PlanningPeriod);
+				}
+				Parameter p_TotalH2MarketDemand {
+					IndexDomain: (i_CensusDivision,i_Season,i_calYear);
+				}
+				Parameter p_MarketH2DemandbySeason {
+					IndexDomain: (i_MarketQuantityCode,i_CensusDivision,i_Season,i_calYear);
+				}
+				Parameter p_MarketH2DemandSeasonFraction {
+					IndexDomain: (i_MarketQuantityCode,i_Season);
+				}
+				Parameter p_FuelPricebyPeriod {
+					IndexDomain: (i_Fuel,i_CensusDivision,i_PlanningPeriod);
+					Comment: {
+						"Units (Same as p_FuelPrice)
+						Natural Gas: 
+						Biomass: 
+						Coal:
+						Electricity: 
+						Ethanol: 
+						Hydrogen:"
+					}
+				}
+			}
+			DeclarationSection Production_Parameters {
+				Set s_ProdActiveOptTechs {
+					SubsetOf: s_ProdActiveTechs;
+					Index: i_ProdActiveOptTech, i_PAT;
+				}
+				Parameter p_ProdCapacityLimit {
+					IndexDomain: (i_ProdTech,i_CensusDivision,i_PlanningPeriod);
+				}
+				Parameter p_TotalProductionCapacity {
+					IndexDomain: (i_ProdTech,i_CensusDivision,i_calYear);
+				}
+				Parameter p_TotalProductionCapacityMultiple {
+					IndexDomain: (i_ProdTech,i_CensusDivision,i_calYear);
+				}
+				Parameter p_ProductionVariableO_MCost {
+					IndexDomain: (i_ProdTech,i_CensusDivision,i_PlanningPeriod);
+				}
+				Parameter p_ProductionFixedO_MCost {
+					IndexDomain: (i_ProdTech,i_CensusDivision,i_PlanningPeriod);
+				}
+				Parameter p_ProductionVariableO_MCostbyYear {
+					IndexDomain: (i_ProdTech,i_CensusDivision,i_calYear);
+				}
+				Parameter p_ProductionFixedO_MCostbyYear {
+					IndexDomain: (i_ProdTech,i_CensusDivision,i_calYear);
+				}
+				Parameter p_ProductionTaxCreditUsed {
+					IndexDomain: (i_ProdTech,i_CensusDivision,i_PlanningPeriod);
+				}
+				Parameter p_ProductionTaxCreditActual {
+					IndexDomain: (i_ProdTech,i_CensusDivision,i_PlanningPeriod);
+				}
+				Parameter p_ProductionTaxCreditbyYear {
+					IndexDomain: (i_ProdTech,i_CensusDivision,i_calYear);
+				}
+				Parameter p_ProductionTaxCreditbyTech {
+					IndexDomain: (i_Tech,i_NEMSYear);
+				}
+				Parameter p_CapacityProductionTaxCredit {
+					IndexDomain: (i_ProdTech, i_CensusDivision, i_PlanningPeriod);
+				}
+				Parameter p_InvestmentTaxCredit {
+					IndexDomain: (i_ProdTech,i_CensusDivision,i_PlanningPeriod);
+				}
+				Parameter p_InvestmentTaxCreditbyYear {
+					IndexDomain: (i_ProdTech,i_CensusDivision,i_calYear);
+				}
+				Parameter p_InvestmentTaxCreditbyTech {
+					IndexDomain: (i_Tech,i_NEMSYear);
+				}
+				Parameter p_ProdProcessCO2CapturedPerTech {
+					IndexDomain: i_ProdActiveTech;
+				}
+				Parameter p_Section45QSalineCredit {
+					IndexDomain: (i_ProdTech,i_CensusDivision,i_PlanningPeriod);
+				}
+				Parameter p_Section45QSalineCreditH2 {
+					IndexDomain: (i_ProdTech,i_CensusDivision,i_PlanningPeriod);
+				}
+				Parameter p_Section45QSalineCreditbyYear {
+					IndexDomain: (i_ProdTech,i_CensusDivision,i_calYear);
+				}
+				Parameter p_Section45QEORCredit {
+					IndexDomain: (i_ProdTech,i_CensusDivision,i_PlanningPeriod);
+				}
+				Parameter p_Section45QEORCreditH2 {
+					IndexDomain: (i_ProdTech,i_CensusDivision,i_PlanningPeriod);
+				}
+				Parameter p_Section45QEORCreditbyYear {
+					IndexDomain: (i_ProdTech,i_CensusDivision,i_calYear);
+				}
+				Parameter p_MaxCredit {
+					IndexDomain: (i_ProdTech,i_CensusDivision,i_PlanningPeriod);
+				}
+				Parameter p_CO2CaptureQty45QCredit {
+					IndexDomain: (i_ProdActiveTech, i_CensusDivision, i_PlanningPeriod);
+				}
+				Parameter p_ProductionUnplannedCapacityCost {
+					IndexDomain: (i_ProdTech,i_CensusDivision,i_PlanningPeriod);
+				}
+				Parameter p_ProductionUnplannedCapacityCostbyYear {
+					IndexDomain: (i_ProdTech,i_CensusDivision,i_calYear);
+				}
+				Parameter p_AdjustedFuelPricebyPeriod {
+					IndexDomain: (i_Fuel,i_ProdTech,i_CensusDivision,i_PlanningPeriod);
+				}
+				Parameter p_ElectricityGenerationNuclearbyYear {
+					IndexDomain: (i_CensusDivision,i_calYear);
+				}
+				Parameter p_ElectricityGenerationNuclear {
+					IndexDomain: (i_CensusDivision,i_PlanningPeriod);
+				}
+				Parameter p_ElectricityGenerationRenewablebyYear {
+					IndexDomain: (i_CensusDivision,i_calYear);
+				}
+				Parameter p_ElectricityGenerationRenewable {
+					IndexDomain: (i_CensusDivision,i_PlanningPeriod);
+				}
+			}
+			DeclarationSection Transportation_Parameters {
+				Parameter p_TransportCapacityLimit {
+					IndexDomain: (i_TranTech,i_CensusDivisionOpt,j_CensusDivisionOpt,i_PlanningPeriod);
+				}
+				Parameter p_TotalTransportCapacity {
+					IndexDomain: (i_TranTech,i_CensusDivisionOpt,j_CensusDivisionOpt,i_calYear);
+				}
+				Parameter p_TransportUnplannedCapacityCost {
+					IndexDomain: (i_TranTech,i_CensusDivisionOpt,j_CensusDivisionOpt,i_PlanningPeriod);
+				}
+				Parameter p_TransportUnplannedCapacityCostbyYear {
+					IndexDomain: (i_TranTech,i_CensusDivisionOpt,j_CensusDivisionOpt,i_calYear);
+				}
+			}
+			DeclarationSection Storage_Parameters {
+				Set s_StorageOptTechs {
+					SubsetOf: s_StorageTechs;
+					Index: i_StorageOptTech;
+				}
+				Parameter p_StorageCapacityLimit {
+					IndexDomain: (i_StorageTech,i_CensusDivision,i_PlanningPeriod);
+				}
+				Parameter p_TotalStorageCapacity {
+					IndexDomain: (i_StorageTech,i_CensusDivision,i_calYear);
+				}
+				Parameter p_StorageUnplannedCapacityCost {
+					IndexDomain: (i_StorageTech,i_CensusDivision,i_PlanningPeriod);
+				}
+				Parameter p_StorageUnplannedCapacityCostbyYear {
+					IndexDomain: (i_StorageTech,i_CensusDivision,i_calYear);
+				}
+				Parameter p_StorageExpansionFraction {
+					IndexDomain: i_StorageTech;
+				}
+			}
+			DeclarationSection Unused_Parameters {
+				Parameter p_TotalDemandThirdPeriod {
+					IndexDomain: (i_CensusDivision,i_Season,i_ThirdPeriodYear);
+				}
+				Parameter p_NPVTotalDemandThirdPeriod {
+					IndexDomain: (i_CensusDivision,i_Season);
+				}
+				Parameter p_FuelPriceThirdPeriod {
+					IndexDomain: (i_Fuel,i_CensusDivision,i_ThirdPeriodYear);
+				}
+				Parameter p_NPVFuelPriceThirdPeriod {
+					IndexDomain: (i_Fuel,i_CensusDivision);
+				}
+				Parameter p_ProductionUnplannedCapacityThirdPeriod {
+					IndexDomain: (i_ProdTech,i_CensusDivision,i_calYear);
+				}
+				Parameter p_NPVProductionUnplannedCapacityThirdPeriod {
+					IndexDomain: (i_ProdTech,i_CensusDivision);
+				}
+				Parameter p_TransportUnplannedCapacityThirdPeriod {
+					IndexDomain: (i_TranTech,i_CensusDivision,j_CensusDivision,i_calYear);
+				}
+				Parameter p_NPVTransportUnplannedCapacityThirdPeriod {
+					IndexDomain: (i_TranTech,i_CensusDivision,j_CensusDivision);
+				}
+				Parameter p_StorageUnplannedCapacityThirdPeriod {
+					IndexDomain: (i_StorageTech,i_CensusDivision,i_calYear);
+				}
+				Parameter p_NPVStorageUnplannedCapacityThirdPeriod {
+					IndexDomain: (i_StorageTech,i_CensusDivision);
+				}
+			}
+		}
+		Section PostOptimization_Procedures {
+			DeclarationSection Outputs_Declaration {
+				Parameter p_OneArray {
+					IndexDomain: i_calYear;
+				}
+				Set s_IterationNumbers_D {
+					SubsetOf: Integers;
+					Text: "Iteration Number";
+					Index: i_IterationNumber;
+					Property: ElementsAreNumerical;
+					Definition: {
+						{1..10}
+					}
+				}
+				Set M3_ {
+					Index: M3;
+					Parameter: ep_M3;
+					Definition: {
+						{'1','2','3'}
+					}
+				}
+				Set M50_ {
+					Index: M50;
+					Parameter: ep_NumTech;
+					Definition: {
+						data 
+						    { 1 , 2 , 3 , 4 , 5 , 6 , 7 , 8 , 9 , 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32,
+						      33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50 }
+					}
+				}
+				Parameter IsActive;
+				Parameter HMMBLK_HMGSPRD {
+					IndexDomain: (i_NEMSYear,i_CensusDivision);
+				}
+				Parameter HMMBLK_NH3EXPORT {
+					IndexDomain: (i_NEMSYear,i_CensusDivision);
+				}
+				Parameter HMMBLK_HMCLPRD {
+					IndexDomain: (i_NEMSYear,i_CensusDivision);
+				}
+				Parameter HMMBLK_HMBIPRD {
+					IndexDomain: (i_NEMSYear,i_CensusDivision);
+				}
+				Parameter HMMBLK_HMELPRD {
+					IndexDomain: (i_NEMSYear,i_CensusDivision);
+				}
+				Parameter HMMBLK_HMPRODSEQ {
+					IndexDomain: (M3,i_CensusDivision,i_NEMSYear);
+				}
+				Parameter HMMBLK_CO2CAPFUEL {
+					IndexDomain: (M3,i_CensusDivision,i_NEMSYear);
+				}
+				Parameter HMMBLK_H2Fuel {
+					IndexDomain: (i_Fuel,i_CensusDivision,i_NEMSYear);
+				}
+				Parameter HMMBLK_INVCST {
+					IndexDomain: (M50,i_CensusDivision,i_NEMSYear);
+					Comment: "Subsidy cost by year";
+				}
+				Parameter p_AmmoniaPrice {
+					IndexDomain: (i_CensusDivision, i_Season,i_calYear);
+				}
+				Parameter p_HydrogenPrice {
+					IndexDomain: (i_CensusDivision, i_Season,i_calYear);
+				}
+				Parameter p_ProductionUnplannedCapacity {
+					IndexDomain: (i_ProdTech,i_CensusDivision,i_calYear);
+				}
+				Parameter p_PUC {
+					IndexDomain: (i_ProdTech,i_CensusDivision,i_calYear);
+				}
+				Parameter p_ProductionCostRatio {
+					IndexDomain: (i_ProdTech,i_CensusDivision,i_ProductionStep);
+				}
+				Parameter p_ProductionMarketShare {
+					IndexDomain: (i_ProdTech,i_CensusDivision,i_ProductionStep);
+				}
+				Parameter p_SumProductionMarketShareAlpha {
+					IndexDomain: (i_CensusDivision,i_ProductionStep);
+				}
+				Parameter p_SumProductionUnplannedCapacity {
+					IndexDomain: (i_CensusDivision,i_PlanningPeriodSecondThird);
+				}
+				Parameter p_AmmoniaUnplannedCapacity {
+					IndexDomain: (i_NH3Tech,i_CensusDivision,i_calYear);
+				}
+				Parameter p_CO2CaptureQtybyTech {
+					IndexDomain: (i_Tech,i_CensusDivision,i_calYear);
+					Range: free;
+				}
+				Parameter p_CO2CaptureSalinebyTech {
+					IndexDomain: (i_Tech,i_CensusDivision,i_calYear);
+					Range: free;
+				}
+				Parameter p_CO2CaptureEORbyTech {
+					IndexDomain: (i_Tech,i_CensusDivision,i_calYear);
+					Range: free;
+				}
+				Parameter p_CO2CaptureQty45QCreditbyYear {
+					IndexDomain: (i_ProdTech, i_CensusDivision, i_calYear);
+				}
+				Parameter p_CO2CaptureSaline45QCreditbyYear {
+					IndexDomain: (i_ProdTech, i_CensusDivision, i_calYear);
+				}
+				Parameter p_CO2CaptureEOR45QCreditbyYear {
+					IndexDomain: (i_ProdTech, i_CensusDivision, i_calYear);
+				}
+				Parameter p_CO2CaptureQty45VCreditbyYear {
+					IndexDomain: (i_ProdTech, i_CensusDivision, i_calYear);
+				}
+				Parameter p_CapacityProductionTaxCreditbyYear {
+					IndexDomain: (i_ProdTech, i_CensusDivision, i_calYear);
+				}
+				Parameter p_CapacityInvestmentTaxCreditbyYear {
+					IndexDomain: (i_ProdTech, i_CensusDivision, i_calYear);
+				}
+				Parameter p_TransportUnplannedCapacity {
+					IndexDomain: (i_TranTech,i_CensusDivision,j_CensusDivision,i_calYear);
+				}
+				Parameter p_StorageUnplannedCapacity {
+					IndexDomain: (i_StorageTech,i_CensusDivision,i_calYear);
+				}
+				Parameter p_ProductionUnplannedCapacityPerYearAndIter {
+					IndexDomain: (i_ProdTech,i_CensusDivision,i_calYear, i_IterationNumber);
+				}
+				Parameter p_TransportUnplannedCapacityPerYearAndIter {
+					IndexDomain: (i_TranTech,i_CensusDivision,j_CensusDivision,i_calYear, i_IterationNumber);
+				}
+				Parameter p_StorageUnplannedCapacityPerYearAndIter {
+					IndexDomain: (i_StorageTech,i_CensusDivision,i_calYear, i_IterationNumber);
+				}
+				Parameter p_AmmoniaUnplannedCapacityPerYearAndIter {
+					IndexDomain: (i_NH3Tech,i_CensusDivision,i_calYear, i_IterationNumber);
+				}
+				Parameter p_DemandSlackPerYearAndIter {
+					IndexDomain: (i_CensusDivision, i_Season, i_PlanningPeriod,i_calYear, i_IterationNumber);
+					Text: "Demand Slack";
+				}
+				Parameter bp_SolvedYearsAndIterations {
+					IndexDomain: (i_calYear, i_IterationNumber);
+					Range: binary;
+				}
+				Parameter bp_ChangedIdentifiers {
+					IndexDomain: i_AllDefinedIdentifierName;
+					Text: "Loaded From Data Case";
+					Range: binary;
+				}
+				Set S_AllDefinedIdentifierNames_D {
+					SubsetOf: AllIdentifiers;
+					Text: "Identifier Name";
+					Index: i_AllDefinedIdentifierName;
+					Definition: {
+						{IndexIdentifiers | 
+						(IndexIdentifiers in S_AllSetNames_D 
+						or IndexIdentifiers in S_AllParameterNames_D)
+						and IndexIdentifiers <> 'SP_IdentifierCardinalities_D'}
+					}
+				}
+				Parameter p_ProductionOperatePerYearAndIter {
+					IndexDomain: (i_ProdTech,i_CensusDivision,i_Season,i_PlanningPeriod, i_calYear, i_IterationNumber);
+				}
+				Parameter p_RegionalTransportPerYearAndIter {
+					IndexDomain: (i_TranTech,i_CensusDivision,j_CensusDivision,i_Season,i_PlanningPeriod,i_calYear, i_IterationNumber);
+				}
+				Parameter p_AmmoniaOperatePerYearAndIter {
+					IndexDomain: (i_NH3Tech,i_CensusDivision,i_Season,i_PlanningPeriod, i_calYear, i_IterationNumber);
+				}
+				Parameter p_HydrogenForAmmoniaProductionPerYearAndIter {
+					IndexDomain: (i_CensusDivision, i_Season,i_PlanningPeriod, i_calYear, i_IterationNumber);
+				}
+				Parameter p_HydrogenProductionOpCost {
+					IndexDomain: (i_PAT, i_CensusDivisionOpt, i_calYear);
+				}
+				Parameter p_HydrogenFixedO_MCost {
+					IndexDomain: (i_PAT, i_CensusDivisionOpt, i_calYear);
+				}
+				Parameter p_HydrogenProductionCapCost {
+					IndexDomain: (i_ProdActiveOptTech, i_CensusDivisionOpt, i_calYear);
+				}
+				Parameter p_HydrogenProductionOpCredit {
+					IndexDomain: (i_ProdActiveOptTech, i_CensusDivisionOpt, i_calYear);
+				}
+				Parameter p_HydrogenProductionInvstCredit {
+					IndexDomain: (i_ProdActiveOptTech, i_CensusDivisionOpt, i_calYear);
+				}
+				Parameter p_CO2CaptureCredit {
+					IndexDomain: (i_ProdActiveOptTech, i_CensusDivisionOpt, i_calYear);
+				}
+			}
+			DeclarationSection Unused {
+				Parameter p_MinProductionReducedCost {
+					IndexDomain: (i_CensusDivision,i_ProductionStep);
+				}
+			}
+			Procedure pr_OutputParameterCreation {
+				Body: {
+					
+					if p_MarketShareON then
+						pr_MarketSharing;
+					endif;
+					
+					! need for sum to region 11
+					ep_CensusDivision := StringtoElement(i_CensusDivision, "11");
+					
+					ep_PlanningPeriodFirst := StringToElement(i_PlanningPeriodFirst,"Current Year");
+					! needed earlier
+					!ep_PlanningPeriodSecond := StringToElement(i_PlanningPeriodSecond,"Next Year");
+					ep_DollarYear := '2021';
+					
+					! deflate back to $87  !!!
+					p_HydrogenPrice(i_CensusDivisionOpt, i_SeasonOpt,ep_CurrentOptYear) 
+						:=  c_DemandNodes.shadowprice(i_CensusDivisionOpt, i_SeasonOpt,ep_PlanningPeriodFirst)/p_GDPDeflator(ep_CurrentOptYear);
+					! keep only current year
+					
+					! set all to slack cost if any is a slack
+					if sum((i_CensusDivisionOpt, i_SeasonOpt), v_DemandSlack(i_CensusDivisionOpt, i_SeasonOpt, ep_PlanningPeriodFirst)) > 0.0  then
+						 p_HydrogenPrice(i_CensusDivisionOpt, i_SeasonOpt,ep_CurrentOptYear) := p_SlackCost(ep_PlanningPeriodFirst)/p_GDPDeflator(ep_CurrentOptYear);
+					endif;
+					!HMMBLK_PHMM(i_MarketPriceCode, i_CensusDivisionOpt, i_NEMSYear) := 0;
+					
+					p_AmmoniaPrice(i_CensusDivisionOpt, i_SeasonOpt, ep_CurrentOptYear)
+						:= sum(i_PlanningPeriodFirst,  c_TotalAmmoniaProduction.ShadowPrice(i_CensusDivisionOpt, i_SeasonOpt, i_PlanningPeriodFirst));
+					
+					HMMBLK_PHMM(i_MarketPriceCode, i_CensusDivisionOpt, ep_NUMYRtoCal(ep_CurrentOptYear))
+						:= (max(i_SeasonOpt, p_HydrogenPrice(i_CensusDivisionOpt, i_SeasonOpt,ep_CurrentOptYear))
+						+ val(sp_HMMMARKUP(i_MarketPriceCode))) /(p_HydrogenHHV) * 10^6;
+					!set a minimum price
+					HMMBLK_PHMM(i_MarketPriceCode, i_CensusDivisionOpt, ep_NUMYRtoCal(ep_CurrentOptYear))
+						:= max(HMMBLK_PHMM(i_MarketPriceCode, i_CensusDivisionOpt, ep_NUMYRtoCal(ep_CurrentOptYear)),p_MinPrice);
+					! Product price and quantity	
+					!make sure all census division 11 filled in which does no good as it is not outputted but needed for prices
+					HMMBLK_QHMM(i_MarketQuantityCode, ep_CensusDivision, ep_NUMYRtoCal(ep_CurrentOptYear))
+						:= sum(i_CensusDivisionOpt,HMMBLK_QHMM(i_MarketQuantityCode, i_CensusDivisionOpt, ep_NUMYRtoCal(ep_CurrentOptYear)));
+					
+					! first set all prices to average of sectors, in case some quantities are all zero.
+					HMMBLK_PHMM(i_MarketPriceCode, ep_CensusDivision, ep_NUMYRtoCal(ep_CurrentOptYear))
+					 	:= sum(i_CensusDivisionOpt, HMMBLK_PHMM(i_MarketPriceCode,i_CensusDivisionOpt, ep_NUMYRtoCal(ep_CurrentOptYear)))/card(i_MarketPriceCode) ;	   !
+					
+					! then derive quantity weights
+					
+					HMMBLK_PHMM(i_MarketPriceCode, ep_CensusDivision, ep_NUMYRtoCal(ep_CurrentOptYear)) | (HMMBLK_QHMM(i_MarketPriceCode, ep_CensusDivision, ep_NUMYRtoCal(ep_CurrentOptYear)) > 0)
+						:= sum(i_CensusDivisionOpt,HMMBLK_PHMM(i_MarketPriceCode, i_CensusDivisionOpt, ep_NUMYRtoCal(ep_CurrentOptYear)) 
+						   * HMMBLK_QHMM(i_MarketPriceCode, i_CensusDivisionOpt, ep_NUMYRtoCal(ep_CurrentOptYear)));
+					
+					! divide by quantity for quantity weighted average when nonzero
+					
+					HMMBLK_PHMM(i_MarketPriceCode, ep_CensusDivision, ep_NUMYRtoCal(ep_CurrentOptYear))  | (HMMBLK_QHMM(i_MarketPriceCode, ep_CensusDivision, ep_NUMYRtoCal(ep_CurrentOptYear)) > 0)
+					 	:=HMMBLK_PHMM(i_MarketPriceCode, ep_CensusDivision, ep_NUMYRtoCal(ep_CurrentOptYear)) 	   !
+						/$HMMBLK_QHMM(i_MarketPriceCode, ep_CensusDivision, ep_NUMYRtoCal(ep_CurrentOptYear));
+					
+					
+					
+					
+					! keep only current year keep all years for 
+					!HMMBLK_INVCST(M50, i_CensusDivisionOpt, i_NEMSYear) := 0;
+					! sum investment costs
+					for i_ProdTech do
+					ep_NumTech := StringToElement(M50, ord(i_ProdTech));
+					!	HMMBLK_INVCST(ep_NumTech, i_CensusDivisionOpt, ep_NUMYRtoCal(ep_CurrentOptYear))
+					!		:= sum((i_PlanningPeriodFirst,i_SeasonOpt), v_ProductionOperate(i_ProdTech, i_CensusDivisionOpt, i_SeasonOpt, i_PlanningPeriodFirst)
+					!			* p_ProductionTaxCredit(i_ProdTech, i_CensusDivisionOpt, i_PlanningPeriodFirst))
+					!		+ sum(i_PlanningPeriodSecond, v_ProductionUnplannedCapacity(i_ProdTech, i_CensusDivisionOpt, i_PlanningPeriodSecond)
+					!			* p_InvestmentTaxCredit(i_ProdTech, i_CensusDivisionOpt, i_PlanningPeriodSecond)); 
+					
+					! keep capacity
+						HMMBLK_INVCST(ep_NumTech, i_CensusDivisionOpt, ep_NUMYRtoCal(ep_CurrentOptYear)) 
+							:= p_TotalProductionCapacity(i_ProdTech, i_CensusDivisionOpt, ep_CurrentOptYear);
+					
+						HMMBLK_INVCST(ep_NumTech, ep_CensusDivision, ep_NUMYRtoCal(ep_CurrentOptYear))
+							:= sum(i_CensusDivisionOpt,HMMBLK_INVCST(ep_NumTech, i_CensusDivisionOpt, ep_NUMYRtoCal(ep_CurrentOptYear)));
+					endfor;
+					
+					! zero out national total
+					
+					HMMBLK_HMPRODSEQ(M3, ep_CensusDivision, ep_NUMYRtoCal(ep_CurrentOptYear)) :=0;
+					
+					! calculate production by sequestered technologies
+					ep_M3 := StringtoElement(M3_ ,'2');
+					HMMBLK_HMPRODSEQ(ep_M3, i_CensusDivisionOpt, ep_NUMYRtoCal(ep_CurrentOptYear))
+					    := sum((i_ProdTech,i_SeasonOpt,i_PlanningPeriodFirst)|(i_ProdTech in s_ProdNGSeqTechs), 
+					        v_ProductionOperate(i_ProdTech, i_CensusDivisionOpt, i_SeasonOpt, i_PlanningPeriodFirst));
+					HMMBLK_HMPRODSEQ(ep_M3, ep_CensusDivision, ep_NUMYRtoCal(ep_CurrentOptYear))
+					    := sum(i_CensusDivisionOpt,HMMBLK_HMPRODSEQ(ep_M3,i_CensusDivisionOpt,ep_NUMYRtoCal(ep_CurrentOptYear)) );
+					
+					ep_M3 := StringtoElement(M3_ ,'1');
+					HMMBLK_HMPRODSEQ(ep_M3, i_CensusDivisionOpt, ep_NUMYRtoCal(ep_CurrentOptYear))
+					    := sum((i_ProdTech,i_SeasonOpt,i_PlanningPeriodFirst)|(i_ProdTech in s_ProdCLSeqTechs), 
+					        v_ProductionOperate(i_ProdTech, i_CensusDivisionOpt, i_SeasonOpt, i_PlanningPeriodFirst));
+					HMMBLK_HMPRODSEQ(ep_M3, ep_CensusDivision, ep_NUMYRtoCal(ep_CurrentOptYear))
+					    := sum(i_CensusDivisionOpt,HMMBLK_HMPRODSEQ(ep_M3,i_CensusDivisionOpt,ep_NUMYRtoCal(ep_CurrentOptYear)) );
+					
+					ep_M3 := StringtoElement(M3_ ,'3');
+					HMMBLK_HMPRODSEQ(ep_M3, i_CensusDivisionOpt, ep_NUMYRtoCal(ep_CurrentOptYear))
+					    := sum((i_ProdTech,i_SeasonOpt,i_PlanningPeriodFirst)|(i_ProdTech in s_ProdBMSeqTechs), 
+					        v_ProductionOperate(i_ProdTech, i_CensusDivisionOpt, i_SeasonOpt, i_PlanningPeriodFirst));
+					HMMBLK_HMPRODSEQ(ep_M3, ep_CensusDivision, ep_NUMYRtoCal(ep_CurrentOptYear))
+					    := sum(i_CensusDivisionOpt,HMMBLK_HMPRODSEQ(ep_M3,i_CensusDivisionOpt,ep_NUMYRtoCal(ep_CurrentOptYear)) );
+					! emissions by fuel
+					
+					HMMBLK_CO2CAPFUEL('1', i_CensusDivisionOpt, ep_NUMYRtoCal(ep_CurrentOptYear))
+						:= sum((i_ProdActiveOptTech,i_SeasonOpt,i_PlanningPeriodFirst), v_CO2EmissionstoCapture(i_ProdActiveOptTech, i_CensusDivisionOpt, i_SeasonOpt, i_PlanningPeriodFirst)
+							* p_ProdFuelConsumptionPerTech('Coal',i_ProdActiveOptTech)*p_EmissionFactors('Coal',ep_CurrentOptYear) / $p_TotalFuelEmissionsPerTech(i_ProdActiveOptTech,ep_CurrentOptYear));
+					HMMBLK_CO2CAPFUEL('2', i_CensusDivisionOpt, ep_NUMYRtoCal(ep_CurrentOptYear))
+						:= sum((i_ProdActiveOptTech,i_SeasonOpt,i_PlanningPeriodFirst), v_CO2EmissionstoCapture(i_ProdActiveOptTech, i_CensusDivisionOpt, i_SeasonOpt, i_PlanningPeriodFirst)
+							* p_ProdFuelConsumptionPerTech('Natural Gas',i_ProdActiveOptTech)*p_EmissionFactors('Natural Gas',ep_CurrentOptYear) / $p_TotalFuelEmissionsPerTech(i_ProdActiveOptTech,ep_CurrentOptYear));
+					HMMBLK_CO2CAPFUEL('3', i_CensusDivisionOpt, ep_NUMYRtoCal(ep_CurrentOptYear))
+						:= sum((i_ProdActiveOptTech,i_SeasonOpt,i_PlanningPeriodFirst), v_CO2EmissionstoCapture(i_ProdActiveOptTech, i_CensusDivisionOpt, i_SeasonOpt, i_PlanningPeriodFirst)
+							* p_ProdFuelConsumptionPerTech('Biomass',i_ProdActiveOptTech)*p_EmissionFactors('Biomass',ep_CurrentOptYear) / $p_TotalFuelEmissionsPerTech(i_ProdActiveOptTech,ep_CurrentOptYear));
+					
+					! national total
+					HMMBLK_CO2CAPFUEL(M3, ep_CensusDivision,ep_NUMYRtoCal(ep_CurrentOptYear))  :=
+					     sum(i_CensusDivisionOpt, HMMBLK_CO2CAPFUEL(M3,i_CensusDivisionOpt, ep_NUMYRtoCal(ep_CurrentOptYear)));
+					
+					
+					HMMBLK_H2Fuel(i_Fuel, i_CensusDivisionOpt, ep_NUMYRtoCal(ep_CurrentOptYear)) | (i_Fuel='Coal' or i_Fuel='Natural Gas' or i_Fuel='Biomass')
+						:= sum((i_ProdActiveOptTech,i_SeasonOpt,i_PlanningPeriodFirst), v_ProductionOperate(i_ProdActiveOptTech, i_CensusDivisionOpt, i_SeasonOpt, i_PlanningPeriodFirst)
+						* p_ProdFuelConsumptionPerTech(i_Fuel,i_ProdActiveOptTech) );
+					
+					HMMBLK_H2Fuel(i_Fuel, ep_CensusDivision, ep_NUMYRtoCal(ep_CurrentOptYear)) 
+					      := sum(i_CensusDivisionOpt, HMMBLK_H2Fuel(i_Fuel,i_CensusDivisionOpt, ep_NUMYRtoCal(ep_CurrentOptYear)));
+					!NG used
+					HMMBLK_HMGSPRD(ep_NUMYRtoCal(ep_CurrentOptYear),i_CensusDivisionOpt) 
+						:= sum((i_ProdTech,i_SeasonOpt,i_PlanningPeriodFirst)|(i_ProdTech in s_ProdNGTechs), 
+							v_ProductionOperate(i_ProdTech, i_CensusDivisionOpt, i_SeasonOpt, i_PlanningPeriodFirst));
+					HMMBLK_HMGSPRD(ep_NUMYRtoCal(ep_CurrentOptYear),ep_CensusDivision) 
+						:= sum(i_CensusDivisionOpt,HMMBLK_HMGSPRD(ep_NUMYRtoCal(ep_CurrentOptYear),i_CensusDivisionOpt) );
+					
+					!Coal used
+					HMMBLK_HMCLPRD(ep_NUMYRtoCal(ep_CurrentOptYear),i_CensusDivisionOpt) 
+						:= sum((i_ProdTech,i_SeasonOpt,i_PlanningPeriodFirst)|(i_ProdTech in s_ProdCLTechs), 
+							v_ProductionOperate(i_ProdTech, i_CensusDivisionOpt, i_SeasonOpt, i_PlanningPeriodFirst));
+					HMMBLK_HMCLPRD(ep_NUMYRtoCal(ep_CurrentOptYear),ep_CensusDivision) 
+						:= sum(i_CensusDivisionOpt,HMMBLK_HMCLPRD(ep_NUMYRtoCal(ep_CurrentOptYear),i_CensusDivisionOpt) );		
+					!Electricity used
+					HMMBLK_HMELPRD(ep_NUMYRtoCal(ep_CurrentOptYear),i_CensusDivisionOpt) 
+						:= sum((i_ProdTech,i_SeasonOpt,i_PlanningPeriodFirst)|(i_ProdTech in s_ProdELTechs), 
+							v_ProductionOperate(i_ProdTech, i_CensusDivisionOpt, i_SeasonOpt, i_PlanningPeriodFirst));
+					HMMBLK_HMELPRD(ep_NUMYRtoCal(ep_CurrentOptYear),ep_CensusDivision) 
+						:= sum(i_CensusDivisionOpt,HMMBLK_HMELPRD(ep_NUMYRtoCal(ep_CurrentOptYear),i_CensusDivisionOpt) );		
+					
+					!Biomass used
+					HMMBLK_HMBIPRD(ep_NUMYRtoCal(ep_CurrentOptYear),i_CensusDivisionOpt) 
+						:= sum((i_ProdTech,i_SeasonOpt,i_PlanningPeriodFirst)|(i_ProdTech in s_ProdBMTechs), 
+							v_ProductionOperate(i_ProdTech, i_CensusDivisionOpt, i_SeasonOpt, i_PlanningPeriodFirst));
+					HMMBLK_HMBIPRD(ep_NUMYRtoCal(ep_CurrentOptYear),ep_CensusDivision) 
+						:= sum(i_CensusDivisionOpt,HMMBLK_HMBIPRD(ep_NUMYRtoCal(ep_CurrentOptYear),i_CensusDivisionOpt) );		
+					
+					!CO2 captured 
+					p_CO2CaptureQtybyTech(i_Tech, i_CensusDivisionOpt, ep_CurrentOptYear)
+						:= sum((i_SeasonOpt,i_PlanningPeriodFirst), v_CO2EmissionstoCapture(ep_ProductionTech(i_Tech), i_CensusDivisionOpt, i_SeasonOpt, ep_PeriodofYear(ep_CurrentOptYear))); 
+					p_CO2CaptureSalinebyTech(i_Tech, i_CensusDivisionOpt, ep_CurrentOptYear)
+						:= sum((i_SeasonOpt,i_PlanningPeriodFirst), v_CO2CapturetoSaline(ep_ProductionTech(i_Tech), i_CensusDivisionOpt, i_SeasonOpt, ep_PeriodofYear(ep_CurrentOptYear)));
+					p_CO2CaptureEORbyTech(i_Tech, i_CensusDivisionOpt, ep_CurrentOptYear)
+						:= sum((i_SeasonOpt,i_PlanningPeriodFirst), v_CO2CapturetoEOR(ep_ProductionTech(i_Tech), i_CensusDivisionOpt, i_SeasonOpt, ep_PeriodofYear(ep_CurrentOptYear)));
+					
+					p_CO2CaptureQty45QCreditbyYear(i_ProdActiveOptTech, i_CensusDivisionOpt, i_calYear) 
+						| ((i_calYear > ep_CurrentOptYear and i_calYear <= ep_CurrentOptYear + TCS45Q_I_45Q_DURATION('1'))) and (ep_CurrentOptYear <= StringToElement(i_calYear, TCS45Q_I_45Q_LYR_NEW('1')))
+						:= sum(i_PlanningPeriodSecond, v_ProductionUnplannedCapacity(i_ProdActiveOptTech, i_CensusDivisionOpt, i_PlanningPeriodSecond))
+							* p_ProdProcessCO2CapturedPerTech(i_ProdActiveOptTech) / 1000
+						+ p_CO2CaptureQty45QCreditbyYear(i_ProdActiveOptTech, i_CensusDivisionOpt, i_calYear);
+					
+					p_CO2CaptureSaline45QCreditbyYear(i_ProdActiveOptTech, i_CensusDivisionOpt, i_calYear)
+						| ((i_calYear > ep_CurrentOptYear and i_calYear <= ep_CurrentOptYear + TCS45Q_I_45Q_DURATION('1'))) and (ep_CurrentOptYear <= StringToElement(i_calYear, TCS45Q_I_45Q_LYR_NEW('1')))
+						:= sum((i_SeasonOpt,i_PlanningPeriodSecond), v_CO2CapturetoSaline45Q(i_ProdActiveOptTech, i_CensusDivisionOpt, i_SeasonOpt, i_PlanningPeriodSecond)
+							 | p_Section45QSalineCredit(i_ProdActiveOptTech, i_CensusDivisionOpt, i_PlanningPeriodSecond)) 
+							+ p_CO2CaptureSaline45QCreditbyYear(i_ProdActiveOptTech, i_CensusDivisionOpt, i_calYear);
+					
+					p_CO2CaptureEOR45QCreditbyYear(i_ProdActiveOptTech, i_CensusDivisionOpt, i_calYear)
+						| ((i_calYear > ep_CurrentOptYear and i_calYear <= ep_CurrentOptYear + TCS45Q_I_45Q_DURATION('1'))) and (ep_CurrentOptYear <= StringToElement(i_calYear, TCS45Q_I_45Q_LYR_NEW('1')))
+						:= sum((i_SeasonOpt,i_PlanningPeriodSecond), v_CO2CapturetoEOR45Q(i_ProdActiveOptTech, i_CensusDivisionOpt, i_SeasonOpt, i_PlanningPeriodSecond) 
+							 | p_Section45QEORCredit(i_ProdActiveOptTech, i_CensusDivisionOpt, i_PlanningPeriodSecond)) 
+							+ p_CO2CaptureEOR45QCreditbyYear(i_ProdActiveOptTech, i_CensusDivisionOpt, i_calYear);
+					
+					p_CO2CaptureQty45VCreditbyYear(i_ProdActiveOptTech, i_CensusDivisionOpt, i_calYear) 
+						| ((i_calYear > ep_CurrentOptYear and i_calYear <= ep_CurrentOptYear + p_45V_DURATION)) and (ep_CurrentOptYear <= StringToElement(i_calYear, p_45V_LYR_NEW))
+						:= sum(i_PlanningPeriodSecond, v_ProductionUnplannedCapacity(i_ProdActiveOptTech, i_CensusDivisionOpt, i_PlanningPeriodSecond))
+						+ p_CO2CaptureQty45VCreditbyYear(i_ProdActiveOptTech, i_CensusDivisionOpt, i_calYear);
+					
+					p_CapacityProductionTaxCreditbyYear(i_ProdActiveOptTech, i_CensusDivisionOpt, i_calYear)
+						| ((i_calYear > ep_CurrentOptYear and i_calYear <= ep_CurrentOptYear + p_45V_DURATION)) and (ep_CurrentOptYear <= StringToElement(i_calYear, p_45V_LYR_NEW))
+						:= sum(i_PlanningPeriodSecond, v_ProductionUnplannedCapacity(i_ProdActiveOptTech, i_CensusDivisionOpt, i_PlanningPeriodSecond)
+							 | p_ProductionTaxCreditUsed(i_ProdActiveOptTech, i_CensusDivisionOpt, i_PlanningPeriodSecond)) 
+						+ p_CapacityProductionTaxCreditbyYear(i_ProdActiveOptTech, i_CensusDivisionOpt, i_calYear);
+					p_CapacityProductionTaxCreditbyYear(ep_ProductionTech(i_Tech), i_CensusDivisionOpt, i_calYear)
+						| ((i_calYear > ep_CurrentOptYear and i_calYear <= ep_CurrentOptYear + p_45V_DURATION)) and (ep_CurrentOptYear <= StringToElement(i_calYear, p_45V_LYR_NEW))
+						:= p_CapacityProductionTaxCreditbyYear(ep_ProductionTech(i_Tech), i_CensusDivisionOpt, i_calYear)
+							+ p_ProductionCapacityPlanned(i_Tech, i_CensusDivisionOpt, ep_NUMYRtoCal(ep_NextOptYear));
+					
+					p_CapacityInvestmentTaxCreditbyYear(i_ProdActiveOptTech, i_CensusDivisionOpt, i_calYear)
+						| ((i_calYear > ep_CurrentOptYear and i_calYear <= ep_CurrentOptYear + p_45V_DURATION)) and (ep_CurrentOptYear <= StringToElement(i_calYear, p_45V_LYR_NEW))
+						:= sum(i_PlanningPeriodSecond, v_ProductionUnplannedCapacity(i_ProdActiveOptTech, i_CensusDivisionOpt, i_PlanningPeriodSecond)
+							 | p_InvestmentTaxCredit(i_ProdActiveOptTech, i_CensusDivisionOpt, i_PlanningPeriodSecond)) 
+						+ p_CapacityInvestmentTaxCreditbyYear(i_ProdActiveOptTech, i_CensusDivisionOpt, i_calYear);
+					
+					
+					
+					! add fuels
+					ep_Fuel :='Coal';
+					QBLK_QCLHM( i_CensusDivisionOpt, ep_NUMYRtoCal(ep_CurrentOptYear)) := 
+						sum(i_PlanningPeriodFirst,v_FuelConsumption(ep_Fuel, i_CensusDivisionOpt,  i_PlanningPeriodFirst));
+					QBLK_QCLHM( ep_CensusDivision, ep_NUMYRtoCal(ep_CurrentOptYear)) :=
+					   sum(i_CensusDivisionOpt, QBLK_QCLHM( i_CensusDivisionOpt, ep_NUMYRtoCal(ep_CurrentOptYear)));
+					
+					ep_Fuel :='Natural Gas';
+					QBLK_QNGHM( i_CensusDivisionOpt, ep_NUMYRtoCal(ep_CurrentOptYear)) :=
+						sum(i_PlanningPeriodFirst, v_FuelConsumption(ep_Fuel, i_CensusDivisionOpt,  i_PlanningPeriodFirst));
+					QBLK_QNGHM( ep_CensusDivision, ep_NUMYRtoCal(ep_CurrentOptYear)) :=
+					   sum(i_CensusDivisionOpt, QBLK_QNGHM( i_CensusDivisionOpt, ep_NUMYRtoCal(ep_CurrentOptYear)));
+					
+					ep_Fuel :='Biomass';
+					QBLK_QBMHM( i_CensusDivisionOpt, ep_NUMYRtoCal(ep_CurrentOptYear)) := 
+					  sum(i_PlanningPeriodFirst,v_FuelConsumption(ep_Fuel, i_CensusDivisionOpt,  i_PlanningPeriodFirst)) ;
+					QBLK_QBMHM( ep_CensusDivision, ep_NUMYRtoCal(ep_CurrentOptYear)) :=
+					   sum(i_CensusDivisionOpt, QBLK_QBMHM( i_CensusDivisionOpt, ep_NUMYRtoCal(ep_CurrentOptYear)));
+					
+					
+					! Note electricity was in kwhr/kg 
+					ep_Fuel :='Electricity';
+					QBLK_QELHM( i_CensusDivisionOpt, ep_NUMYRtoCal(ep_CurrentOptYear)) := 
+						sum(i_PlanningPeriodFirst,v_FuelConsumption(ep_Fuel, i_CensusDivisionOpt,  i_PlanningPeriodFirst)) /p_KWhToMMBTU;
+					QBLK_QELHM( ep_CensusDivision, ep_NUMYRtoCal(ep_CurrentOptYear)) :=
+					   sum(i_CensusDivisionOpt, QBLK_QELHM( i_CensusDivisionOpt, ep_NUMYRtoCal(ep_CurrentOptYear)));
+					
+					
+					!Store Production, transportation storage and ammonia capacity
+					p_ProductionUnplannedCapacity(i_ProdActiveOptTech, i_CensusDivisionOpt, ep_NextOptYear)
+						:= p_ProductionUnplannedCapacity(i_ProdActiveOptTech, i_CensusDivisionOpt, ep_CurrentOptYear) 
+						+ sum(i_PlanningPeriodSecond, v_ProductionUnplannedCapacity(i_ProdActiveOptTech, i_CensusDivisionOpt, i_PlanningPeriodSecond));
+					p_ProductionUnplannedCapacity(ep_ProductionTech(i_Tech), i_CensusDivisionOpt, ep_NextOptYear)
+						:= p_ProductionUnplannedCapacity(ep_ProductionTech(i_Tech), i_CensusDivisionOpt, ep_NextOptYear)
+							+ p_ProductionCapacityPlanned(i_Tech, i_CensusDivisionOpt, ep_NUMYRtoCal(ep_NextOptYear));
+					p_ProductionUnplannedCapacity(i_ProdActiveOptTech, i_CensusDivisionOpt, i_ThirdPeriodYear)
+						:= p_ProductionUnplannedCapacity(i_ProdActiveOptTech, i_CensusDivisionOpt, ep_CurrentOptYear) 
+						+ sum(i_PlanningPeriodSecond, v_ProductionUnplannedCapacity(i_ProdActiveOptTech, i_CensusDivisionOpt, i_PlanningPeriodSecond));
+					p_ProductionUnplannedCapacity(ep_ProductionTech(i_Tech), i_CensusDivisionOpt, i_ThirdPeriodYear)
+						:= p_ProductionUnplannedCapacity(ep_ProductionTech(i_Tech), i_CensusDivisionOpt, i_ThirdPeriodYear)
+							+ p_ProductionCapacityPlanned(i_Tech, i_CensusDivisionOpt, ep_NUMYRtoCal(ep_NextOptYear));
+					
+					p_TransportUnplannedCapacity(i_TranTech, i_CensusDivisionOpt, j_CensusDivisionOpt, ep_NextOptYear)
+						:= p_TransportUnplannedCapacity(i_TranTech, i_CensusDivisionOpt, j_CensusDivisionOpt, ep_CurrentOptYear)
+						+ sum(i_PlanningPeriodSecond, v_TransportUnplannedCapacity(i_TranTech, i_CensusDivisionOpt, j_CensusDivisionOpt, i_PlanningPeriodSecond));
+					p_TransportUnplannedCapacity(i_TranTech, i_CensusDivisionOpt, j_CensusDivisionOpt, i_ThirdPeriodYear)
+						:= p_TransportUnplannedCapacity(i_TranTech, i_CensusDivisionOpt, j_CensusDivisionOpt, ep_CurrentOptYear)
+						+ sum(i_PlanningPeriodSecond, v_TransportUnplannedCapacity(i_TranTech, i_CensusDivisionOpt, j_CensusDivisionOpt, i_PlanningPeriodSecond));
+					
+					p_StorageUnplannedCapacity(i_StorageTech, i_CensusDivisionOpt, ep_NextOptYear)
+						:= p_StorageUnplannedCapacity(i_StorageTech, i_CensusDivisionOpt, ep_CurrentOptYear)
+						+ sum(i_PlanningPeriodSecond, v_StorageUnplannedCapacity(i_StorageTech, i_CensusDivisionOpt, i_PlanningPeriodSecond));
+					p_StorageUnplannedCapacity(i_StorageTech, i_CensusDivisionOpt, i_ThirdPeriodYear)
+						:= p_StorageUnplannedCapacity(i_StorageTech, i_CensusDivisionOpt, ep_CurrentOptYear)
+						+ sum(i_PlanningPeriodSecond, v_StorageUnplannedCapacity(i_StorageTech, i_CensusDivisionOpt, i_PlanningPeriodSecond));
+					
+					p_AmmoniaUnplannedCapacity(i_NH3Tech, i_CensusDivisionOpt, i_calYear)
+						:= p_AmmoniaUnplannedCapacity(i_NH3Tech, i_CensusDivisionOpt, ep_CurrentOptYear)
+						+ sum(i_PlanningPeriodSecond, v_AmmoniaProductionUnplannedCapacity(i_NH3Tech, i_CensusDivisionOpt, i_PlanningPeriodSecond));
+					
+					p_ProductionUnplannedCapacityPerYearAndIter(i_ProdActiveOptTech, i_CensusDivisionOpt, ep_CurrentOptYear, ep_CurrentIteration)
+						:= p_ProductionUnplannedCapacity(i_ProdActiveOptTech, i_CensusDivisionOpt, ep_CurrentOptYear);
+					
+					p_TransportUnplannedCapacityPerYearAndIter(i_TranTech, i_CensusDivisionOpt, j_CensusDivisionOpt, ep_CurrentOptYear, ep_CurrentIteration)
+						:= p_TransportUnplannedCapacity(i_TranTech, i_CensusDivisionOpt, j_CensusDivisionOpt, ep_CurrentOptYear);
+					
+					p_StorageUnplannedCapacityPerYearAndIter(i_StorageTech, i_CensusDivisionOpt, ep_CurrentOptYear, ep_CurrentIteration)
+						:= p_StorageUnplannedCapacity(i_StorageTech, i_CensusDivisionOpt, ep_CurrentOptYear);
+					
+					p_AmmoniaUnplannedCapacityPerYearAndIter(i_NH3Tech, i_CensusDivisionOpt, ep_CurrentOptYear, ep_CurrentIteration)
+						:= p_AmmoniaUnplannedCapacity(i_NH3Tech, i_CensusDivisionOpt, ep_CurrentOptYear);
+					
+					
+					
+					!Store NH3 exports
+					HMMBLK_NH3EXPORT(ep_NUMYRtoCal(ep_CurrentOptYear),i_CensusDivisionOpt)     := sum((i_ActiveNH3Technology,i_SeasonOpt),v_AmmoniaProductionOperate(i_ActiveNH3Technology, i_CensusDivisionOpt, i_SeasonOpt, ep_PlanningPeriodFirst));
+					
+					!region 11
+					HMMBLK_NH3EXPORT(ep_NUMYRtoCal(ep_CurrentOptYear),ep_CensusDivision)   :=
+					   sum(i_CensusDivisionOpt, HMMBLK_NH3EXPORT(ep_NUMYRtoCal(ep_CurrentOptYear),i_CensusDivisionOpt));
+					! Store operates and extra relevant information
+					!store in data operates, transport, NH3 production and H2 for NH3 production
+					p_ProductionOperatePerYearAndIter(i_ProdActiveTech, i_CensusDivisionOpt, i_SeasonOpt, i_PlanningPeriod, ep_CurrentOptYear, ep_CurrentIteration)
+					:= v_ProductionOperate(i_ProdActiveTech, i_CensusDivisionOpt, i_SeasonOpt, i_PlanningPeriod);
+					
+					p_RegionalTransportPerYearAndIter(i_TranTech, i_CensusDivisionOpt, j_CensusDivisionOpt, i_SeasonOpt, i_PlanningPeriod, ep_CurrentOptYear, ep_CurrentIteration)
+					:= v_RegionalTransport(i_TranTech, i_CensusDivisionOpt, j_CensusDivisionOpt, i_SeasonOpt, i_PlanningPeriod);
+					
+					p_AmmoniaOperatePerYearAndIter(i_ActiveNH3Technology, i_CensusDivisionOpt, i_SeasonOpt, i_PlanningPeriod, ep_CurrentOptYear, ep_CurrentIteration)
+					:= v_AmmoniaProductionOperate(i_ActiveNH3Technology, i_CensusDivisionOpt, i_SeasonOpt, i_PlanningPeriod);
+					
+					p_HydrogenForAmmoniaProductionPerYearAndIter(i_CensusDivision, i_Season, i_PlanningPeriod, ep_CurrentOptYear, ep_CurrentIteration)
+					:= v_HydrogenUsedForAmmoniaProduction(i_CensusDivision, i_Season, i_PlanningPeriod);
+					
+					! Store which years-iterations have been solved
+					bp_SolvedYearsAndIterations(ep_CurrentOptYear, ep_CurrentIteration)
+					:= 1;
+					
+					! write out production operate cost
+					p_HydrogenProductionOpCost(i_ProdActiveOptTech, i_CensusDivisionOpt,ep_NextOptYear)  := (sum(i_Fuel, p_AdjustedFuelPricebyPeriod(i_Fuel, i_ProdActiveOptTech, i_CensusDivisionOpt, ep_PlanningPeriodSecond) * p_ProdFuelConsumptionPerTech(i_Fuel,i_ProdActiveOptTech))  
+							+ p_ProductionVariableO_MCost(i_ProdActiveOptTech, i_CensusDivisionOpt, ep_PlanningPeriodSecond)
+							) * p_GDPDeflator(ep_DollarYear)/p_GDPDeflator(ep_NextOptYear);
+					! O&M Cost
+					p_HydrogenFixedO_MCost(i_ProdActiveOptTech, i_CensusDivisionOpt,ep_NextOptYear) := p_ProductionFixedO_MCost(i_ProdActiveOptTech, i_CensusDivisionOpt,  ep_PlanningPeriodSecond)
+					     * p_GDPDeflator(ep_DollarYear)/p_GDPDeflator(ep_NextOptYear);
+					
+					! operating credit Not exactly right, ask Amogh
+					  p_HydrogenProductionOpCredit(i_ProdActiveOptTech, i_CensusDivisionOpt,ep_NextOptYear)  := -1. *  p_ProductionTaxCreditActual(i_ProdActiveOptTech, i_CensusDivisionopt, ep_PlanningPeriodSecond)
+					     * p_GDPDeflator(ep_DollarYear)/p_GDPDeflator(ep_NextOptYear);
+					
+					! capital cost Needs to be levelized. Use third period amortization period
+					p_OneArray(i_calYear) := 1;
+					p_HydrogenProductionCapCost(i_ProdActiveOptTech, i_CensusDivisionOpt,ep_NextOptYear) := p_ProductionUnplannedCapacityCost(i_ProdActiveOptTech, i_CensusDivisionOpt, ep_PlanningPeriodSecond)
+					    * p_GDPDeflator(ep_DollarYear)/p_GDPDeflator(ep_NextOptYear)/$InvestmentVariablePresentValue(
+								p_OneArray(i_ThirdPeriodYear),                   ! (input) one-dimensional numerical parameter
+								p_EquityRate             ! (input) numerical expression
+								);
+					
+					! capital credit
+					p_HydrogenProductionInvstCredit(i_ProdActiveOptTech, i_CensusDivisionOpt,ep_NextOptYear) := - p_InvestmentTaxCredit(i_ProdActiveOptTech, i_CensusDivisionOpt,ep_PlanningPeriodSecond)
+					     * p_GDPDeflator(ep_DollarYear)/p_GDPDeflator(ep_NextOptYear);
+					! CO2 credit
+					p_CO2CaptureCredit(i_ProdActiveOptTech,i_CensusDivisionOpt,ep_NextOptYear) :=	- p_Section45QSalineCredit(i_ProdActiveOptTech, i_CensusDivisionOpt, ep_PlanningPeriodSecond)
+					     * p_GDPDeflator(ep_DollarYear)/p_GDPDeflator(ep_NextOptYear);
+					!	-  p_Section45QEORCredit(i_ProdActiveOptTech, i_CensusDivisionOpt, ep_PlanningPeriodSecond);
+					
+					! Raise a warning if the slack variables are non Zero, and also store the value
+					p_DemandSlackPerYearAndIter(i_CensusDivisionOpt, i_SeasonOpt, i_PlanningPeriod, ep_CurrentOptYear, ep_CurrentIteration)
+					:= v_DemandSlack(i_CensusDivisionOpt, i_SeasonOpt, i_PlanningPeriod);
+					
+					block
+						for (i_CensusDivisionOpt, i_SeasonOpt, i_PlanningPeriod) | v_DemandSlack(i_CensusDivisionOpt, i_SeasonOpt, i_PlanningPeriod) do
+					
+							if v_DemandSlack(i_CensusDivisionOpt, i_SeasonOpt, i_PlanningPeriod) > 0 then
+								raise warning "Demand slack for census division " + i_CensusDivisionOpt +
+								", season " + i_SeasonOpt + " and planning period " + i_PlanningPeriod + " is non-zero, with a value of: " +
+								v_DemandSlack(i_CensusDivisionOpt, i_SeasonOpt, i_PlanningPeriod);
+							endif;
+						endfor;
+					onerror ep_err do
+						sp_ErrorMessage := errh::Message( ep_err ) +
+						pr_ErrorOutput(ep_err);
+					endblock;
+				}
+				Comment: {
+					"price is in $/kg  Must convert to $/MMBTU
+					Add markup 
+					h2fuel should be multiplied!!!
+					
+					p_HydrogenPrice(i_CensusDivisionOpt, i_SeasonOpt,ep_CurrentOptYear) 
+						:= sum(i_PlanningPeriodFirst, c_DemandNodes.shadowprice(i_CensusDivisionOpt, i_SeasonOpt,i_PlanningPeriodFirst)); seems to fail miserably"
+				}
+			}
+			Procedure pr_MarketSharing {
+				Body: {
+					! Calculate ratio of deviation from best cost to total cost
+					p_ProductionCostRatio(i_ProdActiveOptTech, i_CensusDivisionOpt, i_ProductionStep) 
+						| (sum(i_PlanningPeriodSecond, v_ProductionUnplannedCapacityByStep.ReducedCost(i_ProdActiveOptTech, i_CensusDivisionOpt, i_PlanningPeriodSecond, i_ProductionStep)) >= 0)
+						:= 1 - (sum(i_PlanningPeriodSecond, v_ProductionUnplannedCapacityByStep.ReducedCost(i_ProdActiveOptTech, i_CensusDivisionOpt, i_PlanningPeriodSecond, i_ProductionStep)))
+					!			- p_MinProductionReducedCost(i_CensusDivisionOpt, i_ProductionStep))
+							/$(sum(i_PlanningPeriodSecond, p_ProductionUnplannedCapacityCost(i_ProdActiveOptTech, i_CensusDivisionOpt, i_PlanningPeriodSecond)
+					!			- p_InvestmentTaxCredit(i_ProdActiveOptTech, i_CensusDivisionOpt, i_PlanningPeriodSecond))
+								+ sum(i_Fuel, p_AdjustedFuelPricebyPeriod(i_Fuel, i_ProdActiveOptTech, i_CensusDivisionOpt, i_PlanningPeriodSecond) * p_ProdFuelConsumptionPerTech(i_Fuel,i_ProdActiveOptTech))  
+							+ p_ProductionVariableO_MCost(i_ProdActiveOptTech, i_CensusDivisionOpt, i_PlanningPeriodSecond)
+							+ p_ProductionFixedO_MCost(i_ProdActiveOptTech, i_CensusDivisionOpt, i_PlanningPeriodSecond)
+							- p_MaxCredit(i_ProdActiveOptTech, i_CensusDivisionOpt, i_PlanningPeriodSecond) 
+							));
+					
+					! Calculate Market share
+					p_SumProductionMarketShareAlpha(i_CensusDivisionOpt, i_ProductionStep)
+						:= sum(i_ProdActiveOptTech | (p_ProductionCostRatio(i_ProdActiveOptTech, i_CensusDivisionOpt, i_ProductionStep) > p_MarketShareCutoff), 
+							power(p_ProductionCostRatio(i_ProdActiveOptTech, i_CensusDivisionOpt, i_ProductionStep),p_MarketShareAlpha));
+					empty p_ProductionMarketShare;
+					p_ProductionMarketShare(i_ProdActiveOptTech, i_CensusDivisionOpt, i_ProductionStep) | (p_ProductionCostRatio(i_ProdActiveOptTech, i_CensusDivisionOpt, i_ProductionStep) > p_MarketShareCutoff
+						and p_SumProductionMarketShareAlpha(i_CensusDivisionOpt, i_ProductionStep) > 0)
+						:= power(p_ProductionCostRatio(i_ProdActiveOptTech, i_CensusDivisionOpt, i_ProductionStep),p_MarketShareAlpha) / 
+							$p_SumProductionMarketShareAlpha(i_CensusDivisionOpt, i_ProductionStep);
+					
+					! Recalculating unplanned builds
+					ep_ProductionStep := 'Step1';
+					p_SumProductionUnplannedCapacity(i_CensusDivisionOpt, i_PlanningPeriodSecond)
+						:= sum(i_ProdActiveOptTech | (p_ProductionMarketShare(i_ProdActiveOptTech, i_CensusDivisionOpt, ep_ProductionStep) > 0), 
+							v_ProductionUnplannedCapacity(i_ProdActiveOptTech, i_CensusDivisionOpt, i_PlanningPeriodSecond));
+					v_ProductionUnplannedCapacity(i_ProdActiveOptTech, i_CensusDivisionOpt, i_PlanningPeriodSecond) | (p_ProductionMarketShare(i_ProdActiveOptTech, i_CensusDivisionOpt, ep_ProductionStep) > 0)
+					 	:= p_SumProductionUnplannedCapacity(i_CensusDivisionOpt, i_PlanningPeriodSecond) * p_ProductionMarketShare(i_ProdActiveOptTech, i_CensusDivisionOpt, ep_ProductionStep);
+				}
+			}
+		}
+	}
+	Section Optimization_Variables {
+		DeclarationSection Objective_Function {
+			Variable v_TotalCost {
+				Range: free;
+				Definition: {
+					
+					sum((i_ProdActiveOptTech, i_CensusDivisionOpt, i_PlanningPeriod), 
+					! Production Fuel and Variable Costs
+						sum(i_SeasonOpt, v_ProductionOperate(i_ProdActiveOptTech, i_CensusDivisionOpt, i_SeasonOpt, i_PlanningPeriod) )
+							* (sum(i_Fuel, p_AdjustedFuelPricebyPeriod(i_Fuel, i_ProdActiveOptTech, i_CensusDivisionOpt, i_PlanningPeriod) * p_ProdFuelConsumptionPerTech(i_Fuel,i_ProdActiveOptTech))  
+							+ p_ProductionVariableO_MCost(i_ProdActiveOptTech, i_CensusDivisionOpt, i_PlanningPeriod)
+							+ p_ProductionFixedO_MCost(i_ProdActiveOptTech, i_CensusDivisionOpt, i_PlanningPeriod)
+					!		- p_ProductionTaxCredit(i_ProdActiveOptTech, i_CensusDivisionOpt, i_PlanningPeriod)
+							)
+							- v_ProductionTaxCredit(i_ProdActiveOptTech, i_CensusDivisionOpt, i_PlanningPeriod)
+					
+					! Production Capacity Costs with steps
+						+ sum(i_ProductionStep, v_ProductionUnplannedCapacityByStep(i_ProdActiveOptTech, i_CensusDivisionOpt, i_PlanningPeriod, i_ProductionStep)
+							* (p_ProductionUnplannedCapacityCost(i_ProdActiveOptTech, i_CensusDivisionOpt, i_PlanningPeriod)
+							- p_InvestmentTaxCredit(i_ProdActiveOptTech, i_CensusDivisionOpt, i_PlanningPeriod)) * val(sp_ProductionStepCostFraction(i_ProductionStep))
+							)
+					
+					! Section 45Q Credits
+						- sum(i_SeasonOpt, v_CO2CapturetoSaline45Q(i_ProdActiveOptTech, i_CensusDivisionOpt, i_SeasonOpt, i_PlanningPeriod)) 
+							* p_Section45QSalineCredit(i_ProdActiveOptTech, i_CensusDivisionOpt, i_PlanningPeriod)
+						- sum(i_SeasonOpt, v_CO2CapturetoEOR45Q(i_ProdActiveOptTech, i_CensusDivisionOpt, i_SeasonOpt, i_PlanningPeriod)) 
+							* p_Section45QEORCredit(i_ProdActiveOptTech, i_CensusDivisionOpt, i_PlanningPeriod)
+					)
+					+ sum(( i_CensusDivisionOpt, i_SeasonOpt, i_PlanningPeriod), 
+							p_SlackCost(i_PlanningPeriod)*v_DemandSlack(i_CensusDivisionOpt, i_SeasonOpt, i_PlanningPeriod))
+					
+					! Transportation Variable Costs
+					+ sum((i_CensusDivisionOpt, i_PlanningPeriod), 
+						sum(j_CensusDivisionOpt, 
+							sum(i_SeasonOpt, v_RegionalTransport(first(i_TranTech),i_CensusDivisionOpt, j_CensusDivisionOpt, i_SeasonOpt, i_PlanningPeriod) 
+								* sum(i_Fuel, p_FuelPricebyPeriod(i_Fuel,i_CensusDivisionOpt,i_PlanningPeriod) * p_PipeCompressorPowerConsumption(first(i_PipeCompTech),i_Fuel)) 
+								)
+					! Transportation Capital Costs with steps
+							+ sum(i_TransportationStep, v_TransportUnplannedCapacityByStep(first(i_TranTech),i_CensusDivisionOpt,j_CensusDivisionOpt,i_PlanningPeriod,i_TransportationStep) 
+								* p_TransportUnplannedCapacityCost(first(i_TranTech), i_CensusDivisionOpt, j_CensusDivisionOpt, i_PlanningPeriod) * val(sp_TransportationStepCostFraction(i_TransportationStep))
+								) 
+							)
+					)
+					! Storage Variable Cost
+					+ sum((i_StorageOptTech, i_CensusDivisionOpt, i_PlanningPeriod), 	
+					  	sum((i_SeasonOpt,j_SeasonOpt), v_SeasonalTransfer(i_StorageOptTech,i_CensusDivisionOpt,i_SeasonOpt,j_SeasonOpt,i_PlanningPeriod) 
+								* sum(i_Fuel, p_FuelPricebyPeriod(i_Fuel,i_CensusDivisionOpt,i_PlanningPeriod) * p_StorageCompressorPowerConsumption(i_StorageOptTech,i_Fuel))
+					  		)
+					! Storage Capital Cost
+					  	+ v_StorageUnplannedCapacity(i_StorageOptTech,i_CensusDivisionOpt,i_PlanningPeriod) 
+					  		* p_StorageUnplannedCapacityCost(i_StorageOptTech, i_CensusDivisionOpt, i_PlanningPeriod)
+					)
+					
+					!Ammonia Costs
+					+ sum((i_AmmoniaActiveOptTech, i_CensusDivisionOpt, i_PlanningPeriod),
+						!Ammonia Fuel and Variable Costs
+						sum(i_SeasonOpt, v_AmmoniaProductionOperate(i_AmmoniaActiveOptTech, i_CensusDivisionOpt, i_SeasonOpt, i_PlanningPeriod) )
+							* (sum(i_Fuel, p_FuelPricebyPeriod(i_Fuel,i_CensusDivisionOpt,i_PlanningPeriod) 
+							* p_AmmoniaFuelConsumptionPerTech(i_Fuel,i_AmmoniaActiveOptTech))  
+							+ p_AmmoniaVariableO_MCost(i_AmmoniaActiveOptTech, i_CensusDivisionopt, i_PlanningPeriod))
+						!Ammonia Capacity Costs
+						+ sum(i_NH3ProductionStep, v_AmmoniaProductionUnplannedCapacityByStep(i_AmmoniaActiveOptTech,i_CensusDivisionOpt,i_PlanningPeriod, i_NH3ProductionStep)
+							* p_AmmoniaUnplannedCapacityCost(i_AmmoniaActiveOptTech, i_CensusDivisionOpt, i_PlanningPeriod)
+							* p_NH3ProductionStepCostFraction(i_NH3ProductionStep)))
+					! ammmonia export demand negative cost
+					- sum(i_NH3ExportStep,
+						sum((i_CensusDivisionOpt, i_PlanningPeriod),
+					  		v_AmmoniaExportStep(i_NH3ExportStep, i_CensusDivisionOpt, i_PlanningPeriod))	
+					  	* p_NH3StepsPrice(i_NH3ExportStep))
+				}
+			}
+		}
+		DeclarationSection Production_Variables {
+			Variable v_ProductionOperate {
+				IndexDomain: (i_ProdActiveTech,i_CensusDivisionOpt,i_SeasonOpt,i_PlanningPeriod);
+				Text: "Production (in thousands of tons of H2)";
+				Range: nonnegative;
+			}
+			Variable v_DemandSlack {
+				IndexDomain: (i_CensusDivisionOpt,i_SeasonOpt,i_PlanningPeriod);
+				Text: "Slack demand";
+				Range: nonnegative;
+				Comment: "add slack for each demand node not just first Unlimited supply at high price so model won\'t go infeasible";
+			}
+			Variable v_ProductionUnplannedCapacity {
+				IndexDomain: (i_ProdActiveTech,i_CensusDivision,i_PlanningPeriodSecondThird);
+				Text: "Total unplanned capacity";
+				Range: nonnegative;
+				Property: ReducedCost;
+				Comment: "We carry this through, so each year unplanned capacity is added in and is cumulative throughout the forecast";
+			}
+			Variable v_ProductionUnplannedCapacityByStep {
+				IndexDomain: (i_ProdActiveTech,i_CensusDivision,i_PlanningPeriodSecondThird,i_ProductionStep);
+				Text: "Unplanned capacity by step";
+				Range: nonnegative;
+				Property: ReducedCost;
+				Comment: "Successive steps have higher costs to build";
+			}
+			Variable v_TotalProduction {
+				IndexDomain: (i_CensusDivision, i_Season,i_PlanningPeriod);
+				Text: "Sums production across technologies";
+				Range: nonnegative;
+				Definition: {
+					!sum(i_ProdActiveOptTech, v_ProductionOperate(i_ProdActiveOptTech, i_CensusDivisionOpt, i_SeasonCodeOpt, first(i_PlanningPeriodCode)))
+				}
+			}
+			Variable v_ProductionTaxCredit {
+				IndexDomain: (i_ProdActiveTech,i_CensusDivisionOpt,i_PlanningPeriod);
+				Range: nonnegative;
+			}
+		}
+		DeclarationSection Transportation_Variables {
+			Variable v_RegionalTransport {
+				IndexDomain: (i_TranTech,i_CensusDivisionOpt,j_CensusDivisionOpt,i_SeasonOpt,i_PlanningPeriod)| p_CenDivTransportMap(i_CensusDivisionOpt, j_CensusDivisionOpt);
+				Text: "Transport across census regions";
+				Range: nonnegative;
+				Comment: "assumed large amount intra-regional at low cost";
+			}
+			Variable v_TransportUnplannedCapacity {
+				IndexDomain: {
+					(i_TranTech,i_CensusDivisionOpt,j_CensusDivisionOpt,i_PlanningPeriodSecondThird) | p_CenDivTransportMap(i_CensusDivisionOpt, j_CensusDivisionOpt);
+				}
+				Text: "Unplanned transport";
+				Range: nonnegative;
+				Comment: "Build out transport. Intra-regional has large quantity.";
+			}
+			Variable v_TransportUnplannedCapacityByStep {
+				IndexDomain: {
+					(i_TranTech,i_CensusDivisionOpt,j_CensusDivisionOpt,i_PlanningPeriodSecondThird,i_TransportationStep) | p_CenDivTransportMap(i_CensusDivisionOpt, j_CensusDivisionOpt);
+				}
+				Text: "Step for transport";
+				Range: nonnegative;
+				Comment: "more builds for a particular year at a higher cost";
+			}
+		}
+		DeclarationSection Storage_Variables {
+			Variable v_StorageUnplannedCapacity {
+				IndexDomain: (i_StorageTech,i_CensusDivision,i_PlanningPeriodSecondThird);
+				Text: "Unplanned storage";
+				Range: nonnegative;
+				Comment: "Total unplanned from steps";
+			}
+			Variable v_SeasonalStorageLevel {
+				IndexDomain: (i_StorageTech,i_CensusDivision,i_Season,i_PlanningPeriod);
+				Text: "Level of seasonal storage";
+				Range: nonnegative;
+				Comment: "Required for mass balance across period. Needed to limit amount stored to capacity";
+			}
+			Variable v_SeasonalStorageChange {
+				IndexDomain: (i_StorageTech,i_CensusDivision,i_Season,i_PlanningPeriod);
+				Text: "change in storage level";
+				Range: nonnegative;
+				Comment: "Flow between seasons.Needed to limit change between seasons";
+			}
+			Variable v_SeasonalTransfer {
+				IndexDomain: (i_StorageTech,i_CensusDivision,i_Season,j_Season,i_PlanningPeriod)|p_SeasonStorageMap(i_Season, j_Season);
+				Text: "Transfer between seasons fill/draw";
+				Range: nonnegative;
+			}
+		}
+		DeclarationSection Fuel_Consumption_Variables {
+			Variable v_FuelConsumption {
+				IndexDomain: (i_Fuel,i_CensusDivision,i_PlanningPeriod);
+				Text: "Fuel consumption for hydrogen production";
+				Range: free;
+			}
+		}
+		DeclarationSection Ammonia_Variables {
+			Variable v_AmmoniaProductionOperate {
+				IndexDomain: (i_ActiveNH3Technology,i_CensusDivisionOpt,i_SeasonOpt,i_PlanningPeriod);
+				Text: "ammonia operate vector";
+				Range: nonnegative;
+				Comment: "amount of ammonia produced";
+			}
+			Variable v_AmmoniaProductionUnplannedCapacity {
+				IndexDomain: (i_ActiveNH3Technology,i_CensusDivision,i_PlanningPeriodSecondThird);
+				Text: "unplanned capacity for ammonia production";
+				Range: nonnegative;
+				Property: ReducedCost;
+				Comment: "Note we have capacity planning and production separate";
+			}
+			Variable v_HydrogenUsedForAmmoniaProduction {
+				IndexDomain: (i_CensusDivision, i_Season,i_PlanningPeriod);
+				Text: "hydrogen consumption for ammonia";
+				Range: nonnegative;
+			}
+			Variable v_AmmoniaExportStep {
+				IndexDomain: (i_NH3ExportStep, i_CensusDivisionOpt,i_PlanningPeriod);
+				Text: "Export demand curve step";
+				Range: nonnegative;
+			}
+			Variable v_AmmoniaProductionUnplannedCapacityByStep {
+				IndexDomain: (i_AmmoniaActiveOptTech, i_CensusDivisionOpt, i_PlanningPeriodSecondThird, i_NH3ProductionStep);
+				Text: "unplanned capacity by step";
+				Range: nonnegative;
+				Property: ReducedCost;
+				Comment: "higher steps at higher prices for any given year";
+			}
+		}
+		DeclarationSection CO2_Variables {
+			Variable v_CO2Emissions {
+				IndexDomain: (i_ProdActiveTech,i_CensusDivision,i_Season,i_PlanningPeriod);
+				Text: "CO2 emissions by technology";
+				Range: free;
+			}
+			Variable v_CO2EmissionstoCapture {
+				IndexDomain: (i_ProdActiveTech,i_CensusDivision,i_Season,i_PlanningPeriod);
+				Text: "CO2 emissions captures for CCUS";
+				Range: free;
+			}
+			Variable v_CO2Capture45QCredit {
+				IndexDomain: (i_ProdActiveTech,i_CensusDivision,i_Season,i_PlanningPeriod);
+				Text: "Total credit";
+				Range: free;
+			}
+			Variable v_CO2CapturetoSaline {
+				IndexDomain: (i_ProdActiveTech,i_CensusDivision,i_Season,i_PlanningPeriod);
+				Text: "Total CO2 to saline";
+				Range: nonnegative;
+				Comment: "Note could go to EOR also but not implemented.";
+			}
+			Variable v_CO2CapturetoSaline45Q {
+				IndexDomain: (i_ProdActiveTech,i_CensusDivision,i_Season,i_PlanningPeriod);
+				Text: "CO2 captured which gets credit";
+				Range: nonnegative;
+			}
+			Variable v_CO2CapturetoEOR {
+				IndexDomain: (i_ProdActiveTech,i_CensusDivision,i_Season,i_PlanningPeriod);
+				Text: "CO2 to EOR";
+				Range: nonnegative;
+				Comment: "Gets different credit. Reserved for future use.";
+			}
+			Variable v_CO2CapturetoEOR45Q {
+				IndexDomain: (i_ProdActiveTech,i_CensusDivision,i_Season,i_PlanningPeriod);
+				Text: "CO2 captured to EOR with credit";
+				Range: nonnegative;
+			}
+		}
+	}
+	Section Optimization_Constraints {
+		DeclarationSection Node_Constraints {
+			Constraint c_SupplyNodes {
+				IndexDomain: (i_CensusDivisionOpt, i_SeasonOpt,i_PlanningPeriod);
+				Text: "Supply node";
+				Definition: {
+					v_TotalProduction(i_CensusDivisionOpt, i_SeasonOpt, i_PlanningPeriod)
+					- sum(j_CensusDivisionOpt, v_RegionalTransport(first(i_TranTech),i_CensusDivisionOpt, j_CensusDivisionOpt, i_SeasonOpt, i_PlanningPeriod))
+					- sum((i_StorageOptTech,j_SeasonOpt), v_SeasonalTransfer(i_StorageOptTech,i_CensusDivisionOpt, i_SeasonOpt, j_SeasonOpt, i_PlanningPeriod))
+						= 0
+				}
+				Comment: {
+					"Hydrogen production uses a standard network flow between supply nodes and demand nodes.  Note that each census division (node) has both a supply node
+					and a demand, with intra-regional flow. Supply is mass balance between production and transport and storage out"
+				}
+			}
+			Constraint c_DemandNodes {
+				IndexDomain: (i_CensusDivisionOpt, i_SeasonOpt,i_PlanningPeriod);
+				Text: "Demand node";
+				Property: ShadowPrice;
+				Definition: {
+					  sum(j_CensusDivisionOpt, v_RegionalTransport(first(i_TranTech),j_CensusDivisionOpt, i_CensusDivisionOpt, i_SeasonOpt, i_PlanningPeriod))
+					  + sum((i_StorageOptTech,j_SeasonOpt), v_SeasonalTransfer(i_StorageOptTech,i_CensusDivisionOpt, j_SeasonOpt, i_SeasonOpt, i_PlanningPeriod))
+						- v_HydrogenUsedForAmmoniaProduction(i_CensusDivisionOpt, i_SeasonOpt, i_PlanningPeriod)
+						+ v_DemandSlack(i_CensusDivisionOpt, i_SeasonOpt, i_PlanningPeriod)
+						= p_TotalH2Demand(i_CensusDivisionOpt, i_SeasonOpt, i_PlanningPeriod)
+				}
+				Comment: "Demand matches transport and storage discharges to total demand and hydrogen for ammonia";
+			}
+		}
+		DeclarationSection Production_Constraints {
+			Constraint c_MaxProductionOperate {
+				IndexDomain: (i_ProdActiveOptTech,i_CensusDivisionOpt,i_SeasonOpt,i_PlanningPeriod);
+				Text: "max operate";
+				Definition: {
+					v_ProductionOperate(i_ProdActiveOptTech, i_CensusDivisionOpt, i_SeasonOpt, i_PlanningPeriod)
+						<= (p_ProdCapacityLimit(i_ProdActiveOptTech, i_CensusDivisionOpt, i_PlanningPeriod)
+					!	+ v_ProductionUnplannedCapacityThird(i_ProdActiveOptTech,i_CensusDivisionOpt,i_SeasonOpt,i_PlanningPeriod)
+							+ sum(j_PlanningPeriod | j_PlanningPeriod <= i_PlanningPeriod, v_ProductionUnplannedCapacity(i_ProdActiveOptTech,i_CensusDivisionOpt,j_PlanningPeriod))
+							) * p_SeasonFraction(i_SeasonOpt) * p_ProdCapacityFactorPerTech(i_ProdActiveOptTech)
+				}
+				Comment: "Total of operates of a technology less available capacity current period plus unplanned capacity later periods.";
+			}
+			Constraint c_SumProdUnplannedCapacitySteps {
+				IndexDomain: (i_ProdActiveOptTech,i_CensusDivisionOpt,i_PlanningPeriodSecondThird);
+				Text: "sum capacity steps";
+				Definition: {
+					v_ProductionUnplannedCapacity(i_ProdActiveOptTech, i_CensusDivisionOpt, i_PlanningPeriodSecondThird)
+					 = sum(i_ProductionStep, v_ProductionUnplannedCapacityByStep(i_ProdActiveOptTech, i_CensusDivisionOpt, i_PlanningPeriodSecondThird, i_ProductionStep))
+				}
+				Comment: "unplanned capacity is added by step. this transfers total to a variable.";
+			}
+			Constraint c_ProductionUnplannedCapacityLimit {
+				IndexDomain: i_CensusDivisionOpt;
+				Text: "unplanned capacity build limit";
+				Definition: {
+					sum((i_ProdActiveOptTech,i_PlanningPeriodSecond), v_ProductionUnplannedCapacity(i_ProdActiveOptTech, i_CensusDivisionOpt, i_PlanningPeriodSecond))
+					 <= sum((i_ProdActiveOptTech,i_PlanningPeriodFirst), p_ProdCapacityLimit(i_ProdActiveOptTech, i_CensusDivisionOpt, i_PlanningPeriodFirst)) * p_ProductionGrowthLimit
+				}
+				Comment: "total unplanned capacity limited by total of steps";
+			}
+			Constraint c_TotalProduction {
+				IndexDomain: (i_CensusDivisionOpt,i_SeasonOpt,i_PlanningPeriod);
+				Text: "total production limit";
+				Definition: {
+					sum(i_ProdActiveOptTech,v_ProductionOperate(i_ProdActiveOptTech, i_CensusDivisionOpt, i_SeasonOpt, i_PlanningPeriod))
+					= v_TotalProduction(i_CensusDivisionOpt, i_SeasonOpt, i_PlanningPeriod)
+				}
+				Comment: "limits increase in total production in each period, representing limit on how fast region can absorb hydrogen";
+			}
+			Constraint c_NuclearAvailability {
+				IndexDomain: (i_CensusDivisionOpt, i_PlanningPeriodSecondThird);
+				Text: "nuc energy limit";
+				Definition: {
+					v_ProductionUnplannedCapacity('Solid Oxide electrolysis  Nuc', i_CensusDivisionOpt, i_PlanningPeriodSecondThird) 
+						* p_ProdFuelConsumptionPerTech('Electricity','Solid Oxide electrolysis  Nuc') / 1000 
+						<= p_ElectricityGenerationNuclear(i_CensusDivisionOpt, i_PlanningPeriodSecondThird) * p_NuclearShareLimit
+				}
+				Comment: "proxy for amount of steam available for solid oxide using steam and electricity";
+			}
+			Constraint c_RenewableAvailability {
+				IndexDomain: (i_CensusDivisionOpt, i_PlanningPeriodSecondThird);
+				Text: "limit on PEM hydrogen production from renewable energy";
+				Definition: {
+					(v_ProductionUnplannedCapacity('PEM electrolysis  Renewables', i_CensusDivisionOpt, i_PlanningPeriodSecondThird) * p_ProdFuelConsumptionPerTech('Electricity','PEM electrolysis  Renewables')
+					+ v_ProductionUnplannedCapacity('Alkaline Electrolysis', i_CensusDivisionOpt, i_PlanningPeriodSecondThird) * p_ProdFuelConsumptionPerTech('Electricity','Alkaline Electrolysis'))/1000
+						<= p_ElectricityGenerationRenewable(i_CensusDivisionOpt, i_PlanningPeriodSecondThird) * p_RenewablesShareLimit
+				}
+				Comment: "proxy for cheap renewable electricity used in PEM and getting full IRA credit. This goes with an exogenous lower electrolyzer capacity factr.";
+			}
+			Constraint c_ProductionTaxCreditLimit {
+				IndexDomain: (i_ProdActiveOptTech,i_CensusDivisionOpt,i_PlanningPeriod);
+				Text: "PTC";
+				Definition: {
+					v_ProductionTaxCredit(i_ProdActiveOptTech, i_CensusDivisionOpt, i_PlanningPeriod)
+						<= sum(i_SeasonOpt, v_ProductionOperate(i_ProdActiveOptTech, i_CensusDivisionOpt, i_SeasonOpt, i_PlanningPeriod) )
+							* p_ProductionTaxCreditActual(i_ProdActiveOptTech, i_CensusDivisionopt, i_PlanningPeriod)
+				}
+				Comment: "Total PTC limited by operates getting full credit";
+			}
+			Constraint c_MaxProductionTaxCredit {
+				IndexDomain: (i_ProdActiveOptTech,i_CensusDivisionOpt,i_PlanningPeriod);
+				Text: "PTC";
+				Definition: {
+					v_ProductionTaxCredit(i_ProdActiveOptTech, i_CensusDivisionOpt, i_PlanningPeriod)
+						<= p_CapacityProductionTaxCredit(i_ProdActiveOptTech, i_CensusDivisionOpt, i_PlanningPeriod)
+							* p_ProductionTaxCreditActual(i_ProdActiveOptTech, i_CensusDivisionopt, i_PlanningPeriod)
+							+ sum(j_PlanningPeriod | j_PlanningPeriod <= i_PlanningPeriod, v_ProductionUnplannedCapacity(i_ProdActiveOptTech,i_CensusDivisionOpt,j_PlanningPeriod))
+								* p_ProdCapacityFactorPerTech(i_ProdActiveOptTech) * p_ProductionTaxCreditUsed(i_ProdActiveOptTech, i_CensusDivisionOpt, i_PlanningPeriod)
+				}
+				Comment: "Limit operates getting credit to vintaged capacity getting credit";
+			}
+		}
+		DeclarationSection Transportation_Constraints {
+			Constraint c_MaxRegionalTransport {
+				IndexDomain: {
+					(i_CensusDivisionOpt,j_CensusDivisionOpt,i_SeasonOpt,i_PlanningPeriod) | p_CenDivTransportMap(i_CensusDivisionOpt, j_CensusDivisionOpt);
+				}
+				Text: "limit regional transport";
+				Definition: {
+					v_RegionalTransport(first(i_TranTech),i_CensusDivisionOpt, j_CensusDivisionOpt, i_SeasonOpt, i_PlanningPeriod) 
+					!-  v_TransportUnplannedCapacitySecond(i_CensusDivisionOpt,j_CensusDivisionOpt,i_SeasonOpt,i_PlanningPeriod)
+					 	<= (p_TransportCapacityLimit(first(i_TranTech),i_CensusDivisionOpt,j_CensusDivisionOpt,i_PlanningPeriod)
+					 		+  sum(j_PlanningPeriod | j_PlanningPeriod <= i_PlanningPeriod, v_TransportUnplannedCapacity(first(i_TranTech),i_CensusDivisionOpt,j_CensusDivisionOpt,j_PlanningPeriod))
+					 		) * p_SeasonFraction(i_SeasonOpt)
+				}
+				Comment: "limits flow between regions to available transport (i.e. pipeline)";
+			}
+			Constraint c_SumTranUnplannedCapacitySteps {
+				IndexDomain: (i_TranTech, i_CensusDivisionOpt, j_CensusDivisionOpt, i_PlanningPeriodSecondThird);
+				Text: "sums unplanned capacity steps";
+				Definition: {
+					v_TransportUnplannedCapacity(i_TranTech, i_CensusDivisionOpt, j_CensusDivisionOpt, i_PlanningPeriodSecondThird)
+					 = sum(i_TransportationStep, v_TransportUnplannedCapacityByStep(i_TranTech, i_CensusDivisionOpt, j_CensusDivisionOpt, i_PlanningPeriodSecondThird, i_TransportationStep))
+				}
+				Comment: "sums unplanned capacity steps to total unplanned capacity";
+			}
+		}
+		DeclarationSection Storage_Constraints {
+			Constraint c_SeasonTransferLimit {
+				IndexDomain: (i_StorageOptTech,i_CensusDivisionOpt, i_SeasonOpt, j_SeasonOpt,i_PlanningPeriod);
+				Text: "limit on seasonal storage transfer";
+				Definition: {
+					v_SeasonalTransfer(i_StorageOptTech,i_CensusDivisionOpt, i_SeasonOpt, j_SeasonOpt, i_PlanningPeriod) <= 
+					p_SeasonStorageMap(i_SeasonOpt, j_SeasonOpt)
+				}
+			}
+			Constraint c_MaxStorageCapacity {
+				IndexDomain: (i_StorageOptTech,i_CensusDivisionOpt,i_SeasonOpt,i_PlanningPeriod);
+				Text: "max storage level";
+				Definition: {
+					v_SeasonalStorageLevel(i_StorageOptTech,i_CensusDivisionOpt,i_SeasonOpt,i_PlanningPeriod)
+						<= p_StorageCapacityLimit(i_StorageOptTech, i_CensusDivisionOpt, i_PlanningPeriod)
+					!	+ v_StorageUnplannedCapacitySecond(i_StorTech,i_CensusDivisionOpt,i_SeasonOpt,i_PlanningPeriod)
+							+ sum(j_PlanningPeriod | j_PlanningPeriod <= i_PlanningPeriod, v_StorageUnplannedCapacity(i_StorageOptTech,i_CensusDivisionOpt,j_PlanningPeriod))
+						+ v_SeasonalStorageChange(i_StorageOptTech, i_CensusDivisionOpt, i_SeasonOpt, i_PlanningPeriod)
+				}
+				Comment: "maximum storage level based capacity limit and unplanned capacity";
+			}
+			Constraint c_SeasonalStorageBalance {
+				IndexDomain: (i_StorageOptTech,i_CensusDivisionOpt,i_SeasonOpt,i_PlanningPeriod);
+				Text: "mass balance storage";
+				Definition: {
+					v_SeasonalStorageChange(i_StorageOptTech,i_CensusDivisionOpt,i_SeasonOpt,i_PlanningPeriod) =
+						sum(j_SeasonOpt, v_SeasonalTransfer(i_StorageOptTech,i_CensusDivisionOpt,j_SeasonOpt,i_SeasonOpt,i_PlanningPeriod))
+						- sum(j_SeasonOpt,v_SeasonalTransfer(i_StorageOptTech,i_CensusDivisionOpt,i_SeasonOpt,j_SeasonOpt,i_PlanningPeriod))
+				}
+				Comment: "storage level variable is positive and bounded";
+			}
+			Constraint c_MaxSeasonalChange {
+				IndexDomain: (i_StorageOptTech,i_CensusDivisionOpt, i_SeasonOpt, i_PlanningPeriod);
+				Text: "max change by season";
+				Definition: {
+					v_SeasonalStorageChange(i_StorageOptTech, i_CensusDivisionOpt, i_SeasonOpt, i_PlanningPeriod)
+						<= (p_StorageCapacityLimit(i_StorageOptTech, i_CensusDivisionOpt, i_PlanningPeriod)
+							+ sum(j_PlanningPeriod | j_PlanningPeriod <= i_PlanningPeriod, v_StorageUnplannedCapacity(i_StorageOptTech,i_CensusDivisionOpt,j_PlanningPeriod))
+							) * p_StorageExpansionFraction(i_StorageOptTech)
+				}
+				Comment: "max store/withdrawal between seasons";
+			}
+		}
+		DeclarationSection Fuel_Consumption_Constraints {
+			Constraint c_FuelConsumption {
+				IndexDomain: (i_Fuel,i_CensusDivisionOpt,i_PlanningPeriod);
+				Definition: {
+					v_FuelConsumption(i_Fuel, i_CensusDivisionOpt, i_PlanningPeriod)
+					>= sum((i_ProdActiveOptTech, i_SeasonOpt), 
+						v_ProductionOperate(i_ProdActiveOptTech, i_CensusDivisionOpt, i_SeasonOpt, i_PlanningPeriod) 
+							 * p_ProdFuelConsumptionPerTech(i_Fuel,i_ProdActiveOptTech)
+						)
+						+ sum(j_CensusDivisionOpt, 
+							sum(i_SeasonOpt, v_RegionalTransport(first(i_TranTech),i_CensusDivisionOpt, j_CensusDivisionOpt, i_SeasonOpt, i_PlanningPeriod) 
+								 * p_PipeCompressorPowerConsumption(first(i_PipeCompTech),i_Fuel) 
+								)
+							)
+						+ sum((i_StorageOptTech, i_SeasonOpt,j_SeasonOpt), v_SeasonalTransfer(i_StorageOptTech,i_CensusDivisionOpt,i_SeasonOpt,j_SeasonOpt,i_PlanningPeriod) 
+									 * p_StorageCompressorPowerConsumption(i_StorageOptTech,i_Fuel)
+							)
+						+ sum((i_AmmoniaActiveOptTech, i_SeasonOpt),
+							v_AmmoniaProductionOperate(i_AmmoniaActiveOptTech, i_CensusDivisionOpt, i_SeasonOpt, i_PlanningPeriod)
+							* p_AmmoniaFuelConsumptionPerTech(i_Fuel,i_AmmoniaActiveOptTech))
+				}
+				Comment: {
+					"sums consumption by fuel
+					
+					Note this result is in trillion BTUs for all fuels but electricity"
+				}
+			}
+		}
+		DeclarationSection Ammonia_Constraint {
+			Constraint c_AmmoniaProduction {
+				IndexDomain: (i_CensusDivisionOpt, i_SeasonOpt, i_PlanningPeriod);
+				Text: "ammonia production to demand curve";
+				Definition: {
+					sum(i_ActiveNH3Technology,
+						v_AmmoniaProductionOperate(i_ActiveNH3Technology, i_CensusDivisionOpt, i_SeasonOpt, i_PlanningPeriod))
+					!>=
+					=
+					sum(i_NH3ExportStep, 
+						v_AmmoniaExportStep(i_NH3ExportStep, i_CensusDivisionOpt, i_PlanningPeriod))
+					 * p_SeasonFraction(i_SeasonOpt)
+				}
+				Comment: "should be equality otherwise edge case where hydrogen is negative steps not filled in";
+			}
+			Constraint c_ExportStepsBoundsLimit {
+				IndexDomain: i_NH3ExportStep;
+				Text: "demand curve NH3";
+				Definition: {
+					sum((i_CensusDivisionOpt, i_PlanningPeriod),
+					v_AmmoniaExportStep(i_NH3ExportStep, i_CensusDivisionOpt, i_PlanningPeriod))
+					<= p_NH3StepsUpperBound(i_NH3ExportStep)
+				}
+				Comment: "bounds for demand";
+			}
+			Constraint c_MaxAmmoniaOperate {
+				IndexDomain: (i_AmmoniaActiveOptTech,i_CensusDivisionOpt,i_SeasonOpt,i_PlanningPeriod);
+				Text: "production limit NH3";
+				Definition: {
+					v_AmmoniaProductionOperate(i_AmmoniaActiveOptTech, i_CensusDivisionOpt, i_SeasonOpt, i_PlanningPeriod)
+						<= (p_AmmoniaCapacityLimit(i_AmmoniaActiveOptTech, i_CensusDivisionOpt, i_PlanningPeriod)
+							+ sum(j_PlanningPeriod | j_PlanningPeriod <= i_PlanningPeriod, 
+								v_AmmoniaProductionUnplannedCapacity(i_AmmoniaActiveOptTech,i_CensusDivisionOpt,j_PlanningPeriod)))	
+						* p_SeasonFraction(i_SeasonOpt)
+					
+					
+					
+					!Add unplanned to  Capacity limit every year
+				}
+			}
+			Constraint c_TotalAmmoniaProduction {
+				IndexDomain: (i_CensusDivisionOpt,i_SeasonOpt,i_PlanningPeriod);
+				Text: "Hydrogen used for NH3 production";
+				Property: ShadowPrice;
+				Definition: {
+					sum(i_AmmoniaActiveOptTech,v_AmmoniaProductionOperate(i_AmmoniaActiveOptTech, i_CensusDivisionOpt, i_SeasonOpt, i_PlanningPeriod))
+					= v_HydrogenUsedForAmmoniaProduction(i_CensusDivisionOpt, i_SeasonOpt, i_PlanningPeriod)
+					/ p_AmmoniaFuelConsumptionPerTech('Hydrogen',first(i_NH3Tech))
+				}
+				Comment: "this should be divided i.e. 1 ton of ammonia uses .177 tons of hydrogen (about)";
+			}
+			Constraint c_SumAmmoniaProdUnplannedCapacitySteps {
+				IndexDomain: (i_AmmoniaActiveOptTech, i_CensusDivisionOpt, i_PlanningPeriodSecondThird);
+				Text: "sum NH3 capacity steps";
+				Definition: {
+					v_AmmoniaProductionUnplannedCapacity(i_AmmoniaActiveOptTech, i_CensusDivisionOpt, i_PlanningPeriodSecondThird)
+					 = sum(i_NH3ProductionStep, v_AmmoniaProductionUnplannedCapacityByStep(i_AmmoniaActiveOptTech, i_CensusDivisionOpt, i_PlanningPeriodSecondThird, i_NH3ProductionStep))
+				}
+				Comment: "sums steps to get unplanned capacity NH3";
+			}
+		}
+		DeclarationSection CO2_Constraints {
+			Constraint c_CO2Emissions {
+				IndexDomain: (i_ProdActiveOptTech,i_CensusDivisionOpt,i_SeasonOpt,i_PlanningPeriod);
+				Text: "co2 by tech";
+				Definition: {
+					v_CO2Emissions(i_ProdActiveOptTech, i_CensusDivisionOpt, i_SeasonOpt, i_PlanningPeriod)
+					= v_ProductionOperate(i_ProdActiveOptTech, i_CensusDivisionOpt, i_SeasonOpt, i_PlanningPeriod)
+						* p_ProdProcessCO2PerTech(i_ProdActiveOptTech)
+				}
+			}
+			Constraint c_CO2EmissionstoCapture {
+				IndexDomain: (i_ProdActiveOptTech,i_CensusDivisionOpt,i_SeasonOpt,i_PlanningPeriod);
+				Text: "Quantity of CO2 going to CTUS.";
+				Definition: {
+					v_CO2EmissionstoCapture(i_ProdActiveOptTech, i_CensusDivisionOpt, i_SeasonOpt, i_PlanningPeriod)
+					= v_ProductionOperate(i_ProdActiveOptTech, i_CensusDivisionOpt, i_SeasonOpt, i_PlanningPeriod)
+					* p_ProdProcessCO2CapturedPerTech(i_ProdActiveOptTech) / 1000
+				}
+			}
+			Constraint c_TotalCO2Capture {
+				IndexDomain: (i_ProdActiveOptTech,i_CensusDivisionOpt,i_SeasonOpt,i_PlanningPeriod);
+				Text: "EOR and Saline split";
+				Definition: {
+					v_CO2EmissionstoCapture(i_ProdActiveOptTech, i_CensusDivisionOpt, i_SeasonOpt, i_PlanningPeriod)
+					= v_CO2CapturetoSaline(i_ProdActiveOptTech, i_CensusDivisionOpt, i_SeasonOpt, i_PlanningPeriod)
+					+ v_CO2CapturetoEOR(i_ProdActiveOptTech, i_CensusDivisionOpt, i_SeasonOpt, i_PlanningPeriod)
+				}
+				Comment: "Quantity of CO2 going to CTUS split between EOR and Saline.";
+			}
+			Constraint c_CO2CaptureSaline45QCreditQty {
+				IndexDomain: (i_ProdActiveOptTech,i_CensusDivisionOpt,i_SeasonOpt,i_PlanningPeriod);
+				Text: "co2 to saline greater than amount getting credit";
+				Definition: {
+					v_CO2CapturetoSaline(i_ProdActiveOptTech, i_CensusDivisionOpt, i_SeasonOpt, i_PlanningPeriod)
+					>= v_CO2CapturetoSaline45Q(i_ProdActiveOptTech, i_CensusDivisionOpt, i_SeasonOpt, i_PlanningPeriod)
+				}
+				Comment: "at least as much captured going to saline will as will get credit";
+			}
+			Constraint c_CO2CaptureEOR45QCreditQty {
+				IndexDomain: (i_ProdActiveOptTech,i_CensusDivisionOpt,i_SeasonOpt,i_PlanningPeriod);
+				Definition: {
+					v_CO2CapturetoEOR(i_ProdActiveOptTech, i_CensusDivisionOpt, i_SeasonOpt, i_PlanningPeriod)
+					>= v_CO2CapturetoEOR45Q(i_ProdActiveOptTech, i_CensusDivisionOpt, i_SeasonOpt, i_PlanningPeriod)
+				}
+				Comment: "at least as much going to EOR as will get 45Q credit.";
+			}
+			Constraint c_MaxCO2Capture45QCreditQty {
+				IndexDomain: (i_ProdActiveOptTech,i_CensusDivisionOpt,i_PlanningPeriod);
+				Text: "limits 45Q credit used";
+				Definition: {
+					p_CO2CaptureQty45QCredit(i_ProdActiveOptTech, i_CensusDivisionOpt, i_PlanningPeriod)
+					>= sum(i_SeasonOpt, v_CO2Capture45QCredit(i_ProdActiveOptTech, i_CensusDivisionOpt, i_SeasonOpt, i_PlanningPeriod))
+				}
+				Comment: "CO2 captures getting credit less than amount in legislation eligible";
+			}
+			Constraint c_TotalCO2Capture45QCreditQty {
+				IndexDomain: (i_ProdActiveOptTech,i_CensusDivisionOpt,i_SeasonOpt,i_PlanningPeriod);
+				Definition: {
+					v_CO2Capture45QCredit(i_ProdActiveOptTech, i_CensusDivisionOpt, i_SeasonOpt, i_PlanningPeriod)
+					= v_CO2CapturetoSaline45Q(i_ProdActiveOptTech, i_CensusDivisionOpt, i_SeasonOpt, i_PlanningPeriod)
+					+ v_CO2CapturetoEOR45Q(i_ProdActiveOptTech, i_CensusDivisionOpt, i_SeasonOpt, i_PlanningPeriod)
+				}
+				Comment: "Total CO2 getting credit is sum of saline and EOR";
+			}
+		}
+	}
+	Section Optimization_Identifiers {
+		DeclarationSection Production_Identifier;
+		DeclarationSection Transportation_Identifier;
+		DeclarationSection Storage_Identifier;
+		DeclarationSection Cost_Identifiers;
+		DeclarationSection Other_Identifiers {
+			Parameter p_SlackCost {
+				IndexDomain: i_PlanningPeriod;
+				Comment: "Slack cost should be in 87$/kg";
+			}
+		}
+	}
+	Section Excluded_Variables {
+		DeclarationSection Excluded_Objective_Function;
+		DeclarationSection Excluded_Production_Variables {
+			Variable v_ProductionOperate3Season {
+				IndexDomain: (i_ProdActiveOptTech,i_CensusDivisionOpt,i_SeasonOpt,i_PlanningPeriod);
+				Range: nonnegative;
+			}
+			Variable v_ProductionUnplannedCapacityThird {
+				IndexDomain: (i_ProdActiveTech,i_CensusDivision,i_Season,i_PlanningPeriodSecond);
+				Range: nonnegative;
+			}
+		}
+		DeclarationSection Excluded_Transportation_Variables {
+			Variable v_TransportUnplannedCapacitySecond {
+				IndexDomain: (i_CensusDivisionOpt,j_CensusDivisionOpt,i_Season,i_PlanningPeriodSecond)| p_CenDivTransportMap(i_CensusDivisionOpt, j_CensusDivisionOpt);
+				Range: nonnegative;
+			}
+			Variable v_RegionalTransportOut {
+				IndexDomain: (j_CensusDivisionOpt,i_CensusDivisionOpt,i_SeasonOpt,i_PlanningPeriod)|(p_CenDivTransportMap(i_CensusDivisionOpt, j_CensusDivisionOpt));
+				Range: free;
+				Comment: "No longer needed";
+			}
+		}
+		DeclarationSection Excluded_Storage_Variables {
+			Variable v_StorageUnplannedCapacitySecond {
+				IndexDomain: (i_StorageTech,i_CensusDivision,i_Season,i_PlanningPeriodSecond);
+				Range: nonnegative;
+			}
+		}
+		DeclarationSection Excluded_Cost_Variables;
+		DeclarationSection Excluded_Other_Variables;
+	}
+	Section Excluded_Constraints {
+		DeclarationSection Excluded_Production_Constraints {
+			Constraint c_MeetTotalDemand {
+				IndexDomain: (i_CensusDivisionOpt,i_SeasonOpt);
+				Definition: {
+					!sum(i_ProdActiveOptTech, v_ProductionOperate(i_ProdActiveOptTech, i_CensusDivision, i_SeasonCodeOpt, first(i_PlanningPeriodCode)))
+					! - Total Hy production by Tech,Season,Period,region = 0
+					!	>= p_TotalH2Demand(i_CensusDivision, i_SeasonCodeOpt, first(i_PlanningPeriodCode))
+					0=0
+				}
+			}
+		}
+		DeclarationSection Excluded_Transportation_Constraints {
+			Constraint c_RegionalProduction {
+				IndexDomain: (i_CensusDivisionOpt, i_SeasonOpt, i_PlanningPeriod);
+				Definition: {
+					v_RegionalTransport(first(i_TranTech),i_CensusDivisionOpt, i_CensusDivisionOpt, i_SeasonOpt, i_PlanningPeriod) 
+						>= v_TotalProduction(i_CensusDivisionOpt, i_SeasonOpt,i_PlanningPeriod)
+				}
+			}
+			Constraint c_ForceTransport {
+				IndexDomain: (i_SeasonOpt,i_PlanningPeriodFirst);
+				Definition: {
+					v_RegionalTransport(first(i_TranTech),'8', '4', i_SeasonOpt, i_PlanningPeriodFirst) = 100;
+				}
+			}
+		}
+		DeclarationSection Excluded_Storage_Constraints;
+		DeclarationSection Excluded_Cost_Constraints;
+		DeclarationSection Excluded_Other_Constraints;
+	}
+}

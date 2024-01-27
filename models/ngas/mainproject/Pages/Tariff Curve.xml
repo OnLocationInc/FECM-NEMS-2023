@@ -1,0 +1,313 @@
+<?xml version="1.0"?>
+<Page Version="4000" TimeStamp="2022-05-13 17:00:30">
+	<PageEditSize Type="Inherited" />
+	<ProjectUUID>BD6A9103-B1FB-4406-840F-21FDB00917E2</ProjectUUID>
+	<TemplatesTabOrderPosition>1</TemplatesTabOrderPosition>
+	<Background Inherited="true" />
+	<PageObject Type="Selection Object">
+		<SelectionType>DropDownList</SelectionType>
+		<Location top="6" left="216" bottom="36" right="306" />
+		<TabOrder>9</TabOrder>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<TextShown>ElementName</TextShown>
+		<Border Style="None" />
+		<BackgroundColor RGB="#ffffff" />
+		<ExplicitIdentifier>
+			<Identifier>DisplayedHubFrom</Identifier>
+		</ExplicitIdentifier>
+	</PageObject>
+	<PageObject Type="Selection Object">
+		<SelectionType>DropDownList</SelectionType>
+		<Location top="372" left="426" bottom="396" right="522" />
+		<TabOrder>8</TabOrder>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<TextShown>ElementName</TextShown>
+		<Border Style="None" />
+		<BackgroundColor RGB="#ffffff" />
+		<ExplicitIdentifier>
+			<Identifier>DisplayedHubTo</Identifier>
+		</ExplicitIdentifier>
+	</PageObject>
+	<PageObject Type="2D Chart">
+		<Location top="72" left="216" bottom="330" right="522" />
+		<TabOrder>2</TabOrder>
+		<Border Style="InShadow" Width="2" />
+		<X_Axis>
+			<Domain ID="1004">Parameter_CapacityUtilization( DisplayedHubFrom, DisplayedHubTo1, tstep )</Domain>
+		</X_Axis>
+		<Y_Axis>
+			<Identifier>
+				<Value ID="2007">Parameter_TariffCurvePrice( DisplayedHubFrom, DisplayedHubTo1, tstep )</Value>
+			</Identifier>
+			<Scale>
+				<Maximum ID="2036">Displayed_Max_PriceTo</Maximum>
+			</Scale>
+		</Y_Axis>
+	</PageObject>
+	<PageObject Type="Selection Object">
+		<SelectionType>RadioButtons</SelectionType>
+		<Location top="0" left="318" bottom="66" right="522" />
+		<TabOrder>10</TabOrder>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<TextShown>ElementName</TextShown>
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#ffffff" />
+		<ExplicitIdentifier>
+			<Identifier>DisplayedHubTo1</Identifier>
+		</ExplicitIdentifier>
+	</PageObject>
+	<PageObject Type="2D Chart">
+		<Location top="408" left="216" bottom="666" right="522" />
+		<TabOrder>7</TabOrder>
+		<Border Style="InShadow" Width="2" />
+		<X_Axis>
+			<Domain ID="1004">Parameter_CapacityUtilization( DisplayedHubFrom1, DisplayedHubTo, tstep )</Domain>
+		</X_Axis>
+		<Y_Axis>
+			<Identifier>
+				<Value ID="2007">Parameter_TariffCurvePrice( DisplayedHubFrom1, DisplayedHubTo, tstep )</Value>
+			</Identifier>
+			<Scale>
+				<Maximum ID="2036">Displayed_Max_PriceFrom</Maximum>
+			</Scale>
+		</Y_Axis>
+	</PageObject>
+	<PageObject Type="Selection Object">
+		<SelectionType>RadioButtons</SelectionType>
+		<Location top="336" left="216" bottom="402" right="420" />
+		<TabOrder>11</TabOrder>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<TextShown>ElementName</TextShown>
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#ffffff" />
+		<ExplicitIdentifier>
+			<Identifier>DisplayedHubFrom1</Identifier>
+		</ExplicitIdentifier>
+	</PageObject>
+	<PageObject Type="Scalar">
+		<Location top="0" left="552" bottom="30" right="612" />
+		<TabOrder>14</TabOrder>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#ffffff" />
+		<Layout>Text-Value</Layout>
+		<SeparatorSign>=</SeparatorSign>
+		<ExplicitIdentifier>
+			<Identifier>DisplayedHubFrom</Identifier>
+			<NumberFormat Width="15" Decimals="0" Alignment="Left" ShowDefaults="true" />
+		</ExplicitIdentifier>
+	</PageObject>
+	<PageObject Type="Scalar">
+		<Location top="0" left="876" bottom="30" right="936" />
+		<TabOrder>15</TabOrder>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#ffffff" />
+		<Layout>Text-Value</Layout>
+		<SeparatorSign>=</SeparatorSign>
+		<ExplicitIdentifier>
+			<Identifier>DisplayedHubFrom</Identifier>
+			<NumberFormat Width="15" Decimals="0" Alignment="Left" ShowDefaults="true" />
+		</ExplicitIdentifier>
+	</PageObject>
+	<PageObject Type="2D Chart">
+		<Location top="72" left="534" bottom="330" right="840" />
+		<TabOrder>4</TabOrder>
+		<Border Style="InShadow" Width="2" />
+		<X_Axis>
+			<Domain ID="1004">Parameter_CapacityUtilization( DisplayedHubFrom, DisplayedHubTo2, tstep )</Domain>
+		</X_Axis>
+		<Y_Axis>
+			<Identifier>
+				<Value ID="2007">Parameter_TariffCurvePrice( DisplayedHubFrom, DisplayedHubTo2, tstep )</Value>
+			</Identifier>
+			<Scale>
+				<Maximum ID="2036">Displayed_Max_PriceTo</Maximum>
+			</Scale>
+		</Y_Axis>
+	</PageObject>
+	<PageObject Type="2D Chart">
+		<Location top="72" left="846" bottom="330" right="1152" />
+		<TabOrder>3</TabOrder>
+		<Border Style="InShadow" Width="2" />
+		<X_Axis>
+			<Domain ID="1004">Parameter_CapacityUtilization( DisplayedHubFrom, DisplayedHubTo3, tstep )</Domain>
+		</X_Axis>
+		<Y_Axis>
+			<Identifier>
+				<Value ID="2007">Parameter_TariffCurvePrice( DisplayedHubFrom, DisplayedHubTo3, tstep )</Value>
+			</Identifier>
+			<Scale>
+				<Maximum ID="2036">Displayed_Max_PriceTo</Maximum>
+			</Scale>
+		</Y_Axis>
+	</PageObject>
+	<PageObject Type="Selection Object">
+		<SelectionType>RadioButtons</SelectionType>
+		<Location top="0" left="636" bottom="66" right="840" />
+		<TabOrder>12</TabOrder>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<TextShown>ElementName</TextShown>
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#ffffff" />
+		<ExplicitIdentifier>
+			<Identifier>DisplayedHubTo2</Identifier>
+		</ExplicitIdentifier>
+	</PageObject>
+	<PageObject Type="Selection Object">
+		<SelectionType>RadioButtons</SelectionType>
+		<Location top="0" left="948" bottom="66" right="1152" />
+		<TabOrder>13</TabOrder>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<TextShown>ElementName</TextShown>
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#ffffff" />
+		<ExplicitIdentifier>
+			<Identifier>DisplayedHubTo3</Identifier>
+		</ExplicitIdentifier>
+	</PageObject>
+	<PageObject Type="2D Chart">
+		<Location top="408" left="534" bottom="666" right="840" />
+		<TabOrder>6</TabOrder>
+		<Border Style="InShadow" Width="2" />
+		<X_Axis>
+			<Domain ID="1004">Parameter_CapacityUtilization( DisplayedHubFrom2, DisplayedHubTo, tstep )</Domain>
+		</X_Axis>
+		<Y_Axis>
+			<Identifier>
+				<Value ID="2007">Parameter_TariffCurvePrice( DisplayedHubFrom2, DisplayedHubTo, tstep )</Value>
+			</Identifier>
+			<Scale>
+				<Maximum ID="2036">Displayed_Max_PriceFrom</Maximum>
+			</Scale>
+		</Y_Axis>
+	</PageObject>
+	<PageObject Type="2D Chart">
+		<Location top="408" left="852" bottom="666" right="1158" />
+		<TabOrder>5</TabOrder>
+		<Border Style="InShadow" Width="2" />
+		<X_Axis>
+			<Domain ID="1004">Parameter_CapacityUtilization( DisplayedHubFrom3, DisplayedHubTo, tstep )</Domain>
+		</X_Axis>
+		<Y_Axis>
+			<Identifier>
+				<Value ID="2007">Parameter_TariffCurvePrice( DisplayedHubFrom3, DisplayedHubTo, tstep )</Value>
+			</Identifier>
+			<Scale>
+				<Maximum ID="2036">Displayed_Max_PriceFrom</Maximum>
+			</Scale>
+		</Y_Axis>
+	</PageObject>
+	<PageObject Type="Selection Object">
+		<SelectionType>RadioButtons</SelectionType>
+		<Location top="336" left="534" bottom="402" right="738" />
+		<TabOrder>18</TabOrder>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<TextShown>ElementName</TextShown>
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#ffffff" />
+		<ExplicitIdentifier>
+			<Identifier>DisplayedHubFrom2</Identifier>
+		</ExplicitIdentifier>
+	</PageObject>
+	<PageObject Type="Selection Object">
+		<SelectionType>RadioButtons</SelectionType>
+		<Location top="336" left="852" bottom="402" right="1056" />
+		<TabOrder>19</TabOrder>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<TextShown>ElementName</TextShown>
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#ffffff" />
+		<ExplicitIdentifier>
+			<Identifier>DisplayedHubFrom3</Identifier>
+		</ExplicitIdentifier>
+	</PageObject>
+	<PageObject Type="Scalar">
+		<Location top="366" left="744" bottom="402" right="840" />
+		<TabOrder>16</TabOrder>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#ffffff" />
+		<Layout>Text-Value</Layout>
+		<SeparatorSign>=</SeparatorSign>
+		<ExplicitIdentifier>
+			<Identifier>DisplayedHubTo</Identifier>
+			<NumberFormat Width="15" Decimals="0" Alignment="Left" ShowDefaults="true" />
+		</ExplicitIdentifier>
+	</PageObject>
+	<PageObject Type="Scalar">
+		<Location top="366" left="1062" bottom="402" right="1158" />
+		<TabOrder>17</TabOrder>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#ffffff" />
+		<Layout>Text-Value</Layout>
+		<SeparatorSign>=</SeparatorSign>
+		<ExplicitIdentifier>
+			<Identifier>DisplayedHubTo</Identifier>
+			<NumberFormat Width="15" Decimals="0" Alignment="Left" ShowDefaults="true" />
+		</ExplicitIdentifier>
+	</PageObject>
+	<PageObject Type="Text">
+		<Location top="36" left="240" bottom="66" right="282" />
+		<StaticText>to</StaticText>
+		<Alignment>Center</Alignment>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<TextColor RGB="#000000" />
+	</PageObject>
+	<PageObject Type="Text">
+		<Location top="36" left="564" bottom="66" right="606" />
+		<StaticText>to</StaticText>
+		<Alignment>Center</Alignment>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<TextColor RGB="#000000" />
+	</PageObject>
+	<PageObject Type="Text">
+		<Location top="36" left="882" bottom="66" right="924" />
+		<StaticText>to</StaticText>
+		<Alignment>Center</Alignment>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<TextColor RGB="#000000" />
+	</PageObject>
+	<PageObject Type="Text">
+		<Location top="342" left="456" bottom="372" right="498" />
+		<StaticText>to</StaticText>
+		<Alignment>Center</Alignment>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<TextColor RGB="#000000" />
+	</PageObject>
+	<PageObject Type="Text">
+		<Location top="336" left="774" bottom="366" right="816" />
+		<StaticText>to</StaticText>
+		<Alignment>Center</Alignment>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<TextColor RGB="#000000" />
+	</PageObject>
+	<PageObject Type="Text">
+		<Location top="336" left="1092" bottom="366" right="1134" />
+		<StaticText>to</StaticText>
+		<Alignment>Center</Alignment>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<TextColor RGB="#000000" />
+	</PageObject>
+	<UsedReferences>
+		<Model>
+			<Symbol>QP_Hubs_</Symbol>
+			<Symbol>Parameter_TariffCurvePrice</Symbol>
+			<Symbol>Parameter_CapacityUtilization</Symbol>
+			<Symbol>DisplayedHubFrom</Symbol>
+			<Symbol>DisplayedHubTo</Symbol>
+			<Symbol>PossibleHubsTo</Symbol>
+			<Symbol>PossibleHubsFrom_</Symbol>
+			<Symbol>DisplayedHubTo1</Symbol>
+			<Symbol>DisplayedHubTo2</Symbol>
+			<Symbol>DisplayedHubTo3</Symbol>
+			<Symbol>DisplayedHubFrom1</Symbol>
+			<Symbol>DisplayedHubFrom2</Symbol>
+			<Symbol>DisplayedHubFrom3</Symbol>
+			<Symbol>Displayed_Max_PriceTo</Symbol>
+			<Symbol>Displayed_Max_PriceFrom</Symbol>
+			<Symbol>tstep</Symbol>
+		</Model>
+	</UsedReferences>
+</Page>

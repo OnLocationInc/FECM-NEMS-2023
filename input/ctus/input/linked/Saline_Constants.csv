@@ -1,0 +1,21 @@
+"ID","Constant","Unit","Value"
+1,"StrucPC","percent",1.00
+2,"StorePC","percent",0.40
+3,"model inj rate","percent",3660.00
+4,"Cdia","inches",7.50
+5,"FCC","$",200000.00
+6,"Delta_P","Mpa",6.89
+7,"PFCC","$",87000.00
+8,"PumpVar","$/kW",1400.00
+9,"CO2Density","kg/m^3",923.22
+10,"PumpEff","percent",0.75
+11,"GENCC","$",720000.00
+12,"PipeVar","$",0.72
+13,"Hvar","$",0.23
+14,"SIC","$",0.23
+15,"CO2T","$/tonne",0.64
+16,"CPIW","$/well",20429.00
+17,"AWC","$/well",52398.00
+18,"SISU","$/well",5.44
+19,"ADJ1","factor",1.20
+20,"ANNPCT","factor",0.90

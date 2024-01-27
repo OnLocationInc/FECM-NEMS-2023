@@ -1,0 +1,98 @@
+<?xml version="1.0"?>
+<Page Version="4000" TimeStamp="2018-02-23 13:55:09">
+	<PageEditSize Type="Inherited">
+		<Size Width="1608" Height="670" />
+	</PageEditSize>
+	<ProjectUUID>240AD1D4-C5B8-4B93-BFD3-79EF080CCD8D</ProjectUUID>
+	<TemplatesTabOrderPosition>1</TemplatesTabOrderPosition>
+	<ResizeData>
+		<MainArea Line="PercentageFromTop" Value="0.914925373134">
+			<TopArea Line="PercentageFromTop" Value="0.194127243067">
+				<BottomArea Line="PercentageFromLeft" Value="0.764925373134">
+					<LeftArea Line="PercentageFromLeft" Value="0.882926829268">
+						<LeftArea Line="PercentageFromLeft" Value="0.967741935484">
+							<LeftArea Line="PercentageFromLeft" Value="0.0914285714286" />
+						</LeftArea>
+					</LeftArea>
+				</BottomArea>
+			</TopArea>
+		</MainArea>
+	</ResizeData>
+	<Background Inherited="true" />
+	<PageObject Type="2D Chart">
+		<Location top="132" left="234" bottom="504" right="1026" />
+		<TabOrder>2</TabOrder>
+		<Border Style="InShadow" Width="2" />
+		<X_Axis>
+			<Domain ID="1004">hr</Domain>
+			<Scale>
+				<Minimum ID="1014">0</Minimum>
+				<Maximum ID="1015">0</Maximum>
+			</Scale>
+			<Gridlines>
+				<Spacing ID="1018">0</Spacing>
+				<Show_on_top ID="1019">0</Show_on_top>
+			</Gridlines>
+		</X_Axis>
+		<Y_Axis>
+			<Identifier>
+				<Value ExtraInfo="4 0 1 2 3 " ID="2007">Storage_level( pts, '2040', epselect, '1', hr )</Value>
+			</Identifier>
+			<Title>
+				<Text ID="2003">"GWh"</Text>
+			</Title>
+		</Y_Axis>
+		<Display>
+			<Misc_display_settings>
+				<Color_Scheme ID="89">1</Color_Scheme>
+			</Misc_display_settings>
+		</Display>
+		<Header_Footer>
+			<Header>
+				<Text ID="23">"Storage Level"</Text>
+			</Header>
+			<Footer>
+				<Text ID="36">"Hour(h)"</Text>
+			</Footer>
+		</Header_Footer>
+		<Legend>
+			<Show ID="53">"Show"</Show>
+		</Legend>
+	</PageObject>
+	<PageObject Type="Selection Object">
+		<SelectionType>RadioButtons</SelectionType>
+		<Location top="168" left="126" bottom="504" right="228" />
+		<TabOrder>1</TabOrder>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<TextShown>ElementName</TextShown>
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#ffffff" />
+		<ExplicitIdentifier>
+			<Identifier>epselect</Identifier>
+		</ExplicitIdentifier>
+	</PageObject>
+	<PageObject Type="Selection Object">
+		<SelectionType>ListBox</SelectionType>
+		<SingleSelect>true</SingleSelect>
+		<Location top="132" left="126" bottom="162" right="228" />
+		<TabOrder>3</TabOrder>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<TextShown>ElementName</TextShown>
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#ffffff" />
+		<ExplicitIdentifier>
+			<Identifier>yrselect</Identifier>
+		</ExplicitIdentifier>
+	</PageObject>
+	<UsedReferences>
+		<Model>
+			<Symbol>Year</Symbol>
+			<Symbol>Storage_level</Symbol>
+			<Symbol>yrselect</Symbol>
+			<Symbol>epselect</Symbol>
+			<Symbol>hr</Symbol>
+			<Symbol>pts</Symbol>
+			<Symbol>SubEMMReg</Symbol>
+		</Model>
+	</UsedReferences>
+</Page>

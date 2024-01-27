@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<Page Version="4000" TimeStamp="2018-02-23 13:55:09">
+	<PageEditSize Type="Inherited" />
+	<ProjectUUID>240AD1D4-C5B8-4B93-BFD3-79EF080CCD8D</ProjectUUID>
+	<TemplatesTabOrderPosition>1</TemplatesTabOrderPosition>
+	<Background Inherited="true" />
+	<PageObject Type="Button">
+		<Location top="102" left="150" bottom="216" right="228" />
+		<TabOrder>1</TabOrder>
+		<LeaveOnEnter>false</LeaveOnEnter>
+		<ButtonType>Text</ButtonType>
+		<Title>"Run Model"</Title>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<ActionSequence>
+			<Action Type="Run">
+				<RunWhat>SpecificProcecure</RunWhat>
+				<Procedure>MainIntialization</Procedure>
+				<AbortOnError>true</AbortOnError>
+			</Action>
+			<Action Type="Run">
+				<RunWhat>SpecificProcecure</RunWhat>
+				<Procedure>PostMainInitialization</Procedure>
+				<AbortOnError>true</AbortOnError>
+			</Action>
+			<Action Type="Run">
+				<RunWhat>SpecificProcecure</RunWhat>
+				<Procedure>DataVisualization</Procedure>
+				<AbortOnError>true</AbortOnError>
+			</Action>
+		</ActionSequence>
+	</PageObject>
+	<UsedReferences>
+		<Model>
+			<Symbol>MainIntialization</Symbol>
+			<Symbol>PostMainInitialization</Symbol>
+			<Symbol>DataVisualization</Symbol>
+		</Model>
+	</UsedReferences>
+</Page>

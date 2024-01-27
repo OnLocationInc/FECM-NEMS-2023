@@ -1,0 +1,411 @@
+## ams_version=1.0
+
+Section S7_GUI {
+	Section Output_Saving {
+		Procedure pr_GUI_SaveOutputToExcel {
+			Arguments: (FileLocation,StatusCode,StatusDescription);
+			Body: {
+				
+				axll::CloseAllWorkBooks;
+				
+				_sp_OutputFile := "OutputInformation.xlsx";
+				axll::OpenWorkBook(_sp_OutputFile);
+				
+				axll::SelectSheet("Production_Info");
+				axll::ClearRange("A2:Z999999");
+				axll::ClearRange("E1:Z999999");
+				
+				axll::WriteTable(
+					IdentifierReference     :  p_ProductionOperatePerYearAndIter, 
+					RowHeaderRange          :  "A2:D3", 
+					ColumnHeaderRange       :  "E1:G2", 
+					DataRange               :  "E2:G3", 
+					AllowRangeOverflow      :  1, 
+					WriteZeros              :  0);
+				
+				axll::CloseAllWorkBooks;
+				
+				
+				FileLocation := webui::GetIOFilePath(_sp_OutputFile);
+				
+				if FileExists(FileLocation) then
+				    StatusCode := webui::ReturnStatusCode('CREATED');
+				    statusDescription := "File is Ready";
+				else
+				    statusCode := webui::ReturnStatusCode('ERROR');
+				    statusDescription := "Something went wrong when creating the file";
+				endif;
+			}
+			StringParameter _sp_OutputFile;
+			StringParameter FileLocation {
+				Property: Output;
+			}
+			Parameter StatusCode {
+				Property: Output;
+			}
+			StringParameter StatusDescription {
+				Property: Output;
+			}
+		}
+		Set S_OutputCompositeTable {
+			SubsetOf: AllIdentifiers;
+			OrderBy: User;
+			Definition: data {p_ProductionOperatePerYearAndIter};
+		}
+	}
+	Section Summary_Page {
+		Procedure pr_GUI_OnloadSummaryPage;
+		Parameter BP_GUI_SelectProdTech {
+			IndexDomain: i_StorageTech;
+			Range: binary;
+		}
+		Parameter BP_ProductSpecificationDomains {
+			IndexDomain: (i_StorageTech, i_StorSpec);
+			Definition: {
+				if sum(j_StorageTech, BP_GUI_SelectProdTech(j_StorageTech))
+				and  sum(j_StorSpec, BP_GUI_SelectProdSpec(j_StorSpec)) then 
+					1 ONLYIF(BP_GUI_SelectProdTech(i_StorageTech)
+					and BP_GUI_SelectProdSpec(i_StorSpec))
+				
+				elseif sum(j_StorageTech, BP_GUI_SelectProdTech(j_StorageTech))
+				and not  sum(j_StorSpec, BP_GUI_SelectProdSpec(j_StorSpec)) then 
+					1 ONLYIF(BP_GUI_SelectProdTech(i_StorageTech))
+				
+				elseif not sum(j_StorageTech, BP_GUI_SelectProdTech(j_StorageTech))
+				and sum(j_StorSpec, BP_GUI_SelectProdSpec(j_StorSpec)) then 
+					1 ONLYIF(BP_GUI_SelectProdSpec(i_StorSpec))
+				else 
+					1
+				endif
+			}
+		}
+		Parameter BP_GUI_SelectProdSpec {
+			IndexDomain: i_StorSpec;
+		}
+	}
+	Section Identifiers_Information_Page {
+		Procedure PR_OnloadIdentifiersInformationPage {
+			Body: {
+				pr_InitializeSetsForIdentifiersInformation;
+				pr_InitializeIdentifiersInfoFilters;
+			}
+		}
+		Procedure pr_InitializeSetsForIdentifiersInformation {
+			Body: {
+				for i_AllDefinedIdentifierName do
+				if not sp_TypeOfIdentifier_D(i_AllDefinedIdentifierName) in s_IdentifierTypes then 
+				setelementadd(s_IdentifierTypes, ep_IdentifierType, sp_TypeOfIdentifier_D(i_AllDefinedIdentifierName));
+				endif;
+				if not sp_IdentifierInformation_D(i_AllDefinedIdentifierName) in s_IdentifiersInformation then 
+				setelementadd(s_IdentifiersInformation, ep_IdentifierInformation, sp_IdentifierInformation_D(i_AllDefinedIdentifierName));
+				endif;
+				if not sp_OriginOfIdentifiers_D(i_AllDefinedIdentifierName) in s_IdentifiersOrigin then 
+				setelementadd(s_IdentifiersOrigin, ep_IdentifierOrigin, sp_OriginOfIdentifiers_D(i_AllDefinedIdentifierName));
+				endif;
+				endfor;
+			}
+		}
+		Procedure pr_InitializeIdentifiersInfoFilters {
+			Body: {
+				bp_FilteredOrigin(i_IdentifierOrigin) 
+				:= 1;
+				bp_FilteredIdentifierInfo(i_IdentifierInformation) 
+				:= 1;
+				bp_FilteredIdentifierType(i_IdentifierType) 
+				:= 1;
+				bp_SeeEmptyNotEmpty(i_EmptyNotEmpty) 
+				:= 1;
+			}
+		}
+		DeclarationSection Identifier_Information_Declaration {
+			Set S_AllSetNames_D {
+				SubsetOf: AllIdentifiers;
+				Index: i_AllSetName;
+				Definition: {
+					{IndexSets | 
+					IndexSets in S1_Data
+					or IndexSets in S2_Data_Import_Export
+					or IndexSets in S3_Data_Processing
+					or IndexSets in S4_Calculations
+					or IndexSets in S5_Optimization
+					or IndexSets in S6_Output
+					or IndexSets in S7_GUI
+					or IndexSets in S8_Miscellaneous}
+				}
+			}
+			Set S_AllParameterNames_D {
+				SubsetOf: AllIdentifiers;
+				Index: i_AllParameterName;
+				Definition: {
+					{IndexParameters | 
+					IndexParameters in S1_Data
+					or IndexParameters in S2_Data_Import_Export
+					or IndexParameters in S3_Data_Processing
+					or IndexParameters in S4_Calculations
+					or IndexParameters in S5_Optimization
+					or IndexParameters in S6_Output
+					or IndexParameters in S7_GUI
+					or IndexParameters in S8_Miscellaneous}
+				}
+			}
+			StringParameter SP_IdentifierCardinalities_D {
+				IndexDomain: i_AllDefinedIdentifierName;
+				Text: "Cardinality";
+				Definition: {
+					if Card(i_AllDefinedIdentifierName) then 
+					Card(i_AllDefinedIdentifierName)
+					else
+					"EMPTY"
+					endif
+				}
+				webui::AnnotationsIdentifier: sp_IdentifierCardinalityAnnotation(i_AllDefinedIdentifierName);
+			}
+			Parameter P_IdentifierCardinalities_D {
+				IndexDomain: i_AllDefinedIdentifierName;
+				Range: integer;
+				Definition: Card(i_AllDefinedIdentifierName);
+				webui::AnnotationsIdentifier: ;
+			}
+			StringParameter sp_IdentifierCardinalityAnnotation {
+				IndexDomain: i_AllDefinedIdentifierName;
+				Definition: {
+					if P_IdentifierCardinalities_D(i_AllDefinedIdentifierName) = 0 then 
+					"LessTotal"
+					endif;
+				}
+			}
+			StringParameter sp_TypeOfIdentifier_D {
+				IndexDomain: i_AllDefinedIdentifierName;
+				Text: "Identifier Type";
+				Definition: {
+					if i_AllDefinedIdentifierName in S_AllSetNames_D then
+					"Set"
+					elseif i_AllDefinedIdentifierName in S_AllParameterNames_D then
+					"Parameter"
+					endif;
+				}
+				Comment: "It identifies if the identifier is a set or a parameter";
+			}
+			StringParameter sp_IdentifierInformation_D {
+				IndexDomain: i_AllDefinedIdentifierName;
+				Text: "Identifier Information";
+				Definition: {
+					if i_AllDefinedIdentifierName in General_identifiers
+					or i_AllDefinedIdentifierName in Input_Files
+					or i_AllDefinedIdentifierName in General_Parameters then 
+					"General Identifiers"
+					elseif i_AllDefinedIdentifierName in Ammonia_Identifiers 
+					or i_AllDefinedIdentifierName in Ammonia_Data 
+					or i_AllDefinedIdentifierName in Ammonia_Parameters then 
+					"Ammonia Identifiers"
+					elseif i_AllDefinedIdentifierName in Production_Identifiers
+					or i_AllDefinedIdentifierName in Production_Data
+					or i_AllDefinedIdentifierName in Production_Parameters then 
+					"Production Identifiers"
+					elseif i_AllDefinedIdentifierName in Transportation_Identifiers
+					or i_AllDefinedIdentifierName in Transportation_Data
+					or i_AllDefinedIdentifierName in Transportation_Parameters then 
+					"Transportation Identifiers"
+					elseif i_AllDefinedIdentifierName in Compression_Identifiers then 
+					"Compression Identifiers"
+					elseif i_AllDefinedIdentifierName in Storage_Identifiers
+					or i_AllDefinedIdentifierName in Storage_Data
+					or i_AllDefinedIdentifierName in Storage_Parameters then 
+					"Storage Identifiers"
+					elseif i_AllDefinedIdentifierName in Unused_Identifiers
+					or i_AllDefinedIdentifierName in Unused_Data
+					or i_AllDefinedIdentifierName in Unused_Parameters then 
+					"Unused Identifiers"
+					elseif i_AllDefinedIdentifierName in S1_Data then 
+					"Predefined Data"
+					elseif i_AllDefinedIdentifierName in GDS_Parameters then 
+					"GDS Parameters"
+					elseif i_AllDefinedIdentifierName in NEMS_Monitor_Section then 
+					"NEMS Monitor Section"
+					elseif i_AllDefinedIdentifierName in NEMS_Data then 
+					"NEMS Data"
+					
+					else
+					"Rest Of Identifiers"
+					endif;
+				}
+			}
+			StringParameter sp_OriginOfIdentifiers_D {
+				IndexDomain: i_AllDefinedIdentifierName;
+				Text: "Identifier Origin";
+				Definition: {
+					if i_AllDefinedIdentifierName in DBase then
+					"Database Input"
+					elseif i_AllDefinedIdentifierName in Flat_Files_NOT_USED then
+					"Flat Files Input (Not Used)"
+					elseif i_AllDefinedIdentifierName in S3_Data_Processing then
+					"Data Processing"
+					elseif i_AllDefinedIdentifierName in S5_Optimization then
+					"Optimization"
+					elseif i_AllDefinedIdentifierName in S6_Output then
+					"Output"
+					elseif i_AllDefinedIdentifierName in S7_GUI then
+					"WebUI"
+					elseif i_AllDefinedIdentifierName in S8_Miscellaneous then
+					"Miscellaneous"
+					elseif i_AllDefinedIdentifierName in S1_Data then
+					"Predefined Data"
+					elseif i_AllDefinedIdentifierName in NEMS_Interface then
+					"NEMS Interfase"
+					else
+					"Unknown"
+					endif;
+				}
+			}
+			StringParameter sp_EmptyNotEmpty_D {
+				IndexDomain: i_AllDefinedIdentifierName;
+				Definition: {
+					if P_IdentifierCardinalities_D(i_AllDefinedIdentifierName) = 0 then 
+					"Empty"
+					else
+					"Not Empty"
+					Endif
+				}
+			}
+			Set s_IdentifierTypes {
+				Index: i_IdentifierType;
+				Parameter: ep_IdentifierType;
+			}
+			Set s_IdentifiersInformation {
+				Index: i_IdentifierInformation;
+				Parameter: ep_IdentifierInformation;
+			}
+			Set s_IdentifiersOrigin {
+				Index: i_IdentifierOrigin;
+				Parameter: ep_IdentifierOrigin;
+			}
+			Set s_EmptyNotEmpty_D {
+				Index: i_EmptyNotEmpty;
+				Definition: {
+					{'Empty', 'Not Empty'}
+				}
+			}
+			Parameter bp_FilteredOrigin {
+				IndexDomain: i_IdentifierOrigin;
+				Range: binary;
+			}
+			Parameter bp_FilteredIdentifierInfo {
+				IndexDomain: i_IdentifierInformation;
+				Range: binary;
+			}
+			Parameter bp_FilteredIdentifierType {
+				IndexDomain: i_IdentifierType;
+				Range: binary;
+			}
+			Parameter bp_SeeEmptyNotEmpty {
+				IndexDomain: i_EmptyNotEmpty;
+				Range: binary;
+			}
+			Parameter bp_IdentifiersInformationDomain_D {
+				IndexDomain: i_AllDefinedIdentifierName;
+				Definition: {
+					1 ONLYIF(
+					bp_FilteredOrigin(stringtoelement(s_IdentifiersOrigin,sp_OriginOfIdentifiers_D(i_AllDefinedIdentifierName)))
+					and bp_FilteredIdentifierInfo(stringtoelement(s_IdentifiersInformation,sp_IdentifierInformation_D(i_AllDefinedIdentifierName)))
+					and bp_FilteredIdentifierType(stringtoelement(s_IdentifierTypes,sp_TypeOfIdentifier_D(i_AllDefinedIdentifierName)))
+					and bp_SeeEmptyNotEmpty(stringtoelement(s_EmptyNotEmpty_D,sp_EmptyNotEmpty_D(i_AllDefinedIdentifierName)))
+					);
+				}
+			}
+		}
+	}
+	Section Unplanned_Summary_Page {
+		Procedure pr_OnloadUnplannedPage {
+			Body: {
+				ep_GUI_ShownIterations := 'Last Iteration';
+				bp_GUI_ShownYears(i_calYear) :=1;
+				bp_FilterForRegionsFrom(i_CensusDivision) := 1;
+				bp_FilterForRegionsTo(i_CensusDivision) := 1;
+			}
+		}
+		Set S_ShownIterations_D {
+			Index: i_ShownIteration;
+			Definition: {
+				{'All Iterations', 'Last Iteration'}
+			}
+		}
+		ElementParameter ep_GUI_ShownIterations {
+			Text: "Iterations to See";
+			Range: S_ShownIterations_D;
+		}
+		Parameter bp_GUI_ShownYears {
+			IndexDomain: i_calYear | sum(i_IterationNumber,bp_SolvedYearsAndIterations(i_calYear, i_IterationNumber));
+			Range: binary;
+		}
+		Parameter p_GUI_ProductionUnplannedCapacityPerYearAndIter_D {
+			IndexDomain: (i_ProdTech,i_calYear, i_IterationNumber);
+			Definition: {
+				Sum(i_censusdivision | bp_FilterForRegionsFrom(i_CensusDivision),
+				p_ProductionUnplannedCapacityPerYearAndIter(i_ProdTech, i_CensusDivision, i_calYear, i_IterationNumber))
+			}
+		}
+		Parameter p_GUI_TransportUnplannedCapacityPerYearAndIter {
+			IndexDomain: (i_TranTech,i_calYear, i_IterationNumber);
+			Definition: {
+				sum((i_CensusDivision,j_CensusDivision) 
+				| bp_FilterForRegionsFrom(i_CensusDivision) and bp_FilterForRegionsTo(j_CensusDivision)
+				and p_TransportUnplannedCapacityPerYearAndIter(i_TranTech, i_CensusDivision, j_CensusDivision, i_calYear, i_IterationNumber),
+					p_TransportUnplannedCapacityPerYearAndIter(i_TranTech, i_CensusDivision, j_CensusDivision, i_calYear, i_IterationNumber))
+			}
+		}
+		Parameter p_GUI_StorageUnplannedCapacityPerYearAndIter {
+			IndexDomain: (i_StorageTech,i_calYear, i_IterationNumber);
+			Definition: {
+				sum(i_CensusDivision | bp_FilterForRegionsFrom(i_CensusDivision),
+					p_StorageUnplannedCapacityPerYearAndIter(i_StorageTech, i_CensusDivision, i_calYear, i_IterationNumber))
+			}
+		}
+		Parameter p_GUI_AmmoniaUnplannedCapacityPerYearAndIter {
+			IndexDomain: (i_NH3Tech,i_calYear, i_IterationNumber);
+			Definition: {
+				sum(i_CensusDivision | bp_FilterForRegionsFrom(i_CensusDivision),
+					p_AmmoniaUnplannedCapacityPerYearAndIter(i_NH3Tech, i_CensusDivision, i_calYear, i_IterationNumber))
+			}
+		}
+		Parameter bp_GUI_UnplannedDomain_D {
+			IndexDomain: {
+				(i_calYear, i_IterationNumber)
+				| bp_SolvedYearsAndIterations(i_calYear, i_IterationNumber)
+			}
+			Range: binary;
+			Definition: {
+				if ep_GUI_ShownIterations = 'All Iterations' then
+					1 
+					ONLYIF(bp_GUI_ShownYears(i_calYear))
+				elseif ep_GUI_ShownIterations = 'Last Iteration' then
+					1
+					ONLYIF(bp_GUI_ShownYears(i_calYear)
+					and bp_SolvedYearsAndIterations(i_calYear,i_IterationNumber)
+					and i_IterationNumber = ep_LastIterationOfYear(i_calYear))
+				endif
+			}
+		}
+		Parameter bp_GUI_SolvedYears {
+			IndexDomain: i_calYear;
+			Definition: {
+				1 
+				ONLYIF(sum(i_IterationNumber, bp_SolvedYearsAndIterations(i_calYear, i_IterationNumber)))
+			}
+		}
+		ElementParameter ep_LastIterationOfYear {
+			IndexDomain: i_calYear;
+			Range: s_IterationNumbers_D;
+			Definition: Last(i_IterationNumber | bp_SolvedYearsAndIterations(i_calYear, i_IterationNumber));
+		}
+		Parameter bp_FilterForRegionsFrom {
+			IndexDomain: i_CensusDivision;
+			Range: binary;
+			InitialData: 1;
+		}
+		Parameter bp_FilterForRegionsTo {
+			IndexDomain: i_CensusDivision;
+			Range: binary;
+			InitialData: 1;
+		}
+	}
+}

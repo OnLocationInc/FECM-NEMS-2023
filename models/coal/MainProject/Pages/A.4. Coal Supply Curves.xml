@@ -1,0 +1,488 @@
+<?xml version="1.0"?>
+<Page Version="4000" TimeStamp="2020-05-02 22:10:12">
+	<PageEditSize Type="Inherited" />
+	<ProjectUUID>3C1E27EB-95CC-4E52-BBB5-D70269E0E21B</ProjectUUID>
+	<TemplatesTabOrderPosition>2</TemplatesTabOrderPosition>
+	<Background Inherited="true" />
+	<PageObject Type="Pivot Table">
+		<Location top="90" left="24" bottom="480" right="738" />
+		<TabOrder>1</TabOrder>
+		<ObjectUUID>F8F5D26C-BF1C-46A6-8470-3C21AE590B39</ObjectUUID>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<Contents>
+			<Explicit_Identifier>
+				<Identifier ID="4110">Display_AnnualSupplyCurvePrc_87USD( Display_Scrv1, sreg_name, sulf_name, mtyp_name, rank_name, Scrv1Step, selectyr )</Identifier>
+				<Title ID="4120">Price1</Title>
+				<Format>
+					<Decimal_Places ID="4312">2</Decimal_Places>
+				</Format>
+			</Explicit_Identifier>
+			<Explicit_Identifier>
+				<Identifier ID="4110">Display_AnnualSupplyCurvePrc_BYUSD( Display_Scrv1, sreg_name, sulf_name, mtyp_name, rank_name, Scrv1Step, selectyr )</Identifier>
+				<Title ID="4120">YearDollarPrice</Title>
+				<Format>
+					<Decimal_Places ID="4312">2</Decimal_Places>
+				</Format>
+			</Explicit_Identifier>
+			<Explicit_Identifier>
+				<Identifier ID="4110">Display_AnnualSupplyCurveQty( Display_Scrv1, sreg_name, sulf_name, mtyp_name, rank_name, Scrv1Step, selectyr )</Identifier>
+				<Title ID="4120">"Cumulative Step\nQty (MMst)"</Title>
+				<Format>
+					<Decimal_Places ID="4312">3</Decimal_Places>
+				</Format>
+			</Explicit_Identifier>
+		</Contents>
+		<Indices>
+			<Explicit_Index>
+				<Index ID="6510">sreg_name</Index>
+				<Header_Title ID="6530">"Region"</Header_Title>
+			</Explicit_Index>
+			<Explicit_Index>
+				<Index ID="6510">mtyp_name</Index>
+				<Header_Title ID="6530">"Mining Method"</Header_Title>
+			</Explicit_Index>
+			<Explicit_Index>
+				<Index ID="6510">rank_name</Index>
+				<Header_Title ID="6530">"Rank Descr"</Header_Title>
+			</Explicit_Index>
+			<Explicit_Index>
+				<Index ID="6510">sulf_name</Index>
+				<Header_Title ID="6530">"Sulfur Content"</Header_Title>
+			</Explicit_Index>
+			<Explicit_Index>
+				<Index ID="6510">runyr</Index>
+				<Header_Title ID="6530">"Year"</Header_Title>
+			</Explicit_Index>
+			<Explicit_Index>
+				<Index ID="6510">selectyr</Index>
+				<Header_Title ID="6530">"Year"</Header_Title>
+			</Explicit_Index>
+			<Identifier_Index>
+				<Hide_if_Single_Identifier ID="6270">"No"</Hide_if_Single_Identifier>
+			</Identifier_Index>
+		</Indices>
+		<General>
+			<Dense_Aggregation_restricts_to_Domain ID="1022">"Yes"</Dense_Aggregation_restricts_to_Domain>
+		</General>
+		<Row_Area>
+			<Background_Color ID="2010">RGB&lt;255,255,200&gt;</Background_Color>
+			<Text_Color ExtraInfo="D4F48705-BFDF-4DF8-8E1F-D38EFF981024" ID="2020">"default selection"</Text_Color>
+			<Headers>
+				<Background_Color ExtraInfo="D4F48705-BFDF-4DF8-8E1F-D38EFF981024" ID="2120">"default selection"</Background_Color>
+				<Text_Color ID="2130">RGB&lt;255,255,255&gt;</Text_Color>
+				<Show_Sub_Headers ID="2150">"No"</Show_Sub_Headers>
+			</Headers>
+			<Grid_Focus_Indicator>
+				<Background_Color ID="2270">RGB&lt;0,0,168&gt;</Background_Color>
+				<Text_Color ID="2280">RGB&lt;255,255,200&gt;</Text_Color>
+			</Grid_Focus_Indicator>
+		</Row_Area>
+		<Column_Area>
+			<Auto_resize_Column_Widths ID="3006">"Upon all data changes"</Auto_resize_Column_Widths>
+			<Headers>
+				<Show_Sub_Headers ID="3150">"No"</Show_Sub_Headers>
+			</Headers>
+		</Column_Area>
+		<Grid_Area>
+			<Background_Color ID="5010">RGB&lt;255,255,255&gt;</Background_Color>
+			<Alternating_Background_Color ID="5011">RGB&lt;225,225,225&gt;</Alternating_Background_Color>
+			<Aggregators>
+				<Background_Color ID="5220">RGB&lt;255,128,128&gt;</Background_Color>
+			</Aggregators>
+			<Sub_Header_Row_or_Column>
+				<Background_Color ID="5320">RGB&lt;255,255,200&gt;</Background_Color>
+			</Sub_Header_Row_or_Column>
+		</Grid_Area>
+	</PageObject>
+	<PageObject Type="Selection Object">
+		<SelectionType>CheckBoxes</SelectionType>
+		<Location top="12" left="762" bottom="84" right="1566" />
+		<TabOrder>4</TabOrder>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<TextShown>ElementName</TextShown>
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#ffffff" />
+		<ExplicitIdentifier>
+			<Identifier>SelectedYears( runyr )</Identifier>
+		</ExplicitIdentifier>
+	</PageObject>
+	<PageObject Type="Selection Object">
+		<SelectionType>DropDownList</SelectionType>
+		<Location top="120" left="762" bottom="156" right="834" />
+		<TabOrder>5</TabOrder>
+		<Font GUID="F2C814D4-9CCE-416C-9F68-BE15F2AFC56A" Name="font 1" />
+		<TextShown>ElementName</TextShown>
+		<Border Style="None" />
+		<BackgroundColor RGB="#ffffff" />
+		<ExplicitIdentifier>
+			<Identifier>Display_Scrv1</Identifier>
+		</ExplicitIdentifier>
+	</PageObject>
+	<PageObject Type="Table">
+		<Location top="90" left="1008" bottom="174" right="1260" />
+		<TabOrder>6</TabOrder>
+		<Font GUID="F2C814D4-9CCE-416C-9F68-BE15F2AFC56A" Name="font 1" />
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#ffffff" />
+		<RowIndentation>3</RowIndentation>
+		<ExplicitIdentifier>
+			<Identifier>SRegion_Scrv( Display_Scrv1 )</Identifier>
+			<FirstColumn>1</FirstColumn>
+			<HeaderText>"Supply Region"</HeaderText>
+			<NumberFormat Width="20" Decimals="0" Alignment="Left" />
+		</ExplicitIdentifier>
+		<ExplicitIdentifier>
+			<Identifier>SulfName_Scrv( Display_Scrv1 )</Identifier>
+			<FirstColumn>1</FirstColumn>
+			<HeaderText>"Sulfur Content"</HeaderText>
+			<NumberFormat Width="15" Decimals="0" Alignment="Left" />
+		</ExplicitIdentifier>
+		<ExplicitIdentifier>
+			<Identifier>MineType_Scrv( Display_Scrv1 )</Identifier>
+			<FirstColumn>1</FirstColumn>
+			<HeaderText>"Mining Method"</HeaderText>
+			<NumberFormat Width="15" Decimals="0" Alignment="Left" />
+		</ExplicitIdentifier>
+		<ExplicitIdentifier>
+			<Identifier>RankName_Scrv( Display_Scrv1 )</Identifier>
+			<FirstColumn>1</FirstColumn>
+			<HeaderText>"Coal Rank"</HeaderText>
+			<NumberFormat Width="15" Decimals="0" Alignment="Left" />
+		</ExplicitIdentifier>
+	</PageObject>
+	<PageObject Type="Text">
+		<Location top="102" left="762" bottom="126" right="948" />
+		<StaticText>Select Supply Curve Number:</StaticText>
+		<Font GUID="F2C814D4-9CCE-416C-9F68-BE15F2AFC56A" Name="font 1" />
+		<TextColor RGB="#000000" />
+	</PageObject>
+	<PageObject Type="Curve">
+		<Location top="174" left="756" bottom="426" right="1032" />
+		<TabOrder>9</TabOrder>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#ffffff" />
+		<ColorScheme Number="0" />
+		<Title>true</Title>
+		<Legend>true</Legend>
+		<Y-Labels>true</Y-Labels>
+		<X-Labels>true</X-Labels>
+		<StatusLine>true</StatusLine>
+		<ExplicitIdentifier>
+			<Identifier>Display_AnnualSupplyCurvePrc_BYUSD( Display_Scrv1, SRegion_Scrv( Display_Scrv1 ), SulfName_Scrv( Display_Scrv1 ), MineType_Scrv( Display_Scrv1 ), RankName_Scrv( Display_Scrv1 ), Scrv1Step, SelectYear( '1' ) )</Identifier>
+			<TitleText>CurveYearName( '1' )</TitleText>
+			<Description>CurveStep( Scrv1Step )</Description>
+		</ExplicitIdentifier>
+		<DrawLines>true</DrawLines>
+		<MarkPoints>true</MarkPoints>
+		<XAxisIdentifier>
+			<Identifier>Display_AnnualSupplyCurveQty( Display_Scrv1, SRegion_Scrv( Display_Scrv1 ), SulfName_Scrv( Display_Scrv1 ), MineType_Scrv( Display_Scrv1 ), RankName_Scrv( Display_Scrv1 ), Scrv1Step, SelectYear( '1' ) )</Identifier>
+		</XAxisIdentifier>
+	</PageObject>
+	<PageObject Type="Curve">
+		<Location top="174" left="1032" bottom="426" right="1302" />
+		<TabOrder>11</TabOrder>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#ffffff" />
+		<ColorScheme Number="0" />
+		<Title>true</Title>
+		<Legend>true</Legend>
+		<Y-Labels>true</Y-Labels>
+		<X-Labels>true</X-Labels>
+		<StatusLine>true</StatusLine>
+		<ExplicitIdentifier>
+			<Identifier>Display_AnnualSupplyCurvePrc_BYUSD( Display_Scrv1, SRegion_Scrv( Display_Scrv1 ), SulfName_Scrv( Display_Scrv1 ), MineType_Scrv( Display_Scrv1 ), RankName_Scrv( Display_Scrv1 ), Scrv1Step, SelectYear( '2' ) )</Identifier>
+			<TitleText>CurveYearName( '2' )</TitleText>
+			<Description>CurveStep( Scrv1Step )</Description>
+		</ExplicitIdentifier>
+		<DrawLines>true</DrawLines>
+		<MarkPoints>true</MarkPoints>
+		<XAxisIdentifier>
+			<Identifier>Display_AnnualSupplyCurveQty( Display_Scrv1, SRegion_Scrv( Display_Scrv1 ), SulfName_Scrv( Display_Scrv1 ), MineType_Scrv( Display_Scrv1 ), RankName_Scrv( Display_Scrv1 ), Scrv1Step, SelectYear( '2' ) )</Identifier>
+		</XAxisIdentifier>
+	</PageObject>
+	<PageObject Type="Curve">
+		<Location top="174" left="1302" bottom="426" right="1554" />
+		<TabOrder>12</TabOrder>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#ffffff" />
+		<ColorScheme Number="0" />
+		<Title>true</Title>
+		<Legend>true</Legend>
+		<Y-Labels>true</Y-Labels>
+		<X-Labels>true</X-Labels>
+		<StatusLine>true</StatusLine>
+		<ExplicitIdentifier>
+			<Identifier>Display_AnnualSupplyCurvePrc_BYUSD( Display_Scrv1, SRegion_Scrv( Display_Scrv1 ), SulfName_Scrv( Display_Scrv1 ), MineType_Scrv( Display_Scrv1 ), RankName_Scrv( Display_Scrv1 ), Scrv1Step, SelectYear( '3' ) )</Identifier>
+			<TitleText>CurveYearName( '3' )</TitleText>
+			<Description>CurveStep( Scrv1Step )</Description>
+		</ExplicitIdentifier>
+		<DrawLines>true</DrawLines>
+		<MarkPoints>true</MarkPoints>
+		<XAxisIdentifier>
+			<Identifier>Display_AnnualSupplyCurveQty( Display_Scrv1, SRegion_Scrv( Display_Scrv1 ), SulfName_Scrv( Display_Scrv1 ), MineType_Scrv( Display_Scrv1 ), RankName_Scrv( Display_Scrv1 ), Scrv1Step, SelectYear( '3' ) )</Identifier>
+		</XAxisIdentifier>
+	</PageObject>
+	<PageObject Type="Curve">
+		<Location top="426" left="756" bottom="678" right="1032" />
+		<TabOrder>13</TabOrder>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#ffffff" />
+		<ColorScheme Number="0" />
+		<Title>true</Title>
+		<Legend>true</Legend>
+		<Y-Labels>true</Y-Labels>
+		<X-Labels>true</X-Labels>
+		<StatusLine>true</StatusLine>
+		<ExplicitIdentifier>
+			<Identifier>Display_AnnualSupplyCurvePrc_BYUSD( Display_Scrv1, SRegion_Scrv( Display_Scrv1 ), SulfName_Scrv( Display_Scrv1 ), MineType_Scrv( Display_Scrv1 ), RankName_Scrv( Display_Scrv1 ), Scrv1Step, SelectYear( '4' ) )</Identifier>
+			<TitleText>CurveYearName( '4' )</TitleText>
+			<Description>CurveStep( Scrv1Step )</Description>
+		</ExplicitIdentifier>
+		<DrawLines>true</DrawLines>
+		<MarkPoints>true</MarkPoints>
+		<XAxisIdentifier>
+			<Identifier>Display_AnnualSupplyCurveQty( Display_Scrv1, SRegion_Scrv( Display_Scrv1 ), SulfName_Scrv( Display_Scrv1 ), MineType_Scrv( Display_Scrv1 ), RankName_Scrv( Display_Scrv1 ), Scrv1Step, SelectYear( '4' ) )</Identifier>
+		</XAxisIdentifier>
+	</PageObject>
+	<PageObject Type="Curve">
+		<Location top="426" left="1032" bottom="678" right="1302" />
+		<TabOrder>8</TabOrder>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#ffffff" />
+		<ColorScheme Number="0" />
+		<Title>true</Title>
+		<Legend>true</Legend>
+		<Y-Labels>true</Y-Labels>
+		<X-Labels>true</X-Labels>
+		<StatusLine>true</StatusLine>
+		<ExplicitIdentifier>
+			<Identifier>Display_AnnualSupplyCurvePrc_BYUSD( Display_Scrv1, SRegion_Scrv( Display_Scrv1 ), SulfName_Scrv( Display_Scrv1 ), MineType_Scrv( Display_Scrv1 ), RankName_Scrv( Display_Scrv1 ), Scrv1Step, SelectYear( '5' ) )</Identifier>
+			<TitleText>CurveYearName( '5' )</TitleText>
+			<Description>CurveStep( Scrv1Step )</Description>
+		</ExplicitIdentifier>
+		<DrawLines>true</DrawLines>
+		<MarkPoints>true</MarkPoints>
+		<XAxisIdentifier>
+			<Identifier>Display_AnnualSupplyCurveQty( Display_Scrv1, SRegion_Scrv( Display_Scrv1 ), SulfName_Scrv( Display_Scrv1 ), MineType_Scrv( Display_Scrv1 ), RankName_Scrv( Display_Scrv1 ), Scrv1Step, SelectYear( '5' ) )</Identifier>
+		</XAxisIdentifier>
+	</PageObject>
+	<PageObject Type="Curve">
+		<Location top="426" left="1302" bottom="678" right="1560" />
+		<TabOrder>7</TabOrder>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#ffffff" />
+		<ColorScheme Number="0" />
+		<Title>true</Title>
+		<Legend>true</Legend>
+		<Y-Labels>true</Y-Labels>
+		<X-Labels>true</X-Labels>
+		<StatusLine>true</StatusLine>
+		<ExplicitIdentifier>
+			<Identifier>Display_AnnualSupplyCurvePrc_BYUSD( Display_Scrv1, SRegion_Scrv( Display_Scrv1 ), SulfName_Scrv( Display_Scrv1 ), MineType_Scrv( Display_Scrv1 ), RankName_Scrv( Display_Scrv1 ), Scrv1Step, SelectYear( '6' ) )</Identifier>
+			<TitleText>CurveYearName( '6' )</TitleText>
+			<Description>CurveStep( Scrv1Step )</Description>
+		</ExplicitIdentifier>
+		<DrawLines>true</DrawLines>
+		<MarkPoints>true</MarkPoints>
+		<XAxisIdentifier>
+			<Identifier>Display_AnnualSupplyCurveQty( Display_Scrv1, SRegion_Scrv( Display_Scrv1 ), SulfName_Scrv( Display_Scrv1 ), MineType_Scrv( Display_Scrv1 ), RankName_Scrv( Display_Scrv1 ), Scrv1Step, SelectYear( '6' ) )</Identifier>
+		</XAxisIdentifier>
+	</PageObject>
+	<PageObject Type="Curve">
+		<Location top="678" left="960" bottom="930" right="1458" />
+		<TabOrder>10</TabOrder>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#ffffff" />
+		<ColorScheme Number="0" />
+		<Title>true</Title>
+		<Legend>true</Legend>
+		<Y-Labels>true</Y-Labels>
+		<X-Labels>true</X-Labels>
+		<StatusLine>true</StatusLine>
+		<ExplicitIdentifier>
+			<Identifier>Display_AnnualSupplyCurvePrc_BYUSD( Display_Scrv1, SRegion_Scrv( Display_Scrv1 ), SulfName_Scrv( Display_Scrv1 ), MineType_Scrv( Display_Scrv1 ), RankName_Scrv( Display_Scrv1 ), Scrv1Step, SelectYear1 )</Identifier>
+			<TitleText>CurveYearName1</TitleText>
+			<Description>CurveStep( Scrv1Step )</Description>
+		</ExplicitIdentifier>
+		<DrawLines>true</DrawLines>
+		<MarkPoints>true</MarkPoints>
+		<XAxisIdentifier>
+			<Identifier>Display_AnnualSupplyCurveQty( Display_Scrv1, SRegion_Scrv( Display_Scrv1 ), SulfName_Scrv( Display_Scrv1 ), MineType_Scrv( Display_Scrv1 ), RankName_Scrv( Display_Scrv1 ), Scrv1Step, SelectYear1 )</Identifier>
+		</XAxisIdentifier>
+	</PageObject>
+	<PageObject Type="Pivot Table">
+		<Location top="504" left="24" bottom="918" right="738" />
+		<TabOrder>3</TabOrder>
+		<ObjectUUID>FCA9EAD7-8ABE-497A-93F5-B56F9AFF712B</ObjectUUID>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<Contents>
+			<Explicit_Identifier>
+				<Identifier ID="4110">Display_AnnualSupplyCurvePrc_87USD( Scrv1, sreg_name, sulf_name, mtyp_name, rank_name, Scrv1Step, runyr )</Identifier>
+				<Title ID="4120">Price1</Title>
+				<Format>
+					<Decimal_Places ID="4312">2</Decimal_Places>
+				</Format>
+			</Explicit_Identifier>
+			<Explicit_Identifier>
+				<Identifier ID="4110">Display_AnnualSupplyCurvePrc_BYUSD( Scrv1, sreg_name, sulf_name, mtyp_name, rank_name, Scrv1Step, runyr )</Identifier>
+				<Title ID="4120">YearDollarPrice</Title>
+				<Format>
+					<Decimal_Places ID="4312">2</Decimal_Places>
+				</Format>
+			</Explicit_Identifier>
+			<Explicit_Identifier>
+				<Identifier ID="4110">Display_AnnualSupplyCurveQty( Scrv1, sreg_name, sulf_name, mtyp_name, rank_name, Scrv1Step, runyr )</Identifier>
+				<Title ID="4120">"Cumulative Step\nQty (MMst)"</Title>
+				<Format>
+					<Decimal_Places ID="4312">3</Decimal_Places>
+				</Format>
+			</Explicit_Identifier>
+		</Contents>
+		<Indices>
+			<Explicit_Index>
+				<Index ID="6510">sreg_name</Index>
+				<Header_Title ID="6530">"Region"</Header_Title>
+			</Explicit_Index>
+			<Explicit_Index>
+				<Index ID="6510">mtyp_name</Index>
+				<Header_Title ID="6530">"Mining Method"</Header_Title>
+			</Explicit_Index>
+			<Explicit_Index>
+				<Index ID="6510">rank_name</Index>
+				<Header_Title ID="6530">"Rank Descr"</Header_Title>
+			</Explicit_Index>
+			<Explicit_Index>
+				<Index ID="6510">sulf_name</Index>
+				<Header_Title ID="6530">"Sulfur Content"</Header_Title>
+			</Explicit_Index>
+			<Explicit_Index>
+				<Index ID="6510">runyr</Index>
+				<Header_Title ID="6530">"Year"</Header_Title>
+			</Explicit_Index>
+			<Identifier_Index>
+				<Hide_if_Single_Identifier ID="6270">"No"</Hide_if_Single_Identifier>
+			</Identifier_Index>
+		</Indices>
+		<General>
+			<Dense_Aggregation_restricts_to_Domain ID="1022">"Yes"</Dense_Aggregation_restricts_to_Domain>
+		</General>
+		<Row_Area>
+			<Background_Color ID="2010">RGB&lt;255,255,200&gt;</Background_Color>
+			<Text_Color ExtraInfo="D4F48705-BFDF-4DF8-8E1F-D38EFF981024" ID="2020">"default selection"</Text_Color>
+			<Headers>
+				<Background_Color ExtraInfo="D4F48705-BFDF-4DF8-8E1F-D38EFF981024" ID="2120">"default selection"</Background_Color>
+				<Text_Color ID="2130">RGB&lt;255,255,255&gt;</Text_Color>
+				<Show_Sub_Headers ID="2150">"No"</Show_Sub_Headers>
+			</Headers>
+			<Grid_Focus_Indicator>
+				<Background_Color ID="2270">RGB&lt;0,0,168&gt;</Background_Color>
+				<Text_Color ID="2280">RGB&lt;255,255,200&gt;</Text_Color>
+			</Grid_Focus_Indicator>
+		</Row_Area>
+		<Column_Area>
+			<Auto_resize_Column_Widths ID="3006">"Upon all data changes"</Auto_resize_Column_Widths>
+			<Headers>
+				<Show_Sub_Headers ID="3150">"No"</Show_Sub_Headers>
+			</Headers>
+		</Column_Area>
+		<Grid_Area>
+			<Background_Color ID="5010">RGB&lt;255,255,255&gt;</Background_Color>
+			<Alternating_Background_Color ID="5011">RGB&lt;225,225,225&gt;</Alternating_Background_Color>
+			<Aggregators>
+				<Background_Color ID="5220">RGB&lt;255,128,128&gt;</Background_Color>
+			</Aggregators>
+			<Sub_Header_Row_or_Column>
+				<Background_Color ID="5320">RGB&lt;255,255,200&gt;</Background_Color>
+			</Sub_Header_Row_or_Column>
+		</Grid_Area>
+	</PageObject>
+	<PageObject Type="Text">
+		<Location top="486" left="30" bottom="510" right="360" />
+		<StaticText>All Supply Curves For All Years</StaticText>
+		<Font GUID="F2C814D4-9CCE-416C-9F68-BE15F2AFC56A" Name="font 1" />
+		<TextColor RGB="#000000" />
+	</PageObject>
+	<PageObject Type="Text">
+		<Location top="66" left="24" bottom="90" right="498" />
+		<StaticText>Selected Supply Curve For Selected Years at Right (up to 6  years in plots)</StaticText>
+		<Font GUID="F2C814D4-9CCE-416C-9F68-BE15F2AFC56A" Name="font 1" />
+		<TextColor RGB="#000000" />
+	</PageObject>
+	<PageObject Type="Selection Object">
+		<SelectionType>DropDownList</SelectionType>
+		<Location top="720" left="756" bottom="762" right="894" />
+		<TabOrder>14</TabOrder>
+		<Font GUID="F2C814D4-9CCE-416C-9F68-BE15F2AFC56A" Name="font 1" />
+		<TextShown>ElementName</TextShown>
+		<Border Style="None" />
+		<BackgroundColor RGB="#ffffff" />
+		<ExplicitIdentifier>
+			<Identifier>SelectYear1</Identifier>
+		</ExplicitIdentifier>
+	</PageObject>
+	<PageObject Type="Text">
+		<Location top="696" left="756" bottom="720" right="942" />
+		<StaticText>Select Year:</StaticText>
+		<Font GUID="F2C814D4-9CCE-416C-9F68-BE15F2AFC56A" Name="font 1" />
+		<TextColor RGB="#000000" />
+	</PageObject>
+	<PageObject Type="Selection Object">
+		<SelectionType>DropDownList</SelectionType>
+		<Location top="54" left="558" bottom="84" right="630" />
+		<TabOrder>15</TabOrder>
+		<Font GUID="F2C814D4-9CCE-416C-9F68-BE15F2AFC56A" Name="font 1" />
+		<TextShown>ElementName</TextShown>
+		<Border Style="None" />
+		<BackgroundColor RGB="#ffffff" />
+		<ExplicitIdentifier>
+			<Identifier>DisplayDollarYear</Identifier>
+		</ExplicitIdentifier>
+	</PageObject>
+	<PageObject Type="Text">
+		<Location top="18" left="558" bottom="54" right="744" />
+		<StaticText>Select Year for the Step Price below:</StaticText>
+		<Font GUID="F2C814D4-9CCE-416C-9F68-BE15F2AFC56A" Name="font 1" />
+		<TextColor RGB="#000000" />
+	</PageObject>
+	<UsedReferences>
+		<Model>
+			<Symbol>AllYears</Symbol>
+			<Symbol>SupplyCurveNumber2</Symbol>
+			<Symbol>MineType_Scrv</Symbol>
+			<Symbol>SRegion_Scrv</Symbol>
+			<Symbol>SulfName_Scrv</Symbol>
+			<Symbol>RankName_Scrv</Symbol>
+			<Symbol>Display_Scrv1</Symbol>
+			<Symbol>CurveYearName</Symbol>
+			<Symbol>CurveYearName1</Symbol>
+			<Symbol>YearDollarPrice</Symbol>
+			<Symbol>Price1</Symbol>
+			<Symbol>DisplayDollarYear</Symbol>
+			<Symbol>Run_Years</Symbol>
+			<Symbol>SelectedYears</Symbol>
+			<Symbol>SelectYear</Symbol>
+			<Symbol>SelectYear1</Symbol>
+			<Symbol>Display_AnnualSupplyCurveQty</Symbol>
+			<Symbol>Display_AnnualSupplyCurvePrc_87USD</Symbol>
+			<Symbol>Display_AnnualSupplyCurvePrc_BYUSD</Symbol>
+			<Symbol>Scrv1</Symbol>
+			<Symbol>Scrv1Step</Symbol>
+			<Symbol>sreg_name</Symbol>
+			<Symbol>rank_name</Symbol>
+			<Symbol>sulf_name</Symbol>
+			<Symbol>mtyp_name</Symbol>
+			<Symbol>runyr</Symbol>
+			<Symbol>selectyr</Symbol>
+			<Symbol>CurveStep</Symbol>
+		</Model>
+	</UsedReferences>
+</Page>

@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<TemplateManager>
+	<Page Name="All Data Pages" PageGUID="C727C793-651F-479A-BB70-BD8D78224747" />
+	<Page Name="[Data Page] HydroCapFactor" PageGUID="57F1DB45-2D52-4E59-B155-D710F9A574D2" />
+	<Page Name="[Data Page] Load" PageGUID="9A41CAFE-8D07-41CC-B505-EE75F4DF5274" />
+	<Page Name="[Data Page] Bettery_ChargeCap" PageGUID="C4D93886-9883-4266-8AC0-0DCFA00D60A3" />
+	<Page Name="[Data Page] SolWindCapFactor" PageGUID="04B9438E-274A-4976-B8B0-9FC405C7B8D7" />
+	<Page Name="[Data Page] RampUp_Cost" PageGUID="A91FA707-402C-4225-8F00-513C6FA332D8" />
+	<Page Name="[Data Page] Bettery_DischargeCap" PageGUID="9D94E369-265F-46BF-A5B4-D177351D06BD" />
+	<Page Name="[Data Page] RampRate" PageGUID="F5A6F86F-0669-47BD-A945-10D8B6255AB4" />
+	<Page Name="[Data Page] RampDown_Cost" PageGUID="A6910788-D893-4D1B-8D80-512C7A2AEA6F" />
+	<Page Name="[Data Page] Map_Daypattern" PageGUID="6C82B680-A9CD-464E-848B-D5B94D87BC5F" />
+	<Page Name="[Data Page] Load_EMM" PageGUID="50697DD8-8AFF-44E2-A3E3-9419E55329C8" />
+	<Page Name="[Data Page] SolWinCapFactor_ER" PageGUID="3D83CE9E-09C8-4D9D-942C-BC2833B11BB8" />
+	<Page Name="[Data Page] DummyMonHour" PageGUID="2B2F94E3-85C7-49A8-88D8-6D239FB7100C" />
+	<Page Name="[Data Page] Map_MonthHour" PageGUID="37DBA26A-4FD0-41BD-96F8-ED9F24EC4922" />
+	<Page Name="[Data Page] Map_SeasonHour" PageGUID="FED00593-1D52-490B-AA74-9680E1416046" />
+	<Page Name="[Data Page] Generation" PageGUID="4F2A7566-2520-4088-BC64-382BEC93F0AC" />
+	<Page Name="[Data Page] unmet_Load" PageGUID="2BBA29AF-CE13-4A90-A655-3A3F33275055" />
+	<Page Name="[Data Page] Storage_level" PageGUID="0CB9B3FA-12F2-4057-9AE5-1344A8E0EE5D" />
+	<Page Name="[Data Page] RampUp" PageGUID="303D7F23-6BF9-4F64-9759-B486C4673B30" />
+	<Page Name="[Data Page] RampDown" PageGUID="2BE69E27-8975-4E81-AD53-A870F5B9BDF4" />
+	<Page Name="[Data Page] Storage_outflow" PageGUID="ED7934E3-5D3C-4D91-8550-511184CC252C" />
+	<Page Name="[Data Page] Storage_inflow" PageGUID="E264D237-C02A-4280-96F5-9A193261E8D1" />
+	<Page Name="[Data Page] GenerationBy_ECPType" PageGUID="FCCDE819-DEE9-4F7C-84BE-927F4652E6D2" />
+	<Page Name="[Data Page] Battery_ChargeCap" PageGUID="506418C2-1958-4972-9E7C-580ADDCF3D8A" />
+	<Page Name="[Data Page] Map_techs" PageGUID="6232D867-A530-4AF3-A7A3-2C9DED619C0C" />
+	<Page Name="[Data Page] GenerationBy_Group" PageGUID="0820ADF0-3683-42E9-BA14-ECF54A312159" />
+	<Page Name="[Data Page] Demand_balance" PageGUID="8765BAF3-AC52-4662-8155-A4DB390EEAF3" />
+	<Page Name="IntermittentCurtailment" PageGUID="AA059724-A0BF-4142-9921-02442393013A" />
+	<Page Name="[Data Page] Rep_Storage" PageGUID="80EB92C6-51EE-4BE8-895B-52664CA13303" />
+	<Page Name="[Data Page] Fixed_Storage_inflow" PageGUID="7B4D6BDA-1D4A-4E6D-8CDA-DA9747D04DE0" />
+	<Page Name="[Data Page] Hydro_Gen_Cap" PageGUID="434CA00A-01E8-44BA-AC44-F049FBCF30F8" />
+	<Page Name="[Data Page] Tot_generation" PageGUID="58BE27E2-4FC4-446F-BB7F-DB7BA053650D" />
+	<Page Name="[Data Page] Tot_Rep_Storage" PageGUID="08A0B579-10E1-47E2-BB15-CD738CB3771B" />
+	<Page Name="[Data Page] Rep_Curtailment_wos" PageGUID="F682E71E-A274-4766-A643-CA671DC9D486" />
+	<Page Name="[Data Page] Rep_Generation_wos" PageGUID="44C0CEFA-4034-4E23-AD64-A676532BE684" />
+	<Page Name="[Data Page] RE_Upperbound" PageGUID="704B539D-428C-4301-8944-8CFC25AA22CB" />
+	<Page Name="[Data Page] Rep_Curtailment" PageGUID="350C811A-08B5-4D2A-922B-75ED547D7470" />
+	<Page Name="Storage Level" PageGUID="D104AC0E-D335-4D5B-954F-C94D6ED707F0" />
+	<Page Name="[Data Page] Rep_MarginalPirces" PageGUID="D1516992-F916-4C3E-93BD-5A5A2A1AE6E7" />
+	<Page Name="[Data Page] StorageBackward" PageGUID="0B657DDB-9CFA-4B50-8152-915201B9E800" Marked="true" />
+	<Page Name="[Data Page] StorageForward" PageGUID="D896F242-401B-45D4-8F82-0DFA42DC028B" Marked="true" />
+	<Page Name="[Data Page] FirstHourStorageBalance" PageGUID="2967D05B-880D-4EFA-AD06-F9D18954EC08" Marked="true" />
+	<Page Name="[Data Page] ccccccc" PageGUID="D493F438-3AC4-45CE-BC72-5265F8FACCE2" />
+	<Page Name="[Data Page] SR_MAX_LF" PageGUID="D75C9CE9-86CD-480A-99FF-D0D74D71B891" />
+	<Page Name="[Data Page] CapacityFactor" PageGUID="3E7C990C-8A92-4B35-919A-32FEB9FAD040" />
+	<Page Name="[Data Page] Map_DmHour" PageGUID="EB03D202-0904-4FB5-B0F0-42008037F95D" />
+	<Page Name="[Data Page] Rep_MarginalPrices" PageGUID="BC5DF2A6-9939-454E-B452-A70571B20E80" />
+	<Page Name="Generation and Shadow Price" PageGUID="925F0104-CEF4-4504-9EA0-96DB9C05B41D" />
+	<Page Name="Generation- technology Graph" PageGUID="4DD111B3-964E-4F66-A28F-38430E59DD1E" />
+	<Page Name="Run Model" PageGUID="70BD32B8-9448-4A1C-8762-973A472633B2" />
+	<Page Name="[Data Page] Rep_PVBattClipping" PageGUID="FC799415-30D7-429D-8671-97D024930DB7" />
+</TemplateManager>

@@ -1,0 +1,7 @@
+## ams_version=1.0
+
+Module TestModule {
+	Prefix: tm;
+	Procedure pr_Test;
+	DeclarationSection Test_Declaration;
+}

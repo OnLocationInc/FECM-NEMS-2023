@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<Page Version="4000" TimeStamp="2015-12-10 18:28:56">
+	<PageEditSize Type="Inherited">
+		<Size Width="968" Height="390" />
+	</PageEditSize>
+	<ProjectUUID>3C1E27EB-95CC-4E52-BBB5-D70269E0E21B</ProjectUUID>
+	<TemplatesTabOrderPosition>1</TemplatesTabOrderPosition>
+	<ResizeData>
+		<MainArea Line="FixedFromTop" Value="63">
+			<BottomArea Line="FixedFromLeft" Value="185" />
+		</MainArea>
+	</ResizeData>
+	<Background Inherited="true" />
+	<PageObject Type="Table">
+		<Location top="72" left="192" bottom="360" right="906" />
+		<TabOrder>2</TabOrder>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#ffffff" />
+		<RowIndentation>3</RowIndentation>
+		<ExplicitIdentifier>
+			<Identifier>OutputTonsTransportTotalbyImporterThermal( e, i, cyr )</Identifier>
+			<FirstColumn>2</FirstColumn>
+			<NumberFormat Width="7" Decimals="3" />
+		</ExplicitIdentifier>
+	</PageObject>
+	<UsedReferences>
+		<Model>
+			<Symbol>e</Symbol>
+			<Symbol>i</Symbol>
+			<Symbol>cyr</Symbol>
+			<Symbol>OutputTonsTransportTotalbyImporterThermal</Symbol>
+		</Model>
+	</UsedReferences>
+</Page>

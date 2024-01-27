@@ -1,0 +1,14 @@
+Component,Length,Fixed,DD,D,Constant,CO2Esc
+Materials,1,35000,330.5,687,26960,2.011
+Labor,1,185000,343.2,2074,170013,2.011
+Misc,1,95000,0,8417,7324,1.283
+ROW,1,40000,0,577,29788,1.561
+Capital,0,0,0,0,1261268,
+Var,8477,0,0,0,0,
+OthPipeCC,,,,,1356651,
+UnitPump,,,,,83581,
+Elec_Coeff,,,,,315.36,
+PumpPC,,,,,0.04,
+PumpCapCC,,,,,1325362,
+CO2Adj,,,,,1.12,
+PipeCapacity,,,,,0.8,

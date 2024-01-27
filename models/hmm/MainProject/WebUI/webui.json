@@ -1,0 +1,1322 @@
+{
+  "version": "4.67.0",
+  "application": {
+    "aimms.widget.type": {
+      "literal": "application"
+    },
+    "browsername": {
+      "aimms": {
+        "contents": [
+          "webui::ClientBrowserName"
+        ]
+      }
+    },
+    "browsertimezone": {
+      "aimms": {
+        "contents": [
+          "webui::BrowserTimeZone"
+        ]
+      }
+    },
+    "ignoredst": {
+      "aimms": {
+        "contents": [
+          "webui::IgnoreDST"
+        ]
+      }
+    },
+    "pages": {
+      "literal": {
+        "name": "root",
+        "slug": "root",
+        "children": [
+          {
+            "name": "Main Project",
+            "slug": "main_project",
+            "children": [
+              {
+                "name": "home",
+                "slug": "home",
+                "type": "pagev2-grid",
+                "children": []
+              },
+              {
+                "name": "Identifiers Information",
+                "type": "pagev2-grid",
+                "slug": "identifiers_information",
+                "children": []
+              },
+              {
+                "name": "Unplanned Summary Page",
+                "type": "pagev2-grid",
+                "slug": "unplanned_summary_page",
+                "children": []
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "theme.classic": {
+      "literal": "NOT_ALLOWED"
+    },
+    "timezone": {
+      "aimms": {
+        "contents": [
+          "webui::DisplayTimeZone"
+        ]
+      }
+    },
+    "timezone.dst.readonly": {
+      "aimms": {
+        "contents": [
+          "webui::DefaultDSTSettingForDisplayTimeZone"
+        ]
+      }
+    }
+  },
+  "layouts/custom_bb1caa0e-b5fb-4e26-838d-4503728dfa2a": {
+    "definition": {
+      "literal": {
+        "componentName": "Grid",
+        "props": {
+          "gridTemplateColumns": "5% 60% 30%",
+          "gridTemplateRows": "60% 60%",
+          "gridTemplateAreas": "\"area-a area-b area-c\" \"area-a area-d area-d\""
+        },
+        "items": [
+          {
+            "componentName": "WidgetArea",
+            "props": {
+              "gridArea": "area-a",
+              "name": "Area A",
+              "gridAutoFlow": "column"
+            }
+          },
+          {
+            "componentName": "WidgetArea",
+            "props": {
+              "gridArea": "area-b",
+              "name": "Area B",
+              "gridAutoFlow": "column"
+            }
+          },
+          {
+            "componentName": "WidgetArea",
+            "props": {
+              "gridArea": "area-c",
+              "name": "Area C",
+              "gridAutoFlow": "column"
+            }
+          },
+          {
+            "componentName": "WidgetArea",
+            "props": {
+              "gridArea": "area-d",
+              "name": "Area D",
+              "gridAutoFlow": "column"
+            }
+          }
+        ]
+      }
+    },
+    "displayName": {
+      "literal": "Errors page"
+    }
+  },
+  "layouts/custom_cb4eadfa-894a-4ffd-9846-901b0990501f": {
+    "definition": {
+      "literal": {
+        "componentName": "Grid",
+        "props": {
+          "gridTemplateColumns": "5% 90%",
+          "gridTemplateRows": "5% 30% 60% 60% 60% 60%",
+          "gridTemplateAreas": "\"area-a area-g\" \"area-a area-b\" \"area-a area-c\" \"area-a area-d\" \"area-a area-e\" \"area-a area-f\""
+        },
+        "items": [
+          {
+            "componentName": "WidgetArea",
+            "props": {
+              "gridArea": "area-a",
+              "name": "Area A",
+              "gridAutoFlow": "column"
+            }
+          },
+          {
+            "componentName": "WidgetArea",
+            "props": {
+              "gridArea": "area-b",
+              "name": "Area B",
+              "gridAutoFlow": "column"
+            }
+          },
+          {
+            "componentName": "WidgetArea",
+            "props": {
+              "gridArea": "area-c",
+              "name": "Area C",
+              "gridAutoFlow": "column"
+            }
+          },
+          {
+            "componentName": "WidgetArea",
+            "props": {
+              "gridArea": "area-d",
+              "name": "Area D",
+              "gridAutoFlow": "column"
+            }
+          },
+          {
+            "componentName": "WidgetArea",
+            "props": {
+              "gridArea": "area-e",
+              "name": "Area E",
+              "gridAutoFlow": "column"
+            }
+          },
+          {
+            "componentName": "WidgetArea",
+            "props": {
+              "gridArea": "area-f",
+              "name": "Area F",
+              "gridAutoFlow": "column"
+            }
+          },
+          {
+            "componentName": "WidgetArea",
+            "props": {
+              "gridArea": "area-g",
+              "name": "Area G",
+              "gridAutoFlow": "column"
+            }
+          }
+        ]
+      }
+    },
+    "displayName": {
+      "literal": "Unplanned Visualization Page"
+    }
+  },
+  "layouts/custom_f63c5031-bac1-40ae-8ff3-79654486d435": {
+    "definition": {
+      "literal": {
+        "componentName": "Grid",
+        "props": {
+          "gridTemplateColumns": "65% 33%",
+          "gridTemplateRows": "70% 28%",
+          "gridTemplateAreas": "\"area-a area-b\" \"area-a area-c\""
+        },
+        "items": [
+          {
+            "componentName": "WidgetArea",
+            "props": {
+              "gridArea": "area-a",
+              "name": "Area A",
+              "gridAutoFlow": "column"
+            }
+          },
+          {
+            "componentName": "WidgetArea",
+            "props": {
+              "gridArea": "area-b",
+              "name": "Area B",
+              "gridAutoFlow": "column"
+            }
+          },
+          {
+            "componentName": "WidgetArea",
+            "props": {
+              "gridArea": "area-c",
+              "name": "Area C",
+              "gridAutoFlow": "column"
+            }
+          }
+        ]
+      }
+    },
+    "displayName": {
+      "literal": "Identifiers Information Page"
+    }
+  },
+  "pages/home": {
+    "aimms.widget.type": {
+      "literal": "pagev2-grid"
+    },
+    "bindings": {
+      "literal": [
+        {
+          "widgetUri": "Ta_ErrorStacks",
+          "gridArea": "area-c",
+          "dndId": "area-bTa_ErrorStacks2"
+        },
+        {
+          "widgetUri": "TA_DemandSlack",
+          "gridArea": "area-d",
+          "dndId": "area-dTA_DemandSlack0"
+        },
+        {
+          "widgetUri": "TA_ErrorTypes",
+          "gridArea": "area-b",
+          "dndId": "area-bTA_ErrorTypes1"
+        }
+      ]
+    },
+    "layoutId": {
+      "literal": "custom_bb1caa0e-b5fb-4e26-838d-4503728dfa2a"
+    },
+    "maxcolumns": {
+      "literal": 32
+    },
+    "onload": {
+      "aimms": {
+        "run": "pr_GUI_OnloadSummaryPage"
+      }
+    },
+    "widgets": {
+      "literal": [
+        {
+          "uri": "TA_ErrorTypes",
+          "layoutInfo": {
+            "width": "8",
+            "height": "4",
+            "customPosition": ""
+          }
+        },
+        {
+          "uri": "Ta_ErrorStacks",
+          "layoutInfo": {
+            "width": "6",
+            "height": "4",
+            "customPosition": ""
+          }
+        },
+        {
+          "uri": "TA_DemandSlack",
+          "layoutInfo": {
+            "width": "2",
+            "height": "1"
+          }
+        }
+      ]
+    }
+  },
+  "pages/identifiers_information": {
+    "aimms.widget.type": {
+      "literal": "pagev2-grid"
+    },
+    "bindings": {
+      "literal": [
+        {
+          "widgetUri": "MU_IdentifierTypeFilter",
+          "gridArea": "area-c",
+          "dndId": "area-cMU_IdentifierTypeFilter0"
+        },
+        {
+          "widgetUri": "MU_EmptyOrNotSelection",
+          "gridArea": "area-c",
+          "dndId": "Unassigned widgetsMU_EmptyOrNotSelection4"
+        },
+        {
+          "widgetUri": "MU_OriginFilter",
+          "gridArea": "area-b",
+          "dndId": "area-bMU_OriginFilter1"
+        },
+        {
+          "widgetUri": "MU_IdentifierInfoFilter",
+          "gridArea": "area-b",
+          "dndId": "area-bMU_IdentifierInfoFilter2"
+        },
+        {
+          "widgetUri": "TA_IdentifiersInfo",
+          "gridArea": "area-a",
+          "dndId": "area-aTA_IdentifiersInfo3"
+        }
+      ]
+    },
+    "layoutId": {
+      "literal": "custom_f63c5031-bac1-40ae-8ff3-79654486d435"
+    },
+    "onload": {
+      "aimms": {
+        "run": "PR_OnloadIdentifiersInformationPage"
+      }
+    },
+    "widgets": {
+      "literal": [
+        {
+          "uri": "TA_IdentifiersInfo",
+          "layoutInfo": {
+            "width": "2",
+            "height": "1"
+          }
+        },
+        {
+          "uri": "MU_OriginFilter",
+          "layoutInfo": {
+            "width": "2",
+            "height": "1"
+          }
+        },
+        {
+          "uri": "MU_IdentifierInfoFilter",
+          "layoutInfo": {
+            "width": "2",
+            "height": "1"
+          }
+        },
+        {
+          "uri": "MU_IdentifierTypeFilter",
+          "layoutInfo": {
+            "width": "2",
+            "height": "1"
+          }
+        },
+        {
+          "uri": "MU_EmptyOrNotSelection",
+          "layoutInfo": {
+            "width": "2",
+            "height": "1"
+          }
+        }
+      ]
+    }
+  },
+  "pages/unplanned_summary_page": {
+    "aimms.widget.type": {
+      "literal": "pagev2-grid"
+    },
+    "bindings": {
+      "literal": [
+        {
+          "widgetUri": "DO_DownloadOutput",
+          "gridArea": "area-g",
+          "dndId": "Unassigned widgetsDO_DownloadOutput11"
+        },
+        {
+          "widgetUri": "BC_UnplannedAmmoniaProduction",
+          "gridArea": "area-f",
+          "dndId": "area-fBC_UnplannedAmmoniaProduction0"
+        },
+        {
+          "widgetUri": "MU_SelectedYears",
+          "gridArea": "area-b",
+          "dndId": "area-bMU_SelectedYears1"
+        },
+        {
+          "widgetUri": "MU_SelectedIterations",
+          "gridArea": "area-b",
+          "dndId": "area-bMU_SelectedIterations2"
+        },
+        {
+          "widgetUri": "MU_RegionsFromFilter",
+          "gridArea": "area-b",
+          "dndId": "area-bMU_RegionsFromFilter3"
+        },
+        {
+          "widgetUri": "MU_RegionsToFilter",
+          "gridArea": "area-b",
+          "dndId": "area-bMU_RegionsToFilter4"
+        },
+        {
+          "widgetUri": "BC_ProductionUnplanned",
+          "gridArea": "area-c",
+          "dndId": "area-cBC_ProductionUnplanned5"
+        },
+        {
+          "widgetUri": "BC_TransportationUnplanned",
+          "gridArea": "area-d",
+          "dndId": "area-dBC_TransportationUnplanned6"
+        },
+        {
+          "widgetUri": "BC_StorageUnplanned",
+          "gridArea": "area-e",
+          "dndId": "area-eBC_StorageUnplanned7"
+        },
+        {
+          "widgetUri": "TA_TransportationUnplanned",
+          "gridArea": "Unassigned widgets",
+          "dndId": "Unassigned widgetsTA_TransportationUnplanned8"
+        },
+        {
+          "widgetUri": "LC_ProductionUnplannedPerYear",
+          "gridArea": "Unassigned widgets",
+          "dndId": "Unassigned widgetsLC_ProductionUnplannedPerYear9"
+        },
+        {
+          "widgetUri": "MU_TypeOfTechnology",
+          "gridArea": "Unassigned widgets",
+          "dndId": "Unassigned widgetsMU_TypeOfTechnology10"
+        }
+      ]
+    },
+    "layoutId": {
+      "literal": "custom_cb4eadfa-894a-4ffd-9846-901b0990501f"
+    },
+    "onload": {
+      "aimms": {
+        "run": "pr_OnloadUnplannedPage"
+      }
+    },
+    "widgets": {
+      "literal": [
+        {
+          "uri": "LC_ProductionUnplannedPerYear",
+          "layoutInfo": {
+            "width": "2",
+            "height": "1"
+          }
+        },
+        {
+          "uri": "BC_ProductionUnplanned",
+          "layoutInfo": {
+            "width": "2",
+            "height": "1"
+          }
+        },
+        {
+          "uri": "MU_TypeOfTechnology",
+          "layoutInfo": {
+            "width": "2",
+            "height": "1"
+          }
+        },
+        {
+          "uri": "TA_TransportationUnplanned",
+          "layoutInfo": {
+            "width": "2",
+            "height": "1"
+          }
+        },
+        {
+          "uri": "BC_StorageUnplanned",
+          "layoutInfo": {
+            "width": "2",
+            "height": "1"
+          }
+        },
+        {
+          "uri": "BC_TransportationUnplanned",
+          "layoutInfo": {
+            "width": "2",
+            "height": "1"
+          }
+        },
+        {
+          "uri": "MU_SelectedYears",
+          "layoutInfo": {
+            "width": "2",
+            "height": "1"
+          }
+        },
+        {
+          "uri": "MU_SelectedIterations",
+          "layoutInfo": {
+            "width": "2",
+            "height": "1"
+          }
+        },
+        {
+          "uri": "MU_RegionsFromFilter",
+          "layoutInfo": {
+            "width": "2",
+            "height": "1"
+          }
+        },
+        {
+          "uri": "MU_RegionsToFilter",
+          "layoutInfo": {
+            "width": "2",
+            "height": "1"
+          }
+        },
+        {
+          "uri": "BC_UnplannedAmmoniaProduction",
+          "layoutInfo": {
+            "width": "2",
+            "height": "1"
+          }
+        },
+        {
+          "uri": "DO_DownloadOutput",
+          "layoutInfo": {
+            "width": "2",
+            "height": "1"
+          }
+        }
+      ]
+    }
+  },
+  "widgets/BC_ProductionUnplanned": {
+    "aimms.widget.type": {
+      "literal": "barchart"
+    },
+    "contents": {
+      "aimms": {
+        "contents": [
+          "p_GUI_ProductionUnplannedCapacityPerYearAndIter_D"
+        ]
+      }
+    },
+    "contents.displaydomain": {
+      "literal": {
+        "p_productionunplannedcapacityperyearanditer": "bp_GUI_UnplannedDomain_D",
+        "p_gui_productionunplannedcapacityperyearanditer_d": "bp_GUI_UnplannedDomain_D"
+      }
+    },
+    "contents.numdecimals": {
+      "literal": 0
+    },
+    "contents.partition": {
+      "literal": {
+        "header": [
+          "i_calYear",
+          "i_IterationNumber"
+        ],
+        "grouped": [],
+        "stacked": [
+          "i_ProdTech"
+        ],
+        "aggregated": [
+          "i_CensusDivision",
+          "<IDENTIFIER-SET>"
+        ]
+      }
+    },
+    "custom.column.widths": {
+      "literal": [
+        {
+          "type": "rowHeader",
+          "colKey": "i_ProdTech",
+          "width": 58.92
+        }
+      ]
+    },
+    "default.column.width": {
+      "literal": 15
+    },
+    "default.row.height": {
+      "literal": 4
+    },
+    "name": {
+      "literal": "BC_ProductionUnplanned"
+    },
+    "title": {
+      "literal": "Unplanned Production"
+    }
+  },
+  "widgets/BC_StorageUnplanned": {
+    "aimms.widget.type": {
+      "literal": "barchart"
+    },
+    "contents": {
+      "aimms": {
+        "contents": [
+          "p_GUI_StorageUnplannedCapacityPerYearAndIter"
+        ]
+      }
+    },
+    "contents.displaydomain": {
+      "literal": {
+        "p_storageunplannedcapacityperyearanditer": "bp_GUI_UnplannedDomain_D",
+        "p_gui_storageunplannedcapacityperyearanditer": "bp_GUI_UnplannedDomain_D"
+      }
+    },
+    "contents.partition": {
+      "literal": {
+        "header": [
+          "i_calYear",
+          "i_IterationNumber"
+        ],
+        "grouped": [],
+        "stacked": [
+          "i_StorageTech"
+        ],
+        "aggregated": [
+          "i_CensusDivision",
+          "<IDENTIFIER-SET>"
+        ]
+      }
+    },
+    "name": {
+      "literal": "BC_StorageUnplanned"
+    },
+    "title": {
+      "literal": "Unplanned Storage"
+    }
+  },
+  "widgets/BC_TransportationUnplanned": {
+    "aimms.widget.type": {
+      "literal": "barchart"
+    },
+    "contents": {
+      "aimms": {
+        "contents": [
+          "p_GUI_TransportUnplannedCapacityPerYearAndIter"
+        ]
+      }
+    },
+    "contents.displaydomain": {
+      "literal": {
+        "p_transportunplannedcapacityperyearanditer": "bp_GUI_UnplannedDomain_D",
+        "p_gui_transportunplannedcapacityperyearanditer": "bp_GUI_UnplannedDomain_D"
+      }
+    },
+    "contents.partition": {
+      "literal": {
+        "header": [
+          "i_calYear",
+          "i_IterationNumber"
+        ],
+        "grouped": [],
+        "stacked": [],
+        "aggregated": [
+          "<IDENTIFIER-SET>",
+          "i_CensusDivision",
+          "j_CensusDivision",
+          "i_TranTech"
+        ]
+      }
+    },
+    "name": {
+      "literal": "BC_TransportationUnplanned"
+    },
+    "title": {
+      "literal": "Unplanned Transportation"
+    }
+  },
+  "widgets/BC_UnplannedAmmoniaProduction": {
+    "aimms.widget.type": {
+      "literal": "barchart"
+    },
+    "contents": {
+      "aimms": {
+        "contents": [
+          "p_GUI_AmmoniaUnplannedCapacityPerYearAndIter"
+        ]
+      }
+    },
+    "contents.displaydomain": {
+      "literal": {
+        "p_gui_ammoniaunplannedcapacityperyearanditer": "bp_GUI_UnplannedDomain_D"
+      }
+    },
+    "contents.numdecimals": {
+      "literal": 0
+    },
+    "contents.partition": {
+      "literal": {
+        "header": [
+          "i_calYear",
+          "i_IterationNumber"
+        ],
+        "grouped": [],
+        "stacked": [
+          "i_NH3Tech"
+        ],
+        "aggregated": [
+          "<IDENTIFIER-SET>"
+        ]
+      }
+    },
+    "name": {
+      "literal": "BC_UnplannedAmmoniaProduction"
+    },
+    "title": {
+      "literal": "Unplanned Ammonia"
+    }
+  },
+  "widgets/DO_DownloadOutput": {
+    "action": {
+      "literal": {
+        "type": "procedure",
+        "value": "pr_GUI_SaveOutputToExcel"
+      }
+    },
+    "aimms.widget.type": {
+      "literal": "download"
+    }
+  },
+  "widgets/LC_ProductionUnplannedPerYear": {
+    "aimms.widget.type": {
+      "literal": "linechart"
+    },
+    "contents": {
+      "aimms": {
+        "contents": [
+          "p_ProductionUnplannedCapacityPerYearAndIter"
+        ]
+      }
+    },
+    "contents.displaydomain": {
+      "literal": {
+        "p_productionunplannedcapacityperyearanditer": "bp_SolvedYearsAndIterations"
+      }
+    },
+    "contents.partition": {
+      "literal": {
+        "header": [
+          "i_calYear",
+          "i_IterationNumber"
+        ],
+        "stacked": [
+          "i_CensusDivision",
+          "i_ProdTech"
+        ],
+        "overlays": [
+          "<IDENTIFIER-SET>"
+        ],
+        "aggregated": []
+      }
+    },
+    "name": {
+      "literal": "LC_ProductionUnplannedPerYear"
+    }
+  },
+  "widgets/MU_EmptyOrNotSelection": {
+    "aimms.widget.type": {
+      "literal": "multiselect"
+    },
+    "contents": {
+      "aimms": {
+        "contents": [
+          "bp_SeeEmptyNotEmpty"
+        ]
+      }
+    },
+    "name": {
+      "literal": "MU_EmptyOrNotSelection"
+    },
+    "title": {
+      "literal": "Empty Filter"
+    }
+  },
+  "widgets/MU_IdentifierInfoFilter": {
+    "aimms.widget.type": {
+      "literal": "multiselect"
+    },
+    "contents": {
+      "aimms": {
+        "contents": [
+          "bp_FilteredIdentifierInfo"
+        ]
+      }
+    },
+    "name": {
+      "literal": "MU_IdentifierInfoFilter"
+    },
+    "title": {
+      "literal": "Identifier Info Filter"
+    }
+  },
+  "widgets/MU_IdentifierTypeFilter": {
+    "aimms.widget.type": {
+      "literal": "multiselect"
+    },
+    "contents": {
+      "aimms": {
+        "contents": [
+          "bp_FilteredIdentifierType"
+        ]
+      }
+    },
+    "name": {
+      "literal": "MU_IdentifierTypeFilter"
+    },
+    "title": {
+      "literal": "Identifier Type Filter"
+    }
+  },
+  "widgets/MU_OriginFilter": {
+    "aimms.widget.type": {
+      "literal": "multiselect"
+    },
+    "contents": {
+      "aimms": {
+        "contents": [
+          "bp_FilteredOrigin"
+        ]
+      }
+    },
+    "contents.displaydomain": {
+      "literal": {
+        "bp_filteredorigin": "1"
+      }
+    },
+    "name": {
+      "literal": "MU_OriginFilter"
+    },
+    "title": {
+      "literal": "Identifier Origin Filter"
+    }
+  },
+  "widgets/MU_RegionsFromFilter": {
+    "aimms.widget.type": {
+      "literal": "multiselect"
+    },
+    "contents": {
+      "aimms": {
+        "contents": [
+          "bp_FilterForRegionsFrom"
+        ]
+      }
+    },
+    "name": {
+      "literal": "MU_RegionsFromFilter"
+    },
+    "title": {
+      "literal": "Filter Regions (From Transport)"
+    }
+  },
+  "widgets/MU_RegionsToFilter": {
+    "aimms.widget.type": {
+      "literal": "multiselect"
+    },
+    "contents": {
+      "aimms": {
+        "contents": [
+          "bp_FilterForRegionsTo"
+        ]
+      }
+    },
+    "name": {
+      "literal": "MU_RegionsToFilter"
+    },
+    "title": {
+      "literal": "Filter Regions To (Only Transport)"
+    }
+  },
+  "widgets/MU_SelectedIterations": {
+    "aimms.widget.type": {
+      "literal": "multiselect"
+    },
+    "contents": {
+      "aimms": {
+        "contents": [
+          "bp_GUI_ShownYears"
+        ]
+      }
+    },
+    "contents.displaydomain": {
+      "literal": {
+        "bp_gui_shownyears": "bp_GUI_SolvedYears"
+      }
+    },
+    "name": {
+      "literal": "MU_SelectedIterations"
+    },
+    "title": {
+      "literal": "Select Years to Plot"
+    }
+  },
+  "widgets/MU_SelectedYears": {
+    "aimms.widget.type": {
+      "literal": "selectionbox"
+    },
+    "contents": {
+      "aimms": {
+        "contents": [
+          "ep_GUI_ShownIterations"
+        ]
+      }
+    },
+    "name": {
+      "literal": "MU_SelectedYears"
+    }
+  },
+  "widgets/MU_TypeOfTechnology": {
+    "aimms.widget.type": {
+      "literal": "multiselect"
+    },
+    "name": {
+      "literal": "MU_TypeOfTechnology"
+    }
+  },
+  "widgets/TA_DemandSlack": {
+    "aimms.widget.type": {
+      "literal": "table"
+    },
+    "contents": {
+      "aimms": {
+        "contents": [
+          "p_DemandSlackPerYearAndIter"
+        ]
+      }
+    },
+    "contents.numdecimals": {
+      "literal": 0
+    },
+    "contents.partition": {
+      "literal": {
+        "rowHeader": [
+          "i_calYear",
+          "i_IterationNumber",
+          "i_Season",
+          "i_CensusDivision",
+          "i_PlanningPeriod"
+        ],
+        "colHeader": [
+          "<IDENTIFIER-SET>"
+        ],
+        "aggregated": []
+      }
+    },
+    "custom.column.widths": {
+      "literal": [
+        {
+          "type": "rowHeader",
+          "colKey": "i_Season",
+          "width": 27.94
+        },
+        {
+          "type": "rowHeader",
+          "colKey": "i_CensusDivision",
+          "width": 27.32
+        },
+        {
+          "type": "rowHeader",
+          "colKey": "i_PlanningPeriod",
+          "width": 27.73
+        },
+        {
+          "type": "colHeader",
+          "colKey": {},
+          "width": 18.75
+        },
+        {
+          "type": "rowHeader",
+          "colKey": "i_IterationNumber",
+          "width": 24.65
+        },
+        {
+          "type": "colHeader",
+          "colKey": {
+            "<IDENTIFIER-SET>": "p_DemandSlackPerYearAndIter"
+          },
+          "width": 40.16
+        },
+        {
+          "type": "rowHeader",
+          "colKey": "i_calYear",
+          "width": 25.53
+        }
+      ]
+    },
+    "name": {
+      "literal": "TA_DemandSlack"
+    },
+    "title": {
+      "literal": "Non-Zero Slack Demand"
+    }
+  },
+  "widgets/Ta_ErrorStacks": {
+    "aimms.widget.type": {
+      "literal": "table"
+    },
+    "contents": {
+      "aimms": {
+        "contents": [
+          "ep_ErrorNodes",
+          "ep_errorAttributes",
+          "p_errorLines"
+        ],
+        "prefix": "aimms",
+        "slices": [
+          {
+            "identifier": "ep_ErrorNodes",
+            "slice": [
+              {
+                "index": "i_error",
+                "type": "element-parameter",
+                "value": "ep_focusError"
+              },
+              {
+                "index": "i_errorPath",
+                "type": "free",
+                "value": "i_errorPath"
+              }
+            ]
+          },
+          {
+            "identifier": "ep_errorAttributes",
+            "slice": [
+              {
+                "index": "i_error",
+                "type": "element-parameter",
+                "value": "ep_focusError"
+              },
+              {
+                "index": "i_errorPath",
+                "type": "free",
+                "value": "i_errorPath"
+              }
+            ]
+          },
+          {
+            "identifier": "p_errorLines",
+            "slice": [
+              {
+                "index": "i_error",
+                "type": "element-parameter",
+                "value": "ep_focusError"
+              },
+              {
+                "index": "i_errorPath",
+                "type": "free",
+                "value": "i_errorPath"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "contents.numdecimals": {
+      "literal": 0
+    },
+    "contents.partition": {
+      "literal": {
+        "rowHeader": [
+          "i_errorPath",
+          "i_calYear",
+          "i_IterationNumber"
+        ],
+        "colHeader": [
+          "<IDENTIFIER-SET>"
+        ],
+        "aggregated": []
+      }
+    },
+    "custom.column.widths": {
+      "literal": [
+        {
+          "type": "colHeader",
+          "colKey": {
+            "<IDENTIFIER-SET>": "ep_ErrorNodes"
+          },
+          "width": 36.25
+        },
+        {
+          "type": "rowHeader",
+          "colKey": "i_errorPath",
+          "width": 10.27
+        },
+        {
+          "type": "colHeader",
+          "colKey": {
+            "<IDENTIFIER-SET>": "ep_errorAttributes"
+          },
+          "width": 15.86
+        },
+        {
+          "type": "colHeader",
+          "colKey": {
+            "<IDENTIFIER-SET>": "p_errorLines"
+          },
+          "width": 12.46
+        }
+      ]
+    },
+    "name": {
+      "literal": "Ta_ErrorStacks"
+    },
+    "title": {
+      "literal": "Error Location"
+    }
+  },
+  "widgets/TA_ErrorTypes": {
+    "aimms.widget.type": {
+      "literal": "table"
+    },
+    "contents": {
+      "aimms": {
+        "contents": [
+          "ep_errorSeverity",
+          "sp_errorMoment",
+          "sp_errorMessages"
+        ]
+      }
+    },
+    "contents.partition": {
+      "literal": {
+        "rowHeader": [
+          "i_error",
+          "i_calYear",
+          "i_IterationNumber"
+        ],
+        "colHeader": [
+          "<IDENTIFIER-SET>"
+        ],
+        "aggregated": []
+      }
+    },
+    "custom.column.widths": {
+      "literal": [
+        {
+          "type": "colHeader",
+          "colKey": {
+            "<IDENTIFIER-SET>": "ep_errorSeverity"
+          },
+          "width": 24.64
+        },
+        {
+          "type": "colHeader",
+          "colKey": {
+            "<IDENTIFIER-SET>": "sp_errorMoment"
+          },
+          "width": 30.16
+        },
+        {
+          "type": "rowHeader",
+          "colKey": "i_error",
+          "width": 14.38
+        },
+        {
+          "type": "rowHeader",
+          "colKey": "i_calYear",
+          "width": 18.66
+        },
+        {
+          "type": "rowHeader",
+          "colKey": "i_IterationNumber",
+          "width": 27.51
+        },
+        {
+          "type": "colHeader",
+          "colKey": {
+            "<IDENTIFIER-SET>": "sp_errorMessages"
+          },
+          "width": 145.47
+        }
+      ]
+    },
+    "default.column.width": {
+      "literal": 40
+    },
+    "name": {
+      "literal": "TA_ErrorTypes"
+    },
+    "store.focus.in": {
+      "literal": {
+        "i_error": "ep_focusError"
+      }
+    },
+    "title": {
+      "literal": "Error summary"
+    }
+  },
+  "widgets/TA_IdentifiersInfo": {
+    "aimms.widget.type": {
+      "literal": "table"
+    },
+    "contents": {
+      "aimms": {
+        "contents": [
+          "sp_OriginOfIdentifiers_D",
+          "sp_IdentifierInformation_D",
+          "sp_TypeOfIdentifier_D",
+          "SP_IdentifierCardinalities_D",
+          "bp_ChangedIdentifiers"
+        ]
+      }
+    },
+    "contents.displaydomain": {
+      "literal": {
+        "sp_identifiercardinalities_d": "bp_IdentifiersInformationDomain_D",
+        "sp_identifierinformation_d": "bp_IdentifiersInformationDomain_D",
+        "sp_originofidentifiers_d": "bp_IdentifiersInformationDomain_D",
+        "sp_typeofidentifier_d": "bp_IdentifiersInformationDomain_D",
+        "bp_changedidentifiers": "bp_IdentifiersInformationDomain_D"
+      }
+    },
+    "contents.numdecimals": {
+      "literal": 0
+    },
+    "contents.partition": {
+      "literal": {
+        "rowHeader": [
+          "i_AllDefinedIdentifierName"
+        ],
+        "colHeader": [
+          "<IDENTIFIER-SET>"
+        ],
+        "aggregated": []
+      }
+    },
+    "contents.sorting": {
+      "literal": [
+        {
+          "partIndex": 0,
+          "partOffsets": [
+            -1,
+            4
+          ],
+          "mode": "decreasing"
+        }
+      ]
+    },
+    "custom.column.widths": {
+      "literal": [
+        {
+          "type": "colHeader",
+          "colKey": {
+            "<IDENTIFIER-SET>": "sp_OriginOfIdentifiers_D"
+          },
+          "width": 32.52
+        },
+        {
+          "type": "colHeader",
+          "colKey": {
+            "<IDENTIFIER-SET>": "sp_IdentifierInformation_D"
+          },
+          "width": 37.37
+        },
+        {
+          "type": "colHeader",
+          "colKey": {
+            "<IDENTIFIER-SET>": "sp_TypeOfIdentifier_D"
+          },
+          "width": 27.67
+        },
+        {
+          "type": "colHeader",
+          "colKey": {
+            "<IDENTIFIER-SET>": "SP_IdentifierCardinalities_D"
+          },
+          "width": 27.36
+        },
+        {
+          "type": "rowHeader",
+          "colKey": "i_AllDefinedIdentifierName",
+          "width": 51.28
+        },
+        {
+          "type": "colHeader",
+          "colKey": {
+            "<IDENTIFIER-SET>": "bp_ChangedIdentifiers"
+          },
+          "width": 50.86
+        }
+      ]
+    },
+    "default.column.width": {
+      "literal": 40
+    },
+    "name": {
+      "literal": "TA_IdentifiersInfo"
+    }
+  },
+  "widgets/TA_TransportationUnplanned": {
+    "aimms.widget.type": {
+      "literal": "table"
+    },
+    "contents": {
+      "aimms": {
+        "contents": [
+          "p_TransportUnplannedCapacityPerYearAndIter"
+        ]
+      }
+    },
+    "name": {
+      "literal": "TA_TransportationUnplanned"
+    }
+  }
+}

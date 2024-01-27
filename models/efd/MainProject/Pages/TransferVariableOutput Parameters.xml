@@ -1,0 +1,205 @@
+<?xml version="1.0"?>
+<Page Version="4000" TimeStamp="2022-06-15 13:37:42">
+	<PageEditSize Type="Inherited" />
+	<ProjectUUID>FD4E5DBD-7B49-4BC0-8952-143FD8233A59</ProjectUUID>
+	<TemplatesTabOrderPosition>1</TemplatesTabOrderPosition>
+	<Background Inherited="true" />
+	<Action>
+		<EntryProcedure>CountActiveTransferVariables</EntryProcedure>
+	</Action>
+	<PageObject Type="Pivot Table">
+		<Location top="156" left="258" bottom="666" right="954" />
+		<TabOrder>1</TabOrder>
+		<ObjectUUID>6218C8AE-07E6-4E62-AB73-CB7B2B4B3485</ObjectUUID>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<Contents>
+			<Implicit_Identifiers ID="4010">index_tvo</Implicit_Identifiers>
+		</Contents>
+		<Indices>
+			<Identifier_Index>
+				<Hide_if_Single_Identifier ID="6270">"No"</Hide_if_Single_Identifier>
+			</Identifier_Index>
+		</Indices>
+		<General>
+			<Dense_Aggregation_restricts_to_Domain ID="1022">"Yes"</Dense_Aggregation_restricts_to_Domain>
+		</General>
+		<Row_Area>
+			<Background_Color ID="2010">RGB&lt;255,255,200&gt;</Background_Color>
+			<Text_Color ExtraInfo="D4F48705-BFDF-4DF8-8E1F-D38EFF981024" ID="2020">"default selection"</Text_Color>
+			<Headers>
+				<Background_Color ExtraInfo="D4F48705-BFDF-4DF8-8E1F-D38EFF981024" ID="2120">"default selection"</Background_Color>
+				<Text_Color ID="2130">RGB&lt;255,255,255&gt;</Text_Color>
+				<Show_Sub_Headers ID="2150">"No"</Show_Sub_Headers>
+			</Headers>
+			<Grid_Focus_Indicator>
+				<Background_Color ID="2270">RGB&lt;0,0,168&gt;</Background_Color>
+				<Text_Color ID="2280">RGB&lt;255,255,200&gt;</Text_Color>
+			</Grid_Focus_Indicator>
+		</Row_Area>
+		<Column_Area>
+			<Headers>
+				<Show_Sub_Headers ID="3150">"No"</Show_Sub_Headers>
+			</Headers>
+		</Column_Area>
+		<Grid_Area>
+			<Background_Color ID="5010">RGB&lt;255,255,255&gt;</Background_Color>
+			<Alternating_Background_Color ID="5011">RGB&lt;225,225,225&gt;</Alternating_Background_Color>
+			<Aggregators>
+				<Background_Color ID="5220">RGB&lt;255,128,128&gt;</Background_Color>
+			</Aggregators>
+			<Sub_Header_Row_or_Column>
+				<Background_Color ID="5320">RGB&lt;255,255,200&gt;</Background_Color>
+			</Sub_Header_Row_or_Column>
+		</Grid_Area>
+	</PageObject>
+	<PageObject Type="Text">
+		<Location top="18" left="18" bottom="150" right="420" />
+		<StaticText>Transfer Variable Input parameters are black,
+Transfer Variable Output parameters  are blue.
+Empty input parameters are highlighted with yellow.
+Difference between _pass and _calc parameters 
+is highlighted with red checkbox.
+
+Choose a parameter by clicking on the checkmark:</StaticText>
+		<Font GUID="E39160A5-11ED-48BA-8392-5F965B185846" Name="Body" />
+		<TextColor RGB="#000000" />
+	</PageObject>
+	<PageObject Type="Pivot Table">
+		<Location top="156" left="18" bottom="666" right="246" />
+		<TabOrder>2</TabOrder>
+		<ObjectUUID>F47E5C88-9884-4C51-9035-2F1913388A36</ObjectUUID>
+		<Font GUID="00000000-0000-0000-0000-000000000001" Name="Main Font" />
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<Contents>
+			<Explicit_Identifier>
+				<Identifier ID="4110">TV_Parms_( tv_index )</Identifier>
+				<Title ID="4120">"Transfer Variables"</Title>
+				<Colors>
+					<Background_Color ID="4160">TVOdiffColor( tv_index )</Background_Color>
+				</Colors>
+				<Procedures_Assertions>
+					<On_Select ID="4182">BuildTVOParms_DisplaySet( tv_index )</On_Select>
+					<On_Double_Click ID="4183">BuildTVOParms_DisplaySet( tv_index )</On_Double_Click>
+				</Procedures_Assertions>
+			</Explicit_Identifier>
+		</Contents>
+		<Indices>
+			<Explicit_Index>
+				<Index ID="6510">tv_index</Index>
+				<Colors>
+					<Background_Color ID="6542">TVColor3( tv_index )</Background_Color>
+					<Text_Color ID="6540">TVColor2( tv_index )</Text_Color>
+				</Colors>
+			</Explicit_Index>
+			<Identifier_Index>
+				<Hide_if_Single_Identifier ID="6270">"No"</Hide_if_Single_Identifier>
+			</Identifier_Index>
+		</Indices>
+		<General>
+			<Dense_Aggregation_restricts_to_Domain ID="1022">"Yes"</Dense_Aggregation_restricts_to_Domain>
+		</General>
+		<Row_Area>
+			<Background_Color ID="2010">RGB&lt;255,255,255&gt;</Background_Color>
+			<Text_Color ExtraInfo="D4F48705-BFDF-4DF8-8E1F-D38EFF981024" ID="2020">"default selection"</Text_Color>
+			<Headers>
+				<Background_Color ExtraInfo="D4F48705-BFDF-4DF8-8E1F-D38EFF981024" ID="2120">"default selection"</Background_Color>
+				<Text_Color ID="2130">RGB&lt;255,255,255&gt;</Text_Color>
+				<Show_Sub_Headers ID="2150">"No"</Show_Sub_Headers>
+			</Headers>
+			<Grid_Focus_Indicator>
+				<Background_Color ID="2270">RGB&lt;0,0,168&gt;</Background_Color>
+				<Text_Color ID="2280">RGB&lt;255,255,200&gt;</Text_Color>
+			</Grid_Focus_Indicator>
+		</Row_Area>
+		<Column_Area>
+			<Headers>
+				<Show_Sub_Headers ID="3150">"No"</Show_Sub_Headers>
+			</Headers>
+		</Column_Area>
+		<Grid_Area>
+			<Background_Color ID="5010">RGB&lt;255,255,255&gt;</Background_Color>
+			<Alternating_Background_Color ID="5011">RGB&lt;225,225,225&gt;</Alternating_Background_Color>
+			<Aggregators>
+				<Background_Color ID="5220">RGB&lt;255,128,128&gt;</Background_Color>
+			</Aggregators>
+			<Sub_Header_Row_or_Column>
+				<Background_Color ID="5320">RGB&lt;255,255,200&gt;</Background_Color>
+			</Sub_Header_Row_or_Column>
+		</Grid_Area>
+	</PageObject>
+	<PageObject Type="Text">
+		<Location top="18" left="444" bottom="48" right="738" />
+		<StaticText>Number of non-empty Transfer Variables:</StaticText>
+		<Font GUID="E39160A5-11ED-48BA-8392-5F965B185846" Name="Body" />
+		<TextColor RGB="#000000" />
+	</PageObject>
+	<PageObject Type="Text">
+		<Location top="54" left="444" bottom="84" right="738" />
+		<StaticText>Total Number of Transfer Variables:</StaticText>
+		<Font GUID="E39160A5-11ED-48BA-8392-5F965B185846" Name="Body" />
+		<TextColor RGB="#000000" />
+	</PageObject>
+	<PageObject Type="Scalar">
+		<Location top="12" left="732" bottom="42" right="780" />
+		<ReadOnly>"Yes"</ReadOnly>
+		<TabOrder>3</TabOrder>
+		<Font GUID="E39160A5-11ED-48BA-8392-5F965B185846" Name="Body" />
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#ffffff" />
+		<Layout>Value</Layout>
+		<SeparatorSign>=</SeparatorSign>
+		<ExplicitIdentifier>
+			<Identifier>CountActiveTVParameters</Identifier>
+			<NumberFormat Width="4" Decimals="0" Scientific="IfTooSmallorLarge" Alignment="Center" ShowDefaults="true" />
+		</ExplicitIdentifier>
+	</PageObject>
+	<PageObject Type="Scalar">
+		<Location top="48" left="732" bottom="78" right="780" />
+		<TabOrder>4</TabOrder>
+		<Font GUID="E39160A5-11ED-48BA-8392-5F965B185846" Name="Body" />
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#ffffff" />
+		<Layout>Text-Value</Layout>
+		<SeparatorSign>=</SeparatorSign>
+		<ExplicitIdentifier>
+			<Identifier>CountTVParameters</Identifier>
+			<NumberFormat Width="4" Decimals="0" Scientific="IfTooSmallorLarge" Alignment="Center" ShowDefaults="true" />
+		</ExplicitIdentifier>
+	</PageObject>
+	<PageObject Type="Scalar">
+		<Location top="84" left="738" bottom="120" right="834" />
+		<TabOrder>5</TabOrder>
+		<Font GUID="E39160A5-11ED-48BA-8392-5F965B185846" Name="Body" />
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#ffffff" />
+		<Layout>SingleLineEditField</Layout>
+		<SeparatorSign>=</SeparatorSign>
+		<ExplicitIdentifier>
+			<Identifier>Delta_diff</Identifier>
+			<NumberFormat Width="7" Decimals="3" Scientific="IfTooSmallorLarge" Alignment="Center" ShowDefaults="true" />
+			<ProcedureUponChange>CountActiveTransferVariables</ProcedureUponChange>
+		</ExplicitIdentifier>
+	</PageObject>
+	<PageObject Type="Text">
+		<Location top="84" left="444" bottom="126" right="726" />
+		<StaticText>Allowed Delta between _pass and _calc parameters</StaticText>
+		<Font GUID="E39160A5-11ED-48BA-8392-5F965B185846" Name="Body" />
+		<TextColor RGB="#000000" />
+	</PageObject>
+	<UsedReferences>
+		<Model>
+			<Symbol>TV_Parms_</Symbol>
+			<Symbol>TVColor2</Symbol>
+			<Symbol>TVColor3</Symbol>
+			<Symbol>CountActiveTVParameters</Symbol>
+			<Symbol>CountTVParameters</Symbol>
+			<Symbol>TVOdiffColor</Symbol>
+			<Symbol>CountActiveTransferVariables</Symbol>
+			<Symbol>BuildTVOParms_DisplaySet</Symbol>
+			<Symbol>Delta_diff</Symbol>
+			<Symbol>tv_index</Symbol>
+			<Symbol>index_tvo</Symbol>
+		</Model>
+	</UsedReferences>
+</Page>

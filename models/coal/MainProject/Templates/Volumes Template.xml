@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<Page Version="4000" TimeStamp="2020-05-02 22:10:12">
+	<PageEditSize Type="Inherited" />
+	<ProjectUUID>3C1E27EB-95CC-4E52-BBB5-D70269E0E21B</ProjectUUID>
+	<TemplatesTabOrderPosition>1</TemplatesTabOrderPosition>
+	<Background Inherited="true" />
+	<PageObject Type="Selection Object">
+		<SelectionType>RadioButtons</SelectionType>
+		<Location top="54" left="24" bottom="90" right="258" />
+		<TabOrder>1</TabOrder>
+		<Font GUID="F2C814D4-9CCE-416C-9F68-BE15F2AFC56A" Name="font 1" />
+		<TextShown>IdentifierText</TextShown>
+		<Border Style="InShadow" Width="2" MarginTop="5" MarginRight="5" MarginBottom="5" MarginLeft="5" />
+		<BackgroundColor RGB="#ffffff" />
+		<ProcedureUponChange>ConvertTbtu2Tons</ProcedureUponChange>
+		<ExplicitIdentifier>
+			<Identifier>Switch_MMst</Identifier>
+			<Description>"MMst"</Description>
+		</ExplicitIdentifier>
+		<ExplicitIdentifier>
+			<Identifier>Switch_TBTU</Identifier>
+			<Description>"TBTU"</Description>
+		</ExplicitIdentifier>
+	</PageObject>
+	<UsedReferences>
+		<Model>
+			<Symbol>Switch_MMst</Symbol>
+			<Symbol>Switch_TBTU</Symbol>
+			<Symbol>ConvertTbtu2Tons</Symbol>
+		</Model>
+	</UsedReferences>
+</Page>

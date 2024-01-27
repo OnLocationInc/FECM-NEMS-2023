@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<UserFonts>
+	<UserFont Name="Main Font" FaceName="Arial" PointSize="80" UUID="00000000-0000-0000-0000-000000000001" />
+	<UserFont Name="Title" FaceName="Arial" PointSize="200" Bold="true" UUID="62DBA6FF-FA27-4EF5-9EBE-640298DDB3C7" InternalID="1" />
+	<UserFont Name="Header" FaceName="Arial" PointSize="140" Bold="true" UUID="DAF419EC-7C9F-4BA0-A851-93FB642B71E2" InternalID="2" />
+	<UserFont Name="Title (Arial 28)" FaceName="Arial" PointSize="120" Bold="true" UUID="286FE85D-26AF-4DF1-A4B3-8647E236E326" InternalID="3" />
+	<UserFont Name="font 1" FaceName="Arial" PointSize="100" UUID="F2C814D4-9CCE-416C-9F68-BE15F2AFC56A" InternalID="4" />
+</UserFonts>
